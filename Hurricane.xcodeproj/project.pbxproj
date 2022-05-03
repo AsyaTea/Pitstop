@@ -11,6 +11,9 @@
 		415D203128214180004AF201 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D203028214180004AF201 /* ContentView.swift */; };
 		415D203328214182004AF201 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415D203228214182004AF201 /* Assets.xcassets */; };
 		415D203628214182004AF201 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415D203528214182004AF201 /* Preview Assets.xcassets */; };
+		415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 415D203C28214215004AF201 /* CarModel.xcdatamodeld */; };
+		415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D203F282144CE004AF201 /* CoreDataManager.swift */; };
+		415D2042282145FE004AF201 /* CarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D2041282145FE004AF201 /* CarViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,9 @@
 		415D203028214180004AF201 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		415D203228214182004AF201 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		415D203528214182004AF201 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		415D203D28214216004AF201 /* CarModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CarModel.xcdatamodel; sourceTree = "<group>"; };
+		415D203F282144CE004AF201 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		415D2041282145FE004AF201 /* CarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +58,10 @@
 			isa = PBXGroup;
 			children = (
 				415D202E28214180004AF201 /* HurricaneApp.swift */,
+				415D203F282144CE004AF201 /* CoreDataManager.swift */,
+				415D2041282145FE004AF201 /* CarViewModel.swift */,
 				415D203028214180004AF201 /* ContentView.swift */,
+				415D203C28214215004AF201 /* CarModel.xcdatamodeld */,
 				415D203228214182004AF201 /* Assets.xcassets */,
 				415D203428214182004AF201 /* Preview Content */,
 			);
@@ -137,7 +146,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */,
 				415D203128214180004AF201 /* ContentView.swift in Sources */,
+				415D2042282145FE004AF201 /* CarViewModel.swift in Sources */,
+				415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */,
 				415D202F28214180004AF201 /* HurricaneApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,6 +351,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		415D203C28214215004AF201 /* CarModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				415D203D28214216004AF201 /* CarModel.xcdatamodel */,
+			);
+			currentVersion = 415D203D28214216004AF201 /* CarModel.xcdatamodel */;
+			path = CarModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 415D202328214180004AF201 /* Project object */;
 }
