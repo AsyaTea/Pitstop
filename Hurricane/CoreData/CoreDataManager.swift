@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 
 class CoreDataManager {
+    //Singleton
     static let instance = CoreDataManager()
     let container: NSPersistentContainer
     let context: NSManagedObjectContext
@@ -28,6 +29,15 @@ class CoreDataManager {
             try context.save()
         } catch let error {
             print("Error saving Core Data. \(error.localizedDescription)")
+        }
+    }
+    
+    func removeAllItems(deleteRequest : NSBatchDeleteRequest){
+        do {
+            try context.execute(deleteRequest)
+        } catch let error as NSError {
+            // TODO: handle the error
+            print("Error when removing all Items:\(error.localizedDescription)")
         }
     }
     
