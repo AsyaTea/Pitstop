@@ -10,16 +10,16 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject private var vehicleVM = VehicleViewModel()
-//    @State var vehicle : Vehicle = Vehicle(entity: "Vehicle")
-    
+//    @State var vehicle : Vehicle = Vehicle()
+    @State var vehicle : VehicleModel = VehicleModel()
     
     // MARK: PROVA DI AGGIUNTA
     var body: some View {
         VStack{
-            TextField("Name", text: $vehicleVM.name)
+            TextField("Name", text: $vehicle.name.toUnwrapped(defaultValue: ""))
             Text("ciao")
             Button("Add"){
-                vehicleVM.addVehicle()
+                vehicleVM.addVehicle(vehicle : vehicle)
             }
             Button("Remove all"){
                 vehicleVM.removeAllVehicles()
@@ -29,6 +29,8 @@ struct ContentView: View {
                     Text(vehicle.name ?? "")
                     
                 }
+                .onDelete(perform: vehicleVM.removeVehicle)
+                
             }
         }
     }
@@ -47,5 +49,6 @@ extension Binding {
         Binding<T>(get: { self.wrappedValue ?? defaultValue }, set: { self.wrappedValue = $0 })
     }
 }
+
 
 

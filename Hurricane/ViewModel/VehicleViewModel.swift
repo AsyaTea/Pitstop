@@ -5,9 +5,9 @@ import CoreData
 class VehicleViewModel : ObservableObject {
     
     let manager = CoreDataManager.instance
-    @Published var name : String = ""
+
+    @Published var vehicleModel = VehicleModel()
     @Published var vehicles : [Vehicle] = []
-    
     
     init() {
         getVehicles()
@@ -27,9 +27,9 @@ class VehicleViewModel : ObservableObject {
         }
     }
     
-    func addVehicle() {
+    func addVehicle(vehicle : VehicleModel) {
         let newVehicle = Vehicle(context: manager.context)
-        newVehicle.name = name
+        newVehicle.name = vehicle.name
         saveVehicle()
         
     }
@@ -41,6 +41,19 @@ class VehicleViewModel : ObservableObject {
         manager.removeAllItems(deleteRequest: deleteRequest)
         getVehicles()
     }
+    
+    func removeVehicle(indexSet: IndexSet) {
+        guard let index = indexSet.first else { return }
+        let entity = vehicles[index]
+        manager.container.viewContext.delete(entity)
+        saveVehicle()
+    }
+    
+    //MARK: TODOOOOO
+    func updateVehicle(entity: Vehicle, vehicleUpdate: VehicleModel) {
+        entity.name = vehicleUpdate.name
+        saveVehicle()
+    }
 
     
     func saveVehicle() {
@@ -50,3 +63,14 @@ class VehicleViewModel : ObservableObject {
     
 }
 
+struct VehicleModel {
+    var brand : String?
+    var document : Data?
+    var fuelType: Int32?
+    var model : String?
+    var name : String?
+    var odometer : Int16?
+    var plate : String?
+    var vehicleID: UUID?
+    var year: Int16?
+}
