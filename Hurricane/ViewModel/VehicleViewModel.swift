@@ -8,6 +8,7 @@ class VehicleViewModel : ObservableObject {
     @Published var name : String = ""
     @Published var vehicles : [Vehicle] = []
     
+   
     
     init() {
         getVehicles()
@@ -20,6 +21,11 @@ class VehicleViewModel : ObservableObject {
         let sort = NSSortDescriptor(keyPath: \Vehicle.vehicleID, ascending: true)
         request.sortDescriptors = [sort]
         
+        //Filter if needed, ad esempio qua filtro per veicoli a benzina
+//        let filter = NSPredicate(format: "fuelType == %@", "1")
+//        request.predicate = filter
+
+        
         do {
             vehicles =  try manager.context.fetch(request)
         }catch let error {
@@ -30,6 +36,7 @@ class VehicleViewModel : ObservableObject {
     func addVehicle() {
         let newVehicle = Vehicle(context: manager.context)
         newVehicle.name = name
+        newVehicle.fuel = .diesel
         saveVehicle()
         
     }

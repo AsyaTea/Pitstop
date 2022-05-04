@@ -14,6 +14,8 @@
 		415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 415D203C28214215004AF201 /* CarModel.xcdatamodeld */; };
 		415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D203F282144CE004AF201 /* CoreDataManager.swift */; };
 		415D2042282145FE004AF201 /* VehicleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D2041282145FE004AF201 /* VehicleViewModel.swift */; };
+		FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */; };
+		FFFC3937282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC3935282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,8 @@
 		415D203D28214216004AF201 /* CarModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CarModel.xcdatamodel; sourceTree = "<group>"; };
 		415D203F282144CE004AF201 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		415D2041282145FE004AF201 /* VehicleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleViewModel.swift; sourceTree = "<group>"; };
+		FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FFFC3935282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +45,8 @@
 		415D202228214180004AF201 = {
 			isa = PBXGroup;
 			children = (
+				FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */,
+				FFFC3935282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift */,
 				415D202D28214180004AF201 /* Hurricane */,
 				415D202C28214180004AF201 /* Products */,
 			);
@@ -170,11 +176,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */,
 				415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */,
 				415D203128214180004AF201 /* ContentView.swift in Sources */,
 				415D2042282145FE004AF201 /* VehicleViewModel.swift in Sources */,
 				415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */,
 				415D202F28214180004AF201 /* HurricaneApp.swift in Sources */,
+				FFFC3937282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
