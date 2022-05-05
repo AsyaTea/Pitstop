@@ -87,6 +87,28 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		FF1AA19E2823D44900AB61A2 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				415D203028214180004AF201 /* ContentView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		FF1AA19F2823D45300AB61A2 /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		FF1AA1A02823D47D00AB61A2 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		FF249C43282151690062613A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,7 +120,9 @@
 		FF249C442821517C0062613A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				415D203028214180004AF201 /* ContentView.swift */,
+				FF1AA19E2823D44900AB61A2 /* Main */,
+				FF1AA19F2823D45300AB61A2 /* Statistics */,
+				FF1AA1A02823D47D00AB61A2 /* Settings */,
 			);
 			path = View;
 			sourceTree = "<group>";
