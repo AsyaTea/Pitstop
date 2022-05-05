@@ -2,7 +2,7 @@
 //  Vehicle+CoreDataProperties.swift
 //  Hurricane
 //
-//  Created by Ivan Voloshchuk on 03/05/22.
+//  Created by Ivan Voloshchuk on 05/05/22.
 //
 //
 
@@ -26,14 +26,6 @@ extension Vehicle {
     @NSManaged public var vehicleID: UUID?
     @NSManaged public var year: Int16
     @NSManaged public var expenses: NSSet?
-    var fuel: FuelType {
-           set {
-               fuelType = newValue.rawValue
-           }
-           get {
-               FuelType(rawValue: fuelType) ?? .gasoline
-           }
-       }
 
 }
 
@@ -56,11 +48,4 @@ extension Vehicle {
 
 extension Vehicle : Identifiable {
 
-}
-
-enum FuelType: Int32 {
-    case gasoline = 0
-    case electricity = 1
-    case diesel = 2
-    case hydrogen = 3
 }

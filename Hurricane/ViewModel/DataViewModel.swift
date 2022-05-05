@@ -2,7 +2,7 @@
 import Foundation
 import CoreData
 
-class VehicleViewModel : ObservableObject {
+class DataViewModel : ObservableObject {
     
     let manager = CoreDataManager.instance
 
@@ -44,7 +44,6 @@ class VehicleViewModel : ObservableObject {
     func addVehicle(vehicle : VehicleModel) {
         let newVehicle = Vehicle(context: manager.context)
         newVehicle.name = vehicle.name
-        newVehicle.fuel = .diesel
         saveVehicle()
         
     }
@@ -92,10 +91,24 @@ class VehicleViewModel : ObservableObject {
     func addExpense(expense : ExpenseModel) {
         let newExpense = Expense(context: manager.context)
         newExpense.name = expense.name
-        currVehicle.addToExpenses(newExpense)
+        newExpense.vehicle = currVehicle
+        print(expense)
         saveExpense()
     }
     
+    func removeExpense(indexSet: IndexSet) {
+        guard let index = indexSet.first else { return }
+        let entity = expenses[index]
+        manager.container.viewContext.delete(entity)
+        saveExpense()
+    }
+    
+    func removeAllExpenses() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Expense")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        manager.removeAllItems(deleteRequest: deleteRequest)
+        getExpenses()
+    }
     
     func saveExpense() {
         manager.save()

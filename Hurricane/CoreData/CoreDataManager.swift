@@ -40,5 +40,4 @@ class CoreDataManager {
             print("Error when removing all Items:\(error.localizedDescription)")
         }
     }
-    
 }

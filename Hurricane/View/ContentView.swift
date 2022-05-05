@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject private var vehicleVM = VehicleViewModel()
+    @StateObject private var vehicleVM = DataViewModel()
     
     //    @State var vehicle : Vehicle = Vehicle()
     @State var vehicle : VehicleModel = VehicleModel()
@@ -29,8 +29,11 @@ struct ContentView: View {
             Button("Add veicolo"){
                 vehicleVM.addVehicle(vehicle: vehicle)
             }
-            Button("Remove all"){
+            Button("Remove all vehicles"){
                 vehicleVM.removeAllVehicles()
+            }
+            Button("Remove all expenses"){
+                vehicleVM.removeAllExpenses()
             }
             
             Button("Set current vehicle to last added:"){
@@ -45,17 +48,19 @@ struct ContentView: View {
                 ForEach(vehicleVM.vehicles){ vehicle in
                     VStack{
                     
-                    Text(vehicle.name ?? "")
+                    Text("Vehicle name: \(vehicle.name ?? "")")
                     
-                        ForEach(vehicleVM.expenses) { expenses in
-                                Text("Exp: \(expenses.name ?? "")")
-
-                        }
+                      
                         
                     }
                     
                 }
                 .onDelete(perform: vehicleVM.removeVehicle)
+                ForEach(vehicleVM.expenses) { expenses in
+                        Text("Exp: \(expenses.name ?? "")")
+                    Text("Vehicle appart:\(expenses.vehicle?.name ?? "" )")
+
+                } .onDelete(perform: vehicleVM.removeExpense(indexSet:))
                 
             }
             //Floating button
@@ -64,7 +69,6 @@ struct ContentView: View {
                     Spacer(minLength: UIScreen.main.bounds.size.height * 0.62)
                     Button(action: {
                         
-//                        expenseVM.addExpenses(expense: expense)
                         vehicleVM.addExpense(expense: expense)
 //                        vehicleVM.getExpenses()
                     }, label: {
