@@ -104,11 +104,11 @@ struct ContentView: View {
 //}
 
 //Need to this to wrap optional values when Binding
-extension Binding {
-    func toUnwrapped<T>(defaultValue: T) -> Binding<T> where Value == Optional<T>  {
-        Binding<T>(get: { self.wrappedValue ?? defaultValue }, set: { self.wrappedValue = $0 })
-    }
-}
+//extension Binding {
+//    func toUnwrapped<T>(defaultValue: T) -> Binding<T> where Value == Optional<T>  {
+//        Binding<T>(get: { self.wrappedValue ?? defaultValue }, set: { self.wrappedValue = $0 })
+//    }
+//}
 
 
 

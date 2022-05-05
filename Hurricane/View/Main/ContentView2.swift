@@ -87,9 +87,17 @@ struct ContentView2: View {
                             Rectangle()
                                 .frame(width: 343, height: 48, alignment: .center)
                                 .cornerRadius(43)
-                                .foregroundColor(.black)
-                            Text("+ Add expense")
-                                .foregroundColor(.white)
+                                .foregroundColor(Palette.black)
+                            HStack{
+                                Spacer()
+                                Image("plus")
+                                    .resizable()
+                                    .frame(width: 14, height: 14)
+                            Text("Add expense")
+                                .foregroundColor(Palette.white)
+                                .font(Typography.ControlS)
+                                Spacer()
+                            }
                         }
                         
                     })
@@ -128,10 +136,13 @@ struct ExpensesView: View {
 //    }
 //}
 
+
+
+
 //Need to this to wrap optional values when Binding
-//extension Binding {
-//    func toUnwrapped<T>(defaultValue: T) -> Binding<T> where Value == Optional<T>  {
-//        Binding<T>(get: { self.wrappedValue ?? defaultValue }, set: { self.wrappedValue = $0 })
-//    }
-//}
+extension Binding {
+    func toUnwrapped<T>(defaultValue: T) -> Binding<T> where Value == Optional<T>  {
+        Binding<T>(get: { self.wrappedValue ?? defaultValue }, set: { self.wrappedValue = $0 })
+    }
+}
 

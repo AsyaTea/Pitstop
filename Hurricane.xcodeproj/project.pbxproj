@@ -15,8 +15,13 @@
 		415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D203F282144CE004AF201 /* CoreDataManager.swift */; };
 		415D2042282145FE004AF201 /* DataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D2041282145FE004AF201 /* DataViewModel.swift */; };
 		41C6E1F62823E4C800F756B5 /* ContentView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E1F52823E4C800F756B5 /* ContentView2.swift */; };
+		FF1AA1A32823F9C200AB61A2 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A22823F9C200AB61A2 /* Typography.swift */; };
+		FF1AA1A52823FC0600AB61A2 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A42823FC0600AB61A2 /* Palette.swift */; };
+		FF1AA1A72823FC4800AB61A2 /* extensionColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */; };
 		FF5F2C9F2823C4CD007980F3 /* Expense+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */; };
 		FF5F2CA02823C4CD007980F3 /* Expense+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */; };
+		FFDF855A2824104A00E0F9BF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF85592824104A00E0F9BF /* MainView.swift */; };
+		FFDF855C282411FD00E0F9BF /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF855B282411FD00E0F9BF /* TabBarView.swift */; };
 		FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */; };
 		FFFC3937282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC3935282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
@@ -31,8 +36,13 @@
 		415D203F282144CE004AF201 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		415D2041282145FE004AF201 /* DataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewModel.swift; sourceTree = "<group>"; };
 		41C6E1F52823E4C800F756B5 /* ContentView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView2.swift; sourceTree = "<group>"; };
+		FF1AA1A22823F9C200AB61A2 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		FF1AA1A42823FC0600AB61A2 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
+		FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionColor.swift; sourceTree = "<group>"; };
 		FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FFDF85592824104A00E0F9BF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		FFDF855B282411FD00E0F9BF /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FFFC3935282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,10 +61,6 @@
 		415D202228214180004AF201 = {
 			isa = PBXGroup;
 			children = (
-				FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */,
-				FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */,
-				FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */,
-				FFFC3935282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift */,
 				415D202D28214180004AF201 /* Hurricane */,
 				415D202C28214180004AF201 /* Products */,
 			);
@@ -73,8 +79,9 @@
 			children = (
 				415D202E28214180004AF201 /* HurricaneApp.swift */,
 				FF249C45282151A20062613A /* CoreData */,
-				FF249C442821517C0062613A /* View */,
 				FF249C43282151690062613A /* ViewModel */,
+				FF249C442821517C0062613A /* View */,
+				FF1AA1A12823F99500AB61A2 /* DesignKit */,
 				415D203228214182004AF201 /* Assets.xcassets */,
 				415D203428214182004AF201 /* Preview Content */,
 			);
@@ -92,6 +99,7 @@
 		FF1AA19E2823D44900AB61A2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				FFDF85592824104A00E0F9BF /* MainView.swift */,
 				415D203028214180004AF201 /* ContentView.swift */,
 				41C6E1F52823E4C800F756B5 /* ContentView2.swift */,
 			);
@@ -112,6 +120,16 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		FF1AA1A12823F99500AB61A2 /* DesignKit */ = {
+			isa = PBXGroup;
+			children = (
+				FF1AA1A22823F9C200AB61A2 /* Typography.swift */,
+				FF1AA1A42823FC0600AB61A2 /* Palette.swift */,
+				FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */,
+			);
+			path = DesignKit;
+			sourceTree = "<group>";
+		};
 		FF249C43282151690062613A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +144,7 @@
 				FF1AA19E2823D44900AB61A2 /* Main */,
 				FF1AA19F2823D45300AB61A2 /* Statistics */,
 				FF1AA1A02823D47D00AB61A2 /* Settings */,
+				FFDF855B282411FD00E0F9BF /* TabBarView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -133,6 +152,10 @@
 		FF249C45282151A20062613A /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */,
+				FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */,
+				FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */,
+				FFFC3935282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift */,
 				415D203F282144CE004AF201 /* CoreDataManager.swift */,
 				415D203C28214215004AF201 /* CarModel.xcdatamodeld */,
 			);
@@ -210,15 +233,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */,
+				FFDF855A2824104A00E0F9BF /* MainView.swift in Sources */,
 				415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */,
+				FF1AA1A72823FC4800AB61A2 /* extensionColor.swift in Sources */,
 				FF5F2C9F2823C4CD007980F3 /* Expense+CoreDataClass.swift in Sources */,
+				FF1AA1A52823FC0600AB61A2 /* Palette.swift in Sources */,
 				41C6E1F62823E4C800F756B5 /* ContentView2.swift in Sources */,
 				415D203128214180004AF201 /* ContentView.swift in Sources */,
 				415D2042282145FE004AF201 /* DataViewModel.swift in Sources */,
 				415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */,
 				415D202F28214180004AF201 /* HurricaneApp.swift in Sources */,
 				FFFC3937282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift in Sources */,
+				FF1AA1A32823F9C200AB61A2 /* Typography.swift in Sources */,
 				FF5F2CA02823C4CD007980F3 /* Expense+CoreDataProperties.swift in Sources */,
+				FFDF855C282411FD00E0F9BF /* TabBarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,12 +375,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = MYPTJXP3NK;
+				DEVELOPMENT_TEAM = 55H4ABU399;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -364,7 +393,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -376,12 +405,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = MYPTJXP3NK;
+				DEVELOPMENT_TEAM = 55H4ABU399;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -393,7 +423,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
