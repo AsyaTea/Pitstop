@@ -15,9 +15,12 @@ class DataViewModel : ObservableObject {
     @Published var expenses : [Expense] = []
     @Published var expenseModel = ExpenseModel()
     
+    //Filter
+    @Published var filter : NSPredicate?
+    
     init() {
         getVehicles()
-        getExpenses()
+        getExpenses(filter: filter)
     }
     
     
@@ -31,9 +34,7 @@ class DataViewModel : ObservableObject {
         
         //Filter if needed, ad esempio qua filtro per veicoli a benzina
 //        let filter = NSPredicate(format: "fuelType == %@", "1")
-//        request.predicate = filter
-
-        
+    
         do {
             vehicles =  try manager.context.fetch(request)
         }catch let error {
@@ -78,8 +79,10 @@ class DataViewModel : ObservableObject {
     
     
     //MARK: EXPENSE FUNCTIONS
-    func getExpenses (){
+    func getExpenses(filter : NSPredicate?){
+        
         let request = NSFetchRequest<Expense>(entityName: "Expense")
+        request.predicate = filter
         
         do {
             expenses =  try manager.context.fetch(request)
@@ -107,12 +110,12 @@ class DataViewModel : ObservableObject {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Expense")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         manager.removeAllItems(deleteRequest: deleteRequest)
-        getExpenses()
+        getExpenses(filter: filter)
     }
     
     func saveExpense() {
         manager.save()
-        getExpenses()
+        getExpenses(filter: filter)
     }
     
 }

@@ -15,6 +15,7 @@ struct ContentView: View {
     @State var vehicle : VehicleModel = VehicleModel()
     @State var expense : ExpenseModel = ExpenseModel()
     
+    @State var filter : NSPredicate?
 
     // MARK: PROVA DI AGGIUNTA
     var body: some View {
@@ -34,6 +35,10 @@ struct ContentView: View {
             }
             Button("Remove all expenses"){
                 vehicleVM.removeAllExpenses()
+            }
+            Button ("Filter x Expenses"){
+                filter = NSPredicate(format: "vehicle ==  %@", vehicleVM.currVehicle)
+                vehicleVM.getExpenses(filter: filter)
             }
             
             Button("Set current vehicle to last added:"){
