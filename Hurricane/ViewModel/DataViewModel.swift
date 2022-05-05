@@ -64,6 +64,11 @@ class DataViewModel : ObservableObject {
         saveVehicle()
     }
     
+    func setCurrentVehicle(currVehicle: Vehicle) {
+        self.currVehicle = currVehicle
+        print(self.currVehicle.name ?? "")
+    }
+    
     //MARK: TODOOOOO
     func updateVehicle(entity: Vehicle, vehicleUpdate: VehicleModel) {
         entity.name = vehicleUpdate.name
