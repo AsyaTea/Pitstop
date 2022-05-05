@@ -14,7 +14,7 @@
 		415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 415D203C28214215004AF201 /* CarModel.xcdatamodeld */; };
 		415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D203F282144CE004AF201 /* CoreDataManager.swift */; };
 		415D2042282145FE004AF201 /* DataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D2041282145FE004AF201 /* DataViewModel.swift */; };
-		41FCCF122823E37300CC322E /* ContentView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FCCF112823E37300CC322E /* ContentView2.swift */; };
+		41C6E1F62823E4C800F756B5 /* ContentView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E1F52823E4C800F756B5 /* ContentView2.swift */; };
 		FF5F2C9F2823C4CD007980F3 /* Expense+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */; };
 		FF5F2CA02823C4CD007980F3 /* Expense+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */; };
 		FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */; };
@@ -30,7 +30,7 @@
 		415D203D28214216004AF201 /* CarModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CarModel.xcdatamodel; sourceTree = "<group>"; };
 		415D203F282144CE004AF201 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		415D2041282145FE004AF201 /* DataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewModel.swift; sourceTree = "<group>"; };
-		41FCCF112823E37300CC322E /* ContentView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView2.swift; sourceTree = "<group>"; };
+		41C6E1F52823E4C800F756B5 /* ContentView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView2.swift; sourceTree = "<group>"; };
 		FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				415D203028214180004AF201 /* ContentView.swift */,
-				41FCCF112823E37300CC322E /* ContentView2.swift */,
+				41C6E1F52823E4C800F756B5 /* ContentView2.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -212,7 +212,7 @@
 				FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */,
 				415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */,
 				FF5F2C9F2823C4CD007980F3 /* Expense+CoreDataClass.swift in Sources */,
-				41FCCF122823E37300CC322E /* ContentView2.swift in Sources */,
+				41C6E1F62823E4C800F756B5 /* ContentView2.swift in Sources */,
 				415D203128214180004AF201 /* ContentView.swift in Sources */,
 				415D2042282145FE004AF201 /* DataViewModel.swift in Sources */,
 				415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */,
