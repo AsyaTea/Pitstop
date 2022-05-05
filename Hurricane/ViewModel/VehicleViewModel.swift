@@ -6,15 +6,22 @@ class VehicleViewModel : ObservableObject {
     
     let manager = CoreDataManager.instance
 
-    @Published var vehicleModel = VehicleModel()
-    @Published var vehicles : [Vehicle] = []
+    // Vehicle
+    @Published var vehicleModel = VehicleModel() 
+    @Published var vehicles : [Vehicle] = []   //Var to store all the fetched vehicle entities
+    @Published var currVehicle = Vehicle()
     
-   
+    //Expense
+    @Published var expenses : [Expense] = []
+    @Published var expenseModel = ExpenseModel()
     
     init() {
         getVehicles()
+        getExpenses()
     }
     
+    
+    //MARK: VEHICLE FUNCTIONS
     func getVehicles() {
         let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
         
@@ -30,18 +37,19 @@ class VehicleViewModel : ObservableObject {
         do {
             vehicles =  try manager.context.fetch(request)
         }catch let error {
-            print("😵 Error fetching: \(error.localizedDescription)")
+            print("🚓 Error fetching vehicles: \(error.localizedDescription)")
         }
     }
     
     func addVehicle(vehicle : VehicleModel) {
         let newVehicle = Vehicle(context: manager.context)
-        newVehicle.name = name
+        newVehicle.name = vehicle.name
         newVehicle.fuel = .diesel
         saveVehicle()
         
     }
     
+ 
     //In case we need it
     func removeAllVehicles() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Vehicle")
@@ -69,7 +77,33 @@ class VehicleViewModel : ObservableObject {
         getVehicles()
     }
     
+    
+    //MARK: EXPENSE FUNCTIONS
+    func getExpenses (){
+        let request = NSFetchRequest<Expense>(entityName: "Expense")
+        
+        do {
+            expenses =  try manager.context.fetch(request)
+        }catch let error {
+            print("💰 Error fetching expenses: \(error.localizedDescription)")
+        }
+    }
+    
+    func addExpense(expense : ExpenseModel) {
+        let newExpense = Expense(context: manager.context)
+        newExpense.name = expense.name
+        currVehicle.addToExpenses(newExpense)
+        saveExpense()
+    }
+    
+    
+    func saveExpense() {
+        manager.save()
+        getExpenses()
+    }
+    
 }
+
 
 struct VehicleModel {
     var brand : String?
@@ -81,4 +115,15 @@ struct VehicleModel {
     var plate : String?
     var vehicleID: UUID?
     var year: Int16?
+}
+
+struct ExpenseModel {
+    var date : Date?
+    var isRecursive : Bool?
+    var name : String?
+    var note : String?
+    var odometer : Int32?
+    var price : Float?
+    var type : Int16? // Enum
+    
 }
