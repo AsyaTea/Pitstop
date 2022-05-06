@@ -17,7 +17,7 @@ enum Typography {
     static let headerS = Font.system(size: 14, weight: .semibold, design: .rounded)
 
     static let TextM = Font.system(size: 14, weight: .regular, design: .rounded)
-    static let ControlS = Font.system(size: 14, weight: .medium, design: .rounded)
+    static let ControlS = Font.system(size: 14, weight: .semibold, design: .rounded)
 
 }
 

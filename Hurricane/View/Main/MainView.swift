@@ -10,11 +10,10 @@ import SwiftUI
 struct MainView: View {
     var body: some View {
         ZStack{
-            Palette.greyBackground
+            Palette.greyBackground.ignoresSafeArea()
             VStack{
                 Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
             }
-            
         }
         .overlay(
             VStack{
@@ -28,7 +27,6 @@ struct MainView: View {
                 })
                 Spacer()
             }
-            //                    .padding(.top,50)
         )
     }
 }
@@ -43,7 +41,7 @@ struct addButtonView : View {
     var body: some View {
         ZStack{
             Rectangle()
-                .frame(width: 343, height: 48, alignment: .center)
+                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055, alignment: .center)
                 .cornerRadius(43)
                 .foregroundColor(Palette.black)
             HStack{
