@@ -27,10 +27,10 @@ struct ContentView3: View {
                         } label: {
                             ZStack{
                                 RoundedRectangle(cornerRadius: 50)
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(.white)
                                 Text("Per month")
                                     .font(.system(size: 12))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.black)
                             }
                             .frame(width: 80, height: 25, alignment: .center)
                         }
@@ -41,8 +41,9 @@ struct ContentView3: View {
                             ZStack{
                                 RoundedRectangle(cornerRadius: 100)
                                     .frame(width: 25, height: 25, alignment: .center)
-                                Image(systemName: "bell")
                                     .foregroundColor(.white)
+                                Image(systemName: "bell")
+                                    .foregroundColor(.black)
                                     .font(.subheadline)
                             }
                         }
@@ -65,9 +66,15 @@ struct ContentView3: View {
                         StatView()
                     }
                 }
-                ScrollView {
-                    
-                }
+             
+                    List {
+                        Text("1")
+                        Text("1")
+                        Text("1")
+                        Text("1")
+                        Text("1")
+                    }
+                
                 Spacer()
             }
         }
