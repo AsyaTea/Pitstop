@@ -98,13 +98,15 @@ struct StatView: View {
         ZStack{
             RoundedRectangle(cornerRadius: 35)
                 .frame(width: 120, height: 95, alignment: .center)
-                .foregroundColor(.secondary)
+                .foregroundColor(Palette.colorVioletLight)
             VStack{
                 Text("$23,4")
                 Text("All costs")
             }
+            .foregroundColor(.black)
             
         }
+        
         
     }
 }
