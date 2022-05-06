@@ -18,14 +18,51 @@ struct AddReportView: View {
         UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
     }
     
+    @StateObject var utilityVM : UtilityViewModel = .init()
+    
+    //MARK: TODO COLLEGARE VAR
     var categories = ["Category","Day","Odometer","Repeat"]
+    @State private var price : String = ""
+    var currency = "$"
+    
+    @State private var pickerTabs = ["Expense", "Odometer", "Reminder"]
+    
+    //Matching geometry namespace
+    @Namespace var animation
+    
+    //Focusn keyboard
+    @FocusState private var focusedField: FocusField?
+    enum FocusField: Hashable {
+        case field
+    }
     
     //To dismiss the modal
     @Environment(\.presentationMode) private var presentationMode
-
+    
     var body: some View {
         NavigationView{
             VStack {
+                
+                //MARK: Price textField
+                HStack{
+                    Spacer()
+                    TextField("42",text: $price)
+                        .focused($focusedField, equals: .field)
+                        .font(Typography.headerXXL)
+                        .foregroundColor(Palette.black)
+                        .textFieldStyle(.plain)
+                        .keyboardType(.decimalPad)
+                        .fixedSize(horizontal: true, vertical: true)
+                    Text(currency)
+                        .font(Typography.headerXXL)
+                        .foregroundColor(Palette.black)
+                    Spacer()
+                }.padding(.top,20)
+                
+                //MARK: Custom segmented picker
+                CustomSegmentedPicker()
+                    .padding()
+            
                 List{
                     ForEach(categories, id:\.self){ category in
                         HStack{
@@ -41,10 +78,10 @@ struct AddReportView: View {
                             }
                             Text(category)
                                 .font(Typography.headerM)
+                                .foregroundColor(Palette.black)
                                 .padding(.leading,5)
                             Spacer()
                         }
-                        
                     }
                 }
                 
@@ -52,11 +89,8 @@ struct AddReportView: View {
                     //ACTION
                 }.buttonStyle(SaveButton())
                 
-               
             }
-            .navigationTitle(
-                Text("New report").font(Typography.headerM)
-            )
+            .background(Palette.greyBackground)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
@@ -70,9 +104,49 @@ struct AddReportView: View {
                         }
                     }).accentColor(Palette.greyHard)
             )
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("New report")
+                        .font(Typography.headerM)
+                        .foregroundColor(Palette.black)
+                }
+            }
+            .onAppear {
+                /// Setting the keyboard focus on the price
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {  /// Anything over 0.5 delay seems to work
+                    self.focusedField = .field
+                }
+            }
         }
-        
     }
+    
+    @ViewBuilder
+    func CustomSegmentedPicker() -> some View{
+        HStack(spacing:10){
+            ForEach(pickerTabs,id:\.self){tab in
+                Text(tab)
+                    .frame(maxWidth: .infinity)
+                    .padding(10)
+                    .font(Typography.headerS)
+                    .foregroundColor(Palette.black)
+                    .background{
+                        if utilityVM.currentPickerTab == tab {
+                            Capsule()
+                                .fill(Palette.greyLight)
+                                .matchedGeometryEffect(id: "pickerTab", in: animation)
+                        }
+                    }
+                    .containerShape(Capsule())
+                    .onTapGesture {
+                        withAnimation(.easeInOut){
+                            utilityVM.currentPickerTab = tab
+                            
+                        }
+                    }
+            }
+        }
+    }
+    
 }
 
 struct AddReportView_Previews: PreviewProvider {
@@ -89,6 +163,8 @@ struct SaveButton: ButtonStyle {
             .foregroundColor(Palette.white)
             .clipShape(Rectangle())
             .cornerRadius(43)
-            
+        
     }
 }
+
+

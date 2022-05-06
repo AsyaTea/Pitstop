@@ -27,6 +27,7 @@
 		FF5F2C9F2823C4CD007980F3 /* Expense+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */; };
 		FF5F2CA02823C4CD007980F3 /* Expense+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */; };
 		FFCC308428252F5B00391BD5 /* AddReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC308328252F5B00391BD5 /* AddReportView.swift */; };
+		FFCC308628258B6C00391BD5 /* UtilityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */; };
 		FFDF855A2824104A00E0F9BF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF85592824104A00E0F9BF /* MainView.swift */; };
 		FFDF855C282411FD00E0F9BF /* OldTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF855B282411FD00E0F9BF /* OldTabBarView.swift */; };
 		FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */; };
@@ -55,6 +56,7 @@
 		FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FFCC308328252F5B00391BD5 /* AddReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReportView.swift; sourceTree = "<group>"; };
+		FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityViewModel.swift; sourceTree = "<group>"; };
 		FFDF85592824104A00E0F9BF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		FFDF855B282411FD00E0F9BF /* OldTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldTabBarView.swift; sourceTree = "<group>"; };
 		FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				415D2041282145FE004AF201 /* DataViewModel.swift */,
+				FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				FF42ADD12825201A00C66A84 /* TabData.swift in Sources */,
 				415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */,
 				415D202F28214180004AF201 /* HurricaneApp.swift in Sources */,
+				FFCC308628258B6C00391BD5 /* UtilityViewModel.swift in Sources */,
 				FF42ADD52825250B00C66A84 /* StatsView.swift in Sources */,
 				FFFC3937282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift in Sources */,
 				FF1AA1A32823F9C200AB61A2 /* Typography.swift in Sources */,

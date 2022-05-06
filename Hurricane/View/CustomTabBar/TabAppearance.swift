@@ -50,7 +50,7 @@ struct TabItemView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 28, height: 28)
-                .animation(.easeIn)
+                .animation(.default)
             
         }
     }
