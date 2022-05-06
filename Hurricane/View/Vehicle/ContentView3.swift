@@ -86,7 +86,7 @@ struct ContentView3: View {
                     //       vehicleVM.addExpense(expense: expense)
                     //       vehicleVM.getExpenses()
                 }, label: {
-                    addButtonView()
+                    AddReportButton(text: "Add report")
                 })
                 Spacer()
             }
