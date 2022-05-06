@@ -71,7 +71,7 @@ struct ContentView: View {
             //Floating button
             .overlay(
                 VStack{
-                    Spacer(minLength: UIScreen.main.bounds.size.height * 0.62)
+                    Spacer(minLength: UIScreen.main.bounds.size.height * 0.42)
                     Button(action: {
                         
                         vehicleVM.addExpense(expense: expense)

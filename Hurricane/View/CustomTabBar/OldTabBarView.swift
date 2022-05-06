@@ -8,7 +8,8 @@
 import SwiftUI
 import UIKit
 
-struct TabBarView: View {
+// I will leave it here, in case we need
+struct OldTabBarView: View {
     
     var body: some View {
         TabView{
@@ -35,7 +36,7 @@ struct TabBarView: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        TabBarView()
+        OldTabBarView()
     }
 }
 

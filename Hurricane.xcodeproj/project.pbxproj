@@ -19,10 +19,15 @@
 		FF1AA1A32823F9C200AB61A2 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A22823F9C200AB61A2 /* Typography.swift */; };
 		FF1AA1A52823FC0600AB61A2 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A42823FC0600AB61A2 /* Palette.swift */; };
 		FF1AA1A72823FC4800AB61A2 /* extensionColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */; };
+		FF42ADCF2825131C00C66A84 /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADCE2825131C00C66A84 /* CustomTabBarView.swift */; };
+		FF42ADD12825201A00C66A84 /* TabData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD02825201A00C66A84 /* TabData.swift */; };
+		FF42ADD3282520A300C66A84 /* TabAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD2282520A200C66A84 /* TabAppearance.swift */; };
+		FF42ADD52825250B00C66A84 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD42825250A00C66A84 /* StatsView.swift */; };
+		FF42ADD72825251500C66A84 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD62825251500C66A84 /* SettingsView.swift */; };
 		FF5F2C9F2823C4CD007980F3 /* Expense+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */; };
 		FF5F2CA02823C4CD007980F3 /* Expense+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */; };
 		FFDF855A2824104A00E0F9BF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF85592824104A00E0F9BF /* MainView.swift */; };
-		FFDF855C282411FD00E0F9BF /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF855B282411FD00E0F9BF /* TabBarView.swift */; };
+		FFDF855C282411FD00E0F9BF /* OldTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF855B282411FD00E0F9BF /* OldTabBarView.swift */; };
 		FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */; };
 		FFFC3937282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC3935282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
@@ -41,10 +46,15 @@
 		FF1AA1A22823F9C200AB61A2 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		FF1AA1A42823FC0600AB61A2 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionColor.swift; sourceTree = "<group>"; };
+		FF42ADCE2825131C00C66A84 /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
+		FF42ADD02825201A00C66A84 /* TabData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabData.swift; sourceTree = "<group>"; };
+		FF42ADD2282520A200C66A84 /* TabAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabAppearance.swift; sourceTree = "<group>"; };
+		FF42ADD42825250A00C66A84 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		FF42ADD62825251500C66A84 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FFDF85592824104A00E0F9BF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		FFDF855B282411FD00E0F9BF /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		FFDF855B282411FD00E0F9BF /* OldTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldTabBarView.swift; sourceTree = "<group>"; };
 		FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FFFC3935282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,6 +122,7 @@
 		FF1AA19F2823D45300AB61A2 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
+				FF42ADD42825250A00C66A84 /* StatsView.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -119,6 +130,7 @@
 		FF1AA1A02823D47D00AB61A2 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				FF42ADD62825251500C66A84 /* SettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -144,10 +156,10 @@
 		FF249C442821517C0062613A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FFDF855D282512CE00E0F9BF /* CustomTabBar */,
 				FF1AA19E2823D44900AB61A2 /* Main */,
 				FF1AA19F2823D45300AB61A2 /* Statistics */,
 				FF1AA1A02823D47D00AB61A2 /* Settings */,
-				FFDF855B282411FD00E0F9BF /* TabBarView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -163,6 +175,17 @@
 				415D203C28214215004AF201 /* CarModel.xcdatamodeld */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		FFDF855D282512CE00E0F9BF /* CustomTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				FFDF855B282411FD00E0F9BF /* OldTabBarView.swift */,
+				FF42ADCE2825131C00C66A84 /* CustomTabBarView.swift */,
+				FF42ADD2282520A200C66A84 /* TabAppearance.swift */,
+				FF42ADD02825201A00C66A84 /* TabData.swift */,
+			);
+			path = CustomTabBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,18 +262,23 @@
 				FFDF855A2824104A00E0F9BF /* MainView.swift in Sources */,
 				415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */,
 				FF1AA1A72823FC4800AB61A2 /* extensionColor.swift in Sources */,
+				FF42ADCF2825131C00C66A84 /* CustomTabBarView.swift in Sources */,
+				FF42ADD72825251500C66A84 /* SettingsView.swift in Sources */,
+				FF42ADD3282520A300C66A84 /* TabAppearance.swift in Sources */,
 				FF5F2C9F2823C4CD007980F3 /* Expense+CoreDataClass.swift in Sources */,
 				FF1AA1A52823FC0600AB61A2 /* Palette.swift in Sources */,
 				41C6E1FC28251B0100F756B5 /* ContentView3.swift in Sources */,
 				41C6E1F62823E4C800F756B5 /* ContentView2.swift in Sources */,
 				415D203128214180004AF201 /* ContentView.swift in Sources */,
 				415D2042282145FE004AF201 /* DataViewModel.swift in Sources */,
+				FF42ADD12825201A00C66A84 /* TabData.swift in Sources */,
 				415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */,
 				415D202F28214180004AF201 /* HurricaneApp.swift in Sources */,
+				FF42ADD52825250B00C66A84 /* StatsView.swift in Sources */,
 				FFFC3937282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift in Sources */,
 				FF1AA1A32823F9C200AB61A2 /* Typography.swift in Sources */,
 				FF5F2CA02823C4CD007980F3 /* Expense+CoreDataProperties.swift in Sources */,
-				FFDF855C282411FD00E0F9BF /* TabBarView.swift in Sources */,
+				FFDF855C282411FD00E0F9BF /* OldTabBarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -83,7 +83,6 @@ struct MainView: View {
                 })
                 Spacer()
             }
-            //                    .padding(.top,50)
         )
     }
 }
@@ -114,7 +113,7 @@ struct addButtonView : View {
     var body: some View {
         ZStack{
             Rectangle()
-                .frame(width: 343, height: 48, alignment: .center)
+                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055, alignment: .center)
                 .cornerRadius(43)
                 .foregroundColor(Palette.black)
             HStack{
