@@ -85,9 +85,14 @@ struct AddReportView: View {
                     }
                 }
                 
-                Button("Save"){
-                    //ACTION
-                }.buttonStyle(SaveButton())
+                
+//                Button("Save"){
+//                    presentationMode.wrappedValue.dismiss()
+//                }
+//                .buttonStyle(SaveButton())
+//                .disabled(price.isEmpty)
+//                .opacity(price.isEmpty ? 0.6 : 1)
+                
                 
             }
             .background(Palette.greyBackground)
@@ -102,7 +107,19 @@ struct AddReportView: View {
                             Text("Cancel")
                                 .font(Typography.headerM)
                         }
-                    }).accentColor(Palette.greyHard)
+                    })
+                    .accentColor(Palette.greyHard),
+                trailing:
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                            Text("Save")
+                                .font(Typography.headerM)
+                        }
+                    )
+                    .disabled(price.isEmpty)
+                    .opacity(price.isEmpty ? 0.6 : 1)
+                    .accentColor(Palette.greyHard)
             )
             .toolbar {
                 ToolbarItem(placement: .principal) {
