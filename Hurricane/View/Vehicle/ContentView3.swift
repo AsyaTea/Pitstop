@@ -235,7 +235,7 @@ struct ContentView3: View {
             }
             .zIndex(1)
             .padding(.bottom, getOffSet().height)
-            .background(Palette.colorViolet)
+            .background(Palette.greyBackground)
 //            .overlay(
 //                GeometryReader { reader -> Color in
 //
