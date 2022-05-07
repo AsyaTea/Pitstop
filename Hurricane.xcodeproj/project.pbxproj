@@ -16,6 +16,7 @@
 		415D2042282145FE004AF201 /* DataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D2041282145FE004AF201 /* DataViewModel.swift */; };
 		41C6E1F62823E4C800F756B5 /* ContentView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E1F52823E4C800F756B5 /* ContentView2.swift */; };
 		41C6E1FC28251B0100F756B5 /* ContentView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E1FB28251B0100F756B5 /* ContentView3.swift */; };
+		41C6E20228266C8200F756B5 /* ExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E20128266C8200F756B5 /* ExpenseView.swift */; };
 		FF1AA1A32823F9C200AB61A2 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A22823F9C200AB61A2 /* Typography.swift */; };
 		FF1AA1A52823FC0600AB61A2 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A42823FC0600AB61A2 /* Palette.swift */; };
 		FF1AA1A72823FC4800AB61A2 /* extensionColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */; };
@@ -45,6 +46,7 @@
 		415D2041282145FE004AF201 /* DataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewModel.swift; sourceTree = "<group>"; };
 		41C6E1F52823E4C800F756B5 /* ContentView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView2.swift; sourceTree = "<group>"; };
 		41C6E1FB28251B0100F756B5 /* ContentView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView3.swift; sourceTree = "<group>"; };
+		41C6E20128266C8200F756B5 /* ExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseView.swift; sourceTree = "<group>"; };
 		FF1AA1A22823F9C200AB61A2 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		FF1AA1A42823FC0600AB61A2 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionColor.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				415D203028214180004AF201 /* ContentView.swift */,
 				41C6E1F52823E4C800F756B5 /* ContentView2.swift */,
 				41C6E1FB28251B0100F756B5 /* ContentView3.swift */,
+				41C6E20128266C8200F756B5 /* ExpenseView.swift */,
 			);
 			path = Vehicle;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41C6E20228266C8200F756B5 /* ExpenseView.swift in Sources */,
 				FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */,
 				FFDF855A2824104A00E0F9BF /* MainView.swift in Sources */,
 				415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */,
@@ -415,7 +419,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = 55H4ABU399;
+				DEVELOPMENT_TEAM = MYPTJXP3NK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -445,7 +449,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = 55H4ABU399;
+				DEVELOPMENT_TEAM = MYPTJXP3NK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

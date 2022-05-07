@@ -25,6 +25,8 @@ enum Palette {
     static let greyLight = Color(rgb: 0xF5F5F5)
     static let greyBackground = Color(rgb: 0xFBFBFB)
     
+    static let colorVioletLight = Color(rgb: 0x94BCF8)
+    
 
 }
 
