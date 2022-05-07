@@ -14,6 +14,7 @@ struct MainView: View {
     var body: some View {
         ZStack{
             Palette.greyBackground
+            ContentView3()
             
         }
         .overlay(

@@ -123,7 +123,7 @@ struct AddReportView: View {
     @ViewBuilder
     func CustomSegmentedPicker() -> some View{
         HStack(spacing:10){
-            ForEach(pickerTabs,id:\.self){tab in
+            ForEach(pickerTabs,id:\.self){ tab in
                 Text(tab)
                     .frame(maxWidth: .infinity)
                     .padding(10)
