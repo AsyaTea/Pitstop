@@ -121,10 +121,10 @@ struct ContentView3: View {
                                     Circle()
                                         .frame(width: 32, height: 32)
                                         .foregroundColor(Palette.colorOrange)
-                                    Image(systemName: "drop")
+                                    Image(systemName: "drop.fill")
                                         .resizable()
                                         .blendMode(.screen)
-                                        .frame(width: 16, height: 16)
+                                        .frame(width: 12, height: 16)
                                         .foregroundColor(.white)
                                 }
                                 VStack{
@@ -252,20 +252,20 @@ struct ContentView3: View {
 //            )
             
         }
-        .overlay(
-            VStack{
-                Spacer(minLength: UIScreen.main.bounds.size.height * 0.77)
-                Button(action: {
-                    
-                    //       vehicleVM.addExpense(expense: expense)
-                    //       vehicleVM.getExpenses()
-                }, label: {
-                    AddReportButton(text: "Add report")
-                })
-                Spacer()
-            }
-            //                    .padding(.top,50)
-        )
+//        .overlay(
+//            VStack{
+//                Spacer(minLength: UIScreen.main.bounds.size.height * 0.77)
+//                Button(action: {
+//                    
+//                    //       vehicleVM.addExpense(expense: expense)
+//                    //       vehicleVM.getExpenses()
+//                }, label: {
+//                    AddReportButton(text: "Add report")
+//                })
+//                Spacer()
+//            }
+//            //                    .padding(.top,50)
+//        )
     }
     
     func getOffSet()->CGSize {

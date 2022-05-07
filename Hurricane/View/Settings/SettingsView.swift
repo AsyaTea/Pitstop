@@ -9,7 +9,14 @@ import SwiftUI
 
 struct SettingsView: View {
     var body: some View {
-        Text("Settings")
+        VStack{
+            Text("Go away \n we are working!")
+                .multilineTextAlignment(.center)
+                .font(Typography.headerXXL)
+        Image("bestBoy")
+                .resizable()
+                .scaledToFit()
+        }
     }
 }
 
