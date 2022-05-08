@@ -28,8 +28,12 @@ struct AddReportView: View {
     @State private var note : String = ""
     
     @State private var odometerTab : String = ""  /// Var to store the odometer value in odometer tab
-
+    
     @State private var reminderTab : String = "" /// Var to store the reminder title in reminder tab
+    
+    @State private var liters : String = ""
+    @State private var pricePerLiter : String = ""
+    
     
     //Date
     @State private var date = Date()
@@ -55,12 +59,15 @@ struct AddReportView: View {
     @State private var selectedFuelType = "Default"
     let fuelTypes = ["Default", "Secondary"]
     
+    @State private var selectedBased = "Date"
+    let basedTypes = ["Date","Distance"]
+    
     //Matching geometry namespace
     @Namespace var animation
     
     //Focusn keyboard
     @FocusState var focusedField: FocusField?
-  
+    
     //To dismiss the modal
     @Environment(\.presentationMode) private var presentationMode
     
@@ -81,7 +88,7 @@ struct AddReportView: View {
                     TextFieldComponent(submitField: $reminderTab, placeholder: "-", attribute: "ㅤ", keyboardType: .default,focusedField: $focusedField,defaultFocus: .reminderTab)
                         .padding(.top,15)
                 }
-             
+                
                 
                 //MARK: Custom segmented picker
                 CustomSegmentedPicker()
@@ -90,87 +97,247 @@ struct AddReportView: View {
                 
                 
                 if(utilityVM.currentPickerTab == "Expense"){
-                    //MARK: LIST
+                    //MARK: Expense List
                     List{
-                    //MARK: CATEGORY PICKER
-                    Picker(selection: $selectedCategory, content: {
-                        ForEach(categoryTypes, id: \.self) {
-                            Text($0)
-                                .font(Typography.headerM)
-                        }
-                    },label:{
-                        ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
-                    })
-                    
-                    //MARK: ODOMETER
-                    HStack{
-                        ListCategoryComponent(title: "Odometer", iconName: "odometer", color: Palette.colorBlue)
-                        Spacer()
-                        TextField("100",text: $odometer)
-                            .font(Typography.headerM)
-                            .focused($focusedField,equals: .odometer)
-                            .foregroundColor(Palette.black)
-                            .textFieldStyle(.plain)
-                            .keyboardType(.decimalPad)
-                            .fixedSize(horizontal: true, vertical: true)
-                        Text(unit)
-                            .font(Typography.headerM)
-                            .foregroundColor(Palette.black)
-                    }
-                    
-                    //MARK: FUEL TYPE
-                    Picker(selection: $selectedFuelType, content: {
-                        ForEach(fuelTypes, id: \.self) {
-                            Text($0)
-                                .font(Typography.headerM)
-                        }
-                    }, label:{
-                        ListCategoryComponent(title: "Fuel type", iconName: "fuelType", color: Palette.colorOrange)
-                    })
-                    
-                    
-                    //MARK: REPEAT PICKER
-                    Picker(selection: $selectedRepeat, content: {
-                        ForEach(repeatTypes, id: \.self) {
-                            Text($0)
-                                .font(Typography.headerM)
-                        }
-                    }, label:{
-                        ListCategoryComponent(title: "Repeat", iconName: "repeat", color: Palette.colorViolet)
-                    })
-                    
-                    //MARK: DATE PICKER
-                    DatePicker(selection: $date, displayedComponents: [.date]) {
+                        //MARK: CATEGORY PICKER
+                        Picker(selection: $selectedCategory, content: {
+                            ForEach(categoryTypes, id: \.self) {
+                                Text($0)
+                                    .font(Typography.headerM)
+                            }
+                        },label:{
+                            ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
+                        })
+                        .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
                         
-                        ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
+                        //MARK: ODOMETER
+                        HStack{
+                            ListCategoryComponent(title: "Odometer", iconName: "odometer", color: Palette.colorBlue)
+                            Spacer()
+                            TextField("100",text: $odometer)
+                                .font(Typography.headerM)
+                                .focused($focusedField,equals: .odometer)
+                                .foregroundColor(Palette.black)
+                                .keyboardType(.decimalPad)
+                                .fixedSize(horizontal: true, vertical: true)
+                            Text(unit)
+                                .font(Typography.headerM)
+                                .foregroundColor(Palette.black)
+                        }
+                        .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
+                        
+                        
+                        //MARK: FUEL TYPE
+                        if(selectedCategory == "Fuel"){
+                            Picker(selection: $selectedFuelType, content: {
+                                ForEach(fuelTypes, id: \.self) {
+                                    Text($0)
+                                        .font(Typography.headerM)
+                                }
+                            }, label:{
+                                ListCategoryComponent(title: "Fuel type", iconName: "fuelType", color: Palette.colorOrange)
+                            })
+                        }
+                        
+                        //MARK: REPEAT PICKER
+                        Picker(selection: $selectedRepeat, content: {
+                            ForEach(repeatTypes, id: \.self) {
+                                Text($0)
+                                    .font(Typography.headerM)
+                            }
+                        }, label:{
+                            ListCategoryComponent(title: "Repeat", iconName: "repeat", color: Palette.colorViolet)
+                        })
+                        
+                        //MARK: DATE PICKER
+                        DatePicker(selection: $date, displayedComponents: [.date]) {
+                            
+                            ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
+                            
+                        }
+                        
+                        //MARK: LITERS & PRICE/LITER
+                        if(selectedCategory == "Fuel"){
+                            HStack{
+                                ZStack{
+                                    Circle()
+                                        .frame(width: 32, height: 32)
+                                        .foregroundColor(Palette.greyLight)
+                                    Image("liters")
+                                        .resizable()
+                                        .frame(width: 16, height: 16)
+                                }
+                                Text("Liters")
+                                    .foregroundColor(Palette.black)
+                                    .font(Typography.headerM)
+                                Spacer()
+                                TextField("20",text: $liters)
+                                    .disableAutocorrection(true)
+                                    .keyboardType(.numberPad)
+                                    .fixedSize(horizontal: true, vertical: true)
+                                    .font(Typography.headerM)
+                                    .focused($focusedField,equals: .note)
+                                Text("L")
+                                    .font(Typography.headerM)
+                                    .foregroundColor(Palette.black)
+                            }
+                            
+                            HStack{
+                                ZStack{
+                                    Circle()
+                                        .frame(width: 32, height: 32)
+                                        .foregroundColor(Palette.greyLight)
+                                    Image("priceLiter")
+                                        .resizable()
+                                        .frame(width: 16, height: 16)
+                                }
+                                TextField("Price/Liter",text: $pricePerLiter)
+                                    .disableAutocorrection(true)
+                                    .keyboardType(.numberPad)
+                                    .font(Typography.headerM)
+                                    .focused($focusedField,equals: .note)
+                            }
+                            
+                        }
+                        
+                        //MARK: NOTE
+                        HStack{
+                            ZStack{
+                                Circle()
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(Palette.greyLight)
+                                Image("note")
+                                    .resizable()
+                                    .frame(width: 16, height: 16)
+                            }
+                            TextField("Note",text: $note)
+                                .disableAutocorrection(true)
+                                .font(Typography.headerM)
+                                .focused($focusedField,equals: .note)
+                        }
                         
                     }
-                    //MARK: NOTE
-                    HStack{
-                        ZStack{
-                            Circle()
-                                .frame(width: 32, height: 32)
-                                .foregroundColor(Palette.greyLight)
-                            Image("note")
-                                .resizable()
-                                .frame(width: 16, height: 16)
-                        }
-                        TextField("Note",text: $note)
-                            .disableAutocorrection(true)
-                            .font(Typography.headerM)
-                            .focused($focusedField,equals: .note)
-                    }
-                    
-                }
                     .padding(.top,-10)
+                    .onAppear {
+                        /// Setting the keyboard focus on the price when opening the modal
+                        if(priceTab.isEmpty){
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {  /// Anything over 0.5 delay seems to work
+                                self.focusedField = .priceTab
+                            }
+                        }
+                    }
                 }
                 else if (utilityVM.currentPickerTab == "Odometer"){
-                    Text("Odometer")
-                    Spacer()
+                    List{
+                        DatePicker(selection: $date, displayedComponents: [.date]) {
+                            ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
+                        }
+                        
+                        HStack{
+                            ZStack{
+                                Circle()
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(Palette.greyLight)
+                                Image("note")
+                                    .resizable()
+                                    .frame(width: 16, height: 16)
+                            }
+                            TextField("Note",text: $note)
+                                .disableAutocorrection(true)
+                                .font(Typography.headerM)
+                                .focused($focusedField,equals: .note)
+                        }
+                    }
+                    .padding(.top,-10)
+                    .onAppear {
+                        /// Setting the keyboard focus on the price when opening the modal
+                        if(odometerTab.isEmpty){
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {  /// Anything over 0.5 delay seems to work
+                                self.focusedField = .odometerTab
+                            }
+                        }
+                    }
                 }
                 else{
-                    Text("Reminder")
-                    Spacer()
+                    List{
+                        Picker(selection: $selectedCategory, content: {
+                            ForEach(categoryTypes, id: \.self) {
+                                Text($0)
+                                    .font(Typography.headerM)
+                            }
+                        },label:{
+                            ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
+                        })
+                        
+                        //MARK: BASED ON PICKER
+                        Picker(selection: $selectedBased, content: {
+                            ForEach(basedTypes, id: \.self) {
+                                Text($0)
+                                    .font(Typography.headerM)
+                            }
+                        },label:{
+                            ListCategoryComponent(title: "Based on", iconName: "basedOn", color: Palette.colorOrange)
+                        })
+                        
+                        //MARK: REMIND DATE
+                        if (selectedBased == "Date"){
+                            DatePicker(selection: $date, displayedComponents: [.date]) {
+                                ListCategoryComponent(title: "Remind me on", iconName: "remindMe", color: Palette.colorGreen)
+                            }
+                        }
+                        //MARK: REMIND DISTANCE
+                        else{
+                            HStack{
+                                ListCategoryComponent(title: "Remind me in", iconName: "remindMe", color: Palette.colorGreen)
+                                Spacer()
+                                TextField("1000",text: $odometer)
+                                    .font(Typography.headerM)
+                                    .focused($focusedField,equals: .odometer)
+                                    .foregroundColor(Palette.black)
+                                    .textFieldStyle(.plain)
+                                    .keyboardType(.decimalPad)
+                                    .fixedSize(horizontal: true, vertical: true)
+                                Text(unit)
+                                    .font(Typography.headerM)
+                                    .foregroundColor(Palette.black)
+                            }
+                        }
+                        
+                        Picker(selection: $selectedRepeat, content: {
+                            ForEach(repeatTypes, id: \.self) {
+                                Text($0)
+                                    .font(Typography.headerM)
+                            }
+                        }, label:{
+                            ListCategoryComponent(title: "Repeat", iconName: "repeat", color: Palette.colorViolet)
+                        })
+                        
+                        HStack{
+                            ZStack{
+                                Circle()
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(Palette.greyLight)
+                                Image("note")
+                                    .resizable()
+                                    .frame(width: 16, height: 16)
+                            }
+                            TextField("Note",text: $note)
+                                .disableAutocorrection(true)
+                                .font(Typography.headerM)
+                                .focused($focusedField,equals: .note)
+                        }
+                        
+                        
+                    }
+                    .padding(.top,-10)
+                    .onAppear {
+                        /// Setting the keyboard focus on the price when opening the modal
+                        if(reminderTab.isEmpty){
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {  /// Anything over 0.5 delay seems to work
+                                self.focusedField = .reminderTab
+                            }
+                        }
+                    }
                 }
                 
                 //                Button("Save"){
@@ -204,8 +371,8 @@ struct AddReportView: View {
                             .font(Typography.headerM)
                     }
                           )
-                    .disabled(priceTab.isEmpty)
-                    .opacity(priceTab.isEmpty ? 0.6 : 1)
+                    .disabled(priceTab.isEmpty && odometerTab.isEmpty && reminderTab.isEmpty)
+                    .opacity(priceTab.isEmpty && odometerTab.isEmpty && reminderTab.isEmpty ? 0.6 : 1)
                     .accentColor(Palette.greyHard)
             )
             .toolbar {
@@ -218,16 +385,22 @@ struct AddReportView: View {
                         Spacer()
                         if (focusedField == .note){
                             Button("Save") {
+                                let haptic = UIImpactFeedbackGenerator(style: .light)
+                                haptic.impactOccurred()
                                 presentationMode.wrappedValue.dismiss()
                             }.disabled(priceTab.isEmpty)
                         }
                         if (focusedField == .odometer){
                             Button("Next") {
+                                let haptic = UIImpactFeedbackGenerator(style: .light)
+                                haptic.impactOccurred()
                                 focusedField = .note
                             }
                         }
                         if (focusedField == .priceTab){
                             Button("Next") {
+                                let haptic = UIImpactFeedbackGenerator(style: .light)
+                                haptic.impactOccurred()
                                 focusedField = .odometer
                             }
                         }
@@ -240,14 +413,7 @@ struct AddReportView: View {
                         .foregroundColor(Palette.black)
                 }
             }
-            .onAppear {
-                /// Setting the keyboard focus on the price when opening the modal
-                if(priceTab.isEmpty){
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {  /// Anything over 0.5 delay seems to work
-                        self.focusedField = .priceTab
-                    }
-                }
-            }
+            
             
         }
     }
@@ -284,16 +450,20 @@ struct AddReportView: View {
     func resetTabFields(tab : String){
         if(tab == "Expense"){
             priceTab = ""
+            selectedCategory = "Fuel"
             odometer = ""
+            selectedFuelType = "Default"
+            selectedRepeat = "Never"
+            date = Date.now
             note = ""
         }
         if(tab == "Odometer"){
             odometerTab = ""
-//            note = ""
+            //            note = ""
         }
         if(tab == "Reminder"){
             reminderTab = ""
-//            note = ""
+            //            note = ""
         }
     }
     
@@ -344,8 +514,6 @@ struct ListCategoryComponent: View {
 
 struct TextFieldComponent: View {
     
-    
-
     @Binding var submitField : String
     var placeholder : String
     var attribute : String
