@@ -16,17 +16,13 @@ struct ContentView3: View {
     var categories = ["Crossroads","Crossroads","Crossroads"]
     var body: some View {
         ZStack(alignment: .top) {
-//            Palette.colorViolet
-//                .ignoresSafeArea()
-            
             VStack {
                 VStack {
                     HStack {
                         //Title
                         Text("Barman's Car >")
-                            .fontWeight(.bold)
-                            .foregroundColor(.primary)
-                            .font(.title)
+                            .font(Typography.headerXL)
+                            .foregroundColor(Palette.black)
                         Spacer()
                         //Per month Button
                         Button {
