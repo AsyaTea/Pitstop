@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 struct AddReportView: View {
     
     init() {
@@ -23,11 +21,15 @@ struct AddReportView: View {
     //MARK: TODO COLLEGARE VAR
     
     //Text fields vars
-    @State private var price : String = ""
+    @State private var priceTab : String = ""
     var currency = "$"
-    @State private var odometer : String = ""
+    @State private var odometer : String = "" ///Var  to store the odometer value in expense
     var unit = "km"
     @State private var note : String = ""
+    
+    @State private var odometerTab : String = ""  /// Var to store the odometer value in odometer tab
+
+    @State private var reminderTab : String = "" /// Var to store the reminder title in reminder tab
     
     //Date
     @State private var date = Date()
@@ -57,13 +59,8 @@ struct AddReportView: View {
     @Namespace var animation
     
     //Focusn keyboard
-    @FocusState private var focusedField: FocusField?
-    enum FocusField: Hashable {
-        case price
-        case odometer
-        case note
-    }
-    
+    @FocusState var focusedField: FocusField?
+  
     //To dismiss the modal
     @Environment(\.presentationMode) private var presentationMode
     
@@ -71,33 +68,30 @@ struct AddReportView: View {
         NavigationView{
             VStack {
                 
-                //MARK: Price textField
-                HStack{
-                    Spacer()
-                    TextField("42",text: $price)
-                        .focused($focusedField, equals: .price)
-                        .font(Typography.headerXXL)
-                        .foregroundColor(Palette.black)
-                        .textFieldStyle(.plain)
-                        .keyboardType(.numberPad)
-                        .fixedSize(horizontal: true, vertical: true)
-                        .onSubmit {
-                            focusedField = .odometer
-                        }
-                    
-                    Text(currency)
-                        .font(Typography.headerXXL)
-                        .foregroundColor(Palette.black)
-                    Spacer()
-                }.padding(.top,15)
+                //MARK: Custom TextField
+                if(utilityVM.currentPickerTab == "Expense"){
+                    TextFieldComponent(submitField: $priceTab, placeholder: "42", attribute: currency, keyboardType: .numberPad,focusedField: $focusedField, defaultFocus: .priceTab)
+                        .padding(.top,15)
+                }
+                else if (utilityVM.currentPickerTab == "Odometer"){
+                    TextFieldComponent(submitField: $odometerTab, placeholder: "100", attribute: unit, keyboardType: .numberPad,focusedField: $focusedField,defaultFocus: .odometerTab)
+                        .padding(.top,15)
+                }
+                else{
+                    TextFieldComponent(submitField: $reminderTab, placeholder: "-", attribute: "ㅤ", keyboardType: .default,focusedField: $focusedField,defaultFocus: .reminderTab)
+                        .padding(.top,15)
+                }
+             
                 
                 //MARK: Custom segmented picker
                 CustomSegmentedPicker()
                     .padding(.horizontal,32)
                     .padding(.top, -10.0)
                 
-                //MARK: LIST
-                List{
+                
+                if(utilityVM.currentPickerTab == "Expense"){
+                    //MARK: LIST
+                    List{
                     //MARK: CATEGORY PICKER
                     Picker(selection: $selectedCategory, content: {
                         ForEach(categoryTypes, id: \.self) {
@@ -168,7 +162,16 @@ struct AddReportView: View {
                     }
                     
                 }
-                .padding(.top,-10)
+                    .padding(.top,-10)
+                }
+                else if (utilityVM.currentPickerTab == "Odometer"){
+                    Text("Odometer")
+                    Spacer()
+                }
+                else{
+                    Text("Reminder")
+                    Spacer()
+                }
                 
                 //                Button("Save"){
                 //                    presentationMode.wrappedValue.dismiss()
@@ -201,8 +204,8 @@ struct AddReportView: View {
                             .font(Typography.headerM)
                     }
                           )
-                    .disabled(price.isEmpty)
-                    .opacity(price.isEmpty ? 0.6 : 1)
+                    .disabled(priceTab.isEmpty)
+                    .opacity(priceTab.isEmpty ? 0.6 : 1)
                     .accentColor(Palette.greyHard)
             )
             .toolbar {
@@ -216,14 +219,14 @@ struct AddReportView: View {
                         if (focusedField == .note){
                             Button("Save") {
                                 presentationMode.wrappedValue.dismiss()
-                            }
+                            }.disabled(priceTab.isEmpty)
                         }
                         if (focusedField == .odometer){
                             Button("Next") {
                                 focusedField = .note
                             }
                         }
-                        if (focusedField == .price){
+                        if (focusedField == .priceTab){
                             Button("Next") {
                                 focusedField = .odometer
                             }
@@ -239,9 +242,9 @@ struct AddReportView: View {
             }
             .onAppear {
                 /// Setting the keyboard focus on the price when opening the modal
-                if(price.isEmpty){
+                if(priceTab.isEmpty){
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {  /// Anything over 0.5 delay seems to work
-                        self.focusedField = .price
+                        self.focusedField = .priceTab
                     }
                 }
             }
@@ -268,11 +271,29 @@ struct AddReportView: View {
                     .containerShape(Capsule())
                     .onTapGesture {
                         withAnimation(.easeInOut){
+                            resetTabFields(tab: utilityVM.currentPickerTab)
                             utilityVM.currentPickerTab = tab
-                            
+                            let haptic = UIImpactFeedbackGenerator(style: .soft)
+                            haptic.impactOccurred()
                         }
                     }
             }
+        }
+    }
+    
+    func resetTabFields(tab : String){
+        if(tab == "Expense"){
+            priceTab = ""
+            odometer = ""
+            note = ""
+        }
+        if(tab == "Odometer"){
+            odometerTab = ""
+//            note = ""
+        }
+        if(tab == "Reminder"){
+            reminderTab = ""
+//            note = ""
         }
     }
     
@@ -283,6 +304,8 @@ struct AddReportView_Previews: PreviewProvider {
         AddReportView()
     }
 }
+
+
 
 struct SaveButton: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
@@ -295,7 +318,6 @@ struct SaveButton: ButtonStyle {
         
     }
 }
-
 
 struct ListCategoryComponent: View {
     
@@ -318,4 +340,45 @@ struct ListCategoryComponent: View {
                 .font(Typography.headerM)
         }
     }
+}
+
+struct TextFieldComponent: View {
+    
+    
+
+    @Binding var submitField : String
+    var placeholder : String
+    var attribute : String
+    var keyboardType : UIKeyboardType
+    
+    var focusedField : FocusState<FocusField?>.Binding
+    var defaultFocus : FocusField
+    
+    var body: some View {
+        HStack{
+            Spacer()
+            TextField(placeholder,text: $submitField)
+                .focused(focusedField, equals: defaultFocus)
+                .font(Typography.headerXXL)
+                .foregroundColor(Palette.black)
+                .keyboardType(keyboardType)
+                .fixedSize(horizontal: true, vertical: true)
+                .onSubmit {
+                    focusedField.wrappedValue = .odometer
+                }
+            
+            Text(attribute)
+                .font(Typography.headerXXL)
+                .foregroundColor(Palette.black)
+            Spacer()
+        }
+    }
+}
+
+enum FocusField: Hashable {
+    case priceTab
+    case odometerTab
+    case reminderTab
+    case odometer
+    case note
 }
