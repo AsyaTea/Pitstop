@@ -85,6 +85,7 @@ struct ReminderListView: View {
                 }
                 TextField("Note",text: $addExpVM.note)
                     .disableAutocorrection(true)
+                    .focused(focusedField, equals: .note)
                     .font(Typography.headerM)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))

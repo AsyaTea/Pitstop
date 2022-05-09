@@ -127,9 +127,9 @@
 			children = (
 				FFDF85592824104A00E0F9BF /* MainView.swift */,
 				FFCC308328252F5B00391BD5 /* AddReportView.swift */,
+				FF3616CC28290E61002ADA33 /* ExpenseListView.swift */,
 				FF3616D028290F55002ADA33 /* OdometerListView.swift */,
 				FF3616CE28290F21002ADA33 /* ReminderListView.swift */,
-				FF3616CC28290E61002ADA33 /* ExpenseListView.swift */,
 				415D203028214180004AF201 /* ContentView.swift */,
 				41C6E1F52823E4C800F756B5 /* ContentView2.swift */,
 				41C6E1FB28251B0100F756B5 /* ContentView3.swift */,

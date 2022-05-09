@@ -15,11 +15,14 @@ struct OdometerListView: View {
     
     var body: some View {
         List{
+            
+            //MARK: DATE
             DatePicker(selection: $addExpVM.date, displayedComponents: [.date]) {
                 ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
+            //MARK: NOTE
             HStack{
                 ZStack{
                     Circle()
@@ -31,6 +34,7 @@ struct OdometerListView: View {
                 }
                 TextField("Note",text: $addExpVM.note)
                     .disableAutocorrection(true)
+                    .focused(focusedField, equals: .note)
                     .font(Typography.headerM)
                 
             }

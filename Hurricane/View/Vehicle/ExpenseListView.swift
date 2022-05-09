@@ -14,16 +14,18 @@ struct ExpenseListView: View {
     var focusedField : FocusState<FocusField?>.Binding
     
     var body: some View {
+        
         List{
             //MARK: CATEGORY PICKER
             Picker(selection: $addExpVM.selectedCategory, content: {
                 ForEach(addExpVM.categoryTypes, id: \.self) {
                     Text($0)
                         .font(Typography.headerM)
-                }
+                } .listStyle(.automatic)
             },label:{
                 ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
             })
+           
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             //MARK: ODOMETER
@@ -33,6 +35,7 @@ struct ExpenseListView: View {
                 TextField("100",text: $addExpVM.odometer)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
+                    .focused(focusedField, equals: .odometer)
                     .keyboardType(.decimalPad)
                     .fixedSize(horizontal: true, vertical: true)
                 Text(utilityVM.unit)
@@ -79,6 +82,7 @@ struct ExpenseListView: View {
                     TextField("20",text: $addExpVM.liters)
                         .disableAutocorrection(true)
                         .keyboardType(.numberPad)
+                        .focused(focusedField, equals: .liter)
                         .fixedSize(horizontal: true, vertical: true)
                         .font(Typography.headerM)
                     Text("L")
@@ -103,6 +107,7 @@ struct ExpenseListView: View {
                     Spacer()
                     TextField("1.70",text: $addExpVM.pricePerLiter)
                         .disableAutocorrection(true)
+                        .focused(focusedField, equals: .priceLiter)
                         .fixedSize(horizontal: true, vertical: true)
                         .keyboardType(.numberPad)
                         .font(Typography.headerM)
@@ -125,12 +130,13 @@ struct ExpenseListView: View {
                 }
                 TextField("Note",text: $addExpVM.note)
                     .disableAutocorrection(true)
+                    .focused(focusedField, equals: .note)
                     .font(Typography.headerM)
                 
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         }
-        .padding(.top,-10)
+        .padding(.top,-5)
         .onAppear {
             /// Setting the keyboard focus on the price when opening the modal
             if(addExpVM.priceTab.isEmpty){

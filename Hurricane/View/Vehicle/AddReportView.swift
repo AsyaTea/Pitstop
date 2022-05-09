@@ -11,10 +11,10 @@ struct AddReportView: View {
     
     init() {
         //  Change list background color
-        UITableView.appearance().separatorStyle = .none
-        //       UITableViewCell.appearance().backgroundColor = .green
+        UITableView.appearance().separatorStyle = .singleLine
         UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
-        
+        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
+
     }
     
     @StateObject var utilityVM : UtilityViewModel = .init()
@@ -78,6 +78,7 @@ struct AddReportView: View {
                     }, label: {
                         HStack{
                             Image(systemName: "chevron.left")
+                                .foregroundColor(Palette.black)
                             Text("Cancel")
                                 .font(Typography.headerM)
                         }
@@ -93,16 +94,17 @@ struct AddReportView: View {
                           )
                     .disabled(addExpVM.priceTab.isEmpty && addExpVM.odometerTab.isEmpty && addExpVM.reminderTab.isEmpty)
                     .opacity(addExpVM.priceTab.isEmpty && addExpVM.odometerTab.isEmpty && addExpVM.reminderTab.isEmpty ? 0.6 : 1)
-                    .accentColor(Palette.greyHard)
             )
             .toolbar {
                 /// Keyboard focus
                 ToolbarItem(placement: .keyboard) {
                     HStack{
-                        Button("Dismiss") {
+                        Button(action: {
                             focusedField = nil
-                        }
-                        Spacer()
+                        }, label: {
+                            Image(systemName: "keyboard.chevron.compact.down")
+                                .resizable()
+                        })
                     }
                 }
                 ToolbarItem(placement: .principal) {
@@ -205,5 +207,9 @@ enum FocusField: Hashable {
     case priceTab
     case odometerTab
     case reminderTab
+    case odometer
+    case liter
+    case priceLiter
+    case note
     
 }
