@@ -8,5 +8,6 @@
 import Foundation
 
 class UtilityViewModel : ObservableObject {
-    @Published var currentPickerTab : String = "Expense"
+    @Published var currency = "$"
+    @Published var unit = "km"
 }

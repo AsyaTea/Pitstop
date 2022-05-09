@@ -20,6 +20,10 @@
 		FF1AA1A32823F9C200AB61A2 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A22823F9C200AB61A2 /* Typography.swift */; };
 		FF1AA1A52823FC0600AB61A2 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A42823FC0600AB61A2 /* Palette.swift */; };
 		FF1AA1A72823FC4800AB61A2 /* extensionColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */; };
+		FF3616CB28290416002ADA33 /* AddExpenseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616CA28290416002ADA33 /* AddExpenseViewModel.swift */; };
+		FF3616CD28290E61002ADA33 /* ExpenseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616CC28290E61002ADA33 /* ExpenseListView.swift */; };
+		FF3616CF28290F21002ADA33 /* ReminderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616CE28290F21002ADA33 /* ReminderListView.swift */; };
+		FF3616D128290F55002ADA33 /* OdometerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616D028290F55002ADA33 /* OdometerListView.swift */; };
 		FF42ADCF2825131C00C66A84 /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADCE2825131C00C66A84 /* CustomTabBarView.swift */; };
 		FF42ADD12825201A00C66A84 /* TabData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD02825201A00C66A84 /* TabData.swift */; };
 		FF42ADD3282520A300C66A84 /* TabAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD2282520A200C66A84 /* TabAppearance.swift */; };
@@ -50,6 +54,10 @@
 		FF1AA1A22823F9C200AB61A2 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		FF1AA1A42823FC0600AB61A2 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionColor.swift; sourceTree = "<group>"; };
+		FF3616CA28290416002ADA33 /* AddExpenseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseViewModel.swift; sourceTree = "<group>"; };
+		FF3616CC28290E61002ADA33 /* ExpenseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseListView.swift; sourceTree = "<group>"; };
+		FF3616CE28290F21002ADA33 /* ReminderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListView.swift; sourceTree = "<group>"; };
+		FF3616D028290F55002ADA33 /* OdometerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OdometerListView.swift; sourceTree = "<group>"; };
 		FF42ADCE2825131C00C66A84 /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		FF42ADD02825201A00C66A84 /* TabData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabData.swift; sourceTree = "<group>"; };
 		FF42ADD2282520A200C66A84 /* TabAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabAppearance.swift; sourceTree = "<group>"; };
@@ -119,6 +127,9 @@
 			children = (
 				FFDF85592824104A00E0F9BF /* MainView.swift */,
 				FFCC308328252F5B00391BD5 /* AddReportView.swift */,
+				FF3616D028290F55002ADA33 /* OdometerListView.swift */,
+				FF3616CE28290F21002ADA33 /* ReminderListView.swift */,
+				FF3616CC28290E61002ADA33 /* ExpenseListView.swift */,
 				415D203028214180004AF201 /* ContentView.swift */,
 				41C6E1F52823E4C800F756B5 /* ContentView2.swift */,
 				41C6E1FB28251B0100F756B5 /* ContentView3.swift */,
@@ -158,6 +169,7 @@
 			children = (
 				415D2041282145FE004AF201 /* DataViewModel.swift */,
 				FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */,
+				FF3616CA28290416002ADA33 /* AddExpenseViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -267,15 +279,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF3616CF28290F21002ADA33 /* ReminderListView.swift in Sources */,
 				41C6E20228266C8200F756B5 /* ExpenseView.swift in Sources */,
 				FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */,
 				FFDF855A2824104A00E0F9BF /* MainView.swift in Sources */,
 				415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */,
 				FF1AA1A72823FC4800AB61A2 /* extensionColor.swift in Sources */,
+				FF3616CB28290416002ADA33 /* AddExpenseViewModel.swift in Sources */,
 				FFCC308428252F5B00391BD5 /* AddReportView.swift in Sources */,
 				FF42ADCF2825131C00C66A84 /* CustomTabBarView.swift in Sources */,
 				FF42ADD72825251500C66A84 /* SettingsView.swift in Sources */,
 				FF42ADD3282520A300C66A84 /* TabAppearance.swift in Sources */,
+				FF3616D128290F55002ADA33 /* OdometerListView.swift in Sources */,
 				FF5F2C9F2823C4CD007980F3 /* Expense+CoreDataClass.swift in Sources */,
 				FF1AA1A52823FC0600AB61A2 /* Palette.swift in Sources */,
 				41C6E1FC28251B0100F756B5 /* ContentView3.swift in Sources */,
@@ -289,6 +304,7 @@
 				FF42ADD52825250B00C66A84 /* StatsView.swift in Sources */,
 				FFFC3937282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift in Sources */,
 				FF1AA1A32823F9C200AB61A2 /* Typography.swift in Sources */,
+				FF3616CD28290E61002ADA33 /* ExpenseListView.swift in Sources */,
 				FF5F2CA02823C4CD007980F3 /* Expense+CoreDataProperties.swift in Sources */,
 				FFDF855C282411FD00E0F9BF /* OldTabBarView.swift in Sources */,
 			);
