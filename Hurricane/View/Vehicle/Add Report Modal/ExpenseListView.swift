@@ -81,7 +81,7 @@ struct ExpenseListView: View {
                     Spacer()
                     TextField("20",text: $addExpVM.liters)
                         .disableAutocorrection(true)
-                        .keyboardType(.numberPad)
+                        .keyboardType(.decimalPad)
                         .focused(focusedField, equals: .liter)
                         .fixedSize(horizontal: true, vertical: true)
                         .font(Typography.headerM)
@@ -109,7 +109,7 @@ struct ExpenseListView: View {
                         .disableAutocorrection(true)
                         .focused(focusedField, equals: .priceLiter)
                         .fixedSize(horizontal: true, vertical: true)
-                        .keyboardType(.numberPad)
+                        .keyboardType(.decimalPad)
                         .font(Typography.headerM)
                     
                     Text(utilityVM.currency)

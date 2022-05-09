@@ -40,7 +40,7 @@ struct AddReportView: View {
                 
                 //MARK: Custom TextField
                 if(addExpVM.currentPickerTab == "Expense"){
-                    TextFieldComponent(submitField: $addExpVM.priceTab, placeholder: "42", attribute:utilityVM.currency, keyboardType: .numberPad,focusedField: $focusedField, defaultFocus: .priceTab)
+                    TextFieldComponent(submitField: $addExpVM.priceTab, placeholder: "42", attribute:utilityVM.currency, keyboardType: .decimalPad,focusedField: $focusedField, defaultFocus: .priceTab)
                         .padding(.top,15)
                 }
                 else if (addExpVM.currentPickerTab == "Odometer"){
