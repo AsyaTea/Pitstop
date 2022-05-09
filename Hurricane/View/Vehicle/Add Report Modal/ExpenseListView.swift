@@ -21,7 +21,7 @@ struct ExpenseListView: View {
                 ForEach(addExpVM.categoryTypes, id: \.self) {
                     Text($0)
                         .font(Typography.headerM)
-                } .listStyle(.automatic)
+                }
             },label:{
                 ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
             })

@@ -17,6 +17,7 @@ struct ContentView3: View {
     var body: some View {
         ZStack(alignment: .top) {
             VStack {
+                VStack{
                 VStack {
                     HStack {
                         //Title
@@ -77,7 +78,6 @@ struct ContentView3: View {
                 .padding(25)
                 .frame(width: 430, height: 100, alignment: .topLeading)
 
-                
                 //Stats views
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
@@ -88,9 +88,7 @@ struct ContentView3: View {
                     .frame(width: 430, height: 100, alignment: .center)
              
                 }
-                
-                
-            
+                }
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 15) {

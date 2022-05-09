@@ -24,6 +24,7 @@
 		FF3616CD28290E61002ADA33 /* ExpenseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616CC28290E61002ADA33 /* ExpenseListView.swift */; };
 		FF3616CF28290F21002ADA33 /* ReminderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616CE28290F21002ADA33 /* ReminderListView.swift */; };
 		FF3616D128290F55002ADA33 /* OdometerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616D028290F55002ADA33 /* OdometerListView.swift */; };
+		FF3616D528292A26002ADA33 /* AnimationMainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616D428292A26002ADA33 /* AnimationMainScreen.swift */; };
 		FF42ADCF2825131C00C66A84 /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADCE2825131C00C66A84 /* CustomTabBarView.swift */; };
 		FF42ADD12825201A00C66A84 /* TabData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD02825201A00C66A84 /* TabData.swift */; };
 		FF42ADD3282520A300C66A84 /* TabAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD2282520A200C66A84 /* TabAppearance.swift */; };
@@ -58,6 +59,7 @@
 		FF3616CC28290E61002ADA33 /* ExpenseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseListView.swift; sourceTree = "<group>"; };
 		FF3616CE28290F21002ADA33 /* ReminderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListView.swift; sourceTree = "<group>"; };
 		FF3616D028290F55002ADA33 /* OdometerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OdometerListView.swift; sourceTree = "<group>"; };
+		FF3616D428292A26002ADA33 /* AnimationMainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationMainScreen.swift; sourceTree = "<group>"; };
 		FF42ADCE2825131C00C66A84 /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		FF42ADD02825201A00C66A84 /* TabData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabData.swift; sourceTree = "<group>"; };
 		FF42ADD2282520A200C66A84 /* TabAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabAppearance.swift; sourceTree = "<group>"; };
@@ -126,13 +128,11 @@
 			isa = PBXGroup;
 			children = (
 				FFDF85592824104A00E0F9BF /* MainView.swift */,
-				FFCC308328252F5B00391BD5 /* AddReportView.swift */,
-				FF3616CC28290E61002ADA33 /* ExpenseListView.swift */,
-				FF3616D028290F55002ADA33 /* OdometerListView.swift */,
-				FF3616CE28290F21002ADA33 /* ReminderListView.swift */,
+				FF3616D2282926D6002ADA33 /* Add Report Modal */,
 				415D203028214180004AF201 /* ContentView.swift */,
 				41C6E1F52823E4C800F756B5 /* ContentView2.swift */,
 				41C6E1FB28251B0100F756B5 /* ContentView3.swift */,
+				FF3616D428292A26002ADA33 /* AnimationMainScreen.swift */,
 				41C6E20128266C8200F756B5 /* ExpenseView.swift */,
 			);
 			path = Vehicle;
@@ -196,6 +196,17 @@
 				415D203C28214215004AF201 /* CarModel.xcdatamodeld */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		FF3616D2282926D6002ADA33 /* Add Report Modal */ = {
+			isa = PBXGroup;
+			children = (
+				FFCC308328252F5B00391BD5 /* AddReportView.swift */,
+				FF3616CC28290E61002ADA33 /* ExpenseListView.swift */,
+				FF3616D028290F55002ADA33 /* OdometerListView.swift */,
+				FF3616CE28290F21002ADA33 /* ReminderListView.swift */,
+			);
+			path = "Add Report Modal";
 			sourceTree = "<group>";
 		};
 		FFDF855D282512CE00E0F9BF /* CustomTabBar */ = {
@@ -299,6 +310,7 @@
 				415D2042282145FE004AF201 /* DataViewModel.swift in Sources */,
 				FF42ADD12825201A00C66A84 /* TabData.swift in Sources */,
 				415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */,
+				FF3616D528292A26002ADA33 /* AnimationMainScreen.swift in Sources */,
 				415D202F28214180004AF201 /* HurricaneApp.swift in Sources */,
 				FFCC308628258B6C00391BD5 /* UtilityViewModel.swift in Sources */,
 				FF42ADD52825250B00C66A84 /* StatsView.swift in Sources */,

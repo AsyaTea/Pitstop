@@ -78,7 +78,7 @@ struct AddReportView: View {
                     }, label: {
                         HStack{
                             Image(systemName: "chevron.left")
-                                .foregroundColor(Palette.black)
+                                .foregroundColor(Palette.greyHard)
                             Text("Cancel")
                                 .font(Typography.headerM)
                         }
@@ -104,6 +104,7 @@ struct AddReportView: View {
                         }, label: {
                             Image(systemName: "keyboard.chevron.compact.down")
                                 .resizable()
+                                .foregroundColor(Palette.black)
                         })
                     }
                 }
