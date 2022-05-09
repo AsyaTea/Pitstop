@@ -52,10 +52,9 @@ struct TabItemView: View {
                 .frame(width: 28, height: 28)
                 .animation(.default)
             
-        }
+        }.frame(width: 75, height: 55) ///Tappable are on icons
     }
 }
-
 
 struct CustomTabView<Content: View>: View {
     
@@ -77,20 +76,8 @@ struct CustomTabView<Content: View>: View {
                 TabBackView(tabbarItems: tabs, selectedIndex: $selectedIndex)
                    
             }
-           
             .padding(.bottom, 8)
         }
         .ignoresSafeArea()
     }
 }
-
-
-//struct TabAppearance_Previews: PreviewProvider {
-//
-//    @Binding var index : Int
-//
-//    static var previews: some View {
-//        TabBackView(tabbarItems: [TabItemData(image: "carNoTap", selectedImage: "carIcon"), TabItemData(image: "carNoTap", selectedImage: "carIcon")], selectedIndex: $index)
-//    }
-//}
-

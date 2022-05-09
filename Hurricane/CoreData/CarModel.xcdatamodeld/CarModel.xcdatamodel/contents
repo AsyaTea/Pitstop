@@ -23,7 +23,7 @@
         <relationship name="expenses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Expense" inverseName="vehicle" inverseEntity="Expense"/>
     </entity>
     <elements>
-        <element name="Expense" positionX="215.86328125" positionY="1.1640625" width="128" height="163"/>
+        <element name="Expense" positionX="215.86328125" positionY="1.1640625" width="128" height="149"/>
         <element name="Vehicle" positionX="-45" positionY="0" width="128" height="179"/>
     </elements>
 </model>

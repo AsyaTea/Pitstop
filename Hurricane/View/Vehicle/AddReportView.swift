@@ -14,6 +14,7 @@ struct AddReportView: View {
         UITableView.appearance().separatorStyle = .none
         //       UITableViewCell.appearance().backgroundColor = .green
         UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
+
     }
     
     @StateObject var utilityVM : UtilityViewModel = .init()
@@ -52,6 +53,9 @@ struct AddReportView: View {
     //List picker categories
     @State private var selectedCategory = "Fuel"
     let categoryTypes = ["Fuel", "Maintenance", "Insurance","Road tax","Tolls","Fines","Parking","Other"]
+    
+    @State private var selectedCategoryReminder =  "Maintenance"
+    let categoryReminder = ["Maintenance", "Insurance","Road tax","Tolls","Parking","Other"]
     
     @State private var selectedRepeat = "Never"
     let repeatTypes = ["Never", "Daily", "Weekdays","Weekends", "Weekly","Monthly","Every 3 Months","Every 6 Months","Yearly"]
@@ -108,7 +112,7 @@ struct AddReportView: View {
                         },label:{
                             ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
                         })
-                        .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
+                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
                         //MARK: ODOMETER
                         HStack{
@@ -116,7 +120,6 @@ struct AddReportView: View {
                             Spacer()
                             TextField("100",text: $odometer)
                                 .font(Typography.headerM)
-                                .focused($focusedField,equals: .odometer)
                                 .foregroundColor(Palette.black)
                                 .keyboardType(.decimalPad)
                                 .fixedSize(horizontal: true, vertical: true)
@@ -124,7 +127,7 @@ struct AddReportView: View {
                                 .font(Typography.headerM)
                                 .foregroundColor(Palette.black)
                         }
-                        .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
+                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
                         
                         //MARK: FUEL TYPE
@@ -137,17 +140,8 @@ struct AddReportView: View {
                             }, label:{
                                 ListCategoryComponent(title: "Fuel type", iconName: "fuelType", color: Palette.colorOrange)
                             })
+                            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         }
-                        
-                        //MARK: REPEAT PICKER
-                        Picker(selection: $selectedRepeat, content: {
-                            ForEach(repeatTypes, id: \.self) {
-                                Text($0)
-                                    .font(Typography.headerM)
-                            }
-                        }, label:{
-                            ListCategoryComponent(title: "Repeat", iconName: "repeat", color: Palette.colorViolet)
-                        })
                         
                         //MARK: DATE PICKER
                         DatePicker(selection: $date, displayedComponents: [.date]) {
@@ -155,6 +149,7 @@ struct AddReportView: View {
                             ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
                             
                         }
+                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
                         //MARK: LITERS & PRICE/LITER
                         if(selectedCategory == "Fuel"){
@@ -162,8 +157,8 @@ struct AddReportView: View {
                                 ZStack{
                                     Circle()
                                         .frame(width: 32, height: 32)
-                                        .foregroundColor(Palette.greyLight)
-                                    Image("liters")
+                                        .foregroundColor(liters.isEmpty ? Palette.greyLight : Palette.colorOrange)
+                                    Image(liters.isEmpty ? "liters" : "literColored")
                                         .resizable()
                                         .frame(width: 16, height: 16)
                                 }
@@ -176,28 +171,36 @@ struct AddReportView: View {
                                     .keyboardType(.numberPad)
                                     .fixedSize(horizontal: true, vertical: true)
                                     .font(Typography.headerM)
-                                    .focused($focusedField,equals: .note)
                                 Text("L")
                                     .font(Typography.headerM)
                                     .foregroundColor(Palette.black)
                             }
+                            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                            
                             
                             HStack{
                                 ZStack{
                                     Circle()
                                         .frame(width: 32, height: 32)
-                                        .foregroundColor(Palette.greyLight)
-                                    Image("priceLiter")
+                                        .foregroundColor(pricePerLiter.isEmpty ? Palette.greyLight : Palette.colorYellow)
+                                    Image(pricePerLiter.isEmpty ?  "priceLiter" : "priceLiterColored")
                                         .resizable()
                                         .frame(width: 16, height: 16)
                                 }
-                                TextField("Price/Liter",text: $pricePerLiter)
+                                Text("Price/Liter")
+                                    .foregroundColor(Palette.black)
+                                    .font(Typography.headerM)
+                                Spacer()
+                                TextField("1.70",text: $pricePerLiter)
                                     .disableAutocorrection(true)
+                                    .fixedSize(horizontal: true, vertical: true)
                                     .keyboardType(.numberPad)
                                     .font(Typography.headerM)
-                                    .focused($focusedField,equals: .note)
+                                    
+                                Text(currency)
+                                    .foregroundColor(Palette.black)
                             }
-                            
+                            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         }
                         
                         //MARK: NOTE
@@ -205,17 +208,17 @@ struct AddReportView: View {
                             ZStack{
                                 Circle()
                                     .frame(width: 32, height: 32)
-                                    .foregroundColor(Palette.greyLight)
-                                Image("note")
+                                    .foregroundColor(note.isEmpty ? Palette.greyLight : Palette.colorViolet)
+                                Image(note.isEmpty ? "note" : "noteColored")
                                     .resizable()
                                     .frame(width: 16, height: 16)
                             }
                             TextField("Note",text: $note)
                                 .disableAutocorrection(true)
                                 .font(Typography.headerM)
-                                .focused($focusedField,equals: .note)
+                               
                         }
-                        
+                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                     }
                     .padding(.top,-10)
                     .onAppear {
@@ -232,21 +235,23 @@ struct AddReportView: View {
                         DatePicker(selection: $date, displayedComponents: [.date]) {
                             ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
                         }
+                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
                         HStack{
                             ZStack{
                                 Circle()
                                     .frame(width: 32, height: 32)
-                                    .foregroundColor(Palette.greyLight)
-                                Image("note")
+                                    .foregroundColor(note.isEmpty ? Palette.greyLight : Palette.colorViolet)
+                                Image(note.isEmpty ? "note" : "noteColored")
                                     .resizable()
                                     .frame(width: 16, height: 16)
                             }
                             TextField("Note",text: $note)
                                 .disableAutocorrection(true)
                                 .font(Typography.headerM)
-                                .focused($focusedField,equals: .note)
+                                
                         }
+                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                     }
                     .padding(.top,-10)
                     .onAppear {
@@ -260,14 +265,15 @@ struct AddReportView: View {
                 }
                 else{
                     List{
-                        Picker(selection: $selectedCategory, content: {
-                            ForEach(categoryTypes, id: \.self) {
+                        Picker(selection: $selectedCategoryReminder, content: {
+                            ForEach(categoryReminder, id: \.self) {
                                 Text($0)
                                     .font(Typography.headerM)
                             }
                         },label:{
                             ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
                         })
+                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
                         //MARK: BASED ON PICKER
                         Picker(selection: $selectedBased, content: {
@@ -278,12 +284,14 @@ struct AddReportView: View {
                         },label:{
                             ListCategoryComponent(title: "Based on", iconName: "basedOn", color: Palette.colorOrange)
                         })
+                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
                         //MARK: REMIND DATE
                         if (selectedBased == "Date"){
                             DatePicker(selection: $date, displayedComponents: [.date]) {
                                 ListCategoryComponent(title: "Remind me on", iconName: "remindMe", color: Palette.colorGreen)
                             }
+                            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         }
                         //MARK: REMIND DISTANCE
                         else{
@@ -292,7 +300,6 @@ struct AddReportView: View {
                                 Spacer()
                                 TextField("1000",text: $odometer)
                                     .font(Typography.headerM)
-                                    .focused($focusedField,equals: .odometer)
                                     .foregroundColor(Palette.black)
                                     .textFieldStyle(.plain)
                                     .keyboardType(.decimalPad)
@@ -301,6 +308,7 @@ struct AddReportView: View {
                                     .font(Typography.headerM)
                                     .foregroundColor(Palette.black)
                             }
+                            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         }
                         
                         Picker(selection: $selectedRepeat, content: {
@@ -311,23 +319,22 @@ struct AddReportView: View {
                         }, label:{
                             ListCategoryComponent(title: "Repeat", iconName: "repeat", color: Palette.colorViolet)
                         })
+                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
                         HStack{
                             ZStack{
                                 Circle()
                                     .frame(width: 32, height: 32)
-                                    .foregroundColor(Palette.greyLight)
-                                Image("note")
+                                    .foregroundColor(note.isEmpty ? Palette.greyLight : Palette.colorViolet)
+                                Image(note.isEmpty ? "note" : "noteColored")
                                     .resizable()
                                     .frame(width: 16, height: 16)
                             }
                             TextField("Note",text: $note)
                                 .disableAutocorrection(true)
                                 .font(Typography.headerM)
-                                .focused($focusedField,equals: .note)
                         }
-                        
-                        
+                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                     }
                     .padding(.top,-10)
                     .onAppear {
@@ -339,15 +346,6 @@ struct AddReportView: View {
                         }
                     }
                 }
-                
-                //                Button("Save"){
-                //                    presentationMode.wrappedValue.dismiss()
-                //                }
-                //                .buttonStyle(SaveButton())
-                //                .disabled(price.isEmpty)
-                //                .opacity(price.isEmpty ? 0.6 : 1)
-                
-                
             }
             .background(Palette.greyBackground)
             .navigationBarTitleDisplayMode(.inline)
@@ -383,28 +381,6 @@ struct AddReportView: View {
                             focusedField = nil
                         }
                         Spacer()
-                        if (focusedField == .note){
-                            Button("Save") {
-                                let haptic = UIImpactFeedbackGenerator(style: .light)
-                                haptic.impactOccurred()
-                                presentationMode.wrappedValue.dismiss()
-                            }.disabled(priceTab.isEmpty)
-                        }
-                        if (focusedField == .odometer){
-                            Button("Next") {
-                                let haptic = UIImpactFeedbackGenerator(style: .light)
-                                haptic.impactOccurred()
-                                focusedField = .note
-                            }
-                        }
-                        if (focusedField == .priceTab){
-                            Button("Next") {
-                                let haptic = UIImpactFeedbackGenerator(style: .light)
-                                haptic.impactOccurred()
-                                focusedField = .odometer
-                            }
-                        }
-                        
                     }
                 }
                 ToolbarItem(placement: .principal) {
@@ -413,8 +389,6 @@ struct AddReportView: View {
                         .foregroundColor(Palette.black)
                 }
             }
-            
-            
         }
     }
     
@@ -459,11 +433,13 @@ struct AddReportView: View {
         }
         if(tab == "Odometer"){
             odometerTab = ""
-            //            note = ""
+            note = ""
+            date = Date.now
         }
         if(tab == "Reminder"){
             reminderTab = ""
-            //            note = ""
+            note = ""
+            date = Date.now
         }
     }
     
@@ -531,9 +507,6 @@ struct TextFieldComponent: View {
                 .foregroundColor(Palette.black)
                 .keyboardType(keyboardType)
                 .fixedSize(horizontal: true, vertical: true)
-                .onSubmit {
-                    focusedField.wrappedValue = .odometer
-                }
             
             Text(attribute)
                 .font(Typography.headerXXL)
@@ -547,6 +520,5 @@ enum FocusField: Hashable {
     case priceTab
     case odometerTab
     case reminderTab
-    case odometer
-    case note
+
 }
