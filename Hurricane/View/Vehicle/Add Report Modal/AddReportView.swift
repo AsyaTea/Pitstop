@@ -14,7 +14,6 @@ struct AddReportView: View {
         UITableView.appearance().separatorStyle = .singleLine
         UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
         UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
-
     }
     
     @StateObject var utilityVM : UtilityViewModel = .init()
@@ -76,12 +75,8 @@ struct AddReportView: View {
                     Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
-                        HStack{
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(Palette.greyHard)
                             Text("Cancel")
                                 .font(Typography.headerM)
-                        }
                     })
                     .accentColor(Palette.greyHard),
                 trailing:

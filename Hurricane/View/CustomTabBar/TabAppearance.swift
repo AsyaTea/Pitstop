@@ -46,11 +46,12 @@ struct TabItemView: View {
     
     var body: some View {
         VStack {
-            Image(isSelected ? data.selectedImage : data.image)
+            Image(data.image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 28, height: 28)
                 .animation(.default)
+                .foregroundColor(isSelected ? Palette.black : Palette.greyEBEBEB)
             
         }.frame(width: 75, height: 55) ///Tappable are on icons
     }

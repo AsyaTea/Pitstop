@@ -24,6 +24,8 @@ enum FocusFieldBoarding: Hashable {
 }
 
 
+
+
 struct MainContent: View {
     
     @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
@@ -54,7 +56,7 @@ struct OnboardingView: View {
             //                .transition( AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                 .animation(.easeOut)
         case .page2:
-            Page2()
+            Page2(destination: $destination)
             //                .transition( AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .trailing)))
             //                .animation(.easeInOut)
         case .page3:
@@ -68,11 +70,11 @@ struct OnboardingView: View {
     }
 }
 
-struct OnboardingView_Previews: PreviewProvider {
-    static var previews: some View {
-        Page2()
-    }
-}
+//struct OnboardingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Page1()
+//    }
+//}
 
 struct Page1 : View {
     
@@ -111,16 +113,39 @@ struct Page1 : View {
 
 struct Page2 : View {
     
-    //    @Binding var destination : Pages
+        @Binding var destination : Pages
     
     @FocusState var focusedField: FocusFieldBoarding?
     
     @State private var carName : String = ""
     @State private var brand : String = ""
     @State private var model : String = ""
-    @State private var fuelType : String = ""
+
+    let fuelCategories = ["Gasoline","Diesel", "Electricity", "Watermelon🍉🍉", "Grapes🍇🍇" ]
+    @State private var selectedFuel = "Fuel Type"
+    @State private var isTapped = false
     
     let haptic = UIImpactFeedbackGenerator(style: .light)
+    
+    var isDisabled : Bool {
+        return carName.isEmpty || brand.isEmpty || model.isEmpty || selectedFuel == "Fuel Type"
+    }
+    
+    var customLabel: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 36)
+                .stroke(isTapped ? Palette.black : Palette.greyInput,lineWidth: 1)
+                .background(isTapped ? Palette.greyLight : Palette.greyBackground)
+                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
+            HStack{
+                Text(selectedFuel)
+                    .font(Typography.TextM)
+                Spacer()
+            }
+            .accentColor(isTapped ? Palette.black : Palette.greyInput)
+            .padding(.leading,40)
+        }
+    }
     
     var body: some View{
         VStack{
@@ -130,7 +155,7 @@ struct Page2 : View {
                     .frame(width: 12, height: 21)
                     .foregroundColor(Palette.black)
                     .onTapGesture {
-                        //                        destination = .page1
+                                                destination = .page1
                     }
                 Spacer()
             }
@@ -144,14 +169,14 @@ struct Page2 : View {
                     .multilineTextAlignment(.center)
                     .foregroundColor(Palette.black)
             }
-            Spacer()
-            VStack(spacing:16){
+            VStack(spacing:20){
                 
                 TextField("Car's name", text: $carName)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .carName)
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
                     .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
-                    .background(Palette.greyLight)
+                    .background(focusedField == .carName ? Palette.greyLight :Palette.greyBackground)
                     .font(Typography.TextM)
                     .foregroundColor(Palette.black)
                     .cornerRadius(36)
@@ -163,8 +188,9 @@ struct Page2 : View {
                 TextField("Brand", text: $brand)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .brand)
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
                     .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
-                    .background(Palette.greyLight)
+                    .background(focusedField == .brand ? Palette.greyLight :Palette.greyBackground)
                     .font(Typography.TextM)
                     .foregroundColor(Palette.black)
                     .cornerRadius(36)
@@ -172,12 +198,46 @@ struct Page2 : View {
                         .stroke(focusedField == .brand ? Palette.black :Palette.greyInput, lineWidth: 1))
                     .modifier(ClearButton(text: $brand))
                 
+                TextField("Model", text: $model)
+                    .disableAutocorrection(true)
+                    .focused($focusedField,equals: .model)
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
+                    .background(focusedField == .model ? Palette.greyLight :Palette.greyBackground)
+                    .font(Typography.TextM)
+                    .foregroundColor(Palette.black)
+                    .cornerRadius(36)
+                    .overlay(RoundedRectangle(cornerRadius: 36)
+                        .stroke(focusedField == .model ? Palette.black :Palette.greyInput, lineWidth: 1))
+                    .modifier(ClearButton(text: $model))
                 
-            }
+                
+                Menu{
+                Picker(selection: $selectedFuel, label:
+                        EmptyView()){
+                    ForEach(fuelCategories,id: \.self) { name in
+                                 Text(name)
+                             }
+                         }
+                } label: {
+                    customLabel
+                }.onTapGesture {
+                    isTapped = true
+                }
+                
+            }.padding(.vertical,50)
             Spacer()
-            OnBoardingButton(text: "Next", textColor: Palette.white, color: Palette.black)
+            Button(action: {
+                withAnimation(.easeInOut){
+                    destination = .page3
+                }
+            }, label: {
+                OnBoardingButton(text: "Next", textColor: Palette.white, color: Palette.black)
+            })
+                .disabled(isDisabled)
+                .opacity(isDisabled ? 0.25 : 1)
         }
-        .background(Palette.greyBackground)           
+        .background(Palette.greyBackground)
         .onTapGesture {
             focusedField = nil
         }
@@ -223,8 +283,6 @@ struct ClearButton: ViewModifier{
                     self.text = ""
                 }){
                     Image(systemName: "xmark")
-//                        .resizable()
-//                        .frame(width: 12, height: 12)
                         .foregroundColor(Palette.black)
                 }
                 .padding(.trailing, 20)

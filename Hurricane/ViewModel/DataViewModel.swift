@@ -126,7 +126,7 @@ class DataViewModel : ObservableObject {
 }
 
 
-struct VehicleModel {
+struct VehicleModel : Hashable {
     var brand : String?
     var document : Data?
     var fuelType: Int32?

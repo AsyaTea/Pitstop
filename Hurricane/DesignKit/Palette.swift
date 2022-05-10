@@ -23,10 +23,11 @@ enum Palette {
     static let greyMiddle = Color(rgb: 0x8A8A8A)
     static let greyInput = Color(rgb: 0xD2D2D2)
     static let greyLight = Color(rgb: 0xF5F5F5)
+    static let greyEBEBEB = Color(rgb: 0xEBEBEB)
     static let greyBackground = Color(rgb: 0xFBFBFB)
     
     static let colorVioletLight = Color(rgb: 0x94BCF8)
     
-
+    static let test = Color(lightRGB: 0xff0000, darkRGB: 0x00ff00)
 }
 

@@ -10,7 +10,6 @@ import Foundation
 //Data to pass to the tab items
 struct TabItemData {
     let image: String
-    let selectedImage: String
 }
 
 enum TabType: Int, CaseIterable {
@@ -21,11 +20,11 @@ enum TabType: Int, CaseIterable {
     var tabItem: TabItemData {
         switch self {
         case .home:
-            return TabItemData(image: "carNoTap", selectedImage: "carIcon")
+            return TabItemData(image: "carIcon")
         case .stats:
-            return TabItemData(image: "chartNoTap", selectedImage: "chartIcon")
+            return TabItemData(image: "chartIcon")
         case .settings:
-            return TabItemData(image: "settingsNoTap", selectedImage: "settingsIcon")
+            return TabItemData(image: "settingsIcon")
         }
     }
 }
