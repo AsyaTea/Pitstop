@@ -60,21 +60,21 @@ struct OnboardingView: View {
             //                .transition( AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .trailing)))
             //                .animation(.easeInOut)
         case .page3:
-            Text("Hello, World!")
+            Page3()
         case .page4:
-            Text("Hello, World!")
+            Page4(destination: $destination)
         case .page5:
-            Text("Hello, World!")
+            Page5()
         }
         
     }
 }
 
-//struct OnboardingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Page1()
-//    }
-//}
+struct OnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        Page5()
+    }
+}
 
 struct Page1 : View {
     
@@ -113,14 +113,14 @@ struct Page1 : View {
 
 struct Page2 : View {
     
-        @Binding var destination : Pages
+    @Binding var destination : Pages
     
     @FocusState var focusedField: FocusFieldBoarding?
     
     @State private var carName : String = ""
     @State private var brand : String = ""
     @State private var model : String = ""
-
+    
     let fuelCategories = ["Gasoline","Diesel", "Electricity", "Watermelon🍉🍉", "Grapes🍇🍇" ]
     @State private var selectedFuel = "Fuel Type"
     @State private var isTapped = false
@@ -155,7 +155,7 @@ struct Page2 : View {
                     .frame(width: 12, height: 21)
                     .foregroundColor(Palette.black)
                     .onTapGesture {
-                                                destination = .page1
+                        destination = .page1
                     }
                 Spacer()
             }
@@ -213,19 +213,19 @@ struct Page2 : View {
                 
                 
                 Menu{
-                Picker(selection: $selectedFuel, label:
-                        EmptyView()){
-                    ForEach(fuelCategories,id: \.self) { name in
-                                 Text(name)
-                             }
-                         }
+                    Picker(selection: $selectedFuel, label:
+                            EmptyView()){
+                        ForEach(fuelCategories,id: \.self) { name in
+                            Text(name)
+                        }
+                    }
                 } label: {
                     customLabel
                 }.onTapGesture {
                     isTapped = true
                 }
                 
-            }.padding(.vertical,50)
+            }.padding(.vertical,40)
             Spacer()
             Button(action: {
                 withAnimation(.easeInOut){
@@ -234,8 +234,8 @@ struct Page2 : View {
             }, label: {
                 OnBoardingButton(text: "Next", textColor: Palette.white, color: Palette.black)
             })
-                .disabled(isDisabled)
-                .opacity(isDisabled ? 0.25 : 1)
+            .disabled(isDisabled)
+            .opacity(isDisabled ? 0.25 : 1)
         }
         .background(Palette.greyBackground)
         .onTapGesture {
@@ -243,6 +243,94 @@ struct Page2 : View {
         }
     }
     
+}
+
+struct Page3 : View {
+    var body: some View {
+        Text("Page 3")
+    }
+}
+
+struct Page4 : View {
+    
+    @Binding var destination : Pages
+    
+    var body: some View {
+        VStack(alignment: .center){
+
+            Spacer()
+            VStack(spacing:12){
+                Text("Don’t miss anything \n important")
+                    .font(Typography.headerXL)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Palette.black)
+                Text("Let us remind you key dates about your \nvehicle’s maintenance status and deadlines")
+                    .font(Typography.TextM)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Palette.black)
+            }
+            .padding(.vertical,-70)
+            Spacer()
+            Image("page4")
+                .offset(y:-20)
+            Spacer()
+            VStack(spacing: 16){
+                Button(action: {
+                    withAnimation(.easeInOut){
+                                        destination = .page5
+                    }
+                }, label: {
+                    OnBoardingButton(text: "Activate notifications", textColor: Palette.white, color: Palette.black)
+                })
+                Button(action: {
+                    withAnimation(.easeInOut){
+                                               destination = .page5
+                    }
+                }, label: {
+                    OnBoardingButton(text: "Later", textColor: Palette.black, color: Palette.white)
+                })
+                
+            }
+            
+        }.background(Palette.greyBackground)
+    }
+}
+
+struct Page5 : View {
+    var body: some View {
+        VStack(alignment: .center){
+            Spacer()
+            Image("page5")
+                .offset(y:30)
+            Spacer()
+            VStack(spacing:12){
+                Text("Your vehicle is ready!")
+                    .font(Typography.headerXL)
+                    .foregroundColor(Palette.black)
+                Text("You are set to start your engine and optimize \n your spendings")
+                    .font(Typography.TextM)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Palette.black)
+            }.padding(.vertical,50)
+            VStack(spacing: 16){
+                Button(action: {
+                    withAnimation(.easeInOut){
+                        //                        destination = .page5
+                    }
+                }, label: {
+                    OnBoardingButton(text: "Okayyyy let's go", textColor: Palette.white, color: Palette.black)
+                })
+                Button(action: {
+                    withAnimation(.easeInOut){
+                        //                        destination = .page2
+                    }
+                }, label: {
+                    OnBoardingButton(text: "Add new car", textColor: Palette.black, color: Palette.white)
+                })
+            }
+            
+        }.background(Palette.greyBackground)
+    }
 }
 
 
