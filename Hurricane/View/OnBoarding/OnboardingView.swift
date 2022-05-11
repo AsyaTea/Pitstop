@@ -72,7 +72,7 @@ struct OnboardingView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        Page5()
+        Page3()
     }
 }
 
@@ -121,7 +121,7 @@ struct Page2 : View {
     @State private var brand : String = ""
     @State private var model : String = ""
     
-    let fuelCategories = ["Gasoline","Diesel", "Electricity", "Watermelon🍉🍉", "Grapes🍇🍇" ]
+    let fuelCategories = ["Gasoline","Diesel", "Electric","LPG (Propane)","CNG (Methane)","Ethanol","Hydrogen"]
     @State private var selectedFuel = "Fuel Type"
     @State private var isTapped = false
     
@@ -246,8 +246,59 @@ struct Page2 : View {
 }
 
 struct Page3 : View {
+    
+    @State var isImport = false
+    
     var body: some View {
-        Text("Page 3")
+        VStack{
+        HStack{
+            Image(systemName: "chevron.left")
+                .resizable()
+                .frame(width: 12, height: 21)
+                .foregroundColor(Palette.black)
+                .onTapGesture {
+//                    destination = .page2
+                }
+            Spacer()
+        }
+        .padding()
+        VStack(spacing:12){
+            Text("Add more info")
+                .font(Typography.headerXL)
+                .foregroundColor(Palette.black)
+            Text("Keep all of your vehicle info at hand")
+                .font(Typography.TextM)
+                .multilineTextAlignment(.center)
+                .foregroundColor(Palette.black)
+        }
+            VStack(spacing:20){
+                Button(action: {
+                    
+                }, label: {
+                    OnBoardingCard(text: "Documents", bgColor: Palette.colorViolet, iconName:  "documents")
+                })
+                Button(action: {
+                    
+                }, label: {
+                    OnBoardingCard(text: "Odometer", bgColor: Palette.colorBlue, iconName:  "odometer")
+                })
+                Button(action: {
+                    
+                }, label: {
+                    OnBoardingCard(text: "Important numbers", bgColor: Palette.colorGreen, iconName:  "phone")
+                })
+           
+            }.padding(.vertical,40)
+            
+            Spacer()
+            Button(action: {
+                withAnimation(.easeInOut){
+//                    destination = .page4
+                }
+            }, label: {
+                OnBoardingButton(text: "Next", textColor: Palette.white, color: Palette.black)
+            })
+        } .background(Palette.greyBackground)
     }
 }
 
@@ -333,7 +384,6 @@ struct Page5 : View {
     }
 }
 
-
 struct OnBoardingButton : View {
     
     var text : String
@@ -357,6 +407,36 @@ struct OnBoardingButton : View {
     }
 }
 
+struct OnBoardingCard : View {
+    
+    var text : String
+    var bgColor : Color
+    var iconName : String
+    
+    var body: some View {
+        ZStack{
+            Rectangle()
+                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
+                .cornerRadius(12)
+                .foregroundColor(Palette.white)
+                .shadowGrey()
+            HStack{
+                ZStack{
+                    Circle()
+                        .foregroundColor(bgColor)
+                        .frame(width: 32, height: 32)
+                    Image(iconName)
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                }.padding(.horizontal,8)
+                Text(text)
+                    .foregroundColor(Palette.black)
+                    .font(Typography.headerM)
+                Spacer()
+            }.padding(.horizontal,30)
+        }
+    }
+}
 
 struct ClearButton: ViewModifier{
     
