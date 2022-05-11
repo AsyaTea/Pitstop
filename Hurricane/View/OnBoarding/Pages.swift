@@ -54,7 +54,7 @@ struct Page1 : View {
 //MARK: PAGE 2 ADD VEHICLE
 struct Page2 : View {
     
-    @ObservedObject var onboardingVM : OnboardingViewModel
+    @StateObject var onboardingVM : OnboardingViewModel
     
     @Binding var destination : Pages
     @FocusState var focusedField: FocusFieldBoarding?
@@ -85,7 +85,7 @@ struct Page2 : View {
                 Button(action: {
                     destination = .page1
                 }, label: {
-                    Image(systemName: "chevron.left")
+                    Image(systemName: onboardingVM.skipNotification ? "" : "chevron.left")
                         .resizable()
                         .frame(width: 12, height: 21)
                         .foregroundColor(Palette.black)
@@ -113,8 +113,10 @@ struct Page2 : View {
                     .font(Typography.TextM)
                     .foregroundColor(Palette.black)
                     .cornerRadius(36)
-                    .overlay(RoundedRectangle(cornerRadius: 36)
-                        .stroke(focusedField == .carName ? Palette.black :Palette.greyInput, lineWidth: 1))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 36)
+                        .stroke(focusedField == .carName ? Palette.black :Palette.greyInput, lineWidth: 1)
+                    )
                     .modifier(ClearButton(text: $onboardingVM.vehicle.name.toUnwrapped(defaultValue: "")))
                     .onSubmit {
                         focusedField = .brand
@@ -130,8 +132,10 @@ struct Page2 : View {
                     .font(Typography.TextM)
                     .foregroundColor(Palette.black)
                     .cornerRadius(36)
-                    .overlay(RoundedRectangle(cornerRadius: 36)
-                        .stroke(focusedField == .brand ? Palette.black :Palette.greyInput, lineWidth: 1))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 36)
+                        .stroke(focusedField == .brand ? Palette.black :Palette.greyInput, lineWidth: 1)
+                    )
                     .modifier(ClearButton(text: $onboardingVM.vehicle.brand.toUnwrapped(defaultValue: "")))
                     .onSubmit {
                         focusedField = .model
@@ -146,14 +150,16 @@ struct Page2 : View {
                     .font(Typography.TextM)
                     .foregroundColor(Palette.black)
                     .cornerRadius(36)
-                    .overlay(RoundedRectangle(cornerRadius: 36)
-                        .stroke(focusedField == .model ? Palette.black :Palette.greyInput, lineWidth: 1))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 36)
+                            .stroke(focusedField == .model ? Palette.black :Palette.greyInput, lineWidth: 1)
+                    )
                     .modifier(ClearButton(text: $onboardingVM.vehicle.model.toUnwrapped(defaultValue: "")))
                     .onSubmit {
                         focusedField = nil
                     }
                 
-                
+                //MARK: NEED TO FIX MULTIPLE FUEL TYPES
                 Menu{
                     Picker(selection: $onboardingVM.selectedFuel, label:
                             EmptyView()){
@@ -199,7 +205,7 @@ struct Page3 : View {
     
     @State var isImport = false
     @Binding var destination : Pages
-    @StateObject var vehicleVM = DataViewModel()
+    var dataVM = DataViewModel()
     @ObservedObject var onboardingVM : OnboardingViewModel
     
     var body: some View {
@@ -247,8 +253,13 @@ struct Page3 : View {
             Spacer()
             Button(action: {
                 withAnimation(.easeInOut){
-                    vehicleVM.addVehicle(vehicle: onboardingVM.vehicle)
-                    destination = .page4
+                    dataVM.addVehicle(vehicle: onboardingVM.vehicle)
+                    if(onboardingVM.skipNotification == true) {
+                        destination = .page5
+                    }
+                    else{
+                        destination = .page4
+                    }
                 }
             }, label: {
                 OnBoardingButton(text: "Next", textColor: Palette.white, color: Palette.black)
@@ -287,6 +298,7 @@ struct Page4 : View {
                     withAnimation(.easeInOut){
                         onboardingVM.requestAuthNotifications()
                         destination = .page5
+                        onboardingVM.skipNotification = true
                         
                     }
                 }, label: {
@@ -312,7 +324,7 @@ struct Page5 : View {
     @Binding var shouldShowOnboarding : Bool
     @Binding var destination : Pages
     @ObservedObject var onboardingVM : OnboardingViewModel
- 
+    
     var body: some View {
         VStack(alignment: .center){
             Spacer()

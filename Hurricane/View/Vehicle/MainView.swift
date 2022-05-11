@@ -10,8 +10,8 @@ import SwiftUI
 struct MainView: View {
     
     //Onboarding vars
-//    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
-    @State var shouldShowOnboarding : Bool = true //FOR TESTING
+    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
+//    @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
     
     @State private var showAddReport = false
@@ -37,9 +37,9 @@ struct MainView: View {
         .sheet(isPresented: $showAddReport) {
                    AddReportView()
                }
-        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
-            OnboardingView(onboardingVM: onboardingVM, shouldShowOnboarding: $shouldShowOnboarding)
-        })
+//        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
+//            OnboardingView(onboardingVM: onboardingVM, shouldShowOnboarding: $shouldShowOnboarding)
+//        })
 
     }
 }

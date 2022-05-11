@@ -26,8 +26,12 @@ struct MainContent: View {
 
     var body: some View {
         NavigationView{
-            List{
-                ForEach(dataVM.vehicles){ vehicle in
+            VStack{
+            Button("remove all"){
+                dataVM.removeAllVehicles()
+            }
+                List(dataVM.vehicles,id: \.id){ vehicle in
+                
                     VStack{
                         Text(vehicle.name ?? "")
                         Text(vehicle.brand ?? "")
@@ -35,16 +39,21 @@ struct MainContent: View {
                     }
                 }
             }
+            .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
+                OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
+            })
+
         }
-        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
-            OnboardingView(onboardingVM: onboardingVM, shouldShowOnboarding: $shouldShowOnboarding)
-        })
+//        .onAppear{
+//            dataVM.getVehicles()
+//        }
     }
 }
 
 struct OnboardingView: View {
     
-    @StateObject var onboardingVM = OnboardingViewModel()
+    var onboardingVM : OnboardingViewModel
+    var dataVM : DataViewModel
     @State private var destination : Pages = .page1
     @Binding var shouldShowOnboarding : Bool
     
@@ -60,7 +69,7 @@ struct OnboardingView: View {
             Page2(onboardingVM: onboardingVM, destination: $destination)
                 .animation(.easeOut(duration: 0.2))
         case .page3:
-            Page3(destination: $destination, onboardingVM: onboardingVM)
+            Page3(destination: $destination, dataVM:dataVM, onboardingVM: onboardingVM)
         case .page4:
             Page4(destination: $destination, onboardingVM: onboardingVM)
                 .animation(.easeOut(duration: 0.2))
