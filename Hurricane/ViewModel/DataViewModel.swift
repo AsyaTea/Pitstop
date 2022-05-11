@@ -45,6 +45,9 @@ class DataViewModel : ObservableObject {
     func addVehicle(vehicle : VehicleModel) {
         let newVehicle = Vehicle(context: manager.context)
         newVehicle.name = vehicle.name
+        newVehicle.brand = vehicle.brand
+        newVehicle.model = vehicle.model
+        print(newVehicle)
         saveVehicle()
         
     }
