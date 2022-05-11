@@ -9,7 +9,13 @@ import SwiftUI
 
 struct MainView: View {
     
-    @State private var showingSheet = false
+    //Onboarding vars
+//    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
+    @State var shouldShowOnboarding : Bool = true //FOR TESTING
+    @StateObject var onboardingVM = OnboardingViewModel()
+    
+    @State private var showAddReport = false
+    
     
     var body: some View {
         ZStack{
@@ -21,16 +27,20 @@ struct MainView: View {
             VStack{
                 Spacer(minLength: UIScreen.main.bounds.size.height * 0.77)
                 Button(action: {
-                    showingSheet.toggle()
+                    showAddReport.toggle()
                 }, label: {
                     AddReportButton(text: "Add report")
                 })
                 Spacer()
             }
         )
-        .sheet(isPresented: $showingSheet) {
+        .sheet(isPresented: $showAddReport) {
                    AddReportView()
                }
+        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
+            OnboardingView(onboardingVM: onboardingVM, shouldShowOnboarding: $shouldShowOnboarding)
+        })
+
     }
 }
 

@@ -23,10 +23,20 @@ enum Palette {
     static let greyMiddle = Color(rgb: 0x8A8A8A)
     static let greyInput = Color(rgb: 0xD2D2D2)
     static let greyLight = Color(rgb: 0xF5F5F5)
+    static let greyEBEBEB = Color(rgb: 0xEBEBEB)
     static let greyBackground = Color(rgb: 0xFBFBFB)
     
     static let colorVioletLight = Color(rgb: 0x94BCF8)
     
+    
+    
+    static let testDarkmode = Color(lightRGB: 0xff0000, darkRGB: 0x00ff00)
+}
 
+extension View {
+    func shadowGrey() -> some View {
+        self
+            .shadow(color: .black.opacity(0.04) ,radius: 10, x:1 , y: 2)
+    }
 }
 

@@ -21,7 +21,7 @@ struct ContentView3: View {
                 VStack {
                     HStack {
                         //Title
-                        Text("Barman's Car >")
+                        Text("Batman's Car >")
                             .font(Typography.headerXL)
                             .foregroundColor(Palette.black)
                         Spacer()

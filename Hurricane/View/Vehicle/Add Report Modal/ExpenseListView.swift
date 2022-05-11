@@ -22,6 +22,7 @@ struct ExpenseListView: View {
                     Text($0)
                         .font(Typography.headerM)
                 }
+                
             },label:{
                 ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
             })
