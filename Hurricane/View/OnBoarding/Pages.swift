@@ -54,7 +54,7 @@ struct Page1 : View {
 //MARK: PAGE 2 ADD VEHICLE
 struct Page2 : View {
     
-    @ObservedObject var onboardingVM : OnboardingViewModel
+    @StateObject var onboardingVM : OnboardingViewModel
     
     @Binding var destination : Pages
     @FocusState var focusedField: FocusFieldBoarding?
@@ -199,7 +199,7 @@ struct Page3 : View {
     
     @State var isImport = false
     @Binding var destination : Pages
-    @StateObject var vehicleVM = DataViewModel()
+    var dataVM = DataViewModel()
     @ObservedObject var onboardingVM : OnboardingViewModel
     
     var body: some View {
@@ -247,7 +247,7 @@ struct Page3 : View {
             Spacer()
             Button(action: {
                 withAnimation(.easeInOut){
-                    vehicleVM.addVehicle(vehicle: onboardingVM.vehicle)
+                    dataVM.addVehicle(vehicle: onboardingVM.vehicle)
                     destination = .page4
                 }
             }, label: {

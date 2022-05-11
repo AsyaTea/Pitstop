@@ -37,9 +37,9 @@ struct MainView: View {
         .sheet(isPresented: $showAddReport) {
                    AddReportView()
                }
-        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
-            OnboardingView(onboardingVM: onboardingVM, shouldShowOnboarding: $shouldShowOnboarding)
-        })
+//        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
+//            OnboardingView(onboardingVM: onboardingVM, shouldShowOnboarding: $shouldShowOnboarding)
+//        })
 
     }
 }

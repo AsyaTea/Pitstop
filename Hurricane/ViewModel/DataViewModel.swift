@@ -20,12 +20,13 @@ class DataViewModel : ObservableObject {
     
     init() {
         getVehicles()
-        getExpenses(filter: filter)
+//        getExpenses(filter: filter)
     }
     
     
     //MARK: VEHICLE FUNCTIONS
     func getVehicles() {
+        
         let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
         
         //Sort for ID
@@ -47,7 +48,7 @@ class DataViewModel : ObservableObject {
         newVehicle.name = vehicle.name
         newVehicle.brand = vehicle.brand
         newVehicle.model = vehicle.model
-        print(newVehicle)
+//        print(newVehicle)
         saveVehicle()
         
     }
