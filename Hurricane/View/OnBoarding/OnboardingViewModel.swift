@@ -20,6 +20,8 @@ class OnboardingViewModel : ObservableObject {
         return false
     }
     
+    @Published var skipNotification = false
+    
     func resetFields() {
         vehicle.name = ""
         vehicle.brand = ""
