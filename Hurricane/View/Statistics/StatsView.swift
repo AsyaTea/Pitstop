@@ -8,23 +8,18 @@
 import SwiftUI
 
 struct StatsView: View {
+   
     var body: some View {
         VStack{
             HStack{
-            
-                //Header
-                
                 HStack {
-                    Text("Analytics")
-                        .font(.largeTitle)
+                    Text("Analytics")                    
                         .fontWeight(.bold)
-                    Spacer()
+                        .font(Typography.headerXL)
                 }
                 .frame(alignment: .topLeading)
                 .padding()
-                
-                Spacer()
-                
+                Spacer()                
                 ZStack{
                     RoundedRectangle(cornerRadius: 50)
                         .foregroundColor(.white)
@@ -33,21 +28,162 @@ struct StatsView: View {
                         .foregroundColor(.black)
                 }
                 .frame(width: 80, height: 25, alignment: .center)
-                //List
+                
+                Button {
+                    print("Bell is tapped")
+                } label: {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 100)
+                            .frame(width: 25, height: 25, alignment: .center)
+                            .foregroundColor(.white)
+                        Image(systemName: "bell")
+                            .foregroundColor(.black)
+                            .font(.subheadline)
+                    }
                 }
-                
-                
-                Spacer()
+                //List
+            }
+            .frame(height: 30)
+            .padding()
+            
+                    CostsListView()
+               
+                   
+             
             
             
-//            Text("Go away \n we are working!")
-//                .multilineTextAlignment(.center)
-//                .font(Typography.headerXXL)
-//        Image("bestBoy")
-//                .resizable()
-//                .scaledToFit()
+            
+                        
+
             
         }
+        .background(Palette.greyLight)
+        
+    }
+}
+
+struct CostsListView: View {
+    @State var value = "$ 20"
+    var body: some View {
+        List {
+            Section {
+                HStack {
+                    Text("Costs")
+                        .font(Typography.headerL)
+                    Spacer()
+                    Text("$ 2089")
+                        .fontWeight(.semibold)
+                }
+                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+               
+
+                HStack{
+                    ListCategoryComponent(title: "Fuel", iconName: "fuelType", color: Palette.colorYellow)
+                    Spacer()
+                    Text(value)
+                        .font(Typography.headerM)
+                        .foregroundColor(Palette.greyHard)
+                }
+                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                HStack{
+                    ListCategoryComponent(title: "Mainteinance", iconName: "maintanance", color: Palette.colorGreen)
+                    Spacer()
+                    Text(value)
+                        .font(Typography.headerM)
+                        .foregroundColor(Palette.greyHard)
+                }
+                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                HStack{
+                    ListCategoryComponent(title: "Insurance", iconName: "Insurance", color: Palette.colorOrange)
+                    Spacer()
+                    Text(value)
+                        .font(Typography.headerM)
+                        .foregroundColor(Palette.greyHard)
+                }
+                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                HStack{
+                    ListCategoryComponent(title: "Tolls", iconName: "Tolls", color: Palette.colorOrange)
+                    Spacer()
+                    Text(value)
+                        .font(Typography.headerM)
+                        .foregroundColor(Palette.greyHard)
+                }
+                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                HStack{
+                    ListCategoryComponent(title: "Fines", iconName: "fines", color: Palette.colorOrange)
+                    Spacer()
+                    Text(value)
+                        .font(Typography.headerM)
+                        .foregroundColor(Palette.greyHard)
+                }
+                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                HStack{
+                    ListCategoryComponent(title: "Parking", iconName: "Parking", color: Palette.colorViolet)
+                    Spacer()
+                    Text(value)
+                        .font(Typography.headerM)
+                        .foregroundColor(Palette.greyHard)
+                }
+                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                HStack{
+                    ListCategoryComponent(title: "Other", iconName: "Other", color: Palette.colorViolet)
+                    Spacer()
+                    Text(value)
+                        .font(Typography.headerM)
+                        .foregroundColor(Palette.greyHard)
+                }
+                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                
+                
+            }
+            
+            .padding(2)
+            Section {
+                FuelListView()
+                    .padding(2)
+            }
+        }
+    }
+}
+
+struct FuelListView : View {
+    var body: some View {
+        
+        HStack {
+            Text("Fuel")
+                .font(Typography.headerL)
+            Spacer()
+            Text("8,71L/100 Km")
+                .fontWeight(.semibold)
+                .font(Typography.headerM)
+        }
+        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+            
+        ListCostsAttributes(title: "Category", value: "$ 20")
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+        ListCostsAttributes(title: "Fuel", value: "$ 1.564")
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+        ListCostsAttributes(title: "Refuels per month", value: "13")
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+        ListCostsAttributes(title: "Average days/refuel", value: "26")
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+
+
+    }
+}
+
+struct ListCostsAttributes: View {
+    var title : String
+    var value : String
+    var body: some View {
+        HStack{
+            Text(title)
+                .font(Typography.headerM)
+            Spacer()
+            Text(value)
+                .foregroundColor(Palette.greyHard)
+        }
+        
     }
 }
 

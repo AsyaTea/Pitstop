@@ -20,7 +20,7 @@ enum Pages {
 struct MainContent: View {
 
 //    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
-    @State var shouldShowOnboarding : Bool = true //FOR TESTING
+    @State var shouldShowOnboarding : Bool = false //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
     @StateObject var dataVM = DataViewModel()
 
