@@ -81,9 +81,9 @@ struct ContentView3: View {
                 //Stats views
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(0..<3) { _ in
+//                        ForEach(0..<3) { _ in
                             StatView()
-                        }
+//                        }
                     }
                     .frame(width: 430, height: 100, alignment: .center)
              
@@ -91,132 +91,8 @@ struct ContentView3: View {
                 }
                 
                 ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 15) {
-                        HStack{
-                            Text("Last Events")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                            Spacer()
-                            Button {
-                                print("View all tapped")
-                            } label: {
-                                Text("View all >")
-                                    .foregroundColor(Palette.greyHard)
-                            }
-
-                            
-                        }
-                        .padding(5)
-                        
-                            
-                        ForEach(categories,  id:\.self) { category in
-                            HStack{
-                                ZStack{
-                                    Circle()
-                                        .frame(width: 32, height: 32)
-                                        .foregroundColor(Palette.colorOrange)
-                                    Image(systemName: "drop.fill")
-                                        .resizable()
-                                        .blendMode(.screen)
-                                        .frame(width: 12, height: 16)
-                                        .foregroundColor(.white)
-                                }
-                                VStack{
-                                    Text(category)
-                                        .font(Typography.headerM)
-                                        .foregroundColor(Palette.black)
-                                        .padding(.leading,5)
-                                    Text("Products")
-                                        .foregroundColor(Palette.greyHard)
-                                    
-                                }
-                                
-                                Spacer()
-                                
-                                Text("–$ 2 302")
-                                    .foregroundColor(Palette.greyHard)
-                            }
-                        }
-                        
-                        
-                        HStack{
-                            Text("Documents")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                              
-                            Spacer()
-                          
-                        }
-                        .padding(5)
-                        
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
-                                ForEach(0..<2) { _ in
-                                    ZStack{
-                                        RoundedRectangle(cornerRadius: 30)
-                                            .frame(width: 128, height: 110)
-                                            .foregroundColor(.white)
-                                        VStack{
-                                            HStack{
-                                                ZStack{
-                                                    
-                                                    Circle()
-                                                        .frame(width: 24, height: 24)
-                                                        .foregroundColor(Palette.greyLight)
-                                                    Image(systemName: "text.book.closed")
-                                                
-                                                }
-                                                .padding(5)
-                                                Spacer()
-                                            }
-                                            Spacer()
-                                            Text("Driving license")
-                                                .fontWeight(.medium)
-                                        }
-                                        .padding()
-                                    }
-                                }
-                                
-                                Button {
-                                    print("Creating new doc")
-                                } label: {
-                                    ZStack{
-                                        RoundedRectangle(cornerRadius: 30)
-                                            .frame(width: 128, height: 110)
-                                        VStack{
-                                            Text("+")
-                                            Text("Add Document")
-                                        }
-                                        .foregroundColor(.white)
-                                    }
-                                }
-
-                                
-                            }
-                        }
-                        
-                    }
-//                    .overlay(
-//                        GeometryReader { proxy -> Color in
-//                            let minY = proxy.frame(in: .global).minY
-//
-//                            DispatchQueue.main.async {
-//                                if startOffset == 0 {
-//                                    startOffset = minY
-//                                }
-//
-//                                offset = startOffset - minY
-//                                print(offset)
-//                            }
-//
-//                            return Color.clear
-//                        }
-//                            .frame(width: 0, height: 0)
-//                        ,alignment: .top
-//                    )
-                    
-                }
-              
+                    MainPageScroll()
+                }              
                 .padding(25)
                 .background(Palette.greyBackground.ignoresSafeArea(.container, edges: .bottom))
                 .cornerRadius(60)
@@ -271,15 +147,173 @@ struct ContentView3: View {
     }
 }
 
-struct HeaderView {
+struct MainPageScroll: View {
+    var categories = ["Crossroads","Crossroads","Crossroads"]
+    var body: some View {
+        
+            VStack(spacing: 15) {
+                HStack{
+                    Text("Last Events")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Spacer()
+                    Button {
+                        print("View all tapped")
+                    } label: {
+                        Text("View all >")
+                            .foregroundColor(Palette.greyHard)
+                    }
+
+                    
+                }
+                .padding(5)
+                
+                    
+                ForEach(categories,  id:\.self) { category in
+                    HStack{
+                        ZStack{
+                            Circle()
+                                .frame(width: 32, height: 32)
+                                .foregroundColor(Palette.colorOrange)
+                            Image(systemName: "drop.fill")
+                                .resizable()
+                                .blendMode(.screen)
+                                .frame(width: 12, height: 16)
+                                .foregroundColor(.white)
+                        }
+                        VStack{
+                            Text(category)
+                                .font(Typography.headerM)
+                                .foregroundColor(Palette.black)
+                                .padding(.leading,5)
+                            Text("Products")
+                                .foregroundColor(Palette.greyHard)
+                            
+                        }
+                        
+                        Spacer()
+                        
+                        Text("–$ 2 302")
+                            .foregroundColor(Palette.greyHard)
+                    }
+                }
+                
+                
+                HStack{
+                    Text("Documents")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                      
+                    Spacer()
+                  
+                }
+                .padding(5)
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(0..<2) { _ in
+                            ZStack{
+                                RoundedRectangle(cornerRadius: 30)
+                                    .frame(width: 128, height: 110)
+                                    .foregroundColor(.white)
+                                VStack{
+                                    HStack{
+                                        ZStack{
+                                            
+                                            Circle()
+                                                .frame(width: 24, height: 24)
+                                                .foregroundColor(Palette.greyLight)
+                                            Image(systemName: "text.book.closed")
+                                        
+                                        }
+                                        .padding(5)
+                                        Spacer()
+                                    }
+                                    Spacer()
+                                    Text("Driving license")
+                                        .fontWeight(.medium)
+                                }
+                                .padding()
+                            }
+                        }
+                        
+                        Button {
+                            print("Creating new doc")
+                        } label: {
+                            ZStack{
+                                RoundedRectangle(cornerRadius: 30)
+                                    .frame(width: 128, height: 110)
+                                VStack{
+                                    Text("+")
+                                    Text("Add Document")
+                                }
+                                .foregroundColor(.white)
+                            }
+                        }
+
+                        
+                    }
+                }
+                Spacer()
+                
+            }
+            
+            .cornerRadius(20)
+//                    .overlay(
+//                        GeometryReader { proxy -> Color in
+//                            let minY = proxy.frame(in: .global).minY
+//
+//                            DispatchQueue.main.async {
+//                                if startOffset == 0 {
+//                                    startOffset = minY
+//                                }
+//
+//                                offset = startOffset - minY
+//                                print(offset)
+//                            }
+//
+//                            return Color.clear
+//                        }
+//                            .frame(width: 0, height: 0)
+//                        ,alignment: .top
+//                    )
+            
+        }
+    }
+
+
+struct StickyHeader: View {
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 0) {
+                HeaderView()
+            }
+        }
+        .ignoresSafeArea(.container, edges: .vertical)
+    }
+}
+
+struct HeaderView: View {
     
     var body: some View {
-        ZStack{
-            Palette.greyBackground
-                .ignoresSafeArea()
+       
+        GeometryReader{ proxy in
+            let minY = proxy.frame(in: .named("SCroll")).minY
+            let size = proxy.size
+            let height = size.height + minY
             
-            Text("Hi")
+            StatView()
+                .frame(width: size.width, height: height, alignment: .top)
+                .overlay(content: {
+                    ZStack(alignment: .bottom) {
+                        
+                    }
+                })
+                .offset(y: minY)
         }
+            
+
+        
         
     }
 }

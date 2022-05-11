@@ -10,12 +10,43 @@ import SwiftUI
 struct StatsView: View {
     var body: some View {
         VStack{
-            Text("Go away \n we are working!")
-                .multilineTextAlignment(.center)
-                .font(Typography.headerXXL)
-        Image("bestBoy")
-                .resizable()
-                .scaledToFit()
+            HStack{
+            
+                //Header
+                
+                HStack {
+                    Text("Analytics")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    Spacer()
+                }
+                .frame(alignment: .topLeading)
+                .padding()
+                
+                Spacer()
+                
+                ZStack{
+                    RoundedRectangle(cornerRadius: 50)
+                        .foregroundColor(.white)
+                    Text("Per month")
+                        .font(.system(size: 12))
+                        .foregroundColor(.black)
+                }
+                .frame(width: 80, height: 25, alignment: .center)
+                //List
+                }
+                
+                
+                Spacer()
+            
+            
+//            Text("Go away \n we are working!")
+//                .multilineTextAlignment(.center)
+//                .font(Typography.headerXXL)
+//        Image("bestBoy")
+//                .resizable()
+//                .scaledToFit()
+            
         }
     }
 }

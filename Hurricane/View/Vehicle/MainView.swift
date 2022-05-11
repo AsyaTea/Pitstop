@@ -42,20 +42,24 @@ struct MainView_Previews: PreviewProvider {
 
 struct StatView: View {
     var body: some View {
-        ZStack{
-            RoundedRectangle(cornerRadius: 16)
-                .frame(width: 108, height: 76, alignment: .center)
-                .foregroundColor(Palette.colorVioletLight)
-            VStack{
-                Text("$23,4")
-                    .font(Typography.headerL)
-                    .foregroundColor(Palette.black)
-                Text("All costs")
-                    .font(Typography.TextM)
-                    .foregroundColor(Palette.black)
+        ForEach(0..<3) { _ in
+            HStack {
+                ZStack{
+                    RoundedRectangle(cornerRadius: 16)
+                        .frame(width: 108, height: 76, alignment: .center)
+                        .foregroundColor(Palette.colorVioletLight)
+                    VStack{
+                        Text("$23,4")
+                            .font(Typography.headerL)
+                            .foregroundColor(Palette.black)
+                        Text("All costs")
+                            .font(Typography.TextM)
+                            .foregroundColor(Palette.black)
+                    }
+                    .foregroundColor(.black)
+                    
+                }
             }
-            .foregroundColor(.black)
-            
         }
         
         

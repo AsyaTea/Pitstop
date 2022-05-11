@@ -11,8 +11,9 @@ import SwiftUI
 struct HurricaneApp: App {
     var body: some Scene {
         WindowGroup {
-            MainContent()
-                .preferredColorScheme(.light)
+//            MainContent()
+//                .preferredColorScheme(.light)
+            MainView()
         }
     }
 }
