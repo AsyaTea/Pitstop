@@ -10,10 +10,9 @@ import UserNotifications
 
 class OnboardingViewModel : ObservableObject {
     
+    @Published var vehicle : VehicleModel = VehicleModel()
+    
     let fuelCategories = ["Gasoline","Diesel", "Electric","LPG (Propane)","CNG (Methane)","Ethanol","Hydrogen"]
-    @Published var carName : String = ""
-    @Published var brand : String = ""
-    @Published var model : String = ""
     @Published var selectedFuel = "Fuel Type"
     
     var isDisabled : Bool {
@@ -22,9 +21,9 @@ class OnboardingViewModel : ObservableObject {
     }
     
     func resetFields() {
-        carName = ""
-        brand = ""
-        model = ""
+        vehicle.name = ""
+        vehicle.brand = ""
+        vehicle.model = ""
         selectedFuel = "Fuel Type"
     }
     

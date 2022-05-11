@@ -17,23 +17,30 @@ enum Pages {
     case page5
 }
 
-//struct MainContent: View {
-//
-////    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
-//    @State var shouldShowOnboarding : Bool = true //FOR TESTING
-//    @StateObject var onboardingVM = OnboardingViewModel()
-//
-//    var body: some View {
-//        NavigationView{
-//            VStack{
-//                Text("ciao")
-//            }
-//        }
-//        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
-//            OnboardingView(onboardingVM: onboardingVM, shouldShowOnboarding: $shouldShowOnboarding)
-//        })
-//    }
-//}
+struct MainContent: View {
+
+//    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
+    @State var shouldShowOnboarding : Bool = true //FOR TESTING
+    @StateObject var onboardingVM = OnboardingViewModel()
+    @StateObject var dataVM = DataViewModel()
+
+    var body: some View {
+        NavigationView{
+            List{
+                ForEach(dataVM.vehicles){ vehicle in
+                    VStack{
+                        Text(vehicle.name ?? "")
+                        Text(vehicle.brand ?? "")
+                        Text(vehicle.model ?? "")
+                    }
+                }
+            }
+        }
+        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
+            OnboardingView(onboardingVM: onboardingVM, shouldShowOnboarding: $shouldShowOnboarding)
+        })
+    }
+}
 
 struct OnboardingView: View {
     
@@ -50,11 +57,10 @@ struct OnboardingView: View {
             //                .transition( AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                 .animation(.easeOut)
         case .page2:
-            Page2(destination: $destination, onboardingVM: onboardingVM)
-            //                .transition( AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .trailing)))
+            Page2(onboardingVM: onboardingVM, destination: $destination)
                 .animation(.easeOut(duration: 0.2))
         case .page3:
-            Page3(destination: $destination)
+            Page3(destination: $destination, onboardingVM: onboardingVM)
         case .page4:
             Page4(destination: $destination, onboardingVM: onboardingVM)
                 .animation(.easeOut(duration: 0.2))
