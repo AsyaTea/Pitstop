@@ -65,19 +65,18 @@ struct StatsView: View {
                     .padding(10)
                     .font(Typography.headerS)
                     .foregroundColor(Palette.black)
-                    .background {
-                        if pickedTab == tab {
-                            Capsule()
-                                .fill(Palette.greyLight)
-                                .matchedGeometryEffect(id: "pickerTab", in: animation)
-                        }
-                    }
+//                    .background {
+//                        if pickedTab == tab {
+//                            Capsule()
+//                                .fill(Palette.greyLight)
+//                                .matchedGeometryEffect(id: "pickerTab", in: animation)
+//                        }
+//                    }
                     .containerShape(Capsule())
                     .onTapGesture {
-                        withAnimation(.easeInOut){
-                           
-                            let haptic = UIImpactFeedbackGenerator(style: .soft)
-                            haptic.impactOccurred()
+//                        withAnimation(.easeInOut){                           
+//                            let haptic = UIImpactFeedbackGenerator(style: .soft)
+//                            haptic.impactOccurred()
                         }
                     }
             }
