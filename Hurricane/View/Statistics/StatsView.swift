@@ -9,6 +9,8 @@ import SwiftUI
 
 struct StatsView: View {
    
+    @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
+    @State var pickedTab = ""
     var body: some View {
         VStack{
             HStack{
@@ -46,20 +48,43 @@ struct StatsView: View {
             .frame(height: 30)
             .padding()
             
-                    CostsListView()
-               
-                   
-             
-            
-            
-            
-                        
-
-            
+            CostsListView()
         }
+        .overlay(content: {
+            CustomSegmentedPicker()
+        })
         .background(Palette.greyLight)
         
     }
+    
+    func CustomSegmentedPicker() -> some View{
+        HStack(spacing:10) {
+            ForEach(pickerTabs,id:\.self){ tab in
+                Text(tab)
+                    .frame(maxWidth: .infinity)
+                    .padding(10)
+                    .font(Typography.headerS)
+                    .foregroundColor(Palette.black)
+                    .background {
+                        if pickedTab == tab {
+                            Capsule()
+                                .fill(Palette.greyLight)
+                                .matchedGeometryEffect(id: "pickerTab", in: animation)
+                        }
+                    }
+                    .containerShape(Capsule())
+                    .onTapGesture {
+                        withAnimation(.easeInOut){
+                           
+                            let haptic = UIImpactFeedbackGenerator(style: .soft)
+                            haptic.impactOccurred()
+                        }
+                    }
+            }
+        }
+    }
+    
+
 }
 
 struct CostsListView: View {
