@@ -16,7 +16,7 @@ class OnboardingViewModel : ObservableObject {
     @Published var selectedFuel = "Fuel Type"
     
     var isDisabled : Bool {
-        //        return carName.isEmpty || brand.isEmpty || model.isEmpty || selectedFuel == "Fuel Type"
+        return vehicle.name?.isEmpty ?? false || vehicle.brand?.isEmpty ?? false || vehicle.model?.isEmpty ?? false || selectedFuel == "Fuel Type"
         return false
     }
     
