@@ -16,7 +16,7 @@ struct HomeStyleView: View {
     
     var body: some View {
         
-        ScrollView(.vertical,showsIndicators: true){
+        ScrollView(.vertical,showsIndicators: false){
             VStack(spacing: 15){
                 
                 GeometryReader{ proxy in
@@ -41,16 +41,18 @@ struct HomeStyleView: View {
                 .offset(y: -offset)
                 .zIndex(1)
                 // BOTTOM VIEW
-                VStack(spacing: 15){
-                  
+                VStack(spacing: 0){
+                    
                     BottomContent()
                     
                 }
-                .padding()
+//                .padding()
                 .zIndex(0)
             }
+            
             .modifier(OffsetModifier(offset: $offset))
         }
+        .background(Palette.greyBackground)
         // Setting the coordinate space
         .coordinateSpace(name: "SCROLL")
         
@@ -96,9 +98,76 @@ struct Home_Previews: PreviewProvider {
 
 struct BottomContent : View {
     var body: some View {
+        
         TitleSectionComponent(sectionTitle: "Last events")
+        
         TitleSectionComponent(sectionTitle: "Documents")
+        ScrollView(.horizontal,showsIndicators: false){
+            VStack {
+                Spacer(minLength: 16)
+            HStack{
+                documentComponent(title: "Driving license")
+                documentComponent(title: "Driving license")
+                ZStack{
+                    Rectangle()
+                        .cornerRadius(8)
+                        .frame(width: UIScreen.main.bounds.width * 0.35, height: UIScreen.main.bounds.height * 0.11)
+                        .foregroundColor(Palette.white)
+                        .shadowGrey()
+                    VStack(alignment: .center, spacing: 10){
+                        Image("plus")
+                            .foregroundColor(Palette.greyMiddle)
+                        Text("Add document")
+                            .foregroundColor(Palette.greyMiddle)
+                            .font(Typography.ControlS)
+                    }
+                }
+            }
+                Spacer(minLength: 16)
+            }
+            
+        }
+        .safeAreaInset(edge: .trailing, spacing: 0) {
+            Spacer()
+                .frame(width: 16)
+        }
+        .safeAreaInset(edge: .leading, spacing: 0) {
+            Spacer()
+                .frame(width: 16)
+        }
+        
+        
+
+
+        
         TitleSectionComponent(sectionTitle: "Important numbers")
+    }
+    
+    @ViewBuilder
+    func documentComponent(title: String) -> some View {
+        ZStack{
+            Rectangle()
+                .cornerRadius(8)
+                .frame(width: UIScreen.main.bounds.width * 0.35, height: UIScreen.main.bounds.height * 0.11)
+                .foregroundColor(Palette.white)
+                .shadowGrey()
+            VStack(alignment: .leading, spacing: 30){
+                ZStack{
+                    Circle()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(Palette.greyLight)
+                    Image("documents")
+                        .resizable()
+                        .frame(width: 12, height: 12)
+                        .foregroundColor(Palette.black)
+                }
+                Text(title)
+                    .foregroundColor(Palette.black)
+                    .font(Typography.ControlS)
+            }
+            .padding(.leading,-20)
+            .padding(.top,-2)
+        }
     }
 }
 
@@ -175,62 +244,62 @@ struct HeaderContent : View {
         VStack(alignment: .leading, spacing: 15){
             HStack(spacing:13){
                 
-            Button(action: {
-                
-            }, label: {
-                ZStack{
-                    Rectangle()
-                        .cornerRadius(16)
-                        .foregroundColor(Palette.colorMainBlue)
-                        .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
-                    VStack(alignment: .center){
-                    Text("23,4k $")
-                        .foregroundColor(Palette.black)
-                        .font(Typography.headerL)
-                        Text("All costs")
-                            .foregroundColor(Palette.black)
-                            .font(Typography.TextM)
+                Button(action: {
+                    
+                }, label: {
+                    ZStack{
+                        Rectangle()
+                            .cornerRadius(16)
+                            .foregroundColor(Palette.colorMainBlue)
+                            .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
+                        VStack(alignment: .center){
+                            Text("23,4k $")
+                                .foregroundColor(Palette.black)
+                                .font(Typography.headerL)
+                            Text("All costs")
+                                .foregroundColor(Palette.black)
+                                .font(Typography.TextM)
+                        }
                     }
-                }
-            })
-            
-            Button(action: {
+                })
                 
-            }, label: {
-                ZStack{
-                    Rectangle()
-                        .cornerRadius(16)
-                        .foregroundColor(Palette.colorMainBlue)
-                        .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
-                    VStack(alignment: .center){
-                    Text("23842")
-                        .foregroundColor(Palette.black)
-                        .font(Typography.headerL)
-                        Text("Odometer")
-                            .foregroundColor(Palette.black)
-                            .font(Typography.TextM)
+                Button(action: {
+                    
+                }, label: {
+                    ZStack{
+                        Rectangle()
+                            .cornerRadius(16)
+                            .foregroundColor(Palette.colorMainBlue)
+                            .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
+                        VStack(alignment: .center){
+                            Text("23842")
+                                .foregroundColor(Palette.black)
+                                .font(Typography.headerL)
+                            Text("Odometer")
+                                .foregroundColor(Palette.black)
+                                .font(Typography.TextM)
+                        }
                     }
-                }
-            })
-
-            Button(action: {
+                })
                 
-            }, label: {
-                ZStack{
-                    Rectangle()
-                        .cornerRadius(16)
-                        .foregroundColor(Palette.colorMainBlue)
-                        .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
-                    VStack(alignment: .center){
-                    Text("23,4k $")
-                        .foregroundColor(Palette.black)
-                        .font(Typography.headerL)
-                        Text("Average")
-                            .foregroundColor(Palette.black)
-                            .font(Typography.TextM)
+                Button(action: {
+                    
+                }, label: {
+                    ZStack{
+                        Rectangle()
+                            .cornerRadius(16)
+                            .foregroundColor(Palette.colorMainBlue)
+                            .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
+                        VStack(alignment: .center){
+                            Text("23,4k $")
+                                .foregroundColor(Palette.black)
+                                .font(Typography.headerL)
+                            Text("Average")
+                                .foregroundColor(Palette.black)
+                                .font(Typography.TextM)
+                        }
                     }
-                }
-            })
+                })
             }
         }
         .padding()
@@ -288,16 +357,17 @@ struct CustomCorner : Shape {
 struct TitleSectionComponent: View {
     
     var sectionTitle : String
+    //    @Binding var show : Bool
     
     var body: some View {
-       HStack{
+        HStack{
             Text(sectionTitle)
                 .foregroundColor(Palette.black)
                 .font(Typography.headerL)
             Spacer()
             HStack{
                 Button(action:{
-                    
+                    //                    show.toggle()
                 }, label: {
                     Text("View all")
                         .foregroundColor(Palette.greyMiddle)

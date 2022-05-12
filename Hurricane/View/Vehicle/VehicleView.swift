@@ -10,8 +10,8 @@ import SwiftUI
 struct VehicleView: View {
     
     //Onboarding vars
-    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
-//    @State var shouldShowOnboarding : Bool = true //FOR TESTING
+//    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
+    @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
     
     @State private var showAddReport = false
@@ -35,6 +35,7 @@ struct VehicleView: View {
                 })
                 Spacer()
             }
+            
         )
         .sheet(isPresented: $showAddReport) {
                    AddReportView()
@@ -59,14 +60,14 @@ struct AddReportButton : View {
     var body: some View {
         
         ZStack{
-            Rectangle()
+            Capsule(style: .continuous)
                 .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055, alignment: .center)
-                .cornerRadius(43)
                 .foregroundColor(Palette.black)
             HStack{
                 Spacer()
                 Image("plus")
                     .resizable()
+                    .foregroundColor(Palette.white)
                     .frame(width: 14, height: 14)
                 Text(text)
                     .foregroundColor(Palette.white)
