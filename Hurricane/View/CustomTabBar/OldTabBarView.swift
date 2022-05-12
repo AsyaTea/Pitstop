@@ -13,18 +13,18 @@ struct OldTabBarView: View {
     
     var body: some View {
         TabView{
-            MainView()
+            VehicleView()
                 .tabItem {
                     Image("carIcon")
                         .renderingMode(.template)
                 }
             
-            MainView()
+            VehicleView()
                 .tabItem {
                     Image("chartIcon")
                         .renderingMode(.template)
                 }
-            MainView()
+            VehicleView()
                 .tabItem {
                     Image("settingsIcon")
                         .renderingMode(.template)
