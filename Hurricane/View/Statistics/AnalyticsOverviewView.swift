@@ -41,6 +41,8 @@ struct AnalyticsOverviewView: View {
 
 
 struct CostsListView: View {
+
+    
     @State var value = "$ 20"
     var costs = ["Fuel", "Mainteinance", "Insurance", "Tolls", "Fines", "Parking", "Other"]
     var costsImage = ["fuelType", "maintanance", "Insurance", "Tolls", "fines", "Parking", "Other"]
@@ -77,7 +79,7 @@ struct CostsListView: View {
                 }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                 HStack{
-                    ListCategoryComponent(title: "Insurance", iconName: "Insurance", color: Palette.colorOrange)
+                    ListCategoryComponent(title: "Insurance", iconName: "insurance", color: Palette.colorOrange)
                     Spacer()
                     Text(value)
                         .font(Typography.headerM)
@@ -85,7 +87,7 @@ struct CostsListView: View {
                 }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                 HStack{
-                    ListCategoryComponent(title: "Tolls", iconName: "Tolls", color: Palette.colorOrange)
+                    ListCategoryComponent(title: "Tolls", iconName: "tolls", color: Palette.colorOrange)
                     Spacer()
                     Text(value)
                         .font(Typography.headerM)
@@ -101,7 +103,7 @@ struct CostsListView: View {
                 }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                 HStack{
-                    ListCategoryComponent(title: "Parking", iconName: "Parking", color: Palette.colorViolet)
+                    ListCategoryComponent(title: "Parking", iconName: "parking", color: Palette.colorViolet)
                     Spacer()
                     Text(value)
                         .font(Typography.headerM)
@@ -109,7 +111,7 @@ struct CostsListView: View {
                 }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                 HStack{
-                    ListCategoryComponent(title: "Other", iconName: "Other", color: Palette.colorViolet)
+                    ListCategoryComponent(title: "Other", iconName: "other", color: Palette.colorViolet)
                     Spacer()
                     Text(value)
                         .font(Typography.headerM)

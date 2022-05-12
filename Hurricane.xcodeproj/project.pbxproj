@@ -20,6 +20,7 @@
 		41C6E208282CEE6100F756B5 /* AnalyticsCostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E207282CEE6100F756B5 /* AnalyticsCostView.swift */; };
 		41C6E20A282CF47D00F756B5 /* AnalyticsFuelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E209282CF47D00F756B5 /* AnalyticsFuelView.swift */; };
 		41C6E20C282CF49B00F756B5 /* AnalyticsOdometerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E20B282CF49B00F756B5 /* AnalyticsOdometerView.swift */; };
+		41C6E20E282D184400F756B5 /* GraphPractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E20D282D184400F756B5 /* GraphPractice.swift */; };
 		FF10676C282C03300077CCF7 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10676B282C03300077CCF7 /* OnboardingViewModel.swift */; };
 		FF10676E282C03E20077CCF7 /* Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10676D282C03E20077CCF7 /* Pages.swift */; };
 		FF1AA1A32823F9C200AB61A2 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A22823F9C200AB61A2 /* Typography.swift */; };
@@ -61,6 +62,7 @@
 		41C6E207282CEE6100F756B5 /* AnalyticsCostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsCostView.swift; sourceTree = "<group>"; };
 		41C6E209282CF47D00F756B5 /* AnalyticsFuelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsFuelView.swift; sourceTree = "<group>"; };
 		41C6E20B282CF49B00F756B5 /* AnalyticsOdometerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsOdometerView.swift; sourceTree = "<group>"; };
+		41C6E20D282D184400F756B5 /* GraphPractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphPractice.swift; sourceTree = "<group>"; };
 		FF10676B282C03300077CCF7 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		FF10676D282C03E20077CCF7 /* Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pages.swift; sourceTree = "<group>"; };
 		FF1AA1A22823F9C200AB61A2 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				41C6E207282CEE6100F756B5 /* AnalyticsCostView.swift */,
 				41C6E209282CF47D00F756B5 /* AnalyticsFuelView.swift */,
 				41C6E20B282CF49B00F756B5 /* AnalyticsOdometerView.swift */,
+				41C6E20D282D184400F756B5 /* GraphPractice.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				41C6E1FC28251B0100F756B5 /* ContentView3.swift in Sources */,
 				41C6E1F62823E4C800F756B5 /* ContentView2.swift in Sources */,
 				41C6E20A282CF47D00F756B5 /* AnalyticsFuelView.swift in Sources */,
+				41C6E20E282D184400F756B5 /* GraphPractice.swift in Sources */,
 				415D203128214180004AF201 /* ContentView.swift in Sources */,
 				415D2042282145FE004AF201 /* DataViewModel.swift in Sources */,
 				FF42ADD12825201A00C66A84 /* TabData.swift in Sources */,
