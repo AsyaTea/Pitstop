@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct HomeStyleView: View {
     var topEdge : CGFloat
@@ -24,9 +25,10 @@ struct HomeStyleView: View {
                     HeaderContent(offset: $offset, maxHeight: maxHeight)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
+                       
                     // sticky effect
                         .frame(height: getHeaderHeight(),alignment: .bottom)
-                        .background(Palette.colorBlue,in: CustomCorner(corners: [.bottomRight], radius: getCornerRadius()))
+                        .background(Palette.colorBlue,in: CustomCorner(corners: [.bottomRight,.bottomLeft], radius: getCornerRadius()))
                         .overlay(
                             //Top nav view
                             TopNav(offset: $offset)
@@ -44,12 +46,13 @@ struct HomeStyleView: View {
                 VStack(spacing: 0){
                     
                     BottomContent()
+                       
                     
                 }
+               
 //                .padding()
                 .zIndex(0)
             }
-            
             .modifier(OffsetModifier(offset: $offset))
         }
         .background(Palette.greyBackground)
@@ -63,13 +66,13 @@ struct HomeStyleView: View {
         
         // 80 is the costant top nav bar height
         // since we included top safe area so we also need to include that too
-        return topHeight > (80 + topEdge) ? topHeight
-        : (80 + topEdge)
+        return topHeight > (60 + topEdge) ? topHeight
+        : (60 + topEdge)
     }
     
     func getCornerRadius() -> CGFloat {
         
-        let progress = -offset / (maxHeight - (80+topEdge))
+        let progress = -offset / (maxHeight - (60+topEdge))
         
         let value = 1 - progress
         let radius = value * 50
@@ -81,7 +84,7 @@ struct HomeStyleView: View {
         // to start after the main content vanished
         // we nee to eliminate 70 from the offset
         // to get starter..
-        let progress = -(offset + 70) / (maxHeight - (80 + topEdge))
+        let progress = -(offset + 70) / (maxHeight - (60 + topEdge))
         
         return progress
     }
@@ -97,31 +100,33 @@ struct Home_Previews: PreviewProvider {
 }
 
 struct BottomContent : View {
+    
+    
     var body: some View {
         
-        TitleSectionComponent(sectionTitle: "Last events")
-        
-        TitleSectionComponent(sectionTitle: "Documents")
+        titleSectionComponent(sectionTitle: "Last events")
+            .padding()
+        categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
+        categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
+        categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
+          
+        titleSectionComponent(sectionTitle: "Documents")
+            .padding()
         ScrollView(.horizontal,showsIndicators: false){
             VStack {
-                Spacer(minLength: 16)
+                Spacer(minLength: 12)
             HStack{
-                documentComponent(title: "Driving license")
-                documentComponent(title: "Driving license")
-                ZStack{
-                    Rectangle()
-                        .cornerRadius(8)
-                        .frame(width: UIScreen.main.bounds.width * 0.35, height: UIScreen.main.bounds.height * 0.11)
-                        .foregroundColor(Palette.white)
-                        .shadowGrey()
-                    VStack(alignment: .center, spacing: 10){
-                        Image("plus")
-                            .foregroundColor(Palette.greyMiddle)
-                        Text("Add document")
-                            .foregroundColor(Palette.greyMiddle)
-                            .font(Typography.ControlS)
-                    }
-                }
+                Button(action: {
+                   
+                }, label: {
+                    documentComponent(title: "Driving license")
+                })
+                Button(action: {
+                    
+                }, label: {
+                    addComponent(title: "Add document")
+                })
+               
             }
                 Spacer(minLength: 16)
             }
@@ -136,11 +141,98 @@ struct BottomContent : View {
                 .frame(width: 16)
         }
         
+        titleSectionComponent(sectionTitle: "Important numbers")
+            .padding()
+        ScrollView(.horizontal,showsIndicators: false){
+            VStack {
+                Spacer(minLength: 12)
+            HStack{
+                Button(action: {
+                   
+                }, label: {
+                    importantNumbersComponent(title: "Service", number: "366 4925454")
+                })
+                Button(action: {
+                    
+                }, label: {
+                    addComponent(title: "Add number")
+                })
+               
+            }
+                Spacer(minLength: 16)
+            }
+            
+        }
+        .safeAreaInset(edge: .trailing, spacing: 0) {
+            Spacer()
+                .frame(width: 16)
+        }
+        .safeAreaInset(edge: .leading, spacing: 0) {
+            Spacer()
+                .frame(width: 16)
+        }
         
-
-
+        Spacer()
+    }
+    
+    @ViewBuilder
+    func categoryComponent(categoryName : String, date: Date, cost : String) -> some View {
         
-        TitleSectionComponent(sectionTitle: "Important numbers")
+        let formatted = date.formatDate()
+        
+        HStack{
+            ZStack{
+                Circle()
+                    .frame(width: 32, height: 32)
+                    .foregroundColor(Palette.colorYellow)
+                Image("Fuel")
+                    .resizable()
+                    .frame(width: 16, height: 16)
+            }
+            VStack(alignment: .leading){
+                Text(categoryName)
+                    .foregroundColor(Palette.black)
+                    .font(Typography.headerS)
+                Text(formatted)
+                    .foregroundColor(Palette.greyMiddle)
+                    .font(Typography.TextM)
+                
+            }
+            Spacer()
+            VStack{
+            Text("–$ \(cost)")
+                .foregroundColor(Palette.greyHard)
+                .font(Typography.headerS)
+            Spacer()
+            }
+        }
+        .padding(.horizontal)
+        .padding(.vertical,10)
+        
+    }
+    
+    @ViewBuilder
+    func titleSectionComponent(sectionTitle: String) -> some View {
+        HStack{
+            Text(sectionTitle)
+                .foregroundColor(Palette.black)
+                .font(Typography.headerL)
+            Spacer()
+            HStack{
+                Button(action:{
+                }, label: {
+                    Text("View all")
+                        .font(Typography.ControlS)
+                        .foregroundColor(Palette.greyMiddle)
+                    Image("arrowLeft")
+                        .resizable()
+                        .foregroundColor(Palette.greyMiddle)
+                        .frame(width: 5, height: 9)
+                        .rotationEffect(Angle(degrees: 180))
+                })
+                
+            }
+        }
     }
     
     @ViewBuilder
@@ -165,8 +257,58 @@ struct BottomContent : View {
                     .foregroundColor(Palette.black)
                     .font(Typography.ControlS)
             }
-            .padding(.leading,-20)
+            .padding(.leading,-24)
             .padding(.top,-2)
+        }
+    }
+    
+    @ViewBuilder
+    func importantNumbersComponent(title: String, number: String) -> some View {
+        ZStack{
+            Rectangle()
+                .cornerRadius(8)
+                .frame(width: UIScreen.main.bounds.width * 0.35, height: UIScreen.main.bounds.height * 0.11)
+                .foregroundColor(Palette.white)
+                .shadowGrey()
+            VStack(alignment: .leading, spacing: 16){
+                ZStack{
+                    Circle()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(Palette.greyLight)
+                    Image("service")
+                        .resizable()
+                        .frame(width: 14, height: 14)
+                        .foregroundColor(Palette.black)
+                }
+                VStack(alignment: .leading,spacing:3){
+                Text(title)
+                    .foregroundColor(Palette.black)
+                    .font(Typography.ControlS)
+                Text(number)
+                    .foregroundColor(Palette.greyMiddle)
+                    .font(Typography.TextM)
+                }
+            }
+            .padding(.leading,-26)
+            .padding(.top,-2)
+        }
+    }
+    
+    @ViewBuilder
+    func addComponent(title : String) -> some View {
+        ZStack{
+            Rectangle()
+                .cornerRadius(8)
+                .frame(width: UIScreen.main.bounds.width * 0.35, height: UIScreen.main.bounds.height * 0.11)
+                .foregroundColor(Palette.white)
+                .shadowGrey()
+            VStack(alignment: .center, spacing: 10){
+                Image("plus")
+                    .foregroundColor(Palette.greyMiddle)
+                Text(title)
+                    .foregroundColor(Palette.greyMiddle)
+                    .font(Typography.ControlS)
+            }
         }
     }
 }
@@ -178,9 +320,18 @@ struct TopNav : View {
     var body: some View {
         VStack(alignment: .leading){
             HStack{
-                Text("Batman's car >")
+                HStack{
+                Text("Batman's car ")
                     .foregroundColor(Palette.black)
                     .font(Typography.headerXL)
+                    Image("arrowLeft")
+                        .resizable()
+                        .foregroundColor(Palette.black)
+                        .frame(width: 10, height: 14)
+                        .rotationEffect(Angle(degrees: 180))
+                        .padding(.top,3)
+                        .padding(.leading,-5)
+                }
                 Spacer()
                 HStack{
                     Button(action: {
@@ -199,7 +350,7 @@ struct TopNav : View {
                                 Image("arrowDown")
                                 
                             }
-                        }
+                        }.opacity(getOpacity())
                     })
                     
                     ZStack{
@@ -354,31 +505,10 @@ struct CustomCorner : Shape {
     }
 }
 
-struct TitleSectionComponent: View {
-    
-    var sectionTitle : String
-    //    @Binding var show : Bool
-    
-    var body: some View {
-        HStack{
-            Text(sectionTitle)
-                .foregroundColor(Palette.black)
-                .font(Typography.headerL)
-            Spacer()
-            HStack{
-                Button(action:{
-                    //                    show.toggle()
-                }, label: {
-                    Text("View all")
-                        .foregroundColor(Palette.greyMiddle)
-                    Image("arrowLeft")
-                        .resizable()
-                        .foregroundColor(Palette.greyMiddle)
-                        .frame(width: 5, height: 9)
-                        .rotationEffect(Angle(degrees: 180))
-                })
-                
-            }
+extension Date {
+        func formatDate() -> String {
+                let dateFormatter = DateFormatter()
+            dateFormatter.setLocalizedDateFormatFromTemplate("MMM d, EE")
+            return dateFormatter.string(from: self)
         }
-    }
 }
