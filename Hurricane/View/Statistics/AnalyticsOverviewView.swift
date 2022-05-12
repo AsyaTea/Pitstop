@@ -7,65 +7,47 @@
 
 import SwiftUI
 
-struct StatsView: View {
+struct AnalyticsOverviewView: View {
    
+    @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
+    @State var pickedTab = ""
     var body: some View {
         VStack{
-            HStack{
-                HStack {
-                    Text("Analytics")                    
-                        .fontWeight(.bold)
-                        .font(Typography.headerXL)
-                }
-                .frame(alignment: .topLeading)
-                .padding()
-                Spacer()                
-                ZStack{
-                    RoundedRectangle(cornerRadius: 50)
-                        .foregroundColor(.white)
-                    Text("Per month")
-                        .font(.system(size: 12))
-                        .foregroundColor(.black)
-                }
-                .frame(width: 80, height: 25, alignment: .center)
-                
-                Button {
-                    print("Bell is tapped")
-                } label: {
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 100)
-                            .frame(width: 25, height: 25, alignment: .center)
-                            .foregroundColor(.white)
-                        Image(systemName: "bell")
-                            .foregroundColor(.black)
-                            .font(.subheadline)
-                    }
-                }
-                //List
-            }
+            AnalyticsHeaderView()
             .frame(height: 30)
             .padding()
             
-                    CostsListView()
-               
-                   
-             
-            
-            
-            
-                        
-
-            
+            List {
+                CostsListView()
+                Section {
+                    FuelListView()
+                        .padding(2)
+                }
+                Section {
+                    OdometerCostsView()
+                        .padding(2)
+                }
+            }
         }
+        .overlay(content: {
+
+        })
         .background(Palette.greyLight)
         
     }
-}
+    }
+
+
+
 
 struct CostsListView: View {
     @State var value = "$ 20"
+    var costs = ["Fuel", "Mainteinance", "Insurance", "Tolls", "Fines", "Parking", "Other"]
+    var costsImage = ["fuelType", "maintanance", "Insurance", "Tolls", "fines", "Parking", "Other"]
+    
+    
     var body: some View {
-        List {
+    
             Section {
                 HStack {
                     Text("Costs")
@@ -76,6 +58,7 @@ struct CostsListView: View {
                 }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                
+                
 
                 HStack{
                     ListCategoryComponent(title: "Fuel", iconName: "fuelType", color: Palette.colorYellow)
@@ -138,11 +121,8 @@ struct CostsListView: View {
             }
             
             .padding(2)
-            Section {
-                FuelListView()
-                    .padding(2)
-            }
-        }
+            
+        
     }
 }
 
@@ -172,6 +152,29 @@ struct FuelListView : View {
     }
 }
 
+struct OdometerCostsView: View {
+    var body: some View {
+        HStack {
+            Text("Odometer")
+                .font(Typography.headerL)
+            Spacer()
+            Text("2090 Km")
+                .fontWeight(.semibold)
+                .font(Typography.headerM)
+        }
+        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+            
+        ListCostsAttributes(title: "Average", value: "25.4 km/day")
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+        ListCostsAttributes(title: "Month Total", value: "678 km")
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+        ListCostsAttributes(title: "Estimated km/year", value: "9262 km")
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+       
+
+    }
+}
+
 struct ListCostsAttributes: View {
     var title : String
     var value : String
@@ -187,8 +190,46 @@ struct ListCostsAttributes: View {
     }
 }
 
+struct AnalyticsHeaderView : View {
+    var body: some View {
+        HStack{
+            HStack {
+                Text("Analytics")
+                    .fontWeight(.bold)
+                    .font(Typography.headerXL)
+            }
+            .frame(alignment: .topLeading)
+            .padding()
+            Spacer()
+            ZStack{
+                RoundedRectangle(cornerRadius: 50)
+                    .foregroundColor(.white)
+                Text("Per month")
+                    .font(.system(size: 12))
+                    .foregroundColor(.black)
+            }
+            .frame(width: 80, height: 25, alignment: .center)
+            
+            Button {
+                print("Bell is tapped")
+            } label: {
+                ZStack{
+                    RoundedRectangle(cornerRadius: 100)
+                        .frame(width: 25, height: 25, alignment: .center)
+                        .foregroundColor(.white)
+                    Image(systemName: "bell")
+                        .foregroundColor(.black)
+                        .font(.subheadline)
+                }
+            }
+          
+        }
+    }
+}
+    
+
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
-        StatsView()
+        AnalyticsOverviewView()
     }
 }
