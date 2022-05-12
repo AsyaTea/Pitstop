@@ -17,7 +17,6 @@ class OnboardingViewModel : ObservableObject {
     
     var isDisabled : Bool {
         return vehicle.name?.isEmpty ?? false || vehicle.brand?.isEmpty ?? false || vehicle.model?.isEmpty ?? false || selectedFuel == "Fuel Type"
-        return false
     }
     
     @Published var skipNotification = false

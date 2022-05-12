@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainView: View {
+struct VehicleView: View {
     
     //Onboarding vars
     @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
@@ -18,9 +18,11 @@ struct MainView: View {
     
     
     var body: some View {
-        ZStack{
-            Palette.greyBackground
-            ContentView3()
+        GeometryReader{ proxy in
+            let topEdge = proxy.safeAreaInsets.top
+            
+            HomeStyleView(topEdge: topEdge)
+                .ignoresSafeArea(.all,edges: .top)
             
         }
         .overlay(
@@ -46,35 +48,10 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        VehicleView()
     }
 }
 
-struct StatView: View {
-    var body: some View {
-        ForEach(0..<3) { _ in
-            HStack {
-                ZStack{
-                    RoundedRectangle(cornerRadius: 16)
-                        .frame(width: 108, height: 76, alignment: .center)
-                        .foregroundColor(Palette.colorVioletLight)
-                    VStack{
-                        Text("$23,4")
-                            .font(Typography.headerL)
-                            .foregroundColor(Palette.black)
-                        Text("All costs")
-                            .font(Typography.TextM)
-                            .foregroundColor(Palette.black)
-                    }
-                    .foregroundColor(.black)
-                    
-                }
-            }
-        }
-        
-        
-    }
-}
 
 struct AddReportButton : View {
     

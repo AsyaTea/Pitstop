@@ -50,7 +50,7 @@ struct TabItemView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 28, height: 28)
-                .animation(.default)
+//                .animation(.default)
                 .foregroundColor(isSelected ? Palette.black : Palette.greyEBEBEB)
             
         }.frame(width: 75, height: 55) ///Tappable are on icons

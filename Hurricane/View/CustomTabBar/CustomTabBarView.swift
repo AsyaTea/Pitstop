@@ -22,7 +22,7 @@ struct CustomTabBarView: View {
     func getTabView(type: TabType) -> some View {
         switch type {
         case .home:
-            MainView()
+            VehicleView()
         case .stats:
             AnalyticsOverviewView()
         case .settings:
