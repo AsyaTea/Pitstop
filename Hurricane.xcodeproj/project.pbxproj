@@ -140,7 +140,6 @@
 				415D203028214180004AF201 /* ContentView.swift */,
 				41C6E1F52823E4C800F756B5 /* ContentView2.swift */,
 				41C6E1FB28251B0100F756B5 /* ContentView3.swift */,
-				41C6E203282A751000F756B5 /* Practice.swift */,
 				FF3616D428292A26002ADA33 /* AnimationMainScreen.swift */,
 				41C6E20128266C8200F756B5 /* ExpenseView.swift */,
 			);
@@ -341,7 +340,6 @@
 				FF1AA1A32823F9C200AB61A2 /* Typography.swift in Sources */,
 				FF3616CD28290E61002ADA33 /* ExpenseListView.swift in Sources */,
 				FF5F2CA02823C4CD007980F3 /* Expense+CoreDataProperties.swift in Sources */,
-				41C6E204282A751000F756B5 /* Practice.swift in Sources */,
 				FFDF855C282411FD00E0F9BF /* OldTabBarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
