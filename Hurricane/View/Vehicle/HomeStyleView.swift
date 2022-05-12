@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeStyleView: View {
     var topEdge : CGFloat
-    let maxHeight = UIScreen.main.bounds.height / 2.5
+    let maxHeight = UIScreen.main.bounds.height / 3.6
     
     //Offset
     @State var offset:  CGFloat = 0
@@ -21,12 +21,12 @@ struct HomeStyleView: View {
                 
                 GeometryReader{ proxy in
                     
-                    HeaderView(offset: $offset, maxHeight: maxHeight)
+                    HeaderContent(offset: $offset, maxHeight: maxHeight)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                     // sticky effect
                         .frame(height: getHeaderHeight(),alignment: .bottom)
-                        .background(Color.blue,in: CustomCorner(corners: [.bottomRight], radius: getCornerRadius()))
+                        .background(Palette.colorBlue,in: CustomCorner(corners: [.bottomRight], radius: getCornerRadius()))
                         .overlay(
                             //Top nav view
                             TopNav(offset: $offset)
@@ -42,15 +42,8 @@ struct HomeStyleView: View {
                 .zIndex(1)
                 // BOTTOM VIEW
                 VStack(spacing: 15){
-                    ScrollView{
-                        
-                        Text("Don't know where you get your skills, but it's crazy good! Thanks for all the wonderful content you create for the community 🙌🏻")
-                        Text("Don't know where you get your skills, but it's crazy good! Thanks for all the wonderful content you create for the community 🙌🏻")
-                        Text("Don't know where you get your skills, but it's crazy good! Thanks for all the wonderful content you create for the community 🙌🏻")
-                        Text("Don't know where you get your skills, but it's crazy good! Thanks for all the wonderful content you create for the community 🙌🏻")
-                        
-                        
-                    }  .padding()
+                  
+                    BottomContent()
                     
                 }
                 .padding()
@@ -101,6 +94,14 @@ struct Home_Previews: PreviewProvider {
     }
 }
 
+struct BottomContent : View {
+    var body: some View {
+        TitleSectionComponent(sectionTitle: "Last events")
+        TitleSectionComponent(sectionTitle: "Documents")
+        TitleSectionComponent(sectionTitle: "Important numbers")
+    }
+}
+
 struct TopNav : View {
     
     @Binding var offset: CGFloat
@@ -130,7 +131,6 @@ struct TopNav : View {
                                 
                             }
                         }
-                        
                     })
                     
                     ZStack{
@@ -165,21 +165,73 @@ struct TopNav : View {
         
         return offset < 0 ? opacity : 1
     }
-    
-    
 }
 
-struct HeaderView : View {
+struct HeaderContent : View {
     @Binding var offset: CGFloat
     var maxHeight : CGFloat
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15){
+            HStack(spacing:13){
+                
+            Button(action: {
+                
+            }, label: {
+                ZStack{
+                    Rectangle()
+                        .cornerRadius(16)
+                        .foregroundColor(Palette.colorMainBlue)
+                        .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
+                    VStack(alignment: .center){
+                    Text("23,4k $")
+                        .foregroundColor(Palette.black)
+                        .font(Typography.headerL)
+                        Text("All costs")
+                            .foregroundColor(Palette.black)
+                            .font(Typography.TextM)
+                    }
+                }
+            })
             
-            
-            
-            Text("In this Video I'm going to show how to create a Stylish Collapsable Animated Header Using SwiftUI 3.0 - SwiftUI Animated Header - SwiftUI Complex UI - SwiftUI Custom Scroll Animation's - SwiftUI ")
-            
+            Button(action: {
+                
+            }, label: {
+                ZStack{
+                    Rectangle()
+                        .cornerRadius(16)
+                        .foregroundColor(Palette.colorMainBlue)
+                        .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
+                    VStack(alignment: .center){
+                    Text("23842")
+                        .foregroundColor(Palette.black)
+                        .font(Typography.headerL)
+                        Text("Odometer")
+                            .foregroundColor(Palette.black)
+                            .font(Typography.TextM)
+                    }
+                }
+            })
+
+            Button(action: {
+                
+            }, label: {
+                ZStack{
+                    Rectangle()
+                        .cornerRadius(16)
+                        .foregroundColor(Palette.colorMainBlue)
+                        .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
+                    VStack(alignment: .center){
+                    Text("23,4k $")
+                        .foregroundColor(Palette.black)
+                        .font(Typography.headerL)
+                        Text("Average")
+                            .foregroundColor(Palette.black)
+                            .font(Typography.TextM)
+                    }
+                }
+            })
+            }
         }
         .padding()
         .padding(.bottom)
@@ -230,5 +282,33 @@ struct CustomCorner : Shape {
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
+    }
+}
+
+struct TitleSectionComponent: View {
+    
+    var sectionTitle : String
+    
+    var body: some View {
+       HStack{
+            Text(sectionTitle)
+                .foregroundColor(Palette.black)
+                .font(Typography.headerL)
+            Spacer()
+            HStack{
+                Button(action:{
+                    
+                }, label: {
+                    Text("View all")
+                        .foregroundColor(Palette.greyMiddle)
+                    Image("arrowLeft")
+                        .resizable()
+                        .foregroundColor(Palette.greyMiddle)
+                        .frame(width: 5, height: 9)
+                        .rotationEffect(Angle(degrees: 180))
+                })
+                
+            }
+        }
     }
 }
