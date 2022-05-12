@@ -172,6 +172,9 @@ struct BottomContent : View {
                 .frame(width: 16)
         }
         
+        //Trick for scroll space, if you remove this you will see the problem
+       Text("")
+            .padding(.vertical,40)
         Spacer()
     }
     
