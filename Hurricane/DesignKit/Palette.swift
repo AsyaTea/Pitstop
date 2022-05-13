@@ -28,6 +28,7 @@ enum Palette {
     
     static let colorVioletLight = Color(rgb: 0x94BCF8)
     static let greenHighlight = Color(rgb: 0x37E391)
+    static let blueLine = Color(rgb: 0x4761FE)
     
     
     static let testDarkmode = Color(lightRGB: 0xff0000, darkRGB: 0x00ff00)

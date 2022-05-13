@@ -32,33 +32,26 @@ struct AnalyticsFuelView: View {
                                 .font(Typography.headerS)
                                 .foregroundColor(Palette.greenHighlight)
                         }
+                        .padding(-3)
                         HStack{
                             VStack(alignment: .trailing){
                                 Text("10")
-                                Spacer()
-                                VStack{
-                                    Spacer()
-                                    Text("9.5")
-                                    Spacer()
-                                    Text("9")
-                                    Spacer()
-                                    Text("8.5")
-                                    Spacer()
-                                    Text("8")
-                                    Spacer()
-                                }
-                                Spacer()
+                                Text("9.5")
+                                Text("9")
+                                Text("8.5")
+                                Text("8")
                                 Text("7.5")
-                              
                             }
+                           
                             .font(.subheadline)
                             .foregroundColor(Palette.greyMiddle)
-                            .padding(.vertical)
-                            
-                            .foregroundColor(Palette.greyHard)
-                            
-                            GraphPractice()
+                            FuelGraphView(data: sampleData)
+                                .frame(height: 200)
+                                .padding(.top, 25)
+                                .padding(-10)
                         }
+                        .padding(-15)
+                        
                         HStack(alignment: .bottom) {
                             Text("Dec")
                             Text("Jan")
@@ -70,15 +63,15 @@ struct AnalyticsFuelView: View {
                         }
                         .font(.subheadline)
                         .foregroundColor(Palette.greyMiddle)
-                        .padding(.horizontal)
+                        
                     }
                     
+                    
                 }
-//                .frame(width: 350, height: 300)
                 
                 Section {
                     FuelListView()
-                        .padding(2)
+                        .padding(4)
                 }
             }
         }
