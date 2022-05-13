@@ -9,11 +9,34 @@ import SwiftUI
 import Foundation
 
 struct HomeStyleView: View {
-    var topEdge : CGFloat
+   
+//    @StateObject var homeVM = HomeViewModel()
+    
+    //Scroll animation vars
+    @State var offset:  CGFloat = 0
+    @State var topEdge : CGFloat
     let maxHeight = UIScreen.main.bounds.height / 3.6
     
-    //Offset
-    @State var offset:  CGFloat = 0
+    // Opacity to let appear items in the top bar
+    func fadeInOpacity() -> CGFloat {
+        // to start after the main content vanished
+        // we nee to eliminate 70 from the offset
+        // to get starter..
+        let progress = -(offset + 70) / (maxHeight - (60 + topEdge * 3.2))
+        
+        return progress
+    }
+    
+    // Opacity to let items in top bar disappear on scroll
+    func fadeOutOpacity() -> CGFloat {
+        // 70 = Some rnadom amount of time to visible on scroll
+        
+        let progress = -offset / 70
+        let opacity = 1 - progress
+        
+        return offset < 0 ? opacity : 1
+    }
+    
     
     var body: some View {
         
@@ -25,16 +48,20 @@ struct HomeStyleView: View {
                     HeaderContent(offset: $offset, maxHeight: maxHeight)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
+                        .opacity(
+                            withAnimation(.easeOut){ fadeOutOpacity()}
+                        )
                        
                     // sticky effect
                         .frame(height: getHeaderHeight(),alignment: .bottom)
-                        .background(Palette.colorBlue,in: CustomCorner(corners: [.bottomRight,.bottomLeft], radius: getCornerRadius()))
+                        .background(Palette.colorBlue)
                         .overlay(
                             //Top nav view
-                            TopNav(offset: $offset)
+                            TopNav(offset: offset, maxHeight: maxHeight, topEdge:topEdge)
                                 .padding(.horizontal)
                                 .frame(height: 60)
                                 .padding(.top,topEdge)
+                                
                             ,alignment: .top
                         )
                 }
@@ -43,14 +70,14 @@ struct HomeStyleView: View {
                 .offset(y: -offset)
                 .zIndex(1)
                 // BOTTOM VIEW
+                ZStack{
                 VStack(spacing: 0){
-                    
                     BottomContent()
-                       
-                    
                 }
-               
-//                .padding()
+                .background(Palette.greyBackground,in: CustomCorner(corners: [.topLeft,.topRight], radius: getCornerRadius()))
+                }
+                .background(Palette.colorBlue)
+                .padding(.top,-15)
                 .zIndex(0)
             }
             .modifier(OffsetModifier(offset: $offset))
@@ -75,20 +102,12 @@ struct HomeStyleView: View {
         let progress = -offset / (maxHeight - (60+topEdge))
         
         let value = 1 - progress
-        let radius = value * 50
+        let radius = value * 35
         
-        return offset < 0 ? radius : 50
+        return offset < 0 ? radius : 35
     }
     
-    func topBarTitleOpacity() -> CGFloat {
-        // to start after the main content vanished
-        // we nee to eliminate 70 from the offset
-        // to get starter..
-        let progress = -(offset + 70) / (maxHeight - (60 + topEdge))
-        
-        return progress
-    }
-    
+
     
     
 }
@@ -106,12 +125,16 @@ struct BottomContent : View {
         
         titleSectionComponent(sectionTitle: "Last events")
             .padding()
+            .padding(.top,10)
+            .padding(.bottom,-10)
         categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
         categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
         categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
           
         titleSectionComponent(sectionTitle: "Documents")
             .padding()
+            .padding(.top,10)
+            .padding(.bottom,-10)
         ScrollView(.horizontal,showsIndicators: false){
             VStack {
                 Spacer(minLength: 12)
@@ -143,6 +166,8 @@ struct BottomContent : View {
         
         titleSectionComponent(sectionTitle: "Important numbers")
             .padding()
+            .padding(.top,10)
+            .padding(.bottom,-10)
         ScrollView(.horizontal,showsIndicators: false){
             VStack {
                 Spacer(minLength: 12)
@@ -174,7 +199,7 @@ struct BottomContent : View {
         
         //Trick for scroll space, if you remove this you will see the problem
        Text("")
-            .padding(.vertical,40)
+            .padding(.vertical,70)
         Spacer()
     }
     
@@ -213,6 +238,7 @@ struct BottomContent : View {
         .padding(.vertical,10)
         
     }
+ 
     
     @ViewBuilder
     func titleSectionComponent(sectionTitle: String) -> some View {
@@ -243,10 +269,10 @@ struct BottomContent : View {
         ZStack{
             Rectangle()
                 .cornerRadius(8)
-                .frame(width: UIScreen.main.bounds.width * 0.35, height: UIScreen.main.bounds.height * 0.11)
+                .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
                 .foregroundColor(Palette.white)
                 .shadowGrey()
-            VStack(alignment: .leading, spacing: 30){
+            VStack(alignment: .leading, spacing: 40){
                 ZStack{
                     Circle()
                         .frame(width: 24, height: 24)
@@ -260,7 +286,7 @@ struct BottomContent : View {
                     .foregroundColor(Palette.black)
                     .font(Typography.ControlS)
             }
-            .padding(.leading,-24)
+            .padding(.leading,-28)
             .padding(.top,-2)
         }
     }
@@ -270,15 +296,15 @@ struct BottomContent : View {
         ZStack{
             Rectangle()
                 .cornerRadius(8)
-                .frame(width: UIScreen.main.bounds.width * 0.35, height: UIScreen.main.bounds.height * 0.11)
+                .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
                 .foregroundColor(Palette.white)
                 .shadowGrey()
-            VStack(alignment: .leading, spacing: 16){
+            VStack(alignment: .leading, spacing: 22){
                 ZStack{
                     Circle()
                         .frame(width: 24, height: 24)
                         .foregroundColor(Palette.greyLight)
-                    Image("service")
+                    Image("Service")
                         .resizable()
                         .frame(width: 14, height: 14)
                         .foregroundColor(Palette.black)
@@ -292,7 +318,7 @@ struct BottomContent : View {
                     .font(Typography.TextM)
                 }
             }
-            .padding(.leading,-26)
+            .padding(.leading,-34)
             .padding(.top,-2)
         }
     }
@@ -302,7 +328,7 @@ struct BottomContent : View {
         ZStack{
             Rectangle()
                 .cornerRadius(8)
-                .frame(width: UIScreen.main.bounds.width * 0.35, height: UIScreen.main.bounds.height * 0.11)
+                .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
                 .foregroundColor(Palette.white)
                 .shadowGrey()
             VStack(alignment: .center, spacing: 10){
@@ -318,7 +344,32 @@ struct BottomContent : View {
 
 struct TopNav : View {
     
-    @Binding var offset: CGFloat
+    var offset: CGFloat
+    let maxHeight : CGFloat
+    var topEdge : CGFloat
+//    var homeVM : HomeViewModel
+    
+    // Opacity to let appear items in the top bar
+    func fadeInOpacity() -> CGFloat {
+        // to start after the main content vanished
+        // we nee to eliminate 70 from the offset
+        // to get starter..
+        let progress = -(offset + 70) / (maxHeight - (60 + topEdge * 3.2))
+        
+        return progress
+    }
+    
+    // Opacity to let items in top bar disappear on scroll
+    func fadeOutOpacity() -> CGFloat {
+        // 70 = Some rnadom amount of time to visible on scroll
+        
+        let progress = -offset / 70
+        let opacity = 1 - progress
+        
+        return offset < 0 ? opacity : 1
+    }
+
+    
     
     var body: some View {
         VStack(alignment: .leading){
@@ -327,6 +378,7 @@ struct TopNav : View {
                 Text("Batman's car ")
                     .foregroundColor(Palette.black)
                     .font(Typography.headerXL)
+                    .opacity(fadeOutOpacity())
                     Image("arrowLeft")
                         .resizable()
                         .foregroundColor(Palette.black)
@@ -335,6 +387,7 @@ struct TopNav : View {
                         .padding(.top,3)
                         .padding(.leading,-5)
                 }
+                .opacity(fadeOutOpacity())
                 Spacer()
                 HStack{
                     Button(action: {
@@ -353,7 +406,7 @@ struct TopNav : View {
                                 Image("arrowDown")
                                 
                             }
-                        }.opacity(getOpacity())
+                        }.opacity(fadeOutOpacity())
                     })
                     
                     ZStack{
@@ -370,23 +423,28 @@ struct TopNav : View {
                         })
                     }
                 }
+                .padding(.top,2)
             }
             Text("Range Rover Evoque, 2017")
                 .foregroundColor(Palette.black)
                 .font(Typography.TextM)
                 .padding(.top,-12)
-                .opacity(getOpacity())
-        }
-    }
-    
-    // Opacity
-    func getOpacity() -> CGFloat {
-        // 70 = Some rnadom amount of time to visible on scroll
-        
-        let progress = -offset / 70
-        let opacity = 1 - progress
-        
-        return offset < 0 ? opacity : 1
+                .opacity(fadeOutOpacity())
+        }.overlay(
+            VStack(alignment: .center,spacing: 2){
+            Text("Batmans' car")
+                .font(Typography.headerM)
+                .foregroundColor(Palette.black)
+            Text("Range Rover Evoque, 2017")
+                .font(Typography.TextM)
+                .foregroundColor(Palette.black)
+            }
+                .opacity(
+                    withAnimation(.easeInOut){
+                        fadeInOpacity()
+                })
+            .padding(.bottom,15)
+        )
     }
 }
 
@@ -458,19 +516,7 @@ struct HeaderContent : View {
         }
         .padding()
         .padding(.bottom)
-        .opacity(getOpacity())
     }
-    
-    // Opacity
-    func getOpacity() -> CGFloat {
-        // 70 = Some rnadom amount of time to visible on scroll
-        
-        let progress = -offset / 70
-        let opacity = 1 - progress
-        
-        return offset < 0 ? opacity : 1
-    }
-    
 }
 
 struct OffsetModifier: ViewModifier {
