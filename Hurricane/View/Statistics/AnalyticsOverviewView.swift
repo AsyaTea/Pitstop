@@ -34,6 +34,7 @@ struct AnalyticsOverviewView: View {
    
     @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
     @State var pickedTab = ""
+    
     var body: some View {
         VStack{
             AnalyticsHeaderView()
@@ -216,6 +217,7 @@ struct ListCostsAttributes: View {
 }
 
 struct AnalyticsHeaderView : View {
+    
     var body: some View {
         HStack{
             HStack {
@@ -226,31 +228,50 @@ struct AnalyticsHeaderView : View {
             .frame(alignment: .topLeading)
             .padding()
             Spacer()
-            ZStack{
-                RoundedRectangle(cornerRadius: 50)
-                    .foregroundColor(.white)
-                Text("Per month")
-                    .font(.system(size: 12))
-                    .foregroundColor(.black)
-            }
-            .frame(width: 80, height: 25, alignment: .center)
             
-            Button {
-                print("Bell is tapped")
-            } label: {
+            HStack{
+                Button(action: {
+                    
+                }, label: {
+                    ZStack{
+                        Rectangle()
+                            .foregroundColor(Palette.white)
+                            .cornerRadius(37)
+                            .frame(width: UIScreen.main.bounds.width * 0.25, height: UIScreen.main.bounds.height * 0.04)
+                            .shadowGrey()
+                        HStack{
+                            Text("Per month")
+                                .foregroundColor(Palette.black)
+                                .font(Typography.ControlS)
+                            Image("arrowDown")
+                            
+                        }
+                    
+                    }
+                })
+                
                 ZStack{
-                    RoundedRectangle(cornerRadius: 100)
-                        .frame(width: 25, height: 25, alignment: .center)
-                        .foregroundColor(.white)
-                    Image(systemName: "bell")
-                        .foregroundColor(.black)
-                        .font(.subheadline)
+                    Button(action: {
+                        
+                    }, label: {
+                        ZStack{
+                            Circle()
+                                .foregroundColor(Palette.white)
+                                .frame(width: UIScreen.main.bounds.width * 0.09, height: UIScreen.main.bounds.height * 0.04)
+                                .shadowGrey()
+                            Image("bellHome")
+                        }
+                    })
                 }
             }
+            .padding(.top,2)
+
           
         }
     }
 }
+
+
     
 
 struct StatsView_Previews: PreviewProvider {
