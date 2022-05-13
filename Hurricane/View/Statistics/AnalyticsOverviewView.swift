@@ -5,6 +5,29 @@
 //  Created by Ivan Voloshchuk on 06/05/22.
 //
 
+
+
+/*
+ STRUCT MODELCAT {
+    NAME
+    COLOR
+    ICON
+    VALUE
+ }
+ 
+ ARRAYEXPFUEL = FETCHFUEL
+ VAR FUELTOTAL
+ FOR ARRAYEXPFUEL { VALUE IN
+    FUELTOTAL += VALUE
+ }
+ 
+ ARRAY CATEGORY : CATEGORY = [MODELCAT("FUEL",PALETTE.COLOR,"FUELICON",FUELTOTAL),]
+ 
+ FOR EACH (CATEGORY) { CAT IN
+    ROWVIEW( CAT.COLOR,CAT.ICON,CAT.NAME,CAT.VALUE)
+ }
+ */
+
 import SwiftUI
 
 struct AnalyticsOverviewView: View {
@@ -87,7 +110,7 @@ struct CostsListView: View {
                 }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                 HStack{
-                    ListCategoryComponent(title: "Tolls", iconName: "tolls", color: Palette.colorOrange)
+                    ListCategoryComponent(title: "Tolls", iconName: "Tolls", color: Palette.colorOrange)
                     Spacer()
                     Text(value)
                         .font(Typography.headerM)
