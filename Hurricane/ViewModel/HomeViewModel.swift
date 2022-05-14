@@ -14,6 +14,8 @@ class HomeViewModel : ObservableObject {
     @Published var topEdge : CGFloat = 0
     let maxHeight = UIScreen.main.bounds.height / 3.6
     
+    @Published showAlertNumbers = false
+    
     //MARK: FRONTEND FUNCS
     // Opacity to let appear items in the top bar
     func fadeInOpacity() -> CGFloat {
