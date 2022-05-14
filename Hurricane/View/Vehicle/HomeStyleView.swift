@@ -83,7 +83,7 @@ struct HomeStyleView: View {
         
         let topHeight = maxHeight + offset
         
-        // 80 is the costant top nav bar height
+        // 60 is the costant top nav bar height
         // since we included top safe area so we also need to include that too
         return topHeight > (60 + topEdge) ? topHeight
         : (60 + topEdge)
