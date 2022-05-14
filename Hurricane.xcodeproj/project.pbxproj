@@ -23,6 +23,7 @@
 		FF10676E282C03E20077CCF7 /* Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10676D282C03E20077CCF7 /* Pages.swift */; };
 		FF106792282D36160077CCF7 /* HomeStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF106791282D36160077CCF7 /* HomeStyleView.swift */; };
 		FF106794282D38970077CCF7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF106793282D38960077CCF7 /* HeaderView.swift */; };
+		FF14DC30282FCA1F00CA248B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */; };
 		FF1AA1A32823F9C200AB61A2 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A22823F9C200AB61A2 /* Typography.swift */; };
 		FF1AA1A52823FC0600AB61A2 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A42823FC0600AB61A2 /* Palette.swift */; };
 		FF1AA1A72823FC4800AB61A2 /* extensionColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */; };
@@ -146,6 +147,7 @@
 		FF1AA19E2823D44900AB61A2 /* Vehicle */ = {
 			isa = PBXGroup;
 			children = (
+				FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */,
 				FFDF85592824104A00E0F9BF /* VehicleView.swift */,
 				FF106791282D36160077CCF7 /* HomeStyleView.swift */,
 				FFC52897282FB2A40013D8B6 /* BottomContentView.swift */,
@@ -193,7 +195,6 @@
 			children = (
 				415D2041282145FE004AF201 /* DataViewModel.swift */,
 				FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */,
-				FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */,
 				FF3616CA28290416002ADA33 /* AddExpenseViewModel.swift */,
 			);
 			path = ViewModel;
@@ -345,6 +346,7 @@
 				41C6E1F62823E4C800F756B5 /* ContentView2.swift in Sources */,
 				41C6E20A282CF47D00F756B5 /* AnalyticsFuelView.swift in Sources */,
 				41C6E20E282D184400F756B5 /* Graph.swift in Sources */,
+				FF14DC30282FCA1F00CA248B /* HomeViewModel.swift in Sources */,
 				415D203128214180004AF201 /* ContentView.swift in Sources */,
 				FF106794282D38970077CCF7 /* HeaderView.swift in Sources */,
 				415D2042282145FE004AF201 /* DataViewModel.swift in Sources */,

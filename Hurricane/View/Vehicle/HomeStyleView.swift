@@ -10,7 +10,7 @@ import Foundation
 
 struct HomeStyleView: View {
    
-//    @StateObject var homeVM = HomeViewModel()
+   @StateObject var homeVM = HomeViewModel()
     
     //Scroll animation vars
     @State var offset:  CGFloat = 0
@@ -18,7 +18,7 @@ struct HomeStyleView: View {
     let maxHeight = UIScreen.main.bounds.height / 3.6
     
     var body: some View {
-        
+        ZStack{
         ScrollView(.vertical,showsIndicators: false){
             VStack(spacing: 15){
                 
@@ -52,7 +52,7 @@ struct HomeStyleView: View {
                 //MARK: BOTTOM VIEW
                 ZStack{
                
-                    BottomContentView()
+                    BottomContentView(homeVM: homeVM)
                 .background(Palette.greyBackground,in: CustomCorner(corners: [.topLeft,.topRight], radius: getCornerRadius()))
                 }
                 .background(Palette.colorYellow)
@@ -63,6 +63,20 @@ struct HomeStyleView: View {
         }
         .background(Palette.greyBackground)
         .coordinateSpace(name: "SCROLL")
+        .disabled(homeVM.showAlertNumbers)
+        .overlay(
+            ZStack{
+                homeVM.showAlertNumbers ? Color.black.opacity(0.4) : Color.clear
+            }
+        )
+        
+        //SHOW THE ALLERT IF TOGGLED
+        if(homeVM.showAlertNumbers){
+            Spacer()
+            AlertAddNumbers(homeVM: homeVM)
+            Spacer()
+            }
+        }
     }
     
     func getHeaderHeight() -> CGFloat {

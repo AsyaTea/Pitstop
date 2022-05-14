@@ -15,13 +15,11 @@ enum FocusFieldAlert: Hashable {
 
 struct AlertAddNumbers: View {
     
-    @State  var numberTitle : String
-    @State  var number : String
+    @ObservedObject var homeVM : HomeViewModel
+    
     @FocusState var focusedField: FocusFieldAlert?
     
-    var isDisabled : Bool {
-        return numberTitle.isEmpty || number.isEmpty
-    }
+   
     
     var body: some View {
         ZStack{
@@ -37,7 +35,7 @@ struct AlertAddNumbers: View {
                     .padding(.leading,40)
                 Spacer()
                 Button(action: {
-                    
+                    homeVM.showAlertNumbers.toggle()
                 }, label: {
                     buttonComponent(iconName: "plus")
                         .padding(.trailing,20)
@@ -45,10 +43,10 @@ struct AlertAddNumbers: View {
                
             }
                 VStack(spacing:12){
-                TextField("Number title", text: $numberTitle)
+                    TextField("Number title", text: $homeVM.numberTitle)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .numberTitle)
-                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
                     .frame(width: UIScreen.main.bounds.size.width * 0.84, height: UIScreen.main.bounds.size.height * 0.055)
                     .background(Palette.greyLight )
                     .font(Typography.TextM)
@@ -62,10 +60,10 @@ struct AlertAddNumbers: View {
                         focusedField = .number
                     }
                 
-                TextField("Number", text: $number)
+                    TextField("Number", text: $homeVM.number)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .number)
-                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
                     .frame(width: UIScreen.main.bounds.size.width * 0.84, height: UIScreen.main.bounds.size.height * 0.055)
                     .background(Palette.greyLight )
                     .font(Typography.TextM)
@@ -76,7 +74,7 @@ struct AlertAddNumbers: View {
                             .stroke(Palette.greyInput, lineWidth: 1)
                     )
                     .onSubmit {
-//                        focusedField = .brand
+                        focusedField = .number
                     }
                 
                 Button(action: {
@@ -84,14 +82,17 @@ struct AlertAddNumbers: View {
                 }, label: {
                     BlackButton(text: "Save")
                 })
-                .disabled(isDisabled)
-                .opacity(isDisabled ? 0.6 : 1)
+                .disabled(homeVM.isDisabled)
+                .opacity(homeVM.isDisabled ? 0.6 : 1)
                 
                 }
             }
             
         }
         .frame(width: UIScreen.main.bounds.width * 0.92, height: UIScreen.main.bounds.height * 0.26)
+        .onAppear{
+            focusedField = .numberTitle
+        }
     }
     @ViewBuilder
     func buttonComponent(iconName: String) -> some View {
@@ -105,12 +106,12 @@ struct AlertAddNumbers: View {
 }
 
 
-struct AlertAddNumbers_Previews: PreviewProvider {
-    static var previews: some View {
-        AlertAddNumbers(numberTitle: "", number: "")
-           
-    }
-}
+//struct AlertAddNumbers_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AlertAddNumbers(numberTitle: "", number: "")
+//
+//    }
+//}
 
 
 struct BlackButton : View {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BottomContentView: View {
     
-    @State private var showAlertNumbers = false
+    @ObservedObject var homeVM : HomeViewModel
     
     var body: some View {
         VStack(spacing: 0){
@@ -72,7 +72,7 @@ struct BottomContentView: View {
                             importantNumbersComponent(title: "Service", number: "366 4925454")
                         })
                         Button(action: {
-                            showAlertNumbers.toggle()
+                            homeVM.showAlertNumbers.toggle()
                         }, label: {
                             addComponent(title: "Add number")
                         })
@@ -97,6 +97,8 @@ struct BottomContentView: View {
             Spacer()
             
         }
+        
+     
     }
     
     @ViewBuilder
@@ -238,9 +240,9 @@ struct BottomContentView: View {
     }
 }
 
-struct BottomContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        BottomContentView()
-        
-    }
-}
+//struct BottomContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        BottomContentView()
+//        
+//    }
+//}
