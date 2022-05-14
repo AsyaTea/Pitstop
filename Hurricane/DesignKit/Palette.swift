@@ -30,7 +30,7 @@ enum Palette {
 
     static let colorMainBlue = Color(rgb: 0x9FFCF7)
     static let colorMainGreen = Color(rgb: 0x94F3C7)
-    static let colorMainYellow = Color(rgb: 0xCDBCFF)
+    static let colorMainYellow = Color(rgb: 0xFCED9D)
     static let colorMainViolet = Color(rgb: 0xFCED9D)
     static let greenHighlight = Color(rgb: 0x37E391)
     static let blueLine = Color(rgb: 0x4761FE)

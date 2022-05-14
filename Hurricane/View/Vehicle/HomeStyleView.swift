@@ -54,7 +54,7 @@ struct HomeStyleView: View {
                        
                     // sticky effect
                         .frame(height: getHeaderHeight(),alignment: .bottom)
-                        .background(Palette.colorBlue)
+                        .background(Palette.colorYellow)
                         .overlay(
                             //Top nav view
                             TopNav(offset: offset, maxHeight: maxHeight, topEdge:topEdge)
@@ -76,7 +76,7 @@ struct HomeStyleView: View {
                 }
                 .background(Palette.greyBackground,in: CustomCorner(corners: [.topLeft,.topRight], radius: getCornerRadius()))
                 }
-                .background(Palette.colorBlue)
+                .background(Palette.colorYellow)
                 .padding(.top,-15)
                 .zIndex(0)
             }
@@ -199,7 +199,7 @@ struct BottomContent : View {
         
         //Trick for scroll space, if you remove this you will see the problem
        Text("")
-            .padding(.vertical,70)
+            .padding(.vertical,55)
         Spacer()
     }
     
@@ -212,8 +212,8 @@ struct BottomContent : View {
             ZStack{
                 Circle()
                     .frame(width: 32, height: 32)
-                    .foregroundColor(Palette.colorYellow)
-                Image("Fuel")
+                    .foregroundColor(Palette.colorViolet)
+                Image("Parking")
                     .resizable()
                     .frame(width: 16, height: 16)
             }
@@ -462,7 +462,7 @@ struct HeaderContent : View {
                     ZStack{
                         Rectangle()
                             .cornerRadius(16)
-                            .foregroundColor(Palette.colorMainBlue)
+                            .foregroundColor(Palette.colorMainYellow)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
                             Text("23,4k $")
@@ -481,7 +481,7 @@ struct HeaderContent : View {
                     ZStack{
                         Rectangle()
                             .cornerRadius(16)
-                            .foregroundColor(Palette.colorMainBlue)
+                            .foregroundColor(Palette.colorMainYellow)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
                             Text("23842")
@@ -500,7 +500,7 @@ struct HeaderContent : View {
                     ZStack{
                         Rectangle()
                             .cornerRadius(16)
-                            .foregroundColor(Palette.colorMainBlue)
+                            .foregroundColor(Palette.colorMainYellow)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
                             Text("23,4k $")
