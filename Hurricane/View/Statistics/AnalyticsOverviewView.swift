@@ -6,32 +6,12 @@
 //
 
 
-
-/*
- STRUCT MODELCAT {
-    NAME
-    COLOR
-    ICON
-    VALUE
- }
- 
- ARRAYEXPFUEL = FETCHFUEL
- VAR FUELTOTAL
- FOR ARRAYEXPFUEL { VALUE IN
-    FUELTOTAL += VALUE
- }
- 
- ARRAY CATEGORY : CATEGORY = [MODELCAT("FUEL",PALETTE.COLOR,"FUELICON",FUELTOTAL),]
- 
- FOR EACH (CATEGORY) { CAT IN
-    ROWVIEW( CAT.COLOR,CAT.ICON,CAT.NAME,CAT.VALUE)
- }
- */
-
 import SwiftUI
 
 struct AnalyticsOverviewView: View {
    
+    @ObservedObject var categoryVM = CategoryViewModel()
+
     @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
     @State var pickedTab = ""
     
@@ -42,7 +22,7 @@ struct AnalyticsOverviewView: View {
             .padding()
             
             List {
-                CostsListView()
+                CostsListView(categoryVM: categoryVM)
                 Section {
                     FuelListView()
                         .padding(2)
@@ -62,15 +42,10 @@ struct AnalyticsOverviewView: View {
     }
 
 
-
-
+//MARK: Costs List Section
 struct CostsListView: View {
 
-    
-    @State var value = "$ 20"
-    var costs = ["Fuel", "Mainteinance", "Insurance", "Tolls", "Fines", "Parking", "Other"]
-    var costsImage = ["fuelType", "maintanance", "Insurance", "Tolls", "fines", "Parking", "Other"]
-    
+    @ObservedObject var categoryVM : CategoryViewModel
     
     var body: some View {
     
@@ -84,74 +59,23 @@ struct CostsListView: View {
                 }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                
-                
-
-                HStack{
-                    ListCategoryComponent(title: "Fuel", iconName: "fuelType", color: Palette.colorYellow)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
+                ForEach(categoryVM.categories, id: \.self) { category in
+                    HStack{
+                        ListCategoryComponent(title: category.name, iconName: category.icon, color: category.color)
+                        Spacer()
+                        Text(String(category.totalCosts))
+                            .font(Typography.headerM)
+                            .foregroundColor(Palette.greyHard)
+                    }
+                    .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                 }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                HStack{
-                    ListCategoryComponent(title: "Mainteinance", iconName: "maintanance", color: Palette.colorGreen)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
-                }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                HStack{
-                    ListCategoryComponent(title: "Insurance", iconName: "insurance", color: Palette.colorOrange)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
-                }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                HStack{
-                    ListCategoryComponent(title: "Tolls", iconName: "Tolls", color: Palette.colorOrange)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
-                }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                HStack{
-                    ListCategoryComponent(title: "Fines", iconName: "fines", color: Palette.colorOrange)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
-                }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                HStack{
-                    ListCategoryComponent(title: "Parking", iconName: "parking", color: Palette.colorViolet)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
-                }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                HStack{
-                    ListCategoryComponent(title: "Other", iconName: "other", color: Palette.colorViolet)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
-                }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                
-                
             }
             
             .padding(2)
-            
-        
     }
 }
 
+//MARK: Fuel data Section
 struct FuelListView : View {
     var body: some View {
         
@@ -173,11 +97,11 @@ struct FuelListView : View {
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Average days/refuel", value: "26")
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-
-
     }
 }
 
+
+//MARK: Odometer Section
 struct OdometerCostsView: View {
     var body: some View {
         HStack {
@@ -201,6 +125,7 @@ struct OdometerCostsView: View {
     }
 }
 
+//MARK: List row
 struct ListCostsAttributes: View {
     var title : String
     var value : String
@@ -215,6 +140,8 @@ struct ListCostsAttributes: View {
         
     }
 }
+
+//MARK: Analytics Header 
 
 struct AnalyticsHeaderView : View {
     
@@ -259,14 +186,12 @@ struct AnalyticsHeaderView : View {
                                 .foregroundColor(Palette.white)
                                 .frame(width: UIScreen.main.bounds.width * 0.09, height: UIScreen.main.bounds.height * 0.04)
                                 .shadowGrey()
-                            Image("bellHome")
+                            Image("download")
                         }
                     })
                 }
             }
             .padding(.top,2)
-
-          
         }
     }
 }
