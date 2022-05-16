@@ -10,9 +10,7 @@ import SwiftUI
 struct AnalyticsOdometerView: View {
     var body: some View {
         VStack {
-            AnalyticsHeaderView()
-                .frame(height: 30)
-                .padding()
+            
             List {
                 Section {
                         VStack{

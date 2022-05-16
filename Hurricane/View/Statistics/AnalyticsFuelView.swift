@@ -12,9 +12,7 @@ struct AnalyticsFuelView: View {
         
             
         VStack {            
-            AnalyticsHeaderView()
-                .frame(height: 30)
-                .padding()
+            
             List {                
                 Section {
                     VStack{

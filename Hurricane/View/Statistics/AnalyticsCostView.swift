@@ -8,25 +8,20 @@
 import SwiftUI
 
 struct AnalyticsCostView: View {
+    @ObservedObject var categoryVM : CategoryViewModel
     var body: some View {
         
             VStack{
-                AnalyticsHeaderView()
-                .frame(height: 30)
-                .padding()
-                
                 List {
                     Section {
                         CostGraphView()
                             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                             .frame(height: 201)
                     }
-                    
                     Section {
-                        CostsListView()
+                        CostsListView(categoryVM: categoryVM)
                     }
-                    Section {
-                        
+                    Section {                        
                     }
                 }
             }
@@ -180,8 +175,8 @@ struct LineGraph: View {
     
 }
 
-struct AnalyticsCostView_Previews: PreviewProvider {
-    static var previews: some View {
-        AnalyticsCostView()
-    }
-}
+//struct AnalyticsCostView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AnalyticsCostView()
+//    }
+//}

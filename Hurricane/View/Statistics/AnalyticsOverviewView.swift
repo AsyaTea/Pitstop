@@ -6,71 +6,141 @@
 //
 
 
-
-/*
- STRUCT MODELCAT {
-    NAME
-    COLOR
-    ICON
-    VALUE
- }
- 
- ARRAYEXPFUEL = FETCHFUEL
- VAR FUELTOTAL
- FOR ARRAYEXPFUEL { VALUE IN
-    FUELTOTAL += VALUE
- }
- 
- ARRAY CATEGORY : CATEGORY = [MODELCAT("FUEL",PALETTE.COLOR,"FUELICON",FUELTOTAL),]
- 
- FOR EACH (CATEGORY) { CAT IN
-    ROWVIEW( CAT.COLOR,CAT.ICON,CAT.NAME,CAT.VALUE)
- }
- */
-
 import SwiftUI
 
 struct AnalyticsOverviewView: View {
    
+    @ObservedObject var categoryVM = CategoryViewModel()
+
     @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
     @State var pickedTab = ""
+    
+    @Namespace var animation
+    
+    init() {
+        //  Change list background color
+        UITableView.appearance().separatorStyle = .singleLine
+        UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
+        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
+    }
     
     var body: some View {
         VStack{
             AnalyticsHeaderView()
             .frame(height: 30)
-            .padding()
             
-            List {
-                CostsListView()
-                Section {
-                    FuelListView()
-                        .padding(2)
-                }
-                Section {
-                    OdometerCostsView()
-                        .padding(2)
-                }
+            if(categoryVM.currentPickerTab == "Overview") {
+                OverviewView()
             }
+            else if (categoryVM.currentPickerTab == "Cost") {
+                AnalyticsCostView(categoryVM: categoryVM)
+            }
+            else if (categoryVM.currentPickerTab == "Fuel") {
+                AnalyticsFuelView()
+            }
+            else {
+                AnalyticsOdometerView()
+            }
+            
         }
+        
+        .background(Palette.greyBackground)
         .overlay(content: {
-
+            VStack{
+                Spacer()
+                CustomSegmentedPicker()
+                    
+                    .padding(.horizontal)
+                    .padding(.vertical, 12)
+                    .background(.ultraThinMaterial)
+                    
+            }
         })
         .background(Palette.greyLight)
+    }
+    
+    
+    func CustomSegmentedPicker() -> some View{
+        ZStack {
+        HStack(alignment: .center, spacing:10){
+                ForEach(pickerTabs,id:\.self){ tab in
+                    if categoryVM.currentPickerTab == tab {
+                    Text(tab)
+                        .frame(maxWidth: .infinity)
+                        .padding(10)
+                        .font(Typography.headerS)
+                        .foregroundColor(Palette.white)
+                        .background {
+                            if categoryVM.currentPickerTab == tab {
+                                Capsule()
+                                    .fill(Palette.black)
+                                    .matchedGeometryEffect(id: "pickerTab", in: animation)
+                            }
+                        }
+                        .containerShape(Capsule())
+                        .contentShape(Capsule())
+                        .onTapGesture {
+                            withAnimation(.easeInOut){
+                                categoryVM.currentPickerTab = tab
+                                let haptic = UIImpactFeedbackGenerator(style: .soft)
+                                haptic.impactOccurred()
+                            }
+                        }
+                    } else {
+                    Text(tab)
+                        .frame(maxWidth: .infinity)
+                        .padding(10)
+                        .font(Typography.headerS)
+                        .foregroundColor(Palette.black)
+                        .background {
+                            if categoryVM.currentPickerTab == tab {
+                                Capsule()
+                                    .fill(Palette.black)
+                                    .matchedGeometryEffect(id: "pickerTab", in: animation)
+                            }
+                        }
+                        .containerShape(Capsule())
+                        .contentShape(Capsule())
+                        .onTapGesture {
+                            withAnimation(.easeInOut){
+                                categoryVM.currentPickerTab = tab
+                                let haptic = UIImpactFeedbackGenerator(style: .soft)
+                                haptic.impactOccurred()
+                            }
+                        }
+                }
+            }
+        }            
+        .padding(.horizontal, 3)
+        }
+    }
+}
+
+//MARK: Overview page
+struct OverviewView: View {
+    @ObservedObject var categoryVM = CategoryViewModel()
+    var body: some View {
+        List {
+            CostsListView(categoryVM: categoryVM)
+            Section {
+                FuelListView()
+                    .padding(2)
+            }
+            Section {
+                OdometerCostsView()
+                    .padding(2)
+            }
+        }
+        .background(Color.yellow)
         
     }
-    }
+}
 
 
-
-
+//MARK: Costs List Section
 struct CostsListView: View {
 
-    
-    @State var value = "$ 20"
-    var costs = ["Fuel", "Mainteinance", "Insurance", "Tolls", "Fines", "Parking", "Other"]
-    var costsImage = ["fuelType", "maintanance", "Insurance", "Tolls", "fines", "Parking", "Other"]
-    
+    @ObservedObject var categoryVM : CategoryViewModel
     
     var body: some View {
     
@@ -84,74 +154,23 @@ struct CostsListView: View {
                 }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                
-                
-
-                HStack{
-                    ListCategoryComponent(title: "Fuel", iconName: "fuelType", color: Palette.colorYellow)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
+                ForEach(categoryVM.categories, id: \.self) { category in
+                    HStack{
+                        ListCategoryComponent(title: category.name, iconName: category.icon, color: category.color)
+                        Spacer()
+                        Text(String(category.totalCosts))
+                            .font(Typography.headerM)
+                            .foregroundColor(Palette.greyHard)
+                    }
+                    .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                 }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                HStack{
-                    ListCategoryComponent(title: "Mainteinance", iconName: "maintanance", color: Palette.colorGreen)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
-                }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                HStack{
-                    ListCategoryComponent(title: "Insurance", iconName: "insurance", color: Palette.colorOrange)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
-                }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                HStack{
-                    ListCategoryComponent(title: "Tolls", iconName: "Tolls", color: Palette.colorOrange)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
-                }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                HStack{
-                    ListCategoryComponent(title: "Fines", iconName: "fines", color: Palette.colorOrange)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
-                }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                HStack{
-                    ListCategoryComponent(title: "Parking", iconName: "parking", color: Palette.colorViolet)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
-                }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                HStack{
-                    ListCategoryComponent(title: "Other", iconName: "other", color: Palette.colorViolet)
-                    Spacer()
-                    Text(value)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyHard)
-                }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                
-                
             }
             
             .padding(2)
-            
-        
     }
 }
 
+//MARK: Fuel data Section
 struct FuelListView : View {
     var body: some View {
         
@@ -173,11 +192,11 @@ struct FuelListView : View {
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Average days/refuel", value: "26")
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-
-
     }
 }
 
+
+//MARK: Odometer Section
 struct OdometerCostsView: View {
     var body: some View {
         HStack {
@@ -201,6 +220,7 @@ struct OdometerCostsView: View {
     }
 }
 
+//MARK: List row
 struct ListCostsAttributes: View {
     var title : String
     var value : String
@@ -216,17 +236,19 @@ struct ListCostsAttributes: View {
     }
 }
 
+//MARK: Analytics Header 
+
 struct AnalyticsHeaderView : View {
     
     var body: some View {
         HStack{
             HStack {
-                Text("Analytics")
-                    .fontWeight(.bold)
+                Text("Analytics")                    
                     .font(Typography.headerXL)
+                    .padding(.leading,20)
             }
             .frame(alignment: .topLeading)
-            .padding()
+            
             Spacer()
             
             HStack{
@@ -249,7 +271,7 @@ struct AnalyticsHeaderView : View {
                     
                     }
                 })
-                
+               
                 ZStack{
                     Button(action: {
                         
@@ -259,15 +281,15 @@ struct AnalyticsHeaderView : View {
                                 .foregroundColor(Palette.white)
                                 .frame(width: UIScreen.main.bounds.width * 0.09, height: UIScreen.main.bounds.height * 0.04)
                                 .shadowGrey()
-                            Image("bellHome")
+                            Image("download")
                         }
                     })
                 }
+                .padding()
             }
             .padding(.top,2)
-
-          
         }
+        .padding(.top)
     }
 }
 

@@ -23,6 +23,7 @@ struct MainContent: View {
     @State var shouldShowOnboarding : Bool = false //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
     @StateObject var dataVM = DataViewModel()
+    @StateObject var categoryVM = CategoryViewModel()
 
     var body: some View {
         NavigationView{
