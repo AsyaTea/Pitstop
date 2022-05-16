@@ -10,12 +10,94 @@ import Foundation
 
 struct HomeStyleView: View {
    
-//    @StateObject var homeVM = HomeViewModel()
+   @StateObject var homeVM = HomeViewModel()
     
     //Scroll animation vars
     @State var offset:  CGFloat = 0
     @State var topEdge : CGFloat
     let maxHeight = UIScreen.main.bounds.height / 3.6
+    
+    var body: some View {
+        ZStack{
+        ScrollView(.vertical,showsIndicators: false){
+            VStack(spacing: 15){
+                
+                GeometryReader{ proxy in
+                    //MARK: HEADER CONTENT
+                    HeaderContent(offset: $offset, maxHeight: maxHeight)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .opacity(
+                            withAnimation(.easeOut){ fadeOutOpacity()}
+                        )
+                       
+                    // sticky effect
+                        .frame(height: getHeaderHeight(),alignment: .bottom)
+                        .background(Palette.colorYellow)
+                        .overlay(
+                            //MARK: TOP NAV BAR
+                            TopNav(offset: offset, maxHeight: maxHeight, topEdge:topEdge)
+                                .padding(.horizontal)
+                                .frame(height: 60)
+                                .padding(.top,topEdge)
+                                
+                            ,alignment: .top
+                        )
+                }
+                .frame(height: maxHeight)
+                // Fixing at top
+                .offset(y: -offset)
+                .zIndex(1)
+                
+                //MARK: BOTTOM VIEW
+                ZStack{
+               
+                    BottomContentView(homeVM: homeVM)
+                .background(Palette.greyBackground,in: CustomCorner(corners: [.topLeft,.topRight], radius: getCornerRadius()))
+                }
+                .background(Palette.colorYellow)
+                .padding(.top,-15)
+                .zIndex(0)
+            }
+            .modifier(OffsetModifier(offset: $offset))
+        }
+        .background(Palette.greyBackground)
+        .coordinateSpace(name: "SCROLL")
+        .disabled(homeVM.showAlertNumbers)
+        .overlay(
+            ZStack{
+                homeVM.showAlertNumbers ? Color.black.opacity(0.4) : Color.clear
+            }
+        )
+        
+        //SHOW THE ALLERT IF TOGGLED
+        if(homeVM.showAlertNumbers){
+            Spacer()
+            AlertAddNumbers(homeVM: homeVM)
+            Spacer()
+            }
+        }
+    }
+    
+    func getHeaderHeight() -> CGFloat {
+        
+        let topHeight = maxHeight + offset
+        
+        // 60 is the costant top nav bar height
+        // since we included top safe area so we also need to include that too
+        return topHeight > (60 + topEdge) ? topHeight
+        : (60 + topEdge)
+    }
+    
+    func getCornerRadius() -> CGFloat {
+        
+        let progress = -offset / (maxHeight - (60+topEdge))
+        
+        let value = 1 - progress
+        let radius = value * 35
+        
+        return offset < 0 ? radius : 35
+    }
     
     // Opacity to let appear items in the top bar
     func fadeInOpacity() -> CGFloat {
@@ -37,79 +119,7 @@ struct HomeStyleView: View {
         return offset < 0 ? opacity : 1
     }
     
-    
-    var body: some View {
-        
-        ScrollView(.vertical,showsIndicators: false){
-            VStack(spacing: 15){
-                
-                GeometryReader{ proxy in
-                    
-                    HeaderContent(offset: $offset, maxHeight: maxHeight)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .opacity(
-                            withAnimation(.easeOut){ fadeOutOpacity()}
-                        )
-                       
-                    // sticky effect
-                        .frame(height: getHeaderHeight(),alignment: .bottom)
-                        .background(Palette.colorBlue)
-                        .overlay(
-                            //Top nav view
-                            TopNav(offset: offset, maxHeight: maxHeight, topEdge:topEdge)
-                                .padding(.horizontal)
-                                .frame(height: 60)
-                                .padding(.top,topEdge)
-                                
-                            ,alignment: .top
-                        )
-                }
-                .frame(height: maxHeight)
-                // Fixing at top
-                .offset(y: -offset)
-                .zIndex(1)
-                // BOTTOM VIEW
-                ZStack{
-                VStack(spacing: 0){
-                    BottomContent()
-                }
-                .background(Palette.greyBackground,in: CustomCorner(corners: [.topLeft,.topRight], radius: getCornerRadius()))
-                }
-                .background(Palette.colorBlue)
-                .padding(.top,-15)
-                .zIndex(0)
-            }
-            .modifier(OffsetModifier(offset: $offset))
-        }
-        .background(Palette.greyBackground)
-        // Setting the coordinate space
-        .coordinateSpace(name: "SCROLL")
-        
-    }
-    func getHeaderHeight() -> CGFloat {
-        
-        let topHeight = maxHeight + offset
-        
-        // 80 is the costant top nav bar height
-        // since we included top safe area so we also need to include that too
-        return topHeight > (60 + topEdge) ? topHeight
-        : (60 + topEdge)
-    }
-    
-    func getCornerRadius() -> CGFloat {
-        
-        let progress = -offset / (maxHeight - (60+topEdge))
-        
-        let value = 1 - progress
-        let radius = value * 35
-        
-        return offset < 0 ? radius : 35
-    }
-    
 
-    
-    
 }
 
 struct Home_Previews: PreviewProvider {
@@ -118,229 +128,7 @@ struct Home_Previews: PreviewProvider {
     }
 }
 
-struct BottomContent : View {
-    
-    
-    var body: some View {
-        
-        titleSectionComponent(sectionTitle: "Last events")
-            .padding()
-            .padding(.top,10)
-            .padding(.bottom,-10)
-        categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
-        categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
-        categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
-          
-        titleSectionComponent(sectionTitle: "Documents")
-            .padding()
-            .padding(.top,10)
-            .padding(.bottom,-10)
-        ScrollView(.horizontal,showsIndicators: false){
-            VStack {
-                Spacer(minLength: 12)
-            HStack{
-                Button(action: {
-                   
-                }, label: {
-                    documentComponent(title: "Driving license")
-                })
-                Button(action: {
-                    
-                }, label: {
-                    addComponent(title: "Add document")
-                })
-               
-            }
-                Spacer(minLength: 16)
-            }
-            
-        }
-        .safeAreaInset(edge: .trailing, spacing: 0) {
-            Spacer()
-                .frame(width: 16)
-        }
-        .safeAreaInset(edge: .leading, spacing: 0) {
-            Spacer()
-                .frame(width: 16)
-        }
-        
-        titleSectionComponent(sectionTitle: "Important numbers")
-            .padding()
-            .padding(.top,10)
-            .padding(.bottom,-10)
-        ScrollView(.horizontal,showsIndicators: false){
-            VStack {
-                Spacer(minLength: 12)
-            HStack{
-                Button(action: {
-                   
-                }, label: {
-                    importantNumbersComponent(title: "Service", number: "366 4925454")
-                })
-                Button(action: {
-                    
-                }, label: {
-                    addComponent(title: "Add number")
-                })
-               
-            }
-                Spacer(minLength: 16)
-            }
-            
-        }
-        .safeAreaInset(edge: .trailing, spacing: 0) {
-            Spacer()
-                .frame(width: 16)
-        }
-        .safeAreaInset(edge: .leading, spacing: 0) {
-            Spacer()
-                .frame(width: 16)
-        }
-        
-        //Trick for scroll space, if you remove this you will see the problem
-       Text("")
-            .padding(.vertical,70)
-        Spacer()
-    }
-    
-    @ViewBuilder
-    func categoryComponent(categoryName : String, date: Date, cost : String) -> some View {
-        
-        let formatted = date.formatDate()
-        
-        HStack{
-            ZStack{
-                Circle()
-                    .frame(width: 32, height: 32)
-                    .foregroundColor(Palette.colorYellow)
-                Image("Fuel")
-                    .resizable()
-                    .frame(width: 16, height: 16)
-            }
-            VStack(alignment: .leading){
-                Text(categoryName)
-                    .foregroundColor(Palette.black)
-                    .font(Typography.headerS)
-                Text(formatted)
-                    .foregroundColor(Palette.greyMiddle)
-                    .font(Typography.TextM)
-                
-            }
-            Spacer()
-            VStack{
-            Text("–$ \(cost)")
-                .foregroundColor(Palette.greyHard)
-                .font(Typography.headerS)
-            Spacer()
-            }
-        }
-        .padding(.horizontal)
-        .padding(.vertical,10)
-        
-    }
- 
-    
-    @ViewBuilder
-    func titleSectionComponent(sectionTitle: String) -> some View {
-        HStack{
-            Text(sectionTitle)
-                .foregroundColor(Palette.black)
-                .font(Typography.headerL)
-            Spacer()
-            HStack{
-                Button(action:{
-                }, label: {
-                    Text("View all")
-                        .font(Typography.ControlS)
-                        .foregroundColor(Palette.greyMiddle)
-                    Image("arrowLeft")
-                        .resizable()
-                        .foregroundColor(Palette.greyMiddle)
-                        .frame(width: 5, height: 9)
-                        .rotationEffect(Angle(degrees: 180))
-                })
-                
-            }
-        }
-    }
-    
-    @ViewBuilder
-    func documentComponent(title: String) -> some View {
-        ZStack{
-            Rectangle()
-                .cornerRadius(8)
-                .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
-                .foregroundColor(Palette.white)
-                .shadowGrey()
-            VStack(alignment: .leading, spacing: 40){
-                ZStack{
-                    Circle()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(Palette.greyLight)
-                    Image("documents")
-                        .resizable()
-                        .frame(width: 12, height: 12)
-                        .foregroundColor(Palette.black)
-                }
-                Text(title)
-                    .foregroundColor(Palette.black)
-                    .font(Typography.ControlS)
-            }
-            .padding(.leading,-28)
-            .padding(.top,-2)
-        }
-    }
-    
-    @ViewBuilder
-    func importantNumbersComponent(title: String, number: String) -> some View {
-        ZStack{
-            Rectangle()
-                .cornerRadius(8)
-                .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
-                .foregroundColor(Palette.white)
-                .shadowGrey()
-            VStack(alignment: .leading, spacing: 22){
-                ZStack{
-                    Circle()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(Palette.greyLight)
-                    Image("Service")
-                        .resizable()
-                        .frame(width: 14, height: 14)
-                        .foregroundColor(Palette.black)
-                }
-                VStack(alignment: .leading,spacing:3){
-                Text(title)
-                    .foregroundColor(Palette.black)
-                    .font(Typography.ControlS)
-                Text(number)
-                    .foregroundColor(Palette.greyMiddle)
-                    .font(Typography.TextM)
-                }
-            }
-            .padding(.leading,-34)
-            .padding(.top,-2)
-        }
-    }
-    
-    @ViewBuilder
-    func addComponent(title : String) -> some View {
-        ZStack{
-            Rectangle()
-                .cornerRadius(8)
-                .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
-                .foregroundColor(Palette.white)
-                .shadowGrey()
-            VStack(alignment: .center, spacing: 10){
-                Image("plus")
-                    .foregroundColor(Palette.greyMiddle)
-                Text(title)
-                    .foregroundColor(Palette.greyMiddle)
-                    .font(Typography.ControlS)
-            }
-        }
-    }
-}
+
 
 struct TopNav : View {
     
@@ -462,7 +250,7 @@ struct HeaderContent : View {
                     ZStack{
                         Rectangle()
                             .cornerRadius(16)
-                            .foregroundColor(Palette.colorMainBlue)
+                            .foregroundColor(Palette.colorMainYellow)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
                             Text("23,4k $")
@@ -481,7 +269,7 @@ struct HeaderContent : View {
                     ZStack{
                         Rectangle()
                             .cornerRadius(16)
-                            .foregroundColor(Palette.colorMainBlue)
+                            .foregroundColor(Palette.colorMainYellow)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
                             Text("23842")
@@ -500,7 +288,7 @@ struct HeaderContent : View {
                     ZStack{
                         Rectangle()
                             .cornerRadius(16)
-                            .foregroundColor(Palette.colorMainBlue)
+                            .foregroundColor(Palette.colorMainYellow)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
                             Text("23,4k $")
