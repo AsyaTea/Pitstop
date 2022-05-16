@@ -29,6 +29,12 @@ class HomeViewModel : ObservableObject {
         showAlertNumbers = false
     }
     
+    func resetAlertFieldsInside(){
+        numberTitle = ""
+        number = ""
+        showAlertNumbersInside = false
+    }
+    
     //MARK: FRONTEND FUNCS
     // Opacity to let appear items in the top bar
     func fadeInOpacity() -> CGFloat {

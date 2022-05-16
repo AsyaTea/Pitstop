@@ -62,10 +62,11 @@ struct OnboardingView: View {
         switch destination {
             
         case .page1:
+            withAnimation(.easeOut){
             Page1(destination: $destination)
             //                .transition(.move(edge: .leading))
             //                .transition( AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
-                .animation(.easeOut)
+            }
         case .page2:
             Page2(onboardingVM: onboardingVM, destination: $destination)
                 .animation(.easeOut(duration: 0.2))

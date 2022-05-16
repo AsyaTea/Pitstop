@@ -62,7 +62,7 @@ struct ImportantNumbersView: View {
             )
             if(homeVM.showAlertNumbersInside){
                 Spacer()
-                EmptyView()
+                AlertAddNumbersInside(homeVM: homeVM)
                 Spacer()
             }
 
