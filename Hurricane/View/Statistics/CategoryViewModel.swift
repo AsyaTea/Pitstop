@@ -22,10 +22,13 @@ class CategoryViewModel: ObservableObject {
                        Category(name: "Insurance", color: Palette.colorOrange, icon: "insurance", totalCosts: 20.0),
                        Category(name: "Tolls", color: Palette.colorOrange, icon: "Tolls", totalCosts: 20.0),
                        Category(name: "Fines", color: Palette.colorOrange, icon: "fines", totalCosts: 20.0),
-                        Category(name: "Parking", color: Palette.colorViolet, icon: "parking", totalCosts: 20.0),
+                       Category(name: "Parking", color: Palette.colorViolet, icon: "parking", totalCosts: 20.0),
                        Category(name: "Other", color: Palette.colorViolet, icon: "other", totalCosts: 20.0),
     ]
     
+    @Published var currentPickerTab : String = "Overview"
+    
+    //Function to calculate total cost of a category
     func totalCategoryCost(category: Category) -> Double {
         
         return 0.0

@@ -13,6 +13,7 @@ struct HurricaneApp: App {
         WindowGroup {
             CustomTabBarView()
                 .preferredColorScheme(.light)
+//            AnalyticsOverviewView()
         }
     }
 }

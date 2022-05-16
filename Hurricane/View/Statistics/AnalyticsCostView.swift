@@ -12,22 +12,16 @@ struct AnalyticsCostView: View {
     var body: some View {
         
             VStack{
-                AnalyticsHeaderView()
-                .frame(height: 30)
-                .padding()
-                
                 List {
                     Section {
                         CostGraphView()
                             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                             .frame(height: 201)
                     }
-                    
                     Section {
                         CostsListView(categoryVM: categoryVM)
                     }
-                    Section {
-                        
+                    Section {                        
                     }
                 }
             }

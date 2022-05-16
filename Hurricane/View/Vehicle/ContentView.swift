@@ -10,8 +10,6 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject private var vehicleVM = DataViewModel()
-    
-    //    @State var vehicle : Vehicle = Vehicle()
     @State var vehicle : VehicleModel = VehicleModel()
     @State var expense : ExpenseModel = ExpenseModel()
     

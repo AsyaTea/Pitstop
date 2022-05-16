@@ -15,31 +15,101 @@ struct AnalyticsOverviewView: View {
     @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
     @State var pickedTab = ""
     
+    @Namespace var animation
+    
+    init() {
+        //  Change list background color
+        UITableView.appearance().separatorStyle = .singleLine
+        UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
+        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
+    }
+    
     var body: some View {
         VStack{
             AnalyticsHeaderView()
             .frame(height: 30)
-            .padding()
             
-            List {
-                CostsListView(categoryVM: categoryVM)
-                Section {
-                    FuelListView()
-                        .padding(2)
-                }
-                Section {
-                    OdometerCostsView()
-                        .padding(2)
-                }
+            if(categoryVM.currentPickerTab == "Overview") {
+                OverviewView()
             }
+            else if (categoryVM.currentPickerTab == "Cost") {
+                AnalyticsCostView(categoryVM: categoryVM)
+            }
+            else if (categoryVM.currentPickerTab == "Fuel") {
+                AnalyticsFuelView()
+            }
+            else {
+                AnalyticsOdometerView()
+            }
+            
         }
+        
+        .background(Palette.greyBackground)
         .overlay(content: {
-
+            VStack{
+                Spacer()
+                CustomSegmentedPicker()
+                    .padding()
+                    .background(.thickMaterial)
+            }
         })
         .background(Palette.greyLight)
         
+        
     }
+    
+    
+    func CustomSegmentedPicker() -> some View{
+        ZStack {
+            
+            HStack(spacing:10){
+                ForEach(pickerTabs,id:\.self){ tab in
+                    Text(tab)
+                        .frame(maxWidth: .infinity)
+                        .padding(10)
+                        .font(Typography.headerS)
+                        .foregroundColor(Palette.black)
+                        .background {
+                            if categoryVM.currentPickerTab == tab {
+                                Capsule()
+                                    .fill(Palette.greyLight)
+                                    .matchedGeometryEffect(id: "pickerTab", in: animation)
+                            }
+                        }
+                        .containerShape(Capsule())
+                        .onTapGesture {
+                            withAnimation(.easeInOut){
+                                categoryVM.currentPickerTab = tab
+                                let haptic = UIImpactFeedbackGenerator(style: .soft)
+                                haptic.impactOccurred()
+                            }
+                        }
+                }
+            }
+            .padding(3)
+        }
     }
+}
+
+//MARK: Overview page
+struct OverviewView: View {
+    @ObservedObject var categoryVM = CategoryViewModel()
+    var body: some View {
+        List {
+            CostsListView(categoryVM: categoryVM)
+            Section {
+                FuelListView()
+                    .padding(2)
+            }
+            Section {
+                OdometerCostsView()
+                    .padding(2)
+            }
+        }
+        .background(Color.yellow)
+        
+    }
+}
 
 
 //MARK: Costs List Section
@@ -148,12 +218,12 @@ struct AnalyticsHeaderView : View {
     var body: some View {
         HStack{
             HStack {
-                Text("Analytics")
-                    .fontWeight(.bold)
+                Text("Analytics")                    
                     .font(Typography.headerXL)
+                    .padding(.leading,20)
             }
             .frame(alignment: .topLeading)
-            .padding()
+            
             Spacer()
             
             HStack{
@@ -176,7 +246,7 @@ struct AnalyticsHeaderView : View {
                     
                     }
                 })
-                
+               
                 ZStack{
                     Button(action: {
                         
@@ -190,6 +260,7 @@ struct AnalyticsHeaderView : View {
                         }
                     })
                 }
+                .padding()
             }
             .padding(.top,2)
         }
