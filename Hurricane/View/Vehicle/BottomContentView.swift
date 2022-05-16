@@ -10,11 +10,14 @@ import SwiftUI
 struct BottomContentView: View {
     
     @ObservedObject var homeVM : HomeViewModel
+    @State private var viewAllNumbers = false
+    @State private var viewAllDocuments = false
+    @State private var showingOptions = false
     
     var body: some View {
         VStack(spacing: 0){
             
-            titleSectionComponent(sectionTitle: "Last events")
+            TitleSectionComponent(sectionTitle: "Last events",binding: $viewAllNumbers)
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
@@ -22,7 +25,7 @@ struct BottomContentView: View {
             categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
             categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
             
-            titleSectionComponent(sectionTitle: "Documents")
+            TitleSectionComponent(sectionTitle: "Documents", binding: $viewAllDocuments)
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
@@ -56,7 +59,7 @@ struct BottomContentView: View {
                     .frame(width: 16)
             }
             
-            titleSectionComponent(sectionTitle: "Important numbers")
+            TitleSectionComponent(sectionTitle: "Important numbers", binding: $viewAllNumbers)
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
@@ -67,12 +70,17 @@ struct BottomContentView: View {
                     Spacer(minLength: 12)
                     HStack{
                         Button(action: {
-                            
+                            UIApplication.shared.open(URL(string: "tel://32994")!)
                         }, label: {
                             importantNumbersComponent(title: "Service", number: "366 4925454")
                         })
+                        
                         Button(action: {
-                            homeVM.showAlertNumbers.toggle()
+                            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                withAnimation(.easeInOut){
+                                    homeVM.showAlertNumbers.toggle()
+                                }
+                            }
                         }, label: {
                             addComponent(title: "Add number")
                         })
@@ -97,8 +105,9 @@ struct BottomContentView: View {
             Spacer()
             
         }
+        .fullScreenCover(isPresented: $viewAllNumbers){ImportantNumbersView(homeVM: homeVM)}
+        .fullScreenCover(isPresented: $viewAllDocuments){Text("DocumentsView")}
         
-     
     }
     
     @ViewBuilder
@@ -137,30 +146,6 @@ struct BottomContentView: View {
         
     }
     
-    
-    @ViewBuilder
-    func titleSectionComponent(sectionTitle: String) -> some View {
-        HStack{
-            Text(sectionTitle)
-                .foregroundColor(Palette.black)
-                .font(Typography.headerL)
-            Spacer()
-            HStack{
-                Button(action:{
-                }, label: {
-                    Text("View all")
-                        .font(Typography.ControlS)
-                        .foregroundColor(Palette.greyMiddle)
-                    Image("arrowLeft")
-                        .resizable()
-                        .foregroundColor(Palette.greyMiddle)
-                        .frame(width: 5, height: 9)
-                        .rotationEffect(Angle(degrees: 180))
-                })
-                
-            }
-        }
-    }
     
     @ViewBuilder
     func documentComponent(title: String) -> some View {
@@ -246,3 +231,30 @@ struct BottomContentView: View {
 //        
 //    }
 //}
+
+struct TitleSectionComponent : View {
+    
+    var sectionTitle : String
+    @Binding var binding : Bool
+    
+    var body: some View {
+        HStack{
+            Text(sectionTitle)
+                .foregroundColor(Palette.black)
+                .font(Typography.headerL)
+            Spacer()
+            HStack{
+                Button(action:{
+                    binding.toggle()
+                }, label: {
+                    Text("View all")
+                        .font(Typography.ControlS)
+                        .foregroundColor(Palette.greyMiddle)
+                    
+                })
+                
+            }
+        }
+    }
+}
+

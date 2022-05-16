@@ -9,8 +9,8 @@ import SwiftUI
 import Foundation
 
 struct HomeStyleView: View {
-   
-   @StateObject var homeVM = HomeViewModel()
+    
+    @StateObject var homeVM = HomeViewModel()
     
     //Scroll animation vars
     @State var offset:  CGFloat = 0
@@ -19,62 +19,62 @@ struct HomeStyleView: View {
     
     var body: some View {
         ZStack{
-        ScrollView(.vertical,showsIndicators: false){
-            VStack(spacing: 15){
-                
-                GeometryReader{ proxy in
-                    //MARK: HEADER CONTENT
-                    HeaderContent(offset: $offset, maxHeight: maxHeight)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .opacity(
-                            withAnimation(.easeOut){ fadeOutOpacity()}
-                        )
-                       
-                    // sticky effect
-                        .frame(height: getHeaderHeight(),alignment: .bottom)
-                        .background(Palette.colorYellow)
-                        .overlay(
-                            //MARK: TOP NAV BAR
-                            TopNav(offset: offset, maxHeight: maxHeight, topEdge:topEdge)
-                                .padding(.horizontal)
-                                .frame(height: 60)
-                                .padding(.top,topEdge)
+            ScrollView(.vertical,showsIndicators: false){
+                VStack(spacing: 15){
+                    
+                    GeometryReader{ proxy in
+                        //MARK: HEADER CONTENT
+                        HeaderContent(offset: $offset, maxHeight: maxHeight)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .opacity(
+                                withAnimation(.easeOut){ fadeOutOpacity()}
+                            )
+                        
+                        // sticky effect
+                            .frame(height: getHeaderHeight(),alignment: .bottom)
+                            .background(Palette.colorYellow)
+                            .overlay(
+                                //MARK: TOP NAV BAR
+                                TopNav(offset: offset, maxHeight: maxHeight, topEdge:topEdge)
+                                    .padding(.horizontal)
+                                    .frame(height: 60)
+                                    .padding(.top,topEdge+10)
                                 
-                            ,alignment: .top
-                        )
+                                ,alignment: .top
+                            )
+                    }
+                    .frame(height: maxHeight)
+                    // Fixing at top
+                    .offset(y: -offset)
+                    .zIndex(1)
+                    
+                    //MARK: BOTTOM VIEW
+                    ZStack{
+                        
+                        BottomContentView(homeVM: homeVM)
+                            .background(Palette.greyBackground,in: CustomCorner(corners: [.topLeft,.topRight], radius: getCornerRadius()))
+                    }
+                    .background(Palette.colorYellow)
+                    .padding(.top,-15)
+                    .zIndex(0)
                 }
-                .frame(height: maxHeight)
-                // Fixing at top
-                .offset(y: -offset)
-                .zIndex(1)
-                
-                //MARK: BOTTOM VIEW
+                .modifier(OffsetModifier(offset: $offset))
+            }
+            .background(Palette.greyBackground)
+            .coordinateSpace(name: "SCROLL")
+            .disabled(homeVM.showAlertNumbers)
+            .overlay(
                 ZStack{
-               
-                    BottomContentView(homeVM: homeVM)
-                .background(Palette.greyBackground,in: CustomCorner(corners: [.topLeft,.topRight], radius: getCornerRadius()))
+                    homeVM.showAlertNumbers ? Color.black.opacity(0.4) : Color.clear
                 }
-                .background(Palette.colorYellow)
-                .padding(.top,-15)
-                .zIndex(0)
-            }
-            .modifier(OffsetModifier(offset: $offset))
-        }
-        .background(Palette.greyBackground)
-        .coordinateSpace(name: "SCROLL")
-        .disabled(homeVM.showAlertNumbers)
-        .overlay(
-            ZStack{
-                homeVM.showAlertNumbers ? Color.black.opacity(0.4) : Color.clear
-            }
-        )
-        
-        //SHOW THE ALLERT IF TOGGLED
-        if(homeVM.showAlertNumbers){
-            Spacer()
-            AlertAddNumbers(homeVM: homeVM)
-            Spacer()
+            )
+            
+            //SHOW THE ALLERT IF TOGGLED
+            if(homeVM.showAlertNumbers){
+                Spacer()
+                AlertAddNumbers(homeVM: homeVM)
+                Spacer()
             }
         }
     }
@@ -119,7 +119,7 @@ struct HomeStyleView: View {
         return offset < 0 ? opacity : 1
     }
     
-
+    
 }
 
 struct Home_Previews: PreviewProvider {
@@ -135,7 +135,7 @@ struct TopNav : View {
     var offset: CGFloat
     let maxHeight : CGFloat
     var topEdge : CGFloat
-//    var homeVM : HomeViewModel
+    //    var homeVM : HomeViewModel
     
     // Opacity to let appear items in the top bar
     func fadeInOpacity() -> CGFloat {
@@ -156,17 +156,17 @@ struct TopNav : View {
         
         return offset < 0 ? opacity : 1
     }
-
+    
     
     
     var body: some View {
         VStack(alignment: .leading){
             HStack{
                 HStack{
-                Text("Batman's car ")
-                    .foregroundColor(Palette.black)
-                    .font(Typography.headerXL)
-                    .opacity(fadeOutOpacity())
+                    Text("Batman's car ")
+                        .foregroundColor(Palette.black)
+                        .font(Typography.headerXL)
+                        .opacity(fadeOutOpacity())
                     Image("arrowLeft")
                         .resizable()
                         .foregroundColor(Palette.black)
@@ -220,18 +220,18 @@ struct TopNav : View {
                 .opacity(fadeOutOpacity())
         }.overlay(
             VStack(alignment: .center,spacing: 2){
-            Text("Batmans' car")
-                .font(Typography.headerM)
-                .foregroundColor(Palette.black)
-            Text("Range Rover Evoque, 2017")
-                .font(Typography.TextM)
-                .foregroundColor(Palette.black)
+                Text("Batmans' car")
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.black)
+                Text("Range Rover Evoque, 2017")
+                    .font(Typography.TextM)
+                    .foregroundColor(Palette.black)
             }
                 .opacity(
                     withAnimation(.easeInOut){
                         fadeInOpacity()
-                })
-            .padding(.bottom,15)
+                    })
+                .padding(.bottom,15)
         )
     }
 }
@@ -343,9 +343,9 @@ struct CustomCorner : Shape {
 }
 
 extension Date {
-        func formatDate() -> String {
-                let dateFormatter = DateFormatter()
-            dateFormatter.setLocalizedDateFormatFromTemplate("MMM d, EE")
-            return dateFormatter.string(from: self)
-        }
+    func formatDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.setLocalizedDateFormatFromTemplate("MMM d, EE")
+        return dateFormatter.string(from: self)
+    }
 }

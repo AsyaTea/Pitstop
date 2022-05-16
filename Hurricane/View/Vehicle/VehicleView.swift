@@ -38,6 +38,7 @@ struct VehicleView: View {
             }
             
         )
+        .ignoresSafeArea(.keyboard)
         .sheet(isPresented: $showAddReport) {
                    AddReportView()
                }
