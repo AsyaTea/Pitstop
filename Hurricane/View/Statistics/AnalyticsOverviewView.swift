@@ -49,21 +49,44 @@ struct AnalyticsOverviewView: View {
             VStack{
                 Spacer()
                 CustomSegmentedPicker()
-                    .padding()
-                    .background(.thickMaterial)
+                    
+                    .padding(.horizontal)
+                    .padding(.vertical, 12)
+                    .background(.ultraThinMaterial)
+                    
             }
         })
         .background(Palette.greyLight)
-        
-        
     }
     
     
     func CustomSegmentedPicker() -> some View{
         ZStack {
-            
-            HStack(spacing:10){
+        HStack(alignment: .center, spacing:10){
                 ForEach(pickerTabs,id:\.self){ tab in
+                    if categoryVM.currentPickerTab == tab {
+                    Text(tab)
+                        .frame(maxWidth: .infinity)
+                        .padding(10)
+                        .font(Typography.headerS)
+                        .foregroundColor(Palette.white)
+                        .background {
+                            if categoryVM.currentPickerTab == tab {
+                                Capsule()
+                                    .fill(Palette.black)
+                                    .matchedGeometryEffect(id: "pickerTab", in: animation)
+                            }
+                        }
+                        .containerShape(Capsule())
+                        .contentShape(Capsule())
+                        .onTapGesture {
+                            withAnimation(.easeInOut){
+                                categoryVM.currentPickerTab = tab
+                                let haptic = UIImpactFeedbackGenerator(style: .soft)
+                                haptic.impactOccurred()
+                            }
+                        }
+                    } else {
                     Text(tab)
                         .frame(maxWidth: .infinity)
                         .padding(10)
@@ -72,11 +95,12 @@ struct AnalyticsOverviewView: View {
                         .background {
                             if categoryVM.currentPickerTab == tab {
                                 Capsule()
-                                    .fill(Palette.greyLight)
+                                    .fill(Palette.black)
                                     .matchedGeometryEffect(id: "pickerTab", in: animation)
                             }
                         }
                         .containerShape(Capsule())
+                        .contentShape(Capsule())
                         .onTapGesture {
                             withAnimation(.easeInOut){
                                 categoryVM.currentPickerTab = tab
@@ -86,7 +110,8 @@ struct AnalyticsOverviewView: View {
                         }
                 }
             }
-            .padding(3)
+        }            
+        .padding(.horizontal, 3)
         }
     }
 }
@@ -264,6 +289,7 @@ struct AnalyticsHeaderView : View {
             }
             .padding(.top,2)
         }
+        .padding(.top)
     }
 }
 
