@@ -110,7 +110,7 @@ struct AnalyticsOverviewView: View {
                         }
                 }
             }
-        }            
+        }
         .padding(.horizontal, 3)
         }
     }
@@ -130,9 +130,7 @@ struct OverviewView: View {
                 OdometerCostsView()
                     .padding(2)
             }
-        }
-        .background(Color.yellow)
-        
+        }        
     }
 }
 

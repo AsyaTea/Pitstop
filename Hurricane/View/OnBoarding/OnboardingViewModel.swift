@@ -10,7 +10,7 @@ import UserNotifications
 
 class OnboardingViewModel : ObservableObject {
     
-    @Published var vehicle : VehicleModel = VehicleModel()
+    @Published var vehicle : VehicleState = VehicleState()
     
     let fuelCategories = ["Gasoline","Diesel", "Electric","LPG (Propane)","CNG (Methane)","Ethanol","Hydrogen"]
     @Published var selectedFuel = "Fuel Type"
@@ -18,8 +18,7 @@ class OnboardingViewModel : ObservableObject {
     @Published var destination : Pages = .page1
     
     var isDisabled : Bool {
-//        return vehicle.name?.isEmpty ?? false || vehicle.brand?.isEmpty ?? false || vehicle.model?.isEmpty ?? false || selectedFuel == "Fuel Type"
-   return false
+        return vehicle.name.isEmpty  || vehicle.brand.isEmpty  || vehicle.model.isEmpty  || selectedFuel == "Fuel Type"
     }
     
     @Published var skipNotification = false /// Skip notiification page when adding another car

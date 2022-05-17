@@ -8,6 +8,7 @@
 import Foundation
 
 class AddExpenseViewModel : ObservableObject {
+    
     //List picker categories
     @Published var selectedCategory = "Fuel"
     let categoryTypes = ["Fuel", "Maintenance", "Insurance","Road tax","Tolls","Fines","Parking","Other"]
@@ -55,4 +56,10 @@ class AddExpenseViewModel : ObservableObject {
             date = Date.now
         }
     }
+    
+//    func createExpense() -> ExpenseModel {
+//        let newExpense = ExpenseModel(date: self.date, isRecursive: false, name: "Expense 1", note: self.note, odometer: Int32(self.odometer), price: Float(self.priceTab), type: Int16(self.selectedCategory))
+//        return newExpense
+//        
+//    }
 }

@@ -34,8 +34,8 @@ struct SettingsView: View {
             }
             List{
                 Section{
-                    ForEach(dataVM.vehicles){ vehicle in
-                        Text(vehicle.name ?? "")
+                    ForEach(dataVM.vehicleList,id:\.vehicleID){ vehicle in
+                        Text(vehicle.name)
                             .font(Typography.headerM)
                             .foregroundColor(Palette.black)
                     }

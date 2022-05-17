@@ -18,7 +18,7 @@ struct AddReportView: View {
     
     @StateObject var utilityVM : UtilityViewModel = .init()
     @StateObject var addExpVM : AddExpenseViewModel = .init()
-    
+    @ObservedObject var vehicleVM : DataViewModel = .init()
     @State private var showDate = false
     
     //Custom picker tabs
@@ -81,7 +81,14 @@ struct AddReportView: View {
                     .accentColor(Palette.greyHard),
                 trailing:
                     Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
+//                        self.presentationMode.wrappedValue.dismiss()
+//                        for vehicle in vehicleVM.vehicles {
+//                            vehicleVM.currVehicle = vehicle
+//                            print(vehicleVM.currVehicle)
+//                        }
+//                        vehicleVM.currVehicle = vehicleVM.vehicles[0]
+//                        let newExpense = addExpVM.createExpense()
+//                        vehicleVM.addExpense(expense: newExpense)
                     }, label: {
                         Text("Save")
                             .font(Typography.headerM)

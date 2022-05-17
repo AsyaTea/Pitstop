@@ -24,12 +24,12 @@ struct MainContent: View {
             Button("remove all"){
                 dataVM.removeAllVehicles()
             }
-                List(dataVM.vehicles,id: \.id){ vehicle in
+                List(dataVM.vehicleList,id: \.vehicleID){ vehicle in
                 
                     VStack{
-                        Text(vehicle.name ?? "")
-                        Text(vehicle.brand ?? "")
-                        Text(vehicle.model ?? "")
+                        Text(vehicle.name )
+                        Text(vehicle.brand)
+                        Text(vehicle.model)
                     }
                 }
             }

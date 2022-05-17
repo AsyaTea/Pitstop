@@ -33,7 +33,7 @@ struct ExpenseListView: View {
             HStack{
                 ListCategoryComponent(title: "Odometer", iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                TextField("100",text: $addExpVM.odometer)
+                TextField("100", text: $addExpVM.odometer)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .focused(focusedField, equals: .odometer)
