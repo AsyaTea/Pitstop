@@ -11,7 +11,7 @@ struct VehicleView: View {
     
     //Onboarding vars
 //    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
-    @State var shouldShowOnboarding : Bool = true //FOR TESTING
+//    @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
     @StateObject var dataVM = DataViewModel()
     
@@ -42,9 +42,9 @@ struct VehicleView: View {
         .sheet(isPresented: $showAddReport) {
                    AddReportView()
                }
-        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
-            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
-        })
+//        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
+//            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
+//        })
 
     }
 }

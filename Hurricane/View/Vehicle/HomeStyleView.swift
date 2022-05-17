@@ -157,25 +157,51 @@ struct TopNav : View {
         return offset < 0 ? opacity : 1
     }
     
+    @State private var showingAllCars = false
+    @State private var selectedCar = "Batman"
     
     
     var body: some View {
         VStack(alignment: .leading){
             HStack{
-                HStack{
-                    Text("Batman's car ")
-                        .foregroundColor(Palette.black)
-                        .font(Typography.headerXL)
-                        .opacity(fadeOutOpacity())
-                    Image("arrowLeft")
-                        .resizable()
-                        .foregroundColor(Palette.black)
-                        .frame(width: 10, height: 14)
-                        .rotationEffect(Angle(degrees: 180))
-                        .padding(.top,3)
-                        .padding(.leading,-5)
+                Button(action: {
+                    showingAllCars.toggle()
+                }, label: {
+                    HStack{
+                        Text("\(selectedCar)'s car ")
+                            .foregroundColor(Palette.black)
+                            .font(Typography.headerXL)
+                            .opacity(fadeOutOpacity())
+                        Image("arrowLeft")
+                            .resizable()
+                            .foregroundColor(Palette.black)
+                            .frame(width: 10, height: 14)
+                            .rotationEffect(Angle(degrees: 270))
+                            .padding(.top,3)
+                            .padding(.leading,-5)
+                    }
+                    .padding(.leading,-4)
+                    .opacity(fadeOutOpacity())
+                })
+                .confirmationDialog("Select a car", isPresented: $showingAllCars, titleVisibility: .hidden) {
+                                Button("Red") {
+                                    selectedCar = "Red"
+                                }
+
+                                Button("Green") {
+                                    selectedCar = "Green"
+//                                        background = .black
+                                }
+
+                                Button("Blue") {
+                                    selectedCar = "Blue"
+                                }
+                    Button("Cancel", role: .cancel) { }
+                        .background(.black)
+                        .foregroundColor(.red)
                 }
-                .opacity(fadeOutOpacity())
+                
+                
                 Spacer()
                 HStack{
                     Button(action: {
