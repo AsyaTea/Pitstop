@@ -173,7 +173,6 @@
 				41C6E209282CF47D00F756B5 /* AnalyticsFuelView.swift */,
 				41C6E20B282CF49B00F756B5 /* AnalyticsOdometerView.swift */,
 				41C6E20D282D184400F756B5 /* Graph.swift */,
-				41C6E20F283185B200F756B5 /* CategoryViewModel.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -202,6 +201,7 @@
 				415D2041282145FE004AF201 /* DataViewModel.swift */,
 				FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */,
 				FF3616CA28290416002ADA33 /* AddExpenseViewModel.swift */,
+				41C6E20F283185B200F756B5 /* CategoryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";

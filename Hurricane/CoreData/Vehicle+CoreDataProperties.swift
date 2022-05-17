@@ -16,6 +16,7 @@ extension Vehicle {
         return NSFetchRequest<Vehicle>(entityName: "Vehicle")
     }
 
+    @NSManaged public var current: NSNumber?
     @NSManaged public var brand: String?
     @NSManaged public var document: Data?
     @NSManaged public var fuelType: Int32
@@ -23,7 +24,6 @@ extension Vehicle {
     @NSManaged public var name: String?
     @NSManaged public var odometer: Int16
     @NSManaged public var plate: String?
-    @NSManaged public var vehicleID: UUID?
     @NSManaged public var year: Int16
     @NSManaged public var expenses: NSSet?
 

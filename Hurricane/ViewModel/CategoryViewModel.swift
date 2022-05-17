@@ -15,6 +15,12 @@ struct Category: Hashable {
     var totalCosts: Double
 }
 
+enum CategoryEnum {
+    case mainteinance
+    case fuel
+    case insurance
+}
+
 class CategoryViewModel: ObservableObject {
     
      @Published var categories = [Category(name: "Fuel", color: Palette.colorYellow, icon: "fuelType", totalCosts: 20.0),

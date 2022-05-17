@@ -40,4 +40,28 @@ class CoreDataManager {
             print("Error when removing all Items:\(error.localizedDescription)")
         }
     }
+    
+    
+    func getVehicleId(id: NSManagedObjectID) -> Vehicle?  {
+        
+        do{
+            return try context.existingObject(with: id) as? Vehicle
+        }
+        catch {
+            print(error)
+            return nil
+        }
+    }
+    
+    func deleteVehicle(_ vehicle : Vehicle) {
+        context.delete(vehicle)
+        
+        do{
+            try context.save()
+        }
+        catch{
+            context.rollback()
+            print("Failed to delete vehicle \(error)")
+        }
+    }
 }

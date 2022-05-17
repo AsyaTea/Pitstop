@@ -104,7 +104,7 @@ struct Page2 : View {
             }
             VStack(spacing:20){
                 
-                TextField("Car's name", text: $onboardingVM.vehicle.name.toUnwrapped(defaultValue: ""))
+                TextField("Car's name", text: $onboardingVM.vehicle.name)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .carName)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -117,13 +117,13 @@ struct Page2 : View {
                         RoundedRectangle(cornerRadius: 36)
                         .stroke(focusedField == .carName ? Palette.black :Palette.greyInput, lineWidth: 1)
                     )
-                    .modifier(ClearButton(text: $onboardingVM.vehicle.name.toUnwrapped(defaultValue: "")))
+                    .modifier(ClearButton(text: $onboardingVM.vehicle.name))
                     .onSubmit {
                         focusedField = .brand
                     }
                 
                 
-                TextField("Brand", text: $onboardingVM.vehicle.brand.toUnwrapped(defaultValue: ""))
+                TextField("Brand", text: $onboardingVM.vehicle.brand)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .brand)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -136,12 +136,12 @@ struct Page2 : View {
                         RoundedRectangle(cornerRadius: 36)
                         .stroke(focusedField == .brand ? Palette.black :Palette.greyInput, lineWidth: 1)
                     )
-                    .modifier(ClearButton(text: $onboardingVM.vehicle.brand.toUnwrapped(defaultValue: "")))
+                    .modifier(ClearButton(text: $onboardingVM.vehicle.brand))
                     .onSubmit {
                         focusedField = .model
                     }
                 
-                TextField("Model", text: $onboardingVM.vehicle.model.toUnwrapped(defaultValue: ""))
+                TextField("Model", text: $onboardingVM.vehicle.model)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .model)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -154,7 +154,7 @@ struct Page2 : View {
                         RoundedRectangle(cornerRadius: 36)
                             .stroke(focusedField == .model ? Palette.black :Palette.greyInput, lineWidth: 1)
                     )
-                    .modifier(ClearButton(text: $onboardingVM.vehicle.model.toUnwrapped(defaultValue: "")))
+                    .modifier(ClearButton(text: $onboardingVM.vehicle.model))
                     .onSubmit {
                         focusedField = nil
                     }

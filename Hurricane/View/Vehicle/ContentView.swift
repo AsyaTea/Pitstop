@@ -6,22 +6,33 @@
 //
 
 import SwiftUI
-
+//
 struct ContentView: View {
     
     @StateObject private var vehicleVM = DataViewModel()
-    @State var vehicle : VehicleModel = VehicleModel()
+    @State var vehicle : VehicleState = VehicleState()
     @State var expense : ExpenseModel = ExpenseModel()
     
     @State var filter : NSPredicate?
+    
+    
+    private func deleteVehicle(at indexSet: IndexSet){
+        indexSet.forEach{ index in
+            let vehicle = vehicleVM.vehicleList[index]
+            
+            vehicleVM.removeVehicle(vehicle: vehicle)
+            
+            vehicleVM.getVehicles()
+        }
+    }
 
     // MARK: PROVA DI AGGIUNTA
     var body: some View {
         VStack{
-            TextField("Vehicle Name", text: $vehicle.name.toUnwrapped(defaultValue: ""))
+            TextField("Vehicle Name", text: $vehicle.name)
                 .textFieldStyle(.roundedBorder)
                 .padding()
-            TextField("Expenses Name", text: $expense.name.toUnwrapped(defaultValue: ""))
+            TextField("Expenses Name", text: $expense.note.toUnwrapped(defaultValue: ""))
                 .textFieldStyle(.roundedBorder)
                 .padding()
             Text("ciao")
@@ -39,16 +50,16 @@ struct ContentView: View {
                 vehicleVM.getExpenses(filter: filter)
             }
             
-            Button("Set current vehicle to last added:"){
-                for vehicle in vehicleVM.vehicles {
-                    
-                    vehicleVM.currVehicle = vehicle
-                    print(vehicleVM.currVehicle)
-                }
-            }
+//            Button("Set current vehicle to last added:"){
+//                for vehicle in vehicleVM.vehicles {
+//                    
+//                    vehicleVM.currVehicle = vehicle
+//                    print(vehicleVM.currVehicle)
+//                }
+//            }
             
             List(){
-                ForEach(vehicleVM.vehicles){ vehicle in
+                ForEach(vehicleVM.vehicleList,id:\.vehicleID){ vehicle in
                     VStack{
                     
                     Text("Vehicle name: \(vehicle.name ?? "")")
@@ -58,9 +69,9 @@ struct ContentView: View {
                     }
                     
                 }
-                .onDelete(perform: vehicleVM.removeVehicle)
+                .onDelete(perform: deleteVehicle)
                 ForEach(vehicleVM.expenses) { expenses in
-                        Text("Exp: \(expenses.name ?? "")")
+                    Text("Exp: \(expenses.note ?? "" + expenses.note! ?? "")")
                     Text("Vehicle appart:\(expenses.vehicle?.name ?? "" )")
 
                 } .onDelete(perform: vehicleVM.removeExpense(indexSet:))
