@@ -42,7 +42,7 @@ class CoreDataManager {
     }
     
     
-    func getVehicleId(id: NSManagedObjectID) -> Vehicle?  {
+    func getVehicleById(id: NSManagedObjectID) -> Vehicle?  {
         
         do{
             return try context.existingObject(with: id) as? Vehicle

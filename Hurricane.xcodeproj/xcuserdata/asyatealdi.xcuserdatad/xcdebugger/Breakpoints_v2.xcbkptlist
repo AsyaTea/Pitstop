@@ -14,8 +14,8 @@
             filePath = "Hurricane/ViewModel/DataViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "250"
-            endingLineNumber = "250"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
             landmarkName = "ExpenseModel"
             landmarkType = "14">
          </BreakpointContent>
