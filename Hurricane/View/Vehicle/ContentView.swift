@@ -62,7 +62,7 @@ struct ContentView: View {
                 ForEach(vehicleVM.vehicleList,id:\.vehicleID){ vehicle in
                     VStack{
                     
-                    Text("Vehicle name: \(vehicle.name ?? "")")
+                    Text("Vehicle name: \(vehicle.name)")
                     
                       
                         
