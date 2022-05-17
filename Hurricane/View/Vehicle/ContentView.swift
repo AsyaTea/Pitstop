@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 //
 struct ContentView: View {
     
@@ -15,6 +16,8 @@ struct ContentView: View {
     
     @State var filter : NSPredicate?
     
+    @State var vehicleId: NSManagedObjectID?
+    
     
     private func deleteVehicle(at indexSet: IndexSet){
         indexSet.forEach{ index in
@@ -23,6 +26,14 @@ struct ContentView: View {
             vehicleVM.removeVehicle(vehicle: vehicle)
             
             vehicleVM.getVehicles()
+        }
+    }
+    
+    func save() {
+        do {
+            try vehicleVM.updateVehicle(vehicle)
+        } catch {
+            print(error)
         }
     }
 
@@ -37,7 +48,8 @@ struct ContentView: View {
                 .padding()
             Text("ciao")
             Button("Add veicolo"){
-                vehicleVM.addVehicle(vehicle: vehicle)
+                vehicleVM.addVehicle(vehicle: vehicle)               
+                print(vehicle)
             }
             Button("Remove all vehicles"){
                 vehicleVM.removeAllVehicles()
@@ -49,14 +61,24 @@ struct ContentView: View {
                 filter = NSPredicate(format: "vehicle ==  %@", vehicleVM.currVehicle)
                 vehicleVM.getExpenses(filter: filter)
             }
-            
-//            Button("Set current vehicle to last added:"){
-//                for vehicle in vehicleVM.vehicles {
-//                    
-//                    vehicleVM.currVehicle = vehicle
-//                    print(vehicleVM.currVehicle)
+            Button ("Update last car") {
+                //assegnare a vehicle state il vehicle viewmodel
+//                try vehicleVM.getVehicleById(vehicleId: vehicleId) {
+//                    throw VehicleError.VehicleNotFount
 //                }
-//            }
+                do {
+                    try vehicle.vehicleID = vehicleVM.getVehicleById(vehicleId: vehicleId!).vehicleID
+                } catch {
+                    print("Erorreeeeee")
+                }
+                save()
+            }
+            
+            Button("Set current vehicle to last added:"){
+                for vehicle in vehicleVM.vehicleList {
+                    vehicleId = vehicle.vehicleID
+                }
+            }
             
             List(){
                 ForEach(vehicleVM.vehicleList,id:\.vehicleID){ vehicle in
@@ -75,6 +97,7 @@ struct ContentView: View {
                     Text("Vehicle appart:\(expenses.vehicle?.name ?? "" )")
 
                 } .onDelete(perform: vehicleVM.removeExpense(indexSet:))
+                    
                 
             }
             //Floating button

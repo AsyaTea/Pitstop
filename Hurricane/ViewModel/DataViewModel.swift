@@ -2,6 +2,10 @@
 import Foundation
 import CoreData
 
+enum VehicleError: Error {
+    case VehicleNotFount
+}
+
 class DataViewModel : ObservableObject {
     
     let manager = CoreDataManager.instance
@@ -10,6 +14,7 @@ class DataViewModel : ObservableObject {
 //    @Published var vehicleModel = VehicleModel(vehicle: <#Vehicle#>)
     @Published var vehicleList : [VehicleViewModel] = []   //Var to store all the fetched vehicle entities
     @Published var currVehicle = Vehicle() /// da togliere
+    
     
     @Published var currentVehicle : [Vehicle] = []
     
@@ -103,7 +108,7 @@ class DataViewModel : ObservableObject {
 //    }
     
     func removeVehicle(vehicle : VehicleViewModel) {
-        let vehicle = manager.getVehicleId(id: vehicle.vehicleID)
+        let vehicle = manager.getVehicleById(id: vehicle.vehicleID)
         if let vehicle = vehicle {
             manager.deleteVehicle(vehicle)
         }
@@ -132,23 +137,25 @@ class DataViewModel : ObservableObject {
     func updateVehicle(_ vs : VehicleState) throws{
         
         guard let vehicleID = vs.vehicleID else {
-            return print("Vehicle not found")
+            return print("Vehicle not found 1")
         }
         
-        guard let vehicle = manager.getVehicleId(id: vehicleID) else {
-            return print("Vehicle not found")
+        guard let vehicle = manager.getVehicleById(id: vehicleID) else {
+            return print("Vehicle not found 2")
         }
+        
+        
         
         vehicle.name = vs.name
-        vehicle.brand = vs.brand
         // etc etc
         
         manager.save()
     }
     
-    func getVehicleId(vehicleId : NSManagedObjectID) throws -> VehicleViewModel {
-        guard let vehicle = manager.getVehicleId(id: vehicleId) else {
-           throw fatalError() // DA FIXARE
+    func getVehicleById(vehicleId : NSManagedObjectID) throws -> VehicleViewModel {
+        
+        guard let vehicle = manager.getVehicleById(id: vehicleId) else {
+            throw VehicleError.VehicleNotFount // DA FIXARE
         }
         
         let vehicleVM = VehicleViewModel(vehicle: vehicle)
