@@ -16,11 +16,23 @@ class HomeViewModel : ObservableObject {
     
     //Alert numbers
     @Published var showAlertNumbers = false
+    @Published var showAlertNumbersInside = false
     @Published var numberTitle = ""
     @Published var number = ""
     
     var isDisabled : Bool {
         return numberTitle.isEmpty || number.isEmpty
+    }
+    func resetAlertFields(){
+        numberTitle = ""
+        number = ""
+        showAlertNumbers = false
+    }
+    
+    func resetAlertFieldsInside(){
+        numberTitle = ""
+        number = ""
+        showAlertNumbersInside = false
     }
     
     //MARK: FRONTEND FUNCS

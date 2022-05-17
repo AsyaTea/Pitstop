@@ -15,11 +15,14 @@ class OnboardingViewModel : ObservableObject {
     let fuelCategories = ["Gasoline","Diesel", "Electric","LPG (Propane)","CNG (Methane)","Ethanol","Hydrogen"]
     @Published var selectedFuel = "Fuel Type"
     
+    @Published var destination : Pages = .page1
+    
     var isDisabled : Bool {
         return vehicle.name.isEmpty  || vehicle.brand.isEmpty  || vehicle.model.isEmpty  || selectedFuel == "Fuel Type"
     }
     
-    @Published var skipNotification = false
+    @Published var skipNotification = false /// Skip notiification page when adding another car
+    @Published var removeBack = false /// Remove back button when adding another car
     
     func resetFields() {
         vehicle.name = ""
@@ -40,5 +43,11 @@ class OnboardingViewModel : ObservableObject {
     }
 }
 
-
+enum Pages {
+    case page1
+    case page2
+    case page3
+    case page4
+    case page5
+}
 

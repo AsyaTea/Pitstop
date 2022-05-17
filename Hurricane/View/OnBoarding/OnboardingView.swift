@@ -9,14 +9,7 @@ import SwiftUI
 import UserNotifications
 
 
-enum Pages {
-    case page1
-    case page2
-    case page3
-    case page4
-    case page5
-}
-
+//TESTING
 struct MainContent: View {
 
 //    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
@@ -53,29 +46,32 @@ struct MainContent: View {
 
 struct OnboardingView: View {
     
-    var onboardingVM : OnboardingViewModel
+    @StateObject var onboardingVM : OnboardingViewModel
     var dataVM : DataViewModel
     @State private var destination : Pages = .page1
     @Binding var shouldShowOnboarding : Bool
     
+    
     var body: some View {
-        switch destination {
+        switch onboardingVM.destination {
             
         case .page1:
-            Page1(destination: $destination)
+            withAnimation(.easeOut){
+                Page1(onboardingVM: onboardingVM)
             //                .transition(.move(edge: .leading))
             //                .transition( AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
-                .animation(.easeOut)
+            }
         case .page2:
-            Page2(onboardingVM: onboardingVM, destination: $destination)
-                .animation(.easeOut(duration: 0.2))
+            withAnimation(.easeOut(duration: 0.2)){
+                Page2(onboardingVM: onboardingVM)
+            }
         case .page3:
-            Page3(destination: $destination, dataVM:dataVM, onboardingVM: onboardingVM)
+            Page3(dataVM:dataVM, onboardingVM: onboardingVM)
         case .page4:
-            Page4(destination: $destination, onboardingVM: onboardingVM)
+            Page4(onboardingVM: onboardingVM)
                 .animation(.easeOut(duration: 0.2))
         case .page5:
-            Page5(shouldShowOnboarding: $shouldShowOnboarding, destination: $destination, onboardingVM: onboardingVM)
+            Page5(shouldShowOnboarding: $shouldShowOnboarding,onboardingVM: onboardingVM)
         }
         
     }

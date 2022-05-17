@@ -18,8 +18,8 @@ enum FocusFieldBoarding: Hashable {
 //MARK: PAGE 1 FRONT PAGE
 struct Page1 : View {
     
-    @Binding var destination : Pages
-    
+    @StateObject var onboardingVM : OnboardingViewModel
+   
     var body: some View {
         VStack(alignment: .center){
             Spacer()
@@ -38,7 +38,7 @@ struct Page1 : View {
             VStack(spacing: 16){
                 Button(action: {
                     withAnimation(.easeInOut){
-                        destination = .page2
+                        onboardingVM.destination = .page2
                     }
                 }, label: {
                     OnBoardingButton(text: "Add a new vehicle", textColor: Palette.white, color: Palette.black)
@@ -56,7 +56,6 @@ struct Page2 : View {
     
     @StateObject var onboardingVM : OnboardingViewModel
     
-    @Binding var destination : Pages
     @FocusState var focusedField: FocusFieldBoarding?
     
     @State private var isTapped = false
@@ -83,9 +82,9 @@ struct Page2 : View {
         VStack{
             HStack{
                 Button(action: {
-                    destination = .page1
+                    onboardingVM.destination = .page1
                 }, label: {
-                    Image(systemName: onboardingVM.skipNotification ? "" : "chevron.left")
+                    Image(systemName: onboardingVM.removeBack ? "" : "chevron.left")
                         .resizable()
                         .frame(width: 12, height: 21)
                         .foregroundColor(Palette.black)
@@ -115,7 +114,7 @@ struct Page2 : View {
                     .cornerRadius(36)
                     .overlay(
                         RoundedRectangle(cornerRadius: 36)
-                        .stroke(focusedField == .carName ? Palette.black :Palette.greyInput, lineWidth: 1)
+                            .stroke(focusedField == .carName ? Palette.black :Palette.greyInput, lineWidth: 1)
                     )
                     .modifier(ClearButton(text: $onboardingVM.vehicle.name))
                     .onSubmit {
@@ -134,7 +133,7 @@ struct Page2 : View {
                     .cornerRadius(36)
                     .overlay(
                         RoundedRectangle(cornerRadius: 36)
-                        .stroke(focusedField == .brand ? Palette.black :Palette.greyInput, lineWidth: 1)
+                            .stroke(focusedField == .brand ? Palette.black :Palette.greyInput, lineWidth: 1)
                     )
                     .modifier(ClearButton(text: $onboardingVM.vehicle.brand))
                     .onSubmit {
@@ -180,7 +179,7 @@ struct Page2 : View {
             Spacer()
             Button(action: {
                 withAnimation(.easeInOut){
-                    destination = .page3
+                    onboardingVM.destination = .page3
                 }
             }, label: {
                 OnBoardingButton(text: "Next", textColor: Palette.white, color: Palette.black)
@@ -203,16 +202,22 @@ struct Page2 : View {
 //MARK: PAGE 3 ADD MORE INFO
 struct Page3 : View {
     
-    @State var isImport = false
-    @Binding var destination : Pages
+    @State private var isImport = false
     var dataVM = DataViewModel()
-    @ObservedObject var onboardingVM : OnboardingViewModel
+    @StateObject var onboardingVM : OnboardingViewModel
+    
+//    init() {
+//        //  Change list background color
+//        UITableView.appearance().separatorStyle = .none
+//        UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
+////        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
+//    }
     
     var body: some View {
         VStack{
             HStack{
                 Button(action: {
-                    destination = .page2
+                    onboardingVM.destination = .page2
                 }, label: {
                     Image(systemName: "chevron.left")
                         .resizable()
@@ -232,22 +237,81 @@ struct Page3 : View {
                     .foregroundColor(Palette.black)
             }
             VStack(spacing:20){
+                //MARK: DOCUMENTS
                 Button(action: {
                     
                 }, label: {
                     OnBoardingCard(text: "Documents", bgColor: Palette.colorViolet, iconName:  "documents")
                 })
+                
+                
+                //MARK: ODOMETER
                 Button(action: {
                     
                 }, label: {
                     OnBoardingCard(text: "Odometer", bgColor: Palette.colorBlue, iconName:  "odometer")
                 })
+                ZStack{
+                    Rectangle()
+                        .foregroundColor(Palette.greyLight)
+                        .cornerRadius(12)
+                    
+                    HStack{
+                        Text("832498239")
+                            .font(Typography.ControlS)
+                            .foregroundColor(Palette.black)
+                        Spacer()
+                    }
+                    .padding()
+                }
+                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
+                
+                //MARK: IMPORTANT NUMBERS
                 Button(action: {
                     
                 }, label: {
                     OnBoardingCard(text: "Important numbers", bgColor: Palette.colorGreen, iconName:  "phone")
                 })
-                
+                List{
+                ForEach(1..<3){ i in
+                ZStack{
+                    Rectangle()
+                        .foregroundColor(Palette.greyLight)
+                        .cornerRadius(12)
+                   
+                    HStack{
+                        VStack{
+                            
+                            Text("Service")
+                                .font(Typography.ControlS)
+                                .foregroundColor(Palette.black)
+                            Text("Numero")
+                                .font(Typography.TextM)
+                                .foregroundColor(Palette.greyMiddle)
+                        }
+                        Spacer()
+                    }
+                    .padding()
+                }
+            
+                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
+                .swipeActions(allowsFullSwipe: false) {
+                    Button {
+                        print("Muting conversation")
+                    } label: {
+                        Label("Mute", systemImage: "bell.slash.fill")
+                    }
+                    .cornerRadius(20)
+                    .tint(.indigo)
+
+                    Button(role: .destructive) {
+                        print("Deleting conversation")
+                    } label: {
+                        Label("Delete", systemImage: "trash.fill")
+                    }
+                }
+                }
+                }.listStyle(.plain)
             }.padding(.vertical,40)
             
             Spacer()
@@ -255,10 +319,10 @@ struct Page3 : View {
                 withAnimation(.easeInOut){
                     dataVM.addVehicle(vehicle: onboardingVM.vehicle)
                     if(onboardingVM.skipNotification == true) {
-                        destination = .page5
+                        onboardingVM.destination = .page5
                     }
                     else{
-                        destination = .page4
+                        onboardingVM.destination = .page4
                     }
                 }
             }, label: {
@@ -271,7 +335,6 @@ struct Page3 : View {
 //MARK: PAGE 4 NOTIFICATIONS
 struct Page4 : View {
     
-    @Binding var destination : Pages
     @ObservedObject var onboardingVM : OnboardingViewModel
     
     var body: some View {
@@ -297,8 +360,9 @@ struct Page4 : View {
                 Button(action: {
                     withAnimation(.easeInOut){
                         onboardingVM.requestAuthNotifications()
-                        destination = .page5
+                        onboardingVM.destination = .page5
                         onboardingVM.skipNotification = true
+                        onboardingVM.removeBack = true
                         
                     }
                 }, label: {
@@ -306,7 +370,8 @@ struct Page4 : View {
                 })
                 Button(action: {
                     withAnimation(.easeInOut){
-                        destination = .page5
+                        onboardingVM.destination = .page5
+                        onboardingVM.removeBack = true
                     }
                 }, label: {
                     OnBoardingButton(text: "Later", textColor: Palette.black, color: Palette.white)
@@ -322,7 +387,6 @@ struct Page4 : View {
 struct Page5 : View {
     
     @Binding var shouldShowOnboarding : Bool
-    @Binding var destination : Pages
     @ObservedObject var onboardingVM : OnboardingViewModel
     
     var body: some View {
@@ -348,7 +412,7 @@ struct Page5 : View {
                 })
                 Button(action: {
                     withAnimation(.easeInOut){
-                        destination = .page2
+                        onboardingVM.destination = .page2
                         onboardingVM.resetFields()
                     }
                 }, label: {

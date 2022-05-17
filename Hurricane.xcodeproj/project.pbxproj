@@ -154,10 +154,10 @@
 				FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */,
 				FFDF85592824104A00E0F9BF /* VehicleView.swift */,
 				FF106791282D36160077CCF7 /* HomeStyleView.swift */,
-				FF14DC3128302CC300CA248B /* ImportantNumbersView.swift */,
+				FF106793282D38960077CCF7 /* HeaderView.swift */,
 				FFC52897282FB2A40013D8B6 /* BottomContentView.swift */,
 				FFC52899282FB4430013D8B6 /* AlertAddNumbers.swift */,
-				FF106793282D38960077CCF7 /* HeaderView.swift */,
+				FF14DC3128302CC300CA248B /* ImportantNumbersView.swift */,
 				FF3616D2282926D6002ADA33 /* Add Report Modal */,
 				415D203028214180004AF201 /* ContentView.swift */,
 				41C6E1F52823E4C800F756B5 /* ContentView2.swift */,
@@ -501,7 +501,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = MYPTJXP3NK;
+				DEVELOPMENT_TEAM = 55H4ABU399;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hurricane/Info.plist;
