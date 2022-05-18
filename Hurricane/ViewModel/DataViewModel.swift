@@ -19,7 +19,7 @@ class DataViewModel : ObservableObject {
     
     //Expense
     @Published var expenses : [Expense] = []
-    @Published var expenseModel = ExpenseModel()
+    @Published var expenseModel = ExpenseState()
     
     //Filter
     @Published var filter : NSPredicate?
@@ -222,7 +222,7 @@ class DataViewModel : ObservableObject {
         }
     }
     
-    func addExpense(expense : ExpenseModel) {
+    func addExpense(expense : ExpenseState) {
         let newExpense = Expense(context: manager.context)
         newExpense.vehicle = currVehicle
         print(" Expense : \(expense)")
@@ -301,15 +301,6 @@ struct VehicleViewModel : Hashable {
     }
 }
 
-struct ExpenseModel {
-    var date : Date?
-    var isRecursive : Bool?
-    var note : String?
-    var odometer : Int32?
-    var price : Float?
-    var type : Int16? // Enum
-    
-}
 
 struct VehicleState : Hashable {
     
@@ -345,4 +336,66 @@ extension VehicleState {
     
 }
 
+struct ExpenseState: Hashable {
+    var category: Int16?
+    var date: Date?
+    var note: String = ""
+    var odometer: Int32?
+    var price: Float?
+    var expenseID: NSManagedObjectID?
+    
+}
 
+extension ExpenseState {
+    
+    static func fromExpenseViewModel(vm: ExpenseViewModel) -> ExpenseState {
+        var expenseS = ExpenseState()
+        expenseS.category = vm.category
+        expenseS.date = vm.date
+        expenseS.note = vm.note
+        expenseS.odometer = vm.odometer
+        expenseS.price = vm.price
+        expenseS.expenseID = vm.expenseID
+        return expenseS
+    
+    }
+}
+
+struct ExpenseViewModel: Hashable {
+    let expense : Expense
+    
+    var category: Int16 {
+        return expense.category
+    }
+    
+    var date: Date {
+        return expense.date ?? Date.now
+    }
+    
+    var note: String {
+        return expense.note ?? ""
+    }
+    
+    var odometer: Int32 {
+        return expense.odometer
+    }
+    
+    var price: Float {
+        return expense.price
+    }
+    
+    var expenseID: NSManagedObjectID {
+        return expense.objectID
+    }
+    
+}
+
+//struct ExpenseModel {
+//    var date : Date?
+//    var isRecursive : Bool?
+//    var note : String?
+//    var odometer : Int32?
+//    var price : Float?
+//    var type : Int16? // Enum
+//
+//}
