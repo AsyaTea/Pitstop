@@ -161,18 +161,23 @@ struct ContentView: View {
             }
 
             
-                        
+            VStack{
             List(){
                 ForEach(vehicleVM.vehicleList,id:\.vehicleID){ vehicle in
                     VStack{
                     
                     Text("Vehicle name: \(vehicle.name)")
-                    
-                      
-                        
+                
                     }
                 } .onDelete(perform: deleteVehicle)
                 }
+            
+            List {
+                    ForEach(vehicleVM.currentVehicle,id:\.vehicleID){ current in
+                        Text(current.name)
+                    }
+            }
+            }
             
             }
                
@@ -183,33 +188,29 @@ struct ContentView: View {
 //
 //                } .onDelete(perform: vehicleVM.removeExpense(indexSet:))
                     
-            List {
-                    ForEach(vehicleVM.currentVehicle,id:\.vehicleID){ current in
-                        Text(current.name)
-                    }
-            }//Floating button
-            .overlay(
-                VStack{
-                    Spacer(minLength: UIScreen.main.bounds.size.height * 0.42)
-                    Button(action: {
-                        
-                        vehicleVM.addExpense(expense: expense)
-    //                        vehicleVM.getExpenses()
-                    }, label: {
-                        ZStack{
-                            Rectangle()
-                                .frame(width: 343, height: 48, alignment: .center)
-                                .cornerRadius(43)
-                                .foregroundColor(.black)
-                            Text("+ Add expense")
-                                .foregroundColor(.white)
-                        }
-                        
-                    })
-                    Spacer()
-                }
-    //                    .padding(.top,50)
-            )
+         //Floating button
+//            .overlay(
+//                VStack{
+//                    Spacer(minLength: UIScreen.main.bounds.size.height * 0.42)
+//                    Button(action: {
+//
+//                        vehicleVM.addExpense(expense: expense)
+//    //                        vehicleVM.getExpenses()
+//                    }, label: {
+//                        ZStack{
+//                            Rectangle()
+//                                .frame(width: 343, height: 48, alignment: .center)
+//                                .cornerRadius(43)
+//                                .foregroundColor(.black)
+//                            Text("+ Add expense")
+//                                .foregroundColor(.white)
+//                        }
+//
+//                    })
+//                    Spacer()
+//                }
+//    //                    .padding(.top,50)
+//            )
          
             
         }
