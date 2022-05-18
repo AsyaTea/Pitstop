@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CustomTabBarView: View {
     @State var selectedIndex: Int = 0
+    @StateObject var dataVM = DataViewModel()
     
     var body: some View {
         CustomTabView(tabs: TabType.allCases.map({ $0.tabItem }), selectedIndex: $selectedIndex) { index in
@@ -22,11 +23,11 @@ struct CustomTabBarView: View {
     func getTabView(type: TabType) -> some View {
         switch type {
         case .home:
-            VehicleView()
+            VehicleView(dataVM: dataVM)
         case .stats:
-            ContentView()
+            ContentView(vehicleVM: dataVM)
         case .settings:
-            SettingsView()
+            SettingsView(dataVM: dataVM)
         }
     }
 }

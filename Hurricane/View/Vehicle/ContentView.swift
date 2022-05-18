@@ -10,7 +10,7 @@ import CoreData
 //
 struct ContentView: View {
     
-    @StateObject var vehicleVM = DataViewModel()
+    @ObservedObject var vehicleVM : DataViewModel
     @State var vehicleS : VehicleState = VehicleState()
     @State var expense : ExpenseModel = ExpenseModel()
     
@@ -37,6 +37,9 @@ struct ContentView: View {
 
     // MARK: PROVA DI AGGIUNTA
     var body: some View {
+        
+        var filterCurrent = NSPredicate(format: "current = %@","1")
+        
         VStack{
             TextField("Vehicle Name", text: $vehicleS.name)
                 .textFieldStyle(.roundedBorder)
@@ -98,7 +101,10 @@ struct ContentView: View {
             }
             
             Button("Get current vehicle"){
-                vehicleVM.getCurrentVehicle()
+                vehicleVM.getVehiclesCoreData(filter: filterCurrent, storage: {storage in
+                    vehicleVM.currentVehicle = storage
+                    
+                })
             }
             
             List(){

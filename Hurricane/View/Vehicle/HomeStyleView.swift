@@ -11,6 +11,7 @@ import Foundation
 struct HomeStyleView: View {
     
     @StateObject var homeVM = HomeViewModel()
+    @ObservedObject var dataVM : DataViewModel
     
     //Scroll animation vars
     @State var offset:  CGFloat = 0
@@ -36,7 +37,7 @@ struct HomeStyleView: View {
                             .background(Palette.colorYellow)
                             .overlay(
                                 //MARK: TOP NAV BAR
-                                TopNav(offset: offset, maxHeight: maxHeight, topEdge:topEdge)
+                                TopNav(dataVM: dataVM, offset: offset, maxHeight: maxHeight, topEdge:topEdge)
                                     .padding(.horizontal)
                                     .frame(height: 60)
                                     .padding(.top,topEdge+10)
@@ -122,17 +123,17 @@ struct HomeStyleView: View {
     
 }
 
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        VehicleView()
-    }
-}
+//struct Home_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VehicleView()
+//    }
+//}
 
 
 
 struct TopNav : View {
     
-    @StateObject var vehicleVM = DataViewModel()
+    @StateObject var dataVM : DataViewModel
     
     var offset: CGFloat
     let maxHeight : CGFloat
@@ -162,6 +163,7 @@ struct TopNav : View {
     @State private var showingAllCars = false
     @State private var selectedCar = "Batman"
     
+    let filter = NSPredicate(format: "current == %@","1")
     
     var body: some View {
         VStack(alignment: .leading){
@@ -170,7 +172,7 @@ struct TopNav : View {
                     showingAllCars.toggle()
                 }, label: {
                     HStack{
-                        Text(vehicleVM.currentVehicle.first?.name ?? "Default" + "'s car ")
+                        Text(dataVM.currentVehicle.first?.name ?? "Default" + "'s car ")
                             .foregroundColor(Palette.black)
                             .font(Typography.headerXL)
                             .opacity(fadeOutOpacity())
@@ -182,22 +184,24 @@ struct TopNav : View {
                             .padding(.top,3)
                             .padding(.leading,-5)
                     }
-                    .padding(.leading,-4)
+                    .padding(.leading,-1)
                     .opacity(fadeOutOpacity())
                 })
                 .confirmationDialog("Select a car", isPresented: $showingAllCars, titleVisibility: .hidden) {
-                    ForEach(vehicleVM.vehicleList,id:\.self){ vehicle in
+                    ForEach(dataVM.vehicleList,id:\.vehicleID){ vehicle in
                         Button(vehicle.name) {
                             //DEVO SETTARE IL CURRENT VEHICLE
                             selectedCar =  vehicle.name
                             var vehicleS = VehicleState.fromVehicleViewModel(vm: vehicle)
+                            dataVM.setAllCurrentToFalse()
                             vehicleS.current = 1 // SETTO IL CURRENT TO TRUE
-                            //QUANDO SETTO QUESTO A 1, GLI ALTRI DEVO SETTARLI A 0
-                            
+                    
                             do{
                                 if(vehicleS.vehicleID != nil){
-                                try vehicleVM.updateVehicle(vehicleS)
-                                    print("success")
+                                try dataVM.updateVehicle(vehicleS)
+                                    print("updato to current")
+                                    dataVM.currentVehicle.removeAll()
+                                    dataVM.currentVehicle.append(vehicle)
                             }
                             else{
                                 print("error")
@@ -257,10 +261,11 @@ struct TopNav : View {
                 .padding(.top,-12)
                 .opacity(fadeOutOpacity())
         }
-        .onAppear{
-            vehicleVM.getVehicles()
-            vehicleVM.getCurrentVehicle()
-        }
+//        .task{
+//            vehicleVM.getVehiclesCoreData(filter: filter, storage:{ storage in
+//                vehicleVM.currentVehicle = storage
+//            })
+//        }
         .overlay(
             VStack(alignment: .center,spacing: 2){
                 Text("Batmans' car")

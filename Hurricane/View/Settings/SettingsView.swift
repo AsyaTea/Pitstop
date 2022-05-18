@@ -9,14 +9,14 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    init() {
-        //  Change list background color
-        UITableView.appearance().separatorStyle = .singleLine
-        UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
-        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
-    }
+//    init() {
+//        //  Change list background color
+//        UITableView.appearance().separatorStyle = .singleLine
+//        UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
+//        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
+//    }
     
-    @StateObject var dataVM = DataViewModel()
+    @ObservedObject var dataVM : DataViewModel
     
     var body: some View {
         VStack{
@@ -34,7 +34,7 @@ struct SettingsView: View {
             }
             List{
                 Section{
-                    ForEach(dataVM.vehicleList,id:\.vehicleID){ vehicle in
+                    ForEach(dataVM.vehicleList,id:\.self){ vehicle in
                         Text(vehicle.name)
                             .font(Typography.headerM)
                             .foregroundColor(Palette.black)
@@ -58,17 +58,21 @@ struct SettingsView: View {
             
         }
         .background(Palette.greyBackground)
-        .task{
-            dataVM.getVehicles()
-        }
+//        .task{
+//            dataVM.getVehiclesCoreData(filter: nil, storage: {storage in
+//                dataVM.vehicleList = storage
+//                print("successsss")
+//
+//            })
+//        }
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-    }
-}
+//struct SettingsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SettingsView()
+//    }
+//}
 
 struct PremiumBanner : View {
     var body: some View {
