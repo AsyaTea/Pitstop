@@ -23,7 +23,7 @@ struct ContentView: View {
         indexSet.forEach{ index in
             let vehicle = vehicleVM.vehicleList[index]
             vehicleVM.vehicleList.remove(at: index)
-            vehicleVM.removeVehicle(vehicle: vehicle)
+            vehicleVM.deleteVehicleCoreData(vehicle: vehicle)
         }
     }
     

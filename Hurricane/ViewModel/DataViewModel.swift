@@ -155,7 +155,7 @@ class DataViewModel : ObservableObject {
     //        saveVehicle()
     //    }
     
-    func removeVehicle(vehicle : VehicleViewModel) {
+    func deleteVehicleCoreData(vehicle : VehicleViewModel) {
         let vehicle = manager.getVehicleById(id: vehicle.vehicleID)
         if let vehicle = vehicle {
             manager.deleteVehicle(vehicle)
@@ -163,18 +163,17 @@ class DataViewModel : ObservableObject {
         saveVehicle()
     }
     
-    //MARK: TODOOOOO
-    
-    
-    
-    func updateCurrentVehicle(vehicleUpdate: VehicleViewModel) {
-        
-        //        getVehicleID(id: vehicleUpdate.vehicleID ?? UUID())
-        //        currentVehicle.first?.current = true
-        //        //UPDATE ENTITA SU CORE DATA ???????
-        //        saveVehicle()
+    func deleteVehicle(at indexSet: IndexSet){
+        indexSet.forEach{ index in
+            let vehicle = vehicleList[index]
+            vehicleList.remove(at: index)
+            deleteVehicleCoreData(vehicle: vehicle)
+        }
     }
     
+    
+    //MARK: TODOOOOO
+
     func updateVehicle(_ vs : VehicleState) throws{
         
         guard let vehicleID = vs.vehicleID else {
@@ -186,10 +185,21 @@ class DataViewModel : ObservableObject {
         }
         
         vehicle.name = vs.name
-        vehicle.current = vs.current // Setto il current vehicle a questo per provare
-        // etc etc
+        vehicle.brand = vs.brand
+        vehicle.model = vs.model
+        vehicle.current = vs.current
+       //etc etc
+        
+        //PUBLISHED LIST UPDATE
+        for (index,value) in vehicleList.enumerated() {
+            if(value.vehicleID == vs.vehicleID){
+            vehicleList.remove(at: index)
+            vehicleList.insert(VehicleViewModel(vehicle: vehicle), at: index)
+            }
+        }
         
         saveVehicle()
+        print("UPDATE DONE")
     }
     
     func getVehicleById(vehicleId : NSManagedObjectID) throws -> VehicleViewModel {

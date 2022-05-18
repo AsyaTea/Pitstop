@@ -8,14 +8,7 @@
 import SwiftUI
 
 struct AddReportView: View {
-    
-    init() {
-        //  Change list background color
-        UITableView.appearance().separatorStyle = .singleLine
-        UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
-        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
-    }
-    
+        
     @StateObject var utilityVM : UtilityViewModel = .init()
     @StateObject var addExpVM : AddExpenseViewModel = .init()
     @ObservedObject var vehicleVM : DataViewModel = .init()
