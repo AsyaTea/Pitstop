@@ -27,6 +27,38 @@ struct ContentView: View {
         }
     }
     
+//    @StateObject var onboardingVM : OnboardingViewModel
+    
+    @StateObject var fuelVM = FuelViewModel()
+    
+    @FocusState var focusedField: FocusFieldBoarding?
+    
+    @State private var isTapped = false
+    
+    let haptic = UIImpactFeedbackGenerator(style: .light)
+    
+    var customLabel: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 36)
+                .stroke(isTapped ? Palette.black : Palette.greyInput,lineWidth: 1)
+                .background(isTapped ? Palette.greyLight : Palette.greyBackground)
+                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
+            HStack{
+                if isTapped {
+                    Text(fuelVM.currentFuelType)
+                        .font(Typography.TextM)
+                    Spacer()
+                } else {
+                    Text("Fuel Type")
+                        .font(Typography.TextM)
+                    Spacer()
+                }
+            }
+            .accentColor(isTapped ? Palette.black : Palette.greyInput)
+            .padding(.leading,40)
+        }
+    }
+    
 //    func save() {
 //        do {
 //            try vehicleVM.updateVehicle(vehicleS)
@@ -44,7 +76,7 @@ struct ContentView: View {
             TextField("Expenses Name", text: $expense.note.toUnwrapped(defaultValue: ""))
                 .textFieldStyle(.roundedBorder)
                 .padding()
-            Text("ciao")
+            
             Button("Add veicolo"){
                 vehicleVM.addVehicle(vehicle: vehicleS)
                 print(vehicleS)
@@ -101,6 +133,29 @@ struct ContentView: View {
                 vehicleVM.getCurrentVehicle()
             }
             
+            Menu{
+                Picker(selection: $fuelVM.selectedFuel, label:
+                        EmptyView()){
+                        ForEach(FuelType.allCases, id: \.self) { fuel in
+                            Text(fuelVM.getFuelType(fuel: fuel))
+                            
+                    }
+                   
+                }
+            } label: {
+               customLabel
+            }.onTapGesture {
+                isTapped = true
+            }
+
+            Button {
+                print(fuelVM.selectedFuel)
+            } label: {
+                Text("Selected fuel")
+            }
+
+            
+                        
             List(){
                 ForEach(vehicleVM.vehicleList,id:\.vehicleID){ vehicle in
                     VStack{
@@ -112,6 +167,8 @@ struct ContentView: View {
                     }
                 } .onDelete(perform: deleteVehicle)
                 }
+            
+            }
                
             
 //                ForEach(vehicleVM.expenses) { expenses in
@@ -120,7 +177,7 @@ struct ContentView: View {
 //
 //                } .onDelete(perform: vehicleVM.removeExpense(indexSet:))
                     
-            List{
+            List {
                     ForEach(vehicleVM.currentVehicle,id:\.vehicleID){ current in
                         Text(current.name)
                     }
@@ -152,7 +209,7 @@ struct ContentView: View {
         }
         
     }
-}
+
 
 //struct ContentView_Previews: PreviewProvider {
 //    var vehicle = Vehicle()

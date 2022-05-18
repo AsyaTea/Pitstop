@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		41176DA92834DCC3000FD885 /* FuelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41176DA82834DCC3000FD885 /* FuelViewModel.swift */; };
 		415D202F28214180004AF201 /* HurricaneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D202E28214180004AF201 /* HurricaneApp.swift */; };
 		415D203128214180004AF201 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D203028214180004AF201 /* ContentView.swift */; };
 		415D203328214182004AF201 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415D203228214182004AF201 /* Assets.xcassets */; };
@@ -52,6 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		41176DA82834DCC3000FD885 /* FuelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewModel.swift; sourceTree = "<group>"; };
 		415D202B28214180004AF201 /* Hurricane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hurricane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		415D202E28214180004AF201 /* HurricaneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HurricaneApp.swift; sourceTree = "<group>"; };
 		415D203028214180004AF201 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */,
 				FF3616CA28290416002ADA33 /* AddExpenseViewModel.swift */,
 				41C6E20F283185B200F756B5 /* CategoryViewModel.swift */,
+				41176DA82834DCC3000FD885 /* FuelViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				415D2042282145FE004AF201 /* DataViewModel.swift in Sources */,
 				FF42ADD12825201A00C66A84 /* TabData.swift in Sources */,
 				FF106792282D36160077CCF7 /* HomeStyleView.swift in Sources */,
+				41176DA92834DCC3000FD885 /* FuelViewModel.swift in Sources */,
 				415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */,
 				FF10676E282C03E20077CCF7 /* Pages.swift in Sources */,
 				415D202F28214180004AF201 /* HurricaneApp.swift in Sources */,
