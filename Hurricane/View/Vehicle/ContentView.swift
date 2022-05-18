@@ -12,7 +12,7 @@ struct ContentView: View {
     
     @ObservedObject var vehicleVM : DataViewModel
     @State var vehicleS : VehicleState = VehicleState()
-    @State var expense : ExpenseModel = ExpenseModel()
+    @State var expense : ExpenseState = ExpenseState()
     
     @State var filter : NSPredicate?
     
@@ -76,7 +76,7 @@ struct ContentView: View {
             TextField("Vehicle Name", text: $vehicleS.name)
                 .textFieldStyle(.roundedBorder)
                 .padding()
-            TextField("Expenses Name", text: $expense.note.toUnwrapped(defaultValue: ""))
+            TextField("Expenses Name", text: $expense.note)
                 .textFieldStyle(.roundedBorder)
                 .padding()
             
