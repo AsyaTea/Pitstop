@@ -13,7 +13,7 @@ struct VehicleView: View {
 //    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
     @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
-    @StateObject var dataVM = DataViewModel()
+    @ObservedObject var dataVM : DataViewModel
     
     @State private var showAddReport = false
     
@@ -22,7 +22,7 @@ struct VehicleView: View {
         GeometryReader{ proxy in
             let topEdge = proxy.safeAreaInsets.top
             
-            HomeStyleView(topEdge: topEdge)
+            HomeStyleView(dataVM: dataVM, topEdge: topEdge)
                 .ignoresSafeArea(.all,edges: .top)
             
         }
@@ -49,11 +49,11 @@ struct VehicleView: View {
     }
 }
 
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        VehicleView()
-    }
-}
+//struct MainView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VehicleView()
+//    }
+//}
 
 
 struct AddReportButton : View {
