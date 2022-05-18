@@ -7,70 +7,71 @@
 
 import SwiftUI
 
+
 struct SettingsView: View {
-    
-//    init() {
-//        //  Change list background color
-//        UITableView.appearance().separatorStyle = .singleLine
-//        UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
-//        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
-//    }
     
     @ObservedObject var dataVM : DataViewModel
     
     var body: some View {
-        VStack{
-            
-            HStack{
+        NavigationView{
+            VStack{
                 
-            Text("Settings")
-                .font(Typography.headerXL)
-                .padding(.leading,15)
-                Spacer()
-            }
-            Link(destination: URL(string: "https://youtu.be/y9DzkqJ1Fu8")!){
-            PremiumBanner()
-                .padding(.top,5)
-            }
-            List{
-                Section{
-                    ForEach(dataVM.vehicleList,id:\.self){ vehicle in
-                        Text(vehicle.name)
-                            .font(Typography.headerM)
-                            .foregroundColor(Palette.black)
+                Link(destination: URL(string: "https://youtu.be/y9DzkqJ1Fu8")!){
+                    PremiumBanner()
+                        .padding(.top,20)
+                }
+                List{
+                    Section{
+                        ForEach(dataVM.vehicleList,id:\.self){ vehicle in
+                            NavigationLink(destination: EditCarView(dataVM: dataVM, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))){
+                                Text(vehicle.name)
+                                    .font(Typography.headerM)
+                                    .foregroundColor(Palette.black)
+                            }
+                        }.onDelete(perform: dataVM.deleteVehicle)
+                        
+                        Text("Add car")
                     }
-                    Text("Add car")
-                }
-                Section{
-                    Text("Barman's car")
-                    Text("Barman's car")
-                    Text("Barman's car")
-                }
+                    Section{
+                        Text("Barman's car")
+                        Text("Barman's car")
+                        Text("Barman's car")
+                    }
+                    
+                    Section{
+                        Text("Widget")
+                        Text("Widget")
+                        Text("Widget")
+                    }
+                }.listStyle(.insetGrouped)
                 
-                Section{
-                    Text("Widget")
-                    Text("Widget")
-                    Text("Widget")
-                }
+                Spacer()
+                
             }
-            
-            Spacer()
-            
+            .background(Palette.greyBackground)
+//            .navigationBarHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                leading:
+                    Text("Settings")
+                    .foregroundColor(Palette.black)
+                    .font(Typography.headerXL)
+    
+            )
         }
-        .background(Palette.greyBackground)
-//        .task{
-//            dataVM.getVehiclesCoreData(filter: nil, storage: {storage in
-//                dataVM.vehicleList = storage
-//                print("successsss")
-//
-//            })
-//        }
+        //        .task{
+        //            dataVM.getVehiclesCoreData(filter: nil, storage: {storage in
+        //                dataVM.vehicleList = storage
+        //                print("successsss")
+        //
+        //            })
+        //        }
     }
 }
 
 //struct SettingsView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        SettingsView()
+//        EditCarView()
 //    }
 //}
 
@@ -86,10 +87,11 @@ struct PremiumBanner : View {
                     Text("Get more features")
                         .font(Typography.headerL)
                         .foregroundColor(Palette.white)
-                    Text("Unlock the settings and the statistics")
+                    Text("Let us remind you key dates \nabout your vehicles")
                         .font(Typography.TextM)
                         .foregroundColor(Palette.white)
                         .padding(.top,-8)
+                        .multilineTextAlignment(.leading)
                     ZStack{
                         Rectangle()
                             .cornerRadius(8)
@@ -103,6 +105,119 @@ struct PremiumBanner : View {
                 }.padding(.leading)
                 Image("premium")
             }
+        }
+    }
+}
+
+struct EditCarView : View {
+    
+    @FocusState var focusedField: FocusFieldBoarding?
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @ObservedObject var dataVM : DataViewModel
+    
+    @State var vehicleS : VehicleState
+    
+    var isDisabled : Bool {
+        return vehicleS.name.isEmpty || vehicleS.brand.isEmpty || vehicleS.model.isEmpty
+    }
+    
+    var body: some View {
+        ZStack{
+            Palette.greyBackground.ignoresSafeArea()
+            VStack(spacing:20){
+                
+                TextField("Car's name", text: $vehicleS.name)
+                    .disableAutocorrection(true)
+                    .focused($focusedField,equals: .carName)
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
+                    .background(focusedField == .carName ? Palette.greyLight :Palette.greyBackground)
+                    .font(Typography.TextM)
+                    .foregroundColor(Palette.black)
+                    .cornerRadius(36)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 36)
+                            .stroke(focusedField == .carName ? Palette.black :Palette.greyInput, lineWidth: 1)
+                    )
+                    .modifier(ClearButton(text: $vehicleS.name))
+                    .onSubmit {
+                        focusedField = .brand
+                    }
+                
+                TextField("Brand", text: $vehicleS.brand)
+                    .disableAutocorrection(true)
+                    .focused($focusedField,equals: .brand)
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
+                    .background(focusedField == .brand ? Palette.greyLight :Palette.greyBackground)
+                    .font(Typography.TextM)
+                    .foregroundColor(Palette.black)
+                    .cornerRadius(36)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 36)
+                            .stroke(focusedField == .brand ? Palette.black :Palette.greyInput, lineWidth: 1)
+                    )
+                    .modifier(ClearButton(text: $vehicleS.brand))
+                    .onSubmit {
+                        focusedField = .model
+                    }
+                
+                TextField("Model", text: $vehicleS.model)
+                    .disableAutocorrection(true)
+                    .focused($focusedField,equals: .model)
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
+                    .background(focusedField == .model ? Palette.greyLight :Palette.greyBackground)
+                    .font(Typography.TextM)
+                    .foregroundColor(Palette.black)
+                    .cornerRadius(36)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 36)
+                            .stroke(focusedField == .model ? Palette.black :Palette.greyInput, lineWidth: 1)
+                    )
+                    .modifier(ClearButton(text: $vehicleS.model))
+                    .onSubmit {
+                        focusedField = nil
+                    }
+                
+                Spacer()
+            }
+            .padding(.vertical,30)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                leading:
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Image("arrowLeft")
+                    })
+                    .accentColor(Palette.greyHard),
+                trailing:
+                    Button(action: {
+                        do {
+                            try dataVM.updateVehicle(vehicleS)
+                        }
+                        catch{
+                            print(error)
+                        }
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Save")
+                            .font(Typography.headerM)
+                    }
+                          )
+                    .disabled(isDisabled)
+                    .opacity(isDisabled ? 0.6 : 1)
+            )
+            .toolbar{
+                ToolbarItem(placement: .principal) {
+                    Text(vehicleS.name)
+                        .font(Typography.headerM)
+                        .foregroundColor(Palette.black)
+                }
+            }
+            
         }
     }
 }
