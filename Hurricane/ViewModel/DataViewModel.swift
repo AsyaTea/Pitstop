@@ -11,12 +11,11 @@ class DataViewModel : ObservableObject {
     let manager = CoreDataManager.instance
 
     // Vehicle
-//    @Published var vehicleModel = VehicleModel(vehicle: <#Vehicle#>)
     @Published var vehicleList : [VehicleViewModel] = []   //Var to store all the fetched vehicle entities
     @Published var currVehicle = Vehicle() /// da togliere
     
     
-    @Published var currentVehicle : [Vehicle] = []
+    @Published var currentVehicle : [VehicleViewModel] = []
     
     //Expense
     @Published var expenses : [Expense] = []
@@ -27,34 +26,59 @@ class DataViewModel : ObservableObject {
     
     init() {
         getVehicles()
+//        getVehicless(storage: vehicleList, filter: filter)
 //        getExpenses(filter: filter)
     }
     
-    func getVehicleID(id : UUID){
-        let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
-        let filter = NSPredicate(format: "vehicleID == %@", id as CVarArg)
-        request.predicate = filter
-        
-        do {
-             currentVehicle =  try manager.context.fetch(request)
-        }catch let error {
-            print("🚓 Error fetching the vehicle ID: \(error.localizedDescription)")
-        }
-        
-    }
-    
-//    func getCurrentVehicle() {
+//    func getVehicleID(id : UUID){
 //        let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
-//
-//        let filter = NSPredicate(format: "current == %@", "true")
+//        let filter = NSPredicate(format: "vehicleID == %@", id as CVarArg)
 //        request.predicate = filter
 //
 //        do {
-//            vehicles =  try manager.context.fetch(request)
+//             currentVehicle =  try manager.context.fetch(request)
 //        }catch let error {
-//            print("🚓 Error fetching current vehicle: \(error.localizedDescription)")
+//            print("🚓 Error fetching the vehicle ID: \(error.localizedDescription)")
+//        }
+//
+//    }
+    
+//        func getVehicless(filter : NSPredicate?, storage: inout[VehicleViewModel]) throws {
+//        let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
+//        let vehicle : [Vehicle]
+//        request.predicate = filter
+//        
+//        do {
+//            vehicle =  try manager.context.fetch(request)
+//            DispatchQueue.main.async{
+//                storage = vehicle.map(VehicleViewModel.init)
+//            }
+//            print("VEHICLE LIST ",storage)
+//            
+//        }catch let error {
+//            print("🚓 Error fetching vehicles: \(error.localizedDescription)")
 //        }
 //    }
+    
+    
+    func getCurrentVehicle() {
+        let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
+        let vehicle : [Vehicle]
+
+        let filter = NSPredicate(format: "current == %@","1")
+        request.predicate = filter
+
+        do {
+            vehicle =  try manager.context.fetch(request)
+            DispatchQueue.main.async{
+                self.currentVehicle = vehicle.map(VehicleViewModel.init)
+            }
+            print("CURRENT VEHICLE LIST ",vehicleList)
+            
+        }catch let error {
+            print("🚓 Error fetching current vehicle: \(error.localizedDescription)")
+        }
+    }
     
     //MARK: VEHICLE FUNCTIONS
     func getVehicles() {
@@ -74,6 +98,8 @@ class DataViewModel : ObservableObject {
             DispatchQueue.main.async{
                 self.vehicleList = vehicle.map(VehicleViewModel.init)
             }
+            print("VEHICLE LIST ",vehicleList)
+           
         }catch let error {
             print("🚓 Error fetching vehicles: \(error.localizedDescription)")
         }
@@ -114,17 +140,10 @@ class DataViewModel : ObservableObject {
         }
         saveVehicle()
     }
-    
-    func setCurrentVehicle(currVehicle: Vehicle) {
-        self.currVehicle = currVehicle
-        print(self.currVehicle.name ?? "")
-    }
-    
+        
     //MARK: TODOOOOO
-//    func updateVehicle(entity: Vehicle, vehicleUpdate: VehicleViewModel) {
-//        entity.name = vehicleUpdate.name
-//        saveVehicle()
-//    }
+
+    
     
     func updateCurrentVehicle(vehicleUpdate: VehicleViewModel) {
        
@@ -137,19 +156,18 @@ class DataViewModel : ObservableObject {
     func updateVehicle(_ vs : VehicleState) throws{
         
         guard let vehicleID = vs.vehicleID else {
-            return print("Vehicle not found 1")
+            return print("Vehicle ID not found during update")
         }
         
         guard let vehicle = manager.getVehicleById(id: vehicleID) else {
-            return print("Vehicle not found 2")
+            return print("Vehicle not found during update")
         }
         
-        
-        
         vehicle.name = vs.name
+        vehicle.current = vs.current // Setto il current vehicle a questo per provare
         // etc etc
         
-        manager.save()
+        saveVehicle()
     }
     
     func getVehicleById(vehicleId : NSManagedObjectID) throws -> VehicleViewModel {
@@ -217,6 +235,10 @@ struct VehicleViewModel : Hashable {
     
     let vehicle : Vehicle
     
+    var current: NSNumber {
+        return vehicle.current ?? 0
+    }
+    
     var brand : String {
         return vehicle.brand ?? ""
     }
@@ -266,6 +288,7 @@ struct ExpenseModel {
 
 struct VehicleState : Hashable {
     
+    var current : NSNumber?
     var brand : String = ""
     var document : Data?
     var fuelType: Int32?
@@ -281,6 +304,7 @@ extension VehicleState {
     
     static func fromVehicleViewModel(vm: VehicleViewModel) -> VehicleState{
         var vehicleS = VehicleState()
+        vehicleS.current = vm.current
         vehicleS.vehicleID = vm.vehicleID
         vehicleS.odometer = vm.odometer
         vehicleS.brand = vm.brand

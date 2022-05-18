@@ -10,8 +10,8 @@ import CoreData
 //
 struct ContentView: View {
     
-    @StateObject private var vehicleVM = DataViewModel()
-    @State var vehicle : VehicleState = VehicleState()
+    @StateObject var vehicleVM = DataViewModel()
+    @State var vehicleS : VehicleState = VehicleState()
     @State var expense : ExpenseModel = ExpenseModel()
     
     @State var filter : NSPredicate?
@@ -19,28 +19,26 @@ struct ContentView: View {
     @State var vehicleId: NSManagedObjectID?
     
     
-    private func deleteVehicle(at indexSet: IndexSet){
+    func deleteVehicle(at indexSet: IndexSet){
         indexSet.forEach{ index in
             let vehicle = vehicleVM.vehicleList[index]
-            
+            vehicleVM.vehicleList.remove(at: index)
             vehicleVM.removeVehicle(vehicle: vehicle)
-            
-            vehicleVM.getVehicles()
         }
     }
     
-    func save() {
-        do {
-            try vehicleVM.updateVehicle(vehicle)
-        } catch {
-            print(error)
-        }
-    }
+//    func save() {
+//        do {
+//            try vehicleVM.updateVehicle(vehicleS)
+//        } catch {
+//            print(error)
+//        }
+//    }
 
     // MARK: PROVA DI AGGIUNTA
     var body: some View {
         VStack{
-            TextField("Vehicle Name", text: $vehicle.name)
+            TextField("Vehicle Name", text: $vehicleS.name)
                 .textFieldStyle(.roundedBorder)
                 .padding()
             TextField("Expenses Name", text: $expense.note.toUnwrapped(defaultValue: ""))
@@ -48,36 +46,59 @@ struct ContentView: View {
                 .padding()
             Text("ciao")
             Button("Add veicolo"){
-                vehicleVM.addVehicle(vehicle: vehicle)               
-                print(vehicle)
+                vehicleVM.addVehicle(vehicle: vehicleS)
+                print(vehicleS)
             }
             Button("Remove all vehicles"){
                 vehicleVM.removeAllVehicles()
             }
-            Button("Remove all expenses"){
-                vehicleVM.removeAllExpenses()
-            }
-            Button ("Filter x Expenses"){
-                filter = NSPredicate(format: "vehicle ==  %@", vehicleVM.currVehicle)
-                vehicleVM.getExpenses(filter: filter)
-            }
-            Button ("Update last car") {
-                //assegnare a vehicle state il vehicle viewmodel
-//                try vehicleVM.getVehicleById(vehicleId: vehicleId) {
-//                    throw VehicleError.VehicleNotFount
+//            Button("Remove all expenses"){
+//                vehicleVM.removeAllExpenses()
+//            }
+//            Button ("Filter x Expenses"){
+//                filter = NSPredicate(format: "vehicle ==  %@", vehicleVM.currVehicle)
+//                vehicleVM.getExpenses(filter: filter)
+//            }
+            
+//            Button ("Update last car") {
+//                //assegnare a vehicle state il vehicle viewmodel
+////                try vehicleVM.getVehicleById(vehicleId: vehicleId) {
+////                    throw VehicleError.VehicleNotFount
+////                }
+//                do {
+//                    try vehicleS.vehicleID = vehicleVM.getVehicleById(vehicleId: vehicleId!).vehicleID
+//                } catch {
+//                    print("Erorreeeeee")
 //                }
-                do {
-                    try vehicle.vehicleID = vehicleVM.getVehicleById(vehicleId: vehicleId!).vehicleID
-                } catch {
-                    print("Erorreeeeee")
+//                save()
+//            }
+            
+            Button ("UPDATE V2") {
+                do{
+                    if(vehicleS.vehicleID != nil){
+                    try vehicleVM.updateVehicle(vehicleS)
                 }
-                save()
+                else{
+                    print("error")
+                }
+                }
+                catch{
+                    print(error)
+                }
+                
             }
             
             Button("Set current vehicle to last added:"){
                 for vehicle in vehicleVM.vehicleList {
-                    vehicleId = vehicle.vehicleID
+//                    vehicleId = vehicle.vehicleID
+//                    vehicleS.vehicleID = vehicleId
+                    vehicleS.vehicleID = vehicle.vehicleID
+                    print("LAST ADDED IS ",vehicleS.vehicleID)
                 }
+            }
+            
+            Button("Get current vehicle"){
+                vehicleVM.getCurrentVehicle()
             }
             
             List(){
@@ -89,25 +110,28 @@ struct ContentView: View {
                       
                         
                     }
-                    
+                } .onDelete(perform: deleteVehicle)
                 }
-                .onDelete(perform: deleteVehicle)
-                ForEach(vehicleVM.expenses) { expenses in
-                    Text("Exp: \(expenses.note ?? "" + expenses.note! ?? "")")
-                    Text("Vehicle appart:\(expenses.vehicle?.name ?? "" )")
-
-                } .onDelete(perform: vehicleVM.removeExpense(indexSet:))
+               
+            
+//                ForEach(vehicleVM.expenses) { expenses in
+//                    Text("Exp: \(expenses.note ?? "" + expenses.note! ?? "")")
+//                    Text("Vehicle appart:\(expenses.vehicle?.name ?? "" )")
+//
+//                } .onDelete(perform: vehicleVM.removeExpense(indexSet:))
                     
-                
-            }
-            //Floating button
+            List{
+                    ForEach(vehicleVM.currentVehicle,id:\.vehicleID){ current in
+                        Text(current.name)
+                    }
+            }//Floating button
             .overlay(
                 VStack{
                     Spacer(minLength: UIScreen.main.bounds.size.height * 0.42)
                     Button(action: {
                         
                         vehicleVM.addExpense(expense: expense)
-//                        vehicleVM.getExpenses()
+    //                        vehicleVM.getExpenses()
                     }, label: {
                         ZStack{
                             Rectangle()
@@ -121,10 +145,12 @@ struct ContentView: View {
                     })
                     Spacer()
                 }
-//                    .padding(.top,50)
+    //                    .padding(.top,50)
             )
+         
             
         }
+        
     }
 }
 

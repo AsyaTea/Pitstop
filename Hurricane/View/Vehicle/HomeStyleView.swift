@@ -132,6 +132,8 @@ struct Home_Previews: PreviewProvider {
 
 struct TopNav : View {
     
+    @StateObject var vehicleVM = DataViewModel()
+    
     var offset: CGFloat
     let maxHeight : CGFloat
     var topEdge : CGFloat
@@ -168,7 +170,7 @@ struct TopNav : View {
                     showingAllCars.toggle()
                 }, label: {
                     HStack{
-                        Text("\(selectedCar)'s car ")
+                        Text(vehicleVM.currentVehicle.first?.name ?? "Default" + "'s car ")
                             .foregroundColor(Palette.black)
                             .font(Typography.headerXL)
                             .opacity(fadeOutOpacity())
@@ -184,18 +186,28 @@ struct TopNav : View {
                     .opacity(fadeOutOpacity())
                 })
                 .confirmationDialog("Select a car", isPresented: $showingAllCars, titleVisibility: .hidden) {
-                                Button("Red") {
-                                    selectedCar = "Red"
-                                }
-
-                                Button("Green") {
-                                    selectedCar = "Green"
-//                                        background = .black
-                                }
-
-                                Button("Blue") {
-                                    selectedCar = "Blue"
-                                }
+                    ForEach(vehicleVM.vehicleList,id:\.self){ vehicle in
+                        Button(vehicle.name) {
+                            //DEVO SETTARE IL CURRENT VEHICLE
+                            selectedCar =  vehicle.name
+                            var vehicleS = VehicleState.fromVehicleViewModel(vm: vehicle)
+                            vehicleS.current = 1 // SETTO IL CURRENT TO TRUE
+                            //QUANDO SETTO QUESTO A 1, GLI ALTRI DEVO SETTARLI A 0
+                            
+                            do{
+                                if(vehicleS.vehicleID != nil){
+                                try vehicleVM.updateVehicle(vehicleS)
+                                    print("success")
+                            }
+                            else{
+                                print("error")
+                            }
+                            }
+                            catch{
+                                print(error)
+                            }
+                        }
+                    }
                     Button("Cancel", role: .cancel) { }
                         .background(.black)
                         .foregroundColor(.red)
@@ -244,7 +256,12 @@ struct TopNav : View {
                 .font(Typography.TextM)
                 .padding(.top,-12)
                 .opacity(fadeOutOpacity())
-        }.overlay(
+        }
+        .onAppear{
+            vehicleVM.getVehicles()
+            vehicleVM.getCurrentVehicle()
+        }
+        .overlay(
             VStack(alignment: .center,spacing: 2){
                 Text("Batmans' car")
                     .font(Typography.headerM)

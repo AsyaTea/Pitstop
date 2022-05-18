@@ -58,6 +58,9 @@ struct SettingsView: View {
             
         }
         .background(Palette.greyBackground)
+        .task{
+            dataVM.getVehicles()
+        }
     }
 }
 
