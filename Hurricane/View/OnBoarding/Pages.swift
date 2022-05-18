@@ -18,6 +18,7 @@ enum FocusFieldBoarding: Hashable {
 //MARK: PAGE 1 FRONT PAGE
 struct Page1 : View {
     
+    
     @StateObject var onboardingVM : OnboardingViewModel
    
     var body: some View {
@@ -56,6 +57,8 @@ struct Page2 : View {
     
     @StateObject var onboardingVM : OnboardingViewModel
     
+    @StateObject var fuelVM = FuelViewModel()
+    
     @FocusState var focusedField: FocusFieldBoarding?
     
     @State private var isTapped = false
@@ -69,9 +72,15 @@ struct Page2 : View {
                 .background(isTapped ? Palette.greyLight : Palette.greyBackground)
                 .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
             HStack{
-                Text(onboardingVM.selectedFuel)
-                    .font(Typography.TextM)
-                Spacer()
+                if isTapped {
+                    Text(onboardingVM.selectedFuel)
+                        .font(Typography.TextM)
+                    Spacer()
+                } else {
+                    Text("Fuel Type")
+                        .font(Typography.TextM)
+                    Spacer()
+                }
             }
             .accentColor(isTapped ? Palette.black : Palette.greyInput)
             .padding(.leading,40)
@@ -160,14 +169,19 @@ struct Page2 : View {
                 
                 //MARK: NEED TO FIX MULTIPLE FUEL TYPES
                 Menu{
-                    Picker(selection: $onboardingVM.selectedFuel, label:
-                            EmptyView()){
-                        ForEach(onboardingVM.fuelCategories,id: \.self) { name in
+//                    Picker(selection: $fuelVM.selectedFuel, label:
+//                            EmptyView()){
+//                            ForEach(FuelType.allCases, id: \.self) { fuel in
+//                                Text(fuelVM.getFuelType(fuel: fuel))
+//                        }
+//                    }
+                    Picker(selection: $onboardingVM.selectedFuel, label: EmptyView()) {
+                        ForEach(onboardingVM.fuelCategories, id: \.self) { name in
                             Text(name)
                         }
                     }
                 } label: {
-                    customLabel
+                   customLabel
                 }.onTapGesture {
                     isTapped = true
                 }

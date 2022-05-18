@@ -19,7 +19,8 @@ extension Vehicle {
     @NSManaged public var current: NSNumber?
     @NSManaged public var brand: String?
     @NSManaged public var document: Data?
-    @NSManaged public var fuelType: Int32
+    @NSManaged public var fuelTypeOne: Int32
+    @NSManaged public var fuelTypeTwo: Int32
     @NSManaged public var model: String?
     @NSManaged public var name: String?
     @NSManaged public var odometer: Int16

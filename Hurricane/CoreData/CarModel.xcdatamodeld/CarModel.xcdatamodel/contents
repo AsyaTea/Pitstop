@@ -12,7 +12,8 @@
         <attribute name="brand" optional="YES" attributeType="String"/>
         <attribute name="current" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO"/>
         <attribute name="document" optional="YES" attributeType="Binary"/>
-        <attribute name="fuelType" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="fuelTypeOne" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="fuelTypeTwo" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="model" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="odometer" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -22,6 +23,6 @@
     </entity>
     <elements>
         <element name="Expense" positionX="215.86328125" positionY="1.1640625" width="128" height="119"/>
-        <element name="Vehicle" positionX="-45" positionY="0" width="128" height="179"/>
+        <element name="Vehicle" positionX="-45" positionY="0" width="128" height="194"/>
     </elements>
 </model>
