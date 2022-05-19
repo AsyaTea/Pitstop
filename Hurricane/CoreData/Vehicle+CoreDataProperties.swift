@@ -23,9 +23,9 @@ extension Vehicle {
     @NSManaged public var fuelTypeTwo: Int32
     @NSManaged public var model: String?
     @NSManaged public var name: String?
-    @NSManaged public var odometer: Int16
+    @NSManaged public var odometer: Int32
     @NSManaged public var plate: String?
-    @NSManaged public var year: Int16
+    @NSManaged public var year: Int32
     @NSManaged public var expenses: NSSet?
 
 }

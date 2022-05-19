@@ -18,11 +18,14 @@ class OnboardingViewModel : ObservableObject {
     @Published var destination : Pages = .page1
     
     var isDisabled : Bool {
-        return vehicle.name.isEmpty  || vehicle.brand.isEmpty  || vehicle.model.isEmpty  || selectedFuel == "Fuel Type"
+//        return vehicle.name.isEmpty  || vehicle.brand.isEmpty  || vehicle.model.isEmpty  || selectedFuel == "Fuel Type"
+        return false // debugging
     }
     
     @Published var skipNotification = false /// Skip notiification page when adding another car
     @Published var removeBack = false /// Remove back button when adding another car
+    
+    @Published var showAlertOB = false
     
     func resetFields() {
         vehicle.name = ""

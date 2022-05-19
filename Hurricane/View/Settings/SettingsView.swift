@@ -23,16 +23,14 @@ struct SettingsView: View {
                 List{
                     Section{
                         ForEach(dataVM.vehicleList,id:\.self){ vehicle in
-                            NavigationLink(destination: EditCarView(dataVM: dataVM, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))){
+                            NavigationLink(destination: EditVehicleView(dataVM: dataVM, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))){
                                 Text(vehicle.name)
                                     .font(Typography.headerM)
                                     .foregroundColor(Palette.black)
                             }
                         }.onDelete(perform: dataVM.deleteVehicle)
                         
-                        Button(action: {
-                            
-                        }, label: {
+                        NavigationLink(destination: AddNewVehicle()){
                             HStack{
                                 ZStack{
                                     Circle()
@@ -48,7 +46,7 @@ struct SettingsView: View {
                                     .font(Typography.headerM)
                                     .foregroundColor(Palette.black)
                             }
-                        })
+                        }
                         
                     }
                     Section{
@@ -128,7 +126,7 @@ struct PremiumBanner : View {
     }
 }
 
-struct EditCarView : View {
+struct EditVehicleView : View {
     
     @FocusState var focusedField: FocusFieldBoarding?
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>

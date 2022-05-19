@@ -25,7 +25,7 @@ struct HomeStyleView: View {
                     
                     GeometryReader{ proxy in
                         //MARK: HEADER CONTENT
-                        HeaderContent(offset: $offset, maxHeight: maxHeight)
+                        HeaderContent(offset: $offset, maxHeight: maxHeight, dataVM: dataVM)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .opacity(
@@ -291,6 +291,8 @@ struct HeaderContent : View {
     @Binding var offset: CGFloat
     var maxHeight : CGFloat
     
+    @StateObject var dataVM : DataViewModel
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 15){
             HStack(spacing:13){
@@ -323,7 +325,7 @@ struct HeaderContent : View {
                             .foregroundColor(Palette.colorMainYellow)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
-                            Text("23842")
+                            Text(String(dataVM.currentVehicle.first?.odometer ?? 0))
                                 .foregroundColor(Palette.black)
                                 .font(Typography.headerL)
                             Text("Odometer")
