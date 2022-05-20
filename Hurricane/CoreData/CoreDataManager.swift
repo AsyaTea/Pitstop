@@ -53,6 +53,17 @@ class CoreDataManager {
         }
     }
     
+    func getExpenseById(id: NSManagedObjectID) -> Expense?  {
+        
+        do{
+            return try context.existingObject(with: id) as? Expense
+        }
+        catch {
+            print(error)
+            return nil
+        }
+    }
+    
     func deleteVehicle(_ vehicle : Vehicle) {
         context.delete(vehicle)
         

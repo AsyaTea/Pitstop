@@ -12,6 +12,7 @@ struct AddReportView: View {
     @StateObject var utilityVM : UtilityViewModel = .init()
     @StateObject var addExpVM : AddExpenseViewModel = .init()
     @ObservedObject var vehicleVM : DataViewModel = .init()
+    @State var expense : ExpenseState = ExpenseState()
     @State private var showDate = false
     
     //Custom picker tabs
@@ -52,7 +53,7 @@ struct AddReportView: View {
                 
                 //MARK: List
                 if(addExpVM.currentPickerTab == "Expense"){
-                    ExpenseListView(addExpVM: addExpVM,utilityVM: utilityVM, focusedField: $focusedField)
+                    ExpenseListView(addExpVM: addExpVM,utilityVM: utilityVM, focusedField: $focusedField, expense: $expense)
                 }
                 else if (addExpVM.currentPickerTab == "Odometer"){
                     OdometerListView(addExpVM: addExpVM,utilityVM: utilityVM, focusedField: $focusedField)
@@ -74,6 +75,7 @@ struct AddReportView: View {
                     .accentColor(Palette.greyHard),
                 trailing:
                     Button(action: {
+                        vehicleVM.addExpense(expense: expense)
 //                        self.presentationMode.wrappedValue.dismiss()
 //                        for vehicle in vehicleVM.vehicles {
 //                            vehicleVM.currVehicle = vehicle

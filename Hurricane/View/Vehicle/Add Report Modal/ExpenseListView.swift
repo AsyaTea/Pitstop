@@ -12,6 +12,7 @@ struct ExpenseListView: View {
     @ObservedObject var addExpVM : AddExpenseViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     var focusedField : FocusState<FocusField?>.Binding
+    @Binding var expense : ExpenseState // Binding(?)
     
     var body: some View {
         

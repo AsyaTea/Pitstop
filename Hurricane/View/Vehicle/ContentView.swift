@@ -66,20 +66,26 @@ struct ContentView: View {
 //            print(error)
 //        }
 //    }
+    
+    
 
     // MARK: PROVA DI AGGIUNTA
     var body: some View {
         
-        var filterCurrent = NSPredicate(format: "current = %@","1")
+        
+        
+        let filterCurrent = NSPredicate(format: "current = %@","1")
+        let filterCurrentExpense = NSPredicate(format: "vehicle = %@",vehicleVM.getVehicle(vehicleID: vehicleVM.currentVehicle.first!.vehicleID)!)
         
         VStack{
+            VStack{
             TextField("Vehicle Name", text: $vehicleS.name)
                 .textFieldStyle(.roundedBorder)
                 .padding()
             TextField("Expenses Name", text: $expense.note)
                 .textFieldStyle(.roundedBorder)
                 .padding()
-            
+            }
             Button("Add veicolo"){
                 vehicleVM.addVehicle(vehicle: vehicleS)
                 print(vehicleS)
@@ -123,41 +129,55 @@ struct ContentView: View {
                 
             }
             
-            Button("Set current vehicle to last added:"){
-                for vehicle in vehicleVM.vehicleList {
-//                    vehicleId = vehicle.vehicleID
-//                    vehicleS.vehicleID = vehicleId
-                    vehicleS.vehicleID = vehicle.vehicleID
-                    print("LAST ADDED IS ",vehicleS.vehicleID)
-                }
+            
+//            Button("Set current vehicle to last added:"){
+//                for vehicle in vehicleVM.vehicleList {
+////                    vehicleId = vehicle.vehicleID
+////                    vehicleS.vehicleID = vehicleId
+//                    vehicleS.vehicleID = vehicle.vehicleID
+//                    print("LAST ADDED IS ",vehicleS.vehicleID)
+//                }
+//            }
+            Button {
+                print(" expense list : \(vehicleVM.expenseList)")
+            } label: {
+                Text("print expense list")
             }
+
             
             Button("Get current vehicle"){
-                vehicleVM.getVehiclesCoreData(filter: filterCurrent, storage: {storage in
+                vehicleVM.getVehiclesCoreData(filter: filterCurrent, storage: { storage in
                     vehicleVM.currentVehicle = storage
                     
                 })
             }
             
-            Menu{
-                Picker(selection: $fuelVM.selectedFuel, label:
-                        EmptyView()){
-                        ForEach(FuelType.allCases, id: \.self) { fuel in
-                            Text(fuelVM.getFuelType(fuel: fuel))
-                            
-                    }
-                   
-                }
-            } label: {
-               customLabel
-            }.onTapGesture {
-                isTapped = true
-            }
+//            Menu{
+//                Picker(selection: $fuelVM.selectedFuel, label:
+//                        EmptyView()){
+//                        ForEach(FuelType.allCases, id: \.self) { fuel in
+//                            Text(fuelVM.getFuelType(fuel: fuel))
+//
+//                    }
+//
+//                }
+//            } label: {
+//               customLabel
+//            }.onTapGesture {
+//                isTapped = true
+//            }
 
+//            Button {
+//                print(fuelVM.selectedFuel)
+//            } label: {
+//                Text("Selected fuel")
+//            }
+            
             Button {
-                print(fuelVM.selectedFuel)
+                vehicleVM.addExpense(expense: expense)
+                print("expense list \(vehicleVM.expenseList)")
             } label: {
-                Text("Selected fuel")
+                Text("Add Expenses")
             }
 
             
@@ -165,51 +185,58 @@ struct ContentView: View {
             List(){
                 ForEach(vehicleVM.vehicleList,id:\.vehicleID){ vehicle in
                     VStack{
-                    
-                    Text("Vehicle name: \(vehicle.name)")
-                    
-                      
-                        
-                    }
+                    Text("Vehicle name: \(vehicle.name)")                   }
                 } .onDelete(perform: deleteVehicle)
                 }
-            
-            }
+        
+        
+        
+            ForEach(vehicleVM.expenseList, id: \.self) { expense in
                
-            
-//                ForEach(vehicleVM.expenses) { expenses in
-//                    Text("Exp: \(expenses.note ?? "" + expenses.note! ?? "")")
-//                    Text("Vehicle appart:\(expenses.vehicle?.name ?? "" )")
-//
-//                } .onDelete(perform: vehicleVM.removeExpense(indexSet:))
+                  Text("Expense: \(expense.note)")
+//                Text("ciao")
+                
+                    }.onDelete(perform: vehicleVM.removeExpense(indexSet:))
+        
+               
+       
                     
             List {
                     ForEach(vehicleVM.currentVehicle,id:\.vehicleID){ current in
                         Text(current.name)
                     }
-            }//Floating button
-            .overlay(
-                VStack{
-                    Spacer(minLength: UIScreen.main.bounds.size.height * 0.42)
-                    Button(action: {
-                        
-                        vehicleVM.addExpense(expense: expense)
-    //                        vehicleVM.getExpenses()
-                    }, label: {
-                        ZStack{
-                            Rectangle()
-                                .frame(width: 343, height: 48, alignment: .center)
-                                .cornerRadius(43)
-                                .foregroundColor(.black)
-                            Text("+ Add expense")
-                                .foregroundColor(.white)
-                        }
-                        
-                    })
-                    Spacer()
-                }
-    //                    .padding(.top,50)
-            )
+            }
+            
+        }
+        .task{
+            vehicleVM.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
+                vehicleVM.expenseList = storage
+            })
+        }
+        
+        //Floating button
+//            .overlay(
+//                VStack{
+//                    Spacer(minLength: UIScreen.main.bounds.size.height * 0.42)
+//                    Button(action: {
+//
+//                        vehicleVM.addExpense(expense: expense)
+//    //                        vehicleVM.getExpenses()
+//                    }, label: {
+//                        ZStack{
+//                            Rectangle()
+//                                .frame(width: 343, height: 48, alignment: .center)
+//                                .cornerRadius(43)
+//                                .foregroundColor(.black)
+//                            Text("+ Add expense")
+//                                .foregroundColor(.white)
+//                        }
+//
+//                    })
+//                    Spacer()
+//                }
+//    //                    .padding(.top,50)
+//            )
          
             
         }

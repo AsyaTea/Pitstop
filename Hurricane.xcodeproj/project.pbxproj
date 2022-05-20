@@ -200,9 +200,9 @@
 		FF249C43282151690062613A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				415D2041282145FE004AF201 /* DataViewModel.swift */,
 				FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */,
 				FF3616CA28290416002ADA33 /* AddExpenseViewModel.swift */,
+				415D2041282145FE004AF201 /* DataViewModel.swift */,
 				41C6E20F283185B200F756B5 /* CategoryViewModel.swift */,
 				41176DA82834DCC3000FD885 /* FuelViewModel.swift */,
 			);
@@ -505,7 +505,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = 55H4ABU399;
+				DEVELOPMENT_TEAM = MYPTJXP3NK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hurricane/Info.plist;

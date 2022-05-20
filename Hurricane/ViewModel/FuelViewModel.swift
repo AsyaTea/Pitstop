@@ -31,12 +31,12 @@ class FuelViewModel: ObservableObject {
     init() {
     }
     
-    func getFuelString(value: Int32) -> String {
-        var string = "Default"
-        if (value == 0 ) { string = "Diesel" }
-        if (value == 0 ) { string = "Diesel"}
-        return string
-    }
+//    func getFuelString(value: Int32) -> String {
+//        var string = "Default"
+//        if (value == 0 ) { string = "Diesel" }
+//        if (value == 0 ) { string = "Diesel"}
+//        return string
+//    }
     
     func getFuelType(fuel: FuelType) -> String {
         
@@ -57,21 +57,7 @@ class FuelViewModel: ObservableObject {
             return "Electric"
       
         }
-    
     }
-    
-//    func getFuelType(string: String) -> FuelType {
-//
-//        switch string {
-//        case "Diesel":
-//            return FuelType.diesel
-//        }
-//
-//
-//    }
-    
-    
-    
 }
 
 
