@@ -25,7 +25,7 @@ struct HomeStyleView: View {
                     
                     GeometryReader{ proxy in
                         //MARK: HEADER CONTENT
-                        HeaderContent(offset: $offset, maxHeight: maxHeight)
+                        HeaderContent(offset: $offset, maxHeight: maxHeight, dataVM: dataVM)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .opacity(
@@ -161,9 +161,12 @@ struct TopNav : View {
     }
     
     @State private var showingAllCars = false
-    @State private var selectedCar = "Batman"
     
     let filter = NSPredicate(format: "current == %@","1")
+    
+    var brandModelString : String {
+        return "\(dataVM.currentVehicle.first?.brand ?? "brand") \(dataVM.currentVehicle.first?.model ?? "model")"
+    }
     
     var body: some View {
         VStack(alignment: .leading){
@@ -172,7 +175,7 @@ struct TopNav : View {
                     showingAllCars.toggle()
                 }, label: {
                     HStack{
-                        Text(dataVM.currentVehicle.first?.name ?? "Default" + "'s car ")
+                        Text(dataVM.currentVehicle.first?.name ?? "Default's car ")
                             .foregroundColor(Palette.black)
                             .font(Typography.headerXL)
                             .opacity(fadeOutOpacity())
@@ -182,7 +185,7 @@ struct TopNav : View {
                             .frame(width: 10, height: 14)
                             .rotationEffect(Angle(degrees: 270))
                             .padding(.top,3)
-                            .padding(.leading,-5)
+                            .padding(.leading,-3)
                     }
                     .padding(.leading,-1)
                     .opacity(fadeOutOpacity())
@@ -191,7 +194,6 @@ struct TopNav : View {
                     ForEach(dataVM.vehicleList,id:\.vehicleID){ vehicle in
                         Button(vehicle.name) {
                             //DEVO SETTARE IL CURRENT VEHICLE
-                            selectedCar =  vehicle.name
                             var vehicleS = VehicleState.fromVehicleViewModel(vm: vehicle)
                             dataVM.setAllCurrentToFalse()
                             vehicleS.current = 1 // SETTO IL CURRENT TO TRUE
@@ -255,23 +257,24 @@ struct TopNav : View {
                 }
                 .padding(.top,2)
             }
-            Text("Range Rover Evoque, 2017")
+            Text(brandModelString)
                 .foregroundColor(Palette.black)
                 .font(Typography.TextM)
                 .padding(.top,-12)
                 .opacity(fadeOutOpacity())
         }
-//        .task{
-//            vehicleVM.getVehiclesCoreData(filter: filter, storage:{ storage in
-//                vehicleVM.currentVehicle = storage
-//            })
-//        }
+        .task{
+            //Fetch current vehicle from DB
+            dataVM.getVehiclesCoreData(filter: filter, storage:{ storage in
+                dataVM.currentVehicle = storage
+            })
+        }
         .overlay(
             VStack(alignment: .center,spacing: 2){
-                Text("Batmans' car")
+                Text(dataVM.currentVehicle.first?.name ?? "Default's car ")
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
-                Text("Range Rover Evoque, 2017")
+                Text(brandModelString)
                     .font(Typography.TextM)
                     .foregroundColor(Palette.black)
             }
@@ -287,6 +290,8 @@ struct TopNav : View {
 struct HeaderContent : View {
     @Binding var offset: CGFloat
     var maxHeight : CGFloat
+    
+    @StateObject var dataVM : DataViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15){
@@ -320,7 +325,7 @@ struct HeaderContent : View {
                             .foregroundColor(Palette.colorMainYellow)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
-                            Text("23842")
+                            Text(String(dataVM.currentVehicle.first?.odometer ?? 0))
                                 .foregroundColor(Palette.black)
                                 .font(Typography.headerL)
                             Text("Odometer")

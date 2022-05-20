@@ -137,8 +137,11 @@ class DataViewModel : ObservableObject {
         let newVehicle = Vehicle(context: manager.context)
         newVehicle.name = vehicle.name
         newVehicle.brand = vehicle.brand
-        newVehicle.model = vehicle.model // etc
-        
+        newVehicle.model = vehicle.model
+        newVehicle.odometer = vehicle.odometer
+        newVehicle.fuelTypeOne = vehicle.fuelTypeOne
+        newVehicle.fuelTypeTwo = vehicle.fuelTypeTwo ?? 0
+
         self.vehicleList.append(VehicleViewModel(vehicle: newVehicle)) //Add the new vehicle to the list 
         saveVehicle()
         
@@ -345,7 +348,7 @@ struct VehicleViewModel : Hashable {
         return vehicle.name ?? ""
     }
     
-    var odometer : Int16{
+    var odometer : Int32{
         return vehicle.odometer
     }
     
@@ -357,7 +360,7 @@ struct VehicleViewModel : Hashable {
         return vehicle.objectID
     }
     
-    var year: Int16 {
+    var year: Int32 {
         return vehicle.year
     }
 }
@@ -368,14 +371,14 @@ struct VehicleState : Hashable {
     var current : NSNumber?
     var brand : String = ""
     var document : Data?
-    var fuelTypeOne: Int32?
+    var fuelTypeOne: Int32 = 0
     var fuelTypeTwo: Int32?
     var model : String = ""
     var name : String = ""
-    var odometer : Int16?
+    var odometer : Int32 = 0
     var plate : String = ""
     var vehicleID: NSManagedObjectID?
-    var year: Int16?
+    var year: Int32 = 0
 }
 
 extension VehicleState {

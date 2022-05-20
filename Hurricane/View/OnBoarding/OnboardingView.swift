@@ -17,6 +17,7 @@ struct MainContent: View {
     @StateObject var onboardingVM = OnboardingViewModel()
     @StateObject var dataVM = DataViewModel()
     @StateObject var categoryVM = CategoryViewModel()
+  
 
     var body: some View {
         NavigationView{

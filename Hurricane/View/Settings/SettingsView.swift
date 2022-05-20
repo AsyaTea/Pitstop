@@ -23,19 +23,36 @@ struct SettingsView: View {
                 List{
                     Section{
                         ForEach(dataVM.vehicleList,id:\.self){ vehicle in
-                            NavigationLink(destination: EditCarView(dataVM: dataVM, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))){
+                            NavigationLink(destination: EditVehicleView(dataVM: dataVM, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))){
                                 Text(vehicle.name)
                                     .font(Typography.headerM)
                                     .foregroundColor(Palette.black)
                             }
                         }.onDelete(perform: dataVM.deleteVehicle)
                         
-                        Text("Add car")
+                        NavigationLink(destination: AddNewVehicle()){
+                            HStack{
+                                ZStack{
+                                    Circle()
+                                        .foregroundColor(Palette.greyBackground)
+                                        .frame(width: 32, height: 32)
+                                    Image("plus")
+                                        .resizable()
+                                        .frame(width: 16, height: 16)
+                                        .foregroundColor(Palette.black)
+                                        
+                                }
+                                Text("Add car")
+                                    .font(Typography.headerM)
+                                    .foregroundColor(Palette.black)
+                            }
+                        }
+                        
                     }
                     Section{
-                        Text("Barman's car")
-                        Text("Barman's car")
-                        Text("Barman's car")
+                        Text("Currency")
+                        Text("Unit")
+                        Text("Theme")
                     }
                     
                     Section{
@@ -49,14 +66,14 @@ struct SettingsView: View {
                 
             }
             .background(Palette.greyBackground)
-//            .navigationBarHidden(true)
+            //            .navigationBarHidden(true)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
                     Text("Settings")
                     .foregroundColor(Palette.black)
                     .font(Typography.headerXL)
-    
+                
             )
         }
         //        .task{
@@ -109,7 +126,7 @@ struct PremiumBanner : View {
     }
 }
 
-struct EditCarView : View {
+struct EditVehicleView : View {
     
     @FocusState var focusedField: FocusFieldBoarding?
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>

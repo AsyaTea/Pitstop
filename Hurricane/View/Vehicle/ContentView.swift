@@ -181,7 +181,7 @@ struct ContentView: View {
             }
 
             
-                        
+            VStack{
             List(){
                 ForEach(vehicleVM.vehicleList,id:\.vehicleID){ vehicle in
                     VStack{
