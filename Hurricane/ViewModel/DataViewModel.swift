@@ -348,7 +348,7 @@ struct VehicleViewModel : Hashable {
         return vehicle.name ?? ""
     }
     
-    var odometer : Int32{
+    var odometer : Float{
         return vehicle.odometer
     }
     
@@ -375,7 +375,7 @@ struct VehicleState : Hashable {
     var fuelTypeTwo: Int32?
     var model : String = ""
     var name : String = ""
-    var odometer : Int32 = 0
+    var odometer : Float = 0.0
     var plate : String = ""
     var vehicleID: NSManagedObjectID?
     var year: Int32 = 0

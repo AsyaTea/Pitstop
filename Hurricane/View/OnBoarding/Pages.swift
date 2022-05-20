@@ -268,7 +268,7 @@ struct Page3 : View {
                                     .cornerRadius(12)
                                 
                                 HStack{
-                                    Text(String(onboardingVM.vehicle.odometer))
+                                    Text(String(Int(onboardingVM.vehicle.odometer)))
                                         .font(Typography.ControlS)
                                         .foregroundColor(Palette.black)
                                     Spacer()

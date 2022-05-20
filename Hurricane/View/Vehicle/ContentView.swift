@@ -243,7 +243,7 @@ struct ContentView: View {
         
     }
 
-
+}
 //struct ContentView_Previews: PreviewProvider {
 //    var vehicle = Vehicle()
 //    static var previews: some View {
