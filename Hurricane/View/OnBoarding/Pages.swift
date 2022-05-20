@@ -246,6 +246,32 @@ struct Page3 : View {
                 }
                 ScrollView(showsIndicators: false){
                     VStack(spacing:20){
+                        
+                        //MARK: PLATE NUMBER
+                        Button(action: {
+                            onboardingVM.showAlertPlate.toggle()
+                            onboardingVM.showOverlay = true
+                        }, label: {
+                            OnBoardingCard(text: "Plate number", bgColor: Palette.colorOrange, iconName:  "basedOn")
+                        })
+                        
+                        if(!onboardingVM.vehicle.plate.isEmpty){
+                            ZStack{
+                                Rectangle()
+                                    .foregroundColor(Palette.greyLight)
+                                    .cornerRadius(12)
+                                
+                                HStack{
+                                    Text(onboardingVM.vehicle.plate)
+                                        .font(Typography.ControlS)
+                                        .foregroundColor(Palette.black)
+                                    Spacer()
+                                }
+                                .padding()
+                            }
+                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
+                        }
+                        
                         //MARK: DOCUMENTS
                         Button(action: {
                             
@@ -257,11 +283,12 @@ struct Page3 : View {
                         //MARK: ODOMETER
                         
                         Button(action: {
-                            onboardingVM.showAlertOB.toggle()
+                            onboardingVM.showAlertOdometer.toggle()
+                            onboardingVM.showOverlay = true
                         }, label: {
                             OnBoardingCard(text: "Odometer", bgColor: Palette.colorBlue, iconName:  "odometer")
                         })
-                        if(onboardingVM.vehicle.odometer > -1){
+                        if(onboardingVM.vehicle.odometer != 0 || onboardingVM.showAlertOdometer == true){
                             ZStack{
                                 Rectangle()
                                     .foregroundColor(Palette.greyLight)
@@ -350,16 +377,20 @@ struct Page3 : View {
             }
             .ignoresSafeArea(.keyboard)
             .background(Palette.greyBackground)
-            .disabled(onboardingVM.showAlertOB)
+            .disabled(onboardingVM.showOverlay)
             .overlay(
                 ZStack{
-                    onboardingVM.showAlertOB ? Color.black.opacity(0.4) : Color.clear
-                        
+                    onboardingVM.showOverlay ? Color.black.opacity(0.4) : Color.clear
+                    
                 }.ignoresSafeArea()
             )
-            //        .ignoresSafeArea(.keyboard)
+            .ignoresSafeArea(.keyboard)
+            //MARK: ALL ALERTS
+            if(onboardingVM.showAlertPlate == true){
+                AlertPlateOB(onboardingVM: onboardingVM)
+            }
             
-            if(onboardingVM.showAlertOB == true){
+            if(onboardingVM.showAlertOdometer == true){
                 AlertOdometerOB(onboardingVM: onboardingVM)
             }
         }
