@@ -25,7 +25,9 @@ class OnboardingViewModel : ObservableObject {
     @Published var skipNotification = false /// Skip notiification page when adding another car
     @Published var removeBack = false /// Remove back button when adding another car
     
-    @Published var showAlertOB = false
+    @Published var showAlertOdometer = false
+    @Published var showAlertPlate = false
+    @Published var showOverlay = false
     
     func resetFields() {
         vehicle.name = ""
