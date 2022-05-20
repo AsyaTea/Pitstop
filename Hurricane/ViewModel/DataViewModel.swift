@@ -3,7 +3,7 @@ import Foundation
 import CoreData
 
 enum VehicleError: Error {
-    case VehicleNotFount
+    case VehicleNotFound
 }
 
 class DataViewModel : ObservableObject {
@@ -12,8 +12,6 @@ class DataViewModel : ObservableObject {
     
     // Vehicle
     @Published var vehicleList : [VehicleViewModel] = []   //Var to store all the fetched vehicle entities
-    @Published var currVehicle = Vehicle() /// da togliere
-    
     
     @Published var currentVehicle : [VehicleViewModel] = []
     
@@ -215,7 +213,7 @@ class DataViewModel : ObservableObject {
     func getVehicleById(vehicleId : NSManagedObjectID) throws -> VehicleViewModel {
         
         guard let vehicle = manager.getVehicleById(id: vehicleId) else {
-            throw VehicleError.VehicleNotFount // DA FIXARE
+            throw VehicleError.VehicleNotFound // DA FIXARE
         }
         
         let vehicleVM = VehicleViewModel(vehicle: vehicle)
@@ -249,7 +247,7 @@ class DataViewModel : ObservableObject {
     
     func getExpenseByID(expenseID: NSManagedObjectID) throws -> ExpenseViewModel {
         guard let expense = manager.getExpenseById(id: expenseID) else {
-            throw VehicleError.VehicleNotFount // DA FIXARE
+            throw VehicleError.VehicleNotFound // DA FIXARE
         }
         
         let expenseVM = ExpenseViewModel(expense: expense)
@@ -260,7 +258,7 @@ class DataViewModel : ObservableObject {
         let newExpense = Expense(context: manager.context)
         newExpense.vehicle = getVehicle(vehicleID: currentVehicle.first!.vehicleID)
         newExpense.note = expense.note
-        newExpense.price = expense.price ?? 0.0
+        newExpense.price = expense.price
         newExpense.odometer = expense.odometer ?? 0
         newExpense.category = expense.category ?? 0
         newExpense.date = expense.date
@@ -293,15 +291,18 @@ class DataViewModel : ObservableObject {
         request.sortDescriptors = [sort]
         request.predicate = filter
         
-        do {
-            expense =  try manager.context.fetch(request)
-            DispatchQueue.main.async{
-                storage(expense.map(ExpenseViewModel.init))
+        
+        
+            do {
+                expense =  try manager.context.fetch(request)
+                DispatchQueue.main.async{
+                    storage(expense.map(ExpenseViewModel.init))
+                }
+                
+            }catch let error {
+                print("🚓 Error fetching vehicles: \(error.localizedDescription)")
             }
-            
-        }catch let error {
-            print("🚓 Error fetching vehicles: \(error.localizedDescription)")
-        }
+        
     }
     
     func saveExpense() {
@@ -405,7 +406,7 @@ struct ExpenseState: Hashable {
     var date: Date?
     var note: String = ""
     var odometer: Int32?
-    var price: Float?
+    var price: Float = 0.0
     var expenseID: NSManagedObjectID?
     
 }

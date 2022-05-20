@@ -10,7 +10,9 @@ import CoreData
 //
 struct ContentView: View {
     
-    @ObservedObject var vehicleVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
+    @StateObject var utilityVM = UtilityViewModel()
+    
     @State var vehicleS : VehicleState = VehicleState()
     @State var expense : ExpenseState = ExpenseState()
     
@@ -21,9 +23,9 @@ struct ContentView: View {
     
     func deleteVehicle(at indexSet: IndexSet){
         indexSet.forEach{ index in
-            let vehicle = vehicleVM.vehicleList[index]
-            vehicleVM.vehicleList.remove(at: index)
-            vehicleVM.deleteVehicleCoreData(vehicle: vehicle)
+            let vehicle = dataVM.vehicleList[index]
+            dataVM.vehicleList.remove(at: index)
+            dataVM.deleteVehicleCoreData(vehicle: vehicle)
         }
     }
     
@@ -71,27 +73,30 @@ struct ContentView: View {
 
     // MARK: PROVA DI AGGIUNTA
     var body: some View {
-        
-        
-        
+      
         let filterCurrent = NSPredicate(format: "current = %@","1")
-        let filterCurrentExpense = NSPredicate(format: "vehicle = %@",vehicleVM.getVehicle(vehicleID: vehicleVM.currentVehicle.first!.vehicleID)!)
+        
+        let filterCurrentExpense = NSPredicate(format: "vehicle = %@",dataVM.getVehicle(vehicleID: dataVM.currentVehicle.first!.vehicleID)!)
         
         VStack{
             VStack{
+                Text(String(utilityVM.totalVehicleCost))
             TextField("Vehicle Name", text: $vehicleS.name)
                 .textFieldStyle(.roundedBorder)
                 .padding()
             TextField("Expenses Name", text: $expense.note)
                 .textFieldStyle(.roundedBorder)
                 .padding()
+                TextField("Expenses Cost", value: $expense.price, formatter: NumberFormatter() )
+                .textFieldStyle(.roundedBorder)
+                .padding()
             }
             Button("Add veicolo"){
-                vehicleVM.addVehicle(vehicle: vehicleS)
+                dataVM.addVehicle(vehicle: vehicleS)
                 print(vehicleS)
             }
             Button("Remove all vehicles"){
-                vehicleVM.removeAllVehicles()
+                dataVM.removeAllVehicles()
             }
 //            Button("Remove all expenses"){
 //                vehicleVM.removeAllExpenses()
@@ -117,7 +122,7 @@ struct ContentView: View {
             Button ("UPDATE V2") {
                 do{
                     if(vehicleS.vehicleID != nil){
-                    try vehicleVM.updateVehicle(vehicleS)
+                    try dataVM.updateVehicle(vehicleS)
                 }
                 else{
                     print("error")
@@ -139,17 +144,19 @@ struct ContentView: View {
 //                }
 //            }
             Button {
-                print(" expense list : \(vehicleVM.expenseList)")
+                print(" expense list : \(dataVM.expenseList)")
             } label: {
                 Text("print expense list")
             }
 
             
             Button("Get current vehicle"){
-                vehicleVM.getVehiclesCoreData(filter: filterCurrent, storage: { storage in
-                    vehicleVM.currentVehicle = storage
-                    
-                })
+               
+                    dataVM.getVehiclesCoreData(filter: filterCurrent, storage: { storage in
+                        dataVM.currentVehicle = storage
+                        
+                    })
+                
             }
             
 //            Menu{
@@ -174,8 +181,9 @@ struct ContentView: View {
 //            }
             
             Button {
-                vehicleVM.addExpense(expense: expense)
-                print("expense list \(vehicleVM.expenseList)")
+                dataVM.addExpense(expense: expense)
+                utilityVM.getTotalExpense(expenses: dataVM.expenseList)
+                print("expense list \(dataVM.expenseList)")
             } label: {
                 Text("Add Expenses")
             }
@@ -183,35 +191,39 @@ struct ContentView: View {
             
             VStack{
             List(){
-                ForEach(vehicleVM.vehicleList,id:\.vehicleID){ vehicle in
+               
+                ForEach(dataVM.vehicleList,id:\.vehicleID){ vehicle in
                     VStack{
                     Text("Vehicle name: \(vehicle.name)")                   }
                 } .onDelete(perform: deleteVehicle)
                 }
+            
         
         
-        
-            ForEach(vehicleVM.expenseList, id: \.self) { expense in
+            if !dataVM.currentVehicle.isEmpty {
+            ForEach(dataVM.expenseList, id: \.self) { expense in
                
                   Text("Expense: \(expense.note)")
 //                Text("ciao")
                 
-                    }.onDelete(perform: vehicleVM.removeExpense(indexSet:))
-        
-               
+                    }.onDelete(perform: dataVM.removeExpense(indexSet:))
+            }
        
                     
             List {
-                    ForEach(vehicleVM.currentVehicle,id:\.vehicleID){ current in
+                    ForEach(dataVM.currentVehicle,id:\.vehicleID){ current in
                         Text(current.name)
                     }
             }
             
         }
         .task{
-            vehicleVM.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
-                vehicleVM.expenseList = storage
-            })
+            if !dataVM.currentVehicle.isEmpty {
+                dataVM.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
+                    dataVM.expenseList = storage
+                })
+                print("se current vehicle non è vuoto")
+            }
         }
         
         //Floating button

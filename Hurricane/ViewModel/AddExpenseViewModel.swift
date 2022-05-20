@@ -33,6 +33,8 @@ class AddExpenseViewModel : ObservableObject {
     @Published var priceTab : String = ""
     @Published var odometerTab : String = ""  /// Var to store the odometer value in odometer tab
     @Published var reminderTab : String = "" /// Var to store the reminder title in reminder tab
+    
+
    
     
     func resetTabFields(tab : String){

@@ -11,7 +11,7 @@ struct VehicleView: View {
     
     //Onboarding vars
 //    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
-    @State var shouldShowOnboarding : Bool = true //FOR TESTING
+//    @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
     @ObservedObject var dataVM : DataViewModel
     
@@ -22,8 +22,13 @@ struct VehicleView: View {
         GeometryReader{ proxy in
             let topEdge = proxy.safeAreaInsets.top
             
-            HomeStyleView(dataVM: dataVM, topEdge: topEdge)
-                .ignoresSafeArea(.all,edges: .top)
+//            if dataVM.currentVehicle.first != nil {
+                HomeStyleView(dataVM: dataVM, topEdge: topEdge)
+                    .ignoresSafeArea(.all,edges: .top)
+//            } else {
+//                //Placeholder in case no vehicle is set as current
+//                EmptyView()
+//            }
             
         }
         .overlay(
@@ -42,9 +47,9 @@ struct VehicleView: View {
         .sheet(isPresented: $showAddReport) {
                    AddReportView()
                }
-        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
-            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
-        })
+//        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
+//            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
+//        })
 
     }
 }
