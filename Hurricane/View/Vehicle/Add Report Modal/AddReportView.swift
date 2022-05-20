@@ -75,8 +75,8 @@ struct AddReportView: View {
                     .accentColor(Palette.greyHard),
                 trailing:
                     Button(action: {
-                        vehicleVM.addExpense(expense: expense)
-//                        self.presentationMode.wrappedValue.dismiss()
+//                        vehicleVM.addExpense(expense: expense)
+                        self.presentationMode.wrappedValue.dismiss()
 //                        for vehicle in vehicleVM.vehicles {
 //                            vehicleVM.currVehicle = vehicle
 //                            print(vehicleVM.currVehicle)

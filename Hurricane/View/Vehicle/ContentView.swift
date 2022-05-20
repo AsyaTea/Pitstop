@@ -47,7 +47,7 @@ struct ContentView: View {
                 .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
             HStack{
                 if isTapped {
-                    Text(fuelVM.currentFuelType)
+                    Text(fuelVM.currentFuelType.label)
                         .font(Typography.TextM)
                     Spacer()
                 } else {
@@ -92,6 +92,7 @@ struct ContentView: View {
                 .padding()
             }
             Button("Add veicolo"){
+                vehicleS.fuelTypeOne = fuelVM.selectedFuel
                 dataVM.addVehicle(vehicle: vehicleS)
                 print(vehicleS)
             }
@@ -159,20 +160,21 @@ struct ContentView: View {
                 
             }
             
-//            Menu{
-//                Picker(selection: $fuelVM.selectedFuel, label:
-//                        EmptyView()){
-//                        ForEach(FuelType.allCases, id: \.self) { fuel in
+            //MARK: FUEL TYPE
+            Menu{
+                Picker(selection: $fuelVM.currentFuelType, label:
+                        EmptyView()){
+                        ForEach(FuelType.allCases, id: \.self) { fuel in
 //                            Text(fuelVM.getFuelType(fuel: fuel))
-//
-//                    }
-//
-//                }
-//            } label: {
-//               customLabel
-//            }.onTapGesture {
-//                isTapped = true
-//            }
+                            Text(fuel.label)
+                    }
+
+                }
+            } label: {
+               customLabel
+            }.onTapGesture {
+                isTapped = true
+            }
 
 //            Button {
 //                print(fuelVM.selectedFuel)
@@ -194,7 +196,9 @@ struct ContentView: View {
                
                 ForEach(dataVM.vehicleList,id:\.vehicleID){ vehicle in
                     VStack{
-                    Text("Vehicle name: \(vehicle.name)")                   }
+                    Text("Vehicle name: \(vehicle.name)")
+                        Text("Fuel Type : \(vehicle.fuelTypeOne.label)")
+                    }
                 } .onDelete(perform: deleteVehicle)
                 }
             

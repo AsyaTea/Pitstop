@@ -333,11 +333,12 @@ struct VehicleViewModel : Hashable {
     //        return vehicle.date
     //    }
     
-    var fuelTypeOne: Int32 {
-        return vehicle.fuelTypeOne
+    var fuelTypeOne: FuelType {
+        get {return FuelType.init(rawValue: Int(vehicle.fuelTypeOne)) ?? .gasoline}
+        set {vehicle.fuelTypeOne = Int16(newValue.rawValue)}
     }
     
-    var fuelTypeTwo: Int32 {
+    var fuelTypeTwo: Int16 {
         return vehicle.fuelTypeTwo
     }
     
@@ -372,8 +373,8 @@ struct VehicleState : Hashable {
     var current : NSNumber?
     var brand : String = ""
     var document : Data?
-    var fuelTypeOne: Int32 = 0
-    var fuelTypeTwo: Int32?
+    var fuelTypeOne: Int16 = 0
+    var fuelTypeTwo: Int16?
     var model : String = ""
     var name : String = ""
     var odometer : Float = 0.0
@@ -390,7 +391,7 @@ extension VehicleState {
         vehicleS.vehicleID = vm.vehicleID
         vehicleS.odometer = vm.odometer
         vehicleS.brand = vm.brand
-        vehicleS.fuelTypeOne = vm.fuelTypeOne
+        vehicleS.fuelTypeOne = Int16(vm.fuelTypeOne.rawValue)
         vehicleS.fuelTypeTwo = vm.fuelTypeTwo
         vehicleS.name = vm.name
         vehicleS.year = vm.year

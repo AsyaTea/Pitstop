@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FuelType: Int32, CaseIterable {
+enum FuelType: Int {
     case diesel = 0
     case gasoline = 1
     case propane = 2
@@ -15,32 +15,11 @@ enum FuelType: Int32, CaseIterable {
     case ethanol = 4
     case hydrogen = 5
     case electric = 6
-   
 }
 
-class FuelViewModel: ObservableObject {
-    
-    @Published var selectedFuel = FuelType.diesel
-    
-    var currentFuelType : String {
-        get {
-            return getFuelType(fuel: selectedFuel)
-        }
-    }
-    
-    init() {
-    }
-    
-//    func getFuelString(value: Int32) -> String {
-//        var string = "Default"
-//        if (value == 0 ) { string = "Diesel" }
-//        if (value == 0 ) { string = "Diesel"}
-//        return string
-//    }
-    
-    func getFuelType(fuel: FuelType) -> String {
-        
-        switch fuel {
+extension FuelType : CaseIterable{
+    var label : String {
+        switch self {
         case .diesel:
             return "Diesel"
         case .gasoline:
@@ -55,9 +34,49 @@ class FuelViewModel: ObservableObject {
             return "Hydrogen"
         case .electric:
             return "Electric"
-      
-        }
     }
+    }
+}
+
+
+
+
+class FuelViewModel: ObservableObject {
+    
+    @Published var selectedFuel : Int16 = 1
+    
+    var currentFuelType : FuelType {
+        get {return FuelType.init(rawValue: Int(selectedFuel)) ?? .gasoline}
+        set {selectedFuel = Int16(newValue.rawValue)}
+    }
+    
+
+    
+    init() {
+    }
+    
+    
+//    func getFuelType(fuel: FuelType) -> String {
+//
+//        switch fuel {
+//        case .diesel:
+//            return "Diesel"
+//        case .gasoline:
+//            return "Gasoline"
+//        case .propane:
+//            return "LPG (Propane)"
+//        case .methane:
+//            return "CNG (Methane)"
+//        case .ethanol:
+//            return "Ethanol"
+//        case .hydrogen:
+//            return "Hydrogen"
+//        case .electric:
+//            return "Electric"
+//        
+//
+//        }
+//    }
 }
 
 
