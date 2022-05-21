@@ -136,6 +136,7 @@ struct EditVehicleView : View {
     @State var vehicleS : VehicleState
     
     @State private var defaultFuelPicker = false
+    @State private var isTapped = false
     
     @StateObject var fuelVM = FuelViewModel()
     
@@ -202,12 +203,30 @@ struct EditVehicleView : View {
                         focusedField = nil
                     }
                 
-                Button("Default Fuel Type: \(vehicle.fuelTypeOne.label)"){
+                //MARK: DEFAULT FUEL TYPE
+                Button(action: {
                     defaultFuelPicker.toggle()
-                }
+                    isTapped.toggle()
+                }, label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 36)
+                            .stroke(isTapped ? Palette.black : Palette.greyInput,lineWidth: 1)
+                            .background(isTapped ? Palette.greyLight : Palette.greyBackground)
+                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
+                        HStack{
+                                Text(vehicle.fuelTypeOne.label)
+                                    .font(Typography.TextM)
+                                Spacer()
+                            }.padding(.leading,40)
+                        }
+                    .accentColor(Palette.black)
+
+                    })
                 .confirmationDialog("Select a fuel type", isPresented: $defaultFuelPicker, titleVisibility: .visible){
                     ForEach(FuelType.allCases, id: \.self) { fuel in
+                        
                         Button(fuel.label){
+                            isTapped = false
                             fuelVM.defaultFuelType = fuel
                             vehicle.fuelTypeOne = fuel //THIS IS NEEDED TO UPDATE THE LABEL IN THE VIEW
                             vehicleS.fuelTypeOne = fuelVM.defaultSelectedFuel //THIS PASS THE VALUE OF THE FUEL ON VEHICLE STATE
@@ -215,8 +234,9 @@ struct EditVehicleView : View {
                     }
                 }
                 
+                
                 //MARK: TO DO
-                Text("Default Fuel Type: \(vehicle.fuelTypeTwo.label)")
+                Text("Secondary Fuel Type: \(vehicle.fuelTypeTwo.label)")
                     
                     
                     Spacer()
