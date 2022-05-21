@@ -15,6 +15,7 @@ enum FuelType: Int {
     case ethanol = 4
     case hydrogen = 5
     case electric = 6
+    case none = 7
 }
 
 extension FuelType : CaseIterable{
@@ -34,49 +35,33 @@ extension FuelType : CaseIterable{
             return "Hydrogen"
         case .electric:
             return "Electric"
-    }
+        case .none:
+            return "None (?)"
+        }
     }
 }
 
 
-
-
 class FuelViewModel: ObservableObject {
     
-    @Published var selectedFuel : Int16 = 1
+    @Published var defaultSelectedFuel : Int16 = 1
+    @Published var secondarySelectedFuel : Int16 = 7
     
-    var currentFuelType : FuelType {
-        get {return FuelType.init(rawValue: Int(selectedFuel)) ?? .gasoline}
-        set {selectedFuel = Int16(newValue.rawValue)}
+    var defaultFuelType : FuelType {
+        get {return FuelType.init(rawValue: Int(defaultSelectedFuel)) ?? .gasoline}
+        set {defaultSelectedFuel = Int16(newValue.rawValue)}
     }
     
-
-    
-    init() {
+    var secondaryFuelType : FuelType {
+        get {return FuelType.init(rawValue: Int(secondarySelectedFuel)) ?? .none}
+        set {secondarySelectedFuel = Int16(newValue.rawValue)}
     }
     
+    func resetSelectedFuel() {
+        defaultSelectedFuel = 1
+        secondarySelectedFuel = 7
+    }
     
-//    func getFuelType(fuel: FuelType) -> String {
-//
-//        switch fuel {
-//        case .diesel:
-//            return "Diesel"
-//        case .gasoline:
-//            return "Gasoline"
-//        case .propane:
-//            return "LPG (Propane)"
-//        case .methane:
-//            return "CNG (Methane)"
-//        case .ethanol:
-//            return "Ethanol"
-//        case .hydrogen:
-//            return "Hydrogen"
-//        case .electric:
-//            return "Electric"
-//        
-//
-//        }
-//    }
 }
 
 

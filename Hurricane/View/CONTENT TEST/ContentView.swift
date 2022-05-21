@@ -47,7 +47,7 @@ struct ContentView: View {
                 .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
             HStack{
                 if isTapped {
-                    Text(fuelVM.currentFuelType.label)
+                    Text(fuelVM.defaultFuelType.label)
                         .font(Typography.TextM)
                     Spacer()
                 } else {
@@ -92,7 +92,7 @@ struct ContentView: View {
                 .padding()
             }
             Button("Add veicolo"){
-                vehicleS.fuelTypeOne = fuelVM.selectedFuel
+                vehicleS.fuelTypeOne = fuelVM.defaultSelectedFuel
                 dataVM.addVehicle(vehicle: vehicleS)
                 print(vehicleS)
             }
@@ -162,7 +162,7 @@ struct ContentView: View {
             
             //MARK: FUEL TYPE
             Menu{
-                Picker(selection: $fuelVM.currentFuelType, label:
+                Picker(selection: $fuelVM.defaultFuelType, label:
                         EmptyView()){
                         ForEach(FuelType.allCases, id: \.self) { fuel in
 //                            Text(fuelVM.getFuelType(fuel: fuel))
@@ -195,9 +195,10 @@ struct ContentView: View {
             List(){
                
                 ForEach(dataVM.vehicleList,id:\.vehicleID){ vehicle in
-                    VStack{
+                    VStack(alignment: .leading){
                     Text("Vehicle name: \(vehicle.name)")
                         Text("Fuel Type : \(vehicle.fuelTypeOne.label)")
+                        Text("Second fuel: \(vehicle.fuelTypeTwo.label)")
                     }
                 } .onDelete(perform: deleteVehicle)
                 }

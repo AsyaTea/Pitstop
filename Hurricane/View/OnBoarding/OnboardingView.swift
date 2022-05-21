@@ -9,48 +9,13 @@ import SwiftUI
 import UserNotifications
 
 
-//TESTING
-struct MainContent: View {
-
-//    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
-    @State var shouldShowOnboarding : Bool = false //FOR TESTING
-    @StateObject var onboardingVM = OnboardingViewModel()
-    @StateObject var dataVM = DataViewModel()
-    @StateObject var categoryVM = CategoryViewModel()
-  
-
-    var body: some View {
-        NavigationView{
-            VStack{
-            Button("remove all"){
-                dataVM.removeAllVehicles()
-            }
-                List(dataVM.vehicleList,id: \.vehicleID){ vehicle in
-                
-                    VStack{
-                        Text(vehicle.name )
-                        Text(vehicle.brand)
-                        Text(vehicle.model)
-                    }
-                }
-            }
-//            .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
-//                OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
-//            })
-
-        }
-//        .onAppear{
-//            dataVM.getVehicles()
-//        }
-    }
-}
-
 struct OnboardingView: View {
     
     @StateObject var onboardingVM : OnboardingViewModel
     var dataVM : DataViewModel
     @State private var destination : Pages = .page1
     @Binding var shouldShowOnboarding : Bool
+    @StateObject var fuelVM = FuelViewModel()
     
     
     var body: some View {
@@ -59,18 +24,19 @@ struct OnboardingView: View {
         case .page1:
             withAnimation(.easeOut){
                 Page1(onboardingVM: onboardingVM)
-            //                .transition(.move(edge: .leading))
-            //                .transition( AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                //                .transition(.move(edge: .leading))
+                //                .transition( AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
             }
         case .page2:
             withAnimation(.easeOut(duration: 0.2)){
-                Page2(onboardingVM: onboardingVM)
+                Page2(onboardingVM: onboardingVM, fuelVM: fuelVM)
             }
         case .page3:
-            Page3(dataVM:dataVM, onboardingVM: onboardingVM)
+            Page3(dataVM:dataVM, onboardingVM: onboardingVM,fuelVM: fuelVM)
         case .page4:
-            Page4(onboardingVM: onboardingVM)
-                .animation(.easeOut(duration: 0.2))
+            withAnimation(.easeInOut(duration: 0.2)){
+                Page4(onboardingVM: onboardingVM)
+            }
         case .page5:
             Page5(shouldShowOnboarding: $shouldShowOnboarding,onboardingVM: onboardingVM)
         }

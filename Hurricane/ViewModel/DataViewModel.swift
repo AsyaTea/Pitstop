@@ -139,7 +139,7 @@ class DataViewModel : ObservableObject {
         newVehicle.odometer = vehicle.odometer
         newVehicle.fuelTypeOne = vehicle.fuelTypeOne
         newVehicle.fuelTypeTwo = vehicle.fuelTypeTwo ?? 0
-
+        print("🚓🚓🚓 ",newVehicle)
         self.vehicleList.append(VehicleViewModel(vehicle: newVehicle)) //Add the new vehicle to the list 
         saveVehicle()
         
@@ -338,8 +338,9 @@ struct VehicleViewModel : Hashable {
         set {vehicle.fuelTypeOne = Int16(newValue.rawValue)}
     }
     
-    var fuelTypeTwo: Int16 {
-        return vehicle.fuelTypeTwo
+    var fuelTypeTwo: FuelType {
+        get {return FuelType.init(rawValue: Int(vehicle.fuelTypeTwo)) ?? .none}
+        set {vehicle.fuelTypeTwo = Int16(newValue.rawValue)}
     }
     
     var model : String{
@@ -392,7 +393,7 @@ extension VehicleState {
         vehicleS.odometer = vm.odometer
         vehicleS.brand = vm.brand
         vehicleS.fuelTypeOne = Int16(vm.fuelTypeOne.rawValue)
-        vehicleS.fuelTypeTwo = vm.fuelTypeTwo
+        vehicleS.fuelTypeTwo = Int16(vm.fuelTypeTwo.rawValue)
         vehicleS.name = vm.name
         vehicleS.year = vm.year
         vehicleS.model = vm.model

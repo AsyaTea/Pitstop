@@ -57,7 +57,7 @@ struct Page2 : View {
     
     @StateObject var onboardingVM : OnboardingViewModel
     
-    @StateObject var fuelVM = FuelViewModel()
+    @StateObject var fuelVM : FuelViewModel
     
     @FocusState var focusedField: FocusFieldBoarding?
     
@@ -73,7 +73,7 @@ struct Page2 : View {
                 .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
             HStack{
                 if isTapped {
-                    Text(onboardingVM.selectedFuel)
+                    Text(fuelVM.defaultFuelType.label)
                         .font(Typography.TextM)
                     Spacer()
                 } else {
@@ -167,17 +167,11 @@ struct Page2 : View {
                         focusedField = nil
                     }
                 
-                //MARK: NEED TO FIX MULTIPLE FUEL TYPES
+                //MARK: PRIMARY FUEL
                 Menu{
-                    //                    Picker(selection: $fuelVM.selectedFuel, label:
-                    //                            EmptyView()){
-                    //                            ForEach(FuelType.allCases, id: \.self) { fuel in
-                    //                                Text(fuelVM.getFuelType(fuel: fuel))
-                    //                        }
-                    //                    }
-                    Picker(selection: $onboardingVM.selectedFuel, label: EmptyView()) {
-                        ForEach(onboardingVM.fuelCategories, id: \.self) { name in
-                            Text(name)
+                    Picker(selection: $fuelVM.defaultFuelType, label: EmptyView()) {
+                        ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
+                            Text(fuel.label)
                         }
                     }
                 } label: {
@@ -217,8 +211,10 @@ struct Page2 : View {
 struct Page3 : View {
     
     @State private var isImport = false
+    @State private var showFuelRow = false
     var dataVM = DataViewModel()
     @StateObject var onboardingVM : OnboardingViewModel
+    @StateObject var fuelVM : FuelViewModel
     
     var body: some View {
         ZStack{
@@ -352,17 +348,45 @@ struct Page3 : View {
                         
                         //MARK: SECOND FUEL TYPE
                         Button(action: {
-                            
+                            onboardingVM.showAllFuels.toggle()
                         }, label: {
                             OnBoardingCard(text: "Second fuel type", bgColor: Palette.colorYellow, iconName:  "fuel")
                         })
-                        
+                        .confirmationDialog("Select a fuel type", isPresented: $onboardingVM.showAllFuels, titleVisibility: .visible){
+                            ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
+                                Button(fuel.label){
+                                    
+                                    fuelVM.secondaryFuelType = fuel
+                                    showFuelRow = true
+                                }
+                                
+                            }
+                        }
+                        if(showFuelRow){
+                            ZStack{
+                                Rectangle()
+                                    .foregroundColor(Palette.greyLight)
+                                    .cornerRadius(12)
+                                
+                                HStack{
+                                    Text(fuelVM.secondaryFuelType.label)
+                                        .font(Typography.ControlS)
+                                        .foregroundColor(Palette.black)
+                                    Spacer()
+                                }
+                                .padding()
+                            }
+                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
+                            
+                        }
                         
                     }.padding(.vertical,40)
                 }
                 Spacer()
                 Button(action: {
                     withAnimation(.easeInOut){
+                        onboardingVM.vehicle.fuelTypeOne = fuelVM.defaultSelectedFuel
+                        onboardingVM.vehicle.fuelTypeTwo = fuelVM.secondarySelectedFuel
                         dataVM.addVehicle(vehicle: onboardingVM.vehicle)
                         if(onboardingVM.skipNotification == true) {
                             onboardingVM.destination = .page5
@@ -370,6 +394,7 @@ struct Page3 : View {
                         else{
                             onboardingVM.destination = .page4
                         }
+                        fuelVM.resetSelectedFuel()
                     }
                 }, label: {
                     OnBoardingButton(text: "Next", textColor: Palette.white, color: Palette.black)
@@ -385,6 +410,7 @@ struct Page3 : View {
                 }.ignoresSafeArea()
             )
             .ignoresSafeArea(.keyboard)
+            
             //MARK: ALL ALERTS
             if(onboardingVM.showAlertPlate == true){
                 AlertPlateOB(onboardingVM: onboardingVM)

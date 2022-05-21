@@ -23,7 +23,7 @@ struct SettingsView: View {
                 List{
                     Section{
                         ForEach(dataVM.vehicleList,id:\.self){ vehicle in
-                            NavigationLink(destination: EditVehicleView(dataVM: dataVM, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))){
+                            NavigationLink(destination: EditVehicleView(dataVM: dataVM, vehicle: vehicle, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))){
                                 Text(vehicle.name)
                                     .font(Typography.headerM)
                                     .foregroundColor(Palette.black)
@@ -40,7 +40,7 @@ struct SettingsView: View {
                                         .resizable()
                                         .frame(width: 16, height: 16)
                                         .foregroundColor(Palette.black)
-                                        
+                                    
                                 }
                                 Text("Add car")
                                     .font(Typography.headerM)
@@ -132,10 +132,15 @@ struct EditVehicleView : View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var dataVM : DataViewModel
     
+    @State var vehicle : VehicleViewModel
     @State var vehicleS : VehicleState
     
+    @State private var defaultFuelPicker = false
+    
+    @StateObject var fuelVM = FuelViewModel()
+    
     var isDisabled : Bool {
-        return vehicleS.name.isEmpty || vehicleS.brand.isEmpty || vehicleS.model.isEmpty
+        return vehicleS.name.isEmpty || vehicleS.brand.isEmpty || vehicleS.model.isEmpty || vehicleS.fuelTypeOne == 7
     }
     
     var body: some View {
@@ -197,44 +202,62 @@ struct EditVehicleView : View {
                         focusedField = nil
                     }
                 
-                Spacer()
-            }
-            .padding(.vertical,30)
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading:
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Image("arrowLeft")
-                    })
-                    .accentColor(Palette.greyHard),
-                trailing:
-                    Button(action: {
-                        do {
-                            try dataVM.updateVehicle(vehicleS)
-                        }
-                        catch{
-                            print(error)
-                        }
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Save")
-                            .font(Typography.headerM)
-                    }
-                          )
-                    .disabled(isDisabled)
-                    .opacity(isDisabled ? 0.6 : 1)
-            )
-            .toolbar{
-                ToolbarItem(placement: .principal) {
-                    Text(vehicleS.name)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.black)
+                Button("Default Fuel Type: \(vehicle.fuelTypeOne.label)"){
+                    defaultFuelPicker.toggle()
                 }
+                .confirmationDialog("Select a fuel type", isPresented: $defaultFuelPicker, titleVisibility: .visible){
+                    ForEach(FuelType.allCases, id: \.self) { fuel in
+                        Button(fuel.label){
+                            fuelVM.defaultFuelType = fuel
+                            vehicle.fuelTypeOne = fuel //THIS IS NEEDED TO UPDATE THE LABEL IN THE VIEW
+                            vehicleS.fuelTypeOne = fuelVM.defaultSelectedFuel //THIS PASS THE VALUE OF THE FUEL ON VEHICLE STATE
+                        }
+                    }
+                }
+                
+                //MARK: TO DO
+                Text("Default Fuel Type: \(vehicle.fuelTypeTwo.label)")
+                    
+                    
+                    Spacer()
+                }
+                .padding(.vertical,30)
+                .navigationBarBackButtonHidden(true)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarItems(
+                    leading:
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }, label: {
+                            Image("arrowLeft")
+                        })
+                        .accentColor(Palette.greyHard),
+                    trailing:
+                        Button(action: {
+                            do {
+                                try dataVM.updateVehicle(vehicleS)
+                            }
+                            catch{
+                                print(error)
+                            }
+                            presentationMode.wrappedValue.dismiss()
+                            fuelVM.resetSelectedFuel()
+                        }, label: {
+                            Text("Save")
+                                .font(Typography.headerM)
+                        }
+                              )
+                        .disabled(isDisabled)
+                        .opacity(isDisabled ? 0.6 : 1)
+                )
+                .toolbar{
+                    ToolbarItem(placement: .principal) {
+                        Text(vehicle.name)
+                            .font(Typography.headerM)
+                            .foregroundColor(Palette.black)
+                    }
+                }
+                
             }
-            
         }
     }
-}

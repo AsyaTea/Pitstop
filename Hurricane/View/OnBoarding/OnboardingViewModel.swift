@@ -12,8 +12,8 @@ class OnboardingViewModel : ObservableObject {
     
     @Published var vehicle : VehicleState = VehicleState()
     
-    let fuelCategories = ["Gasoline","Diesel", "Electric","LPG (Propane)","CNG (Methane)","Ethanol","Hydrogen"]
-    @Published var selectedFuel = "Fuel Type"
+//    let fuelCategories = ["Gasoline","Diesel", "Electric","LPG (Propane)","CNG (Methane)","Ethanol","Hydrogen"]
+//    @Published var selectedFuel = "Fuel Type"
     
     @Published var destination : Pages = .page1
     
@@ -25,6 +25,8 @@ class OnboardingViewModel : ObservableObject {
     @Published var skipNotification = false /// Skip notiification page when adding another car
     @Published var removeBack = false /// Remove back button when adding another car
     
+    @Published var showAllFuels = false
+    
     @Published var showAlertOdometer = false
     @Published var showAlertPlate = false
     @Published var showOverlay = false
@@ -33,7 +35,9 @@ class OnboardingViewModel : ObservableObject {
         vehicle.name = ""
         vehicle.brand = ""
         vehicle.model = ""
-        selectedFuel = "Fuel Type"
+        vehicle.odometer = 0
+        vehicle.fuelTypeOne = 0
+        vehicle.fuelTypeTwo = nil
     }
     
     func requestAuthNotifications() {

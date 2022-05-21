@@ -165,8 +165,6 @@
 				FFC52899282FB4430013D8B6 /* AlertAddNumbers.swift */,
 				FF14DC3128302CC300CA248B /* ImportantNumbersView.swift */,
 				FF3616D2282926D6002ADA33 /* Add Report Modal */,
-				415D203028214180004AF201 /* ContentView.swift */,
-				41C6E1F52823E4C800F756B5 /* ContentView2.swift */,
 			);
 			path = Vehicle;
 			sourceTree = "<group>";
@@ -217,6 +215,7 @@
 		FF249C442821517C0062613A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FFC67B432838DC320078B283 /* CONTENT TEST */,
 				FFDF855D282512CE00E0F9BF /* CustomTabBar */,
 				FF5D5A2328299757006D5ABF /* OnBoarding */,
 				FF1AA19E2823D44900AB61A2 /* Vehicle */,
@@ -259,6 +258,15 @@
 				FF10676B282C03300077CCF7 /* OnboardingViewModel.swift */,
 			);
 			path = OnBoarding;
+			sourceTree = "<group>";
+		};
+		FFC67B432838DC320078B283 /* CONTENT TEST */ = {
+			isa = PBXGroup;
+			children = (
+				415D203028214180004AF201 /* ContentView.swift */,
+				41C6E1F52823E4C800F756B5 /* ContentView2.swift */,
+			);
+			path = "CONTENT TEST";
 			sourceTree = "<group>";
 		};
 		FFDF855D282512CE00E0F9BF /* CustomTabBar */ = {
