@@ -12,12 +12,19 @@ class UtilityViewModel : ObservableObject {
     @Published var unit = "km"
     
     @Published var totalVehicleCost : Float = 0.0
-    
-    func getTotalExpense(expenses: [ExpenseViewModel]) {
-        for expense in expenses {
-            totalVehicleCost += expense.price
-        }
-        print("sum cost : \(totalVehicleCost)")
+  
+    init() {
+        
     }
     
+//    func getTotalExpense(expenses: [ExpenseViewModel]) -> Float {
+//        for expense in expenses {
+//            totalVehicleCost += expense.price
+//        }
+//        totalExpense = totalVehicleCost
+//        print("sum cost : \(totalVehicleCost)")
+//        return totalVehicleCost
+//    }
+    
+
 }
