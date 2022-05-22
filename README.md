@@ -23,6 +23,8 @@ We used **SwiftUI** to create the user interface, **Swift** as main programming 
 The design pattern we adopted is **MVVM** with different view models for handling CoreData access, the statistics, categories and fuel type...
 
 ## Screenshots
-![image](https://user-images.githubusercontent.com/92304740/169691236-491c09ea-27a9-4404-bf08-11ba5bd26d7f.png)
+
+
+
 
 ## Testflight or Appstore
