@@ -196,6 +196,9 @@ class DataViewModel : ObservableObject {
         vehicle.brand = vs.brand
         vehicle.model = vs.model
         vehicle.current = vs.current
+        vehicle.plate = vs.plate
+        vehicle.fuelTypeOne = vs.fuelTypeOne
+        vehicle.fuelTypeTwo = vs.fuelTypeTwo ?? 7
        //etc etc
         
         //PUBLISHED LIST UPDATE
@@ -356,7 +359,7 @@ struct VehicleViewModel : Hashable {
     }
     
     var plate : String {
-        return vehicle.plate ?? "Not specified"
+        return vehicle.plate ?? ""
     }
     
     var vehicleID: NSManagedObjectID {
