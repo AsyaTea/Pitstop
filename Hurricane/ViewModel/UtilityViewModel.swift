@@ -13,6 +13,7 @@ class UtilityViewModel : ObservableObject {
     
     @Published var totalVehicleCost : Float = 0.0
   
+    
     init() {
         
     }

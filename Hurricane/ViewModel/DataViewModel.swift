@@ -30,15 +30,10 @@ class DataViewModel : ObservableObject {
         getVehiclesCoreData(filter:nil, storage: {storage in
             self.vehicleList = storage
         })
-
-        //        getExpensesCoreData(filter: nil, storage:  { storage in
-        //            self.expenseList = storage
-        //        })
         getExpensesCoreData(filter: nil, storage:  { storage in
             self.expenseList = storage
             self.getTotalExpense(expenses: storage)
         })
-
         getCurrentVehicle()
         
     }
@@ -318,7 +313,7 @@ class DataViewModel : ObservableObject {
     
     func saveExpense() {
         manager.save()
-        //        getExpenses(filter: filter)
+//        getExpenses(filter: filter)
     }
     
     //Total Cost functions
