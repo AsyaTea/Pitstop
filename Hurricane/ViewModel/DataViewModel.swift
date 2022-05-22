@@ -23,14 +23,24 @@ class DataViewModel : ObservableObject {
     //Filter
     @Published var filter : NSPredicate?
     
+    @Published var totalVehicleCost : Float = 0.0
+    @Published var totalExpense : Float = 0.0
+    
     init() {
         getVehiclesCoreData(filter:nil, storage: {storage in
             self.vehicleList = storage
         })
+
         //        getExpensesCoreData(filter: nil, storage:  { storage in
         //            self.expenseList = storage
         //        })
+        getExpensesCoreData(filter: nil, storage:  { storage in
+            self.expenseList = storage
+            self.getTotalExpense(expenses: storage)
+        })
+
         getCurrentVehicle()
+        
     }
     
     //    func getVehicleID(id : UUID){
@@ -309,6 +319,22 @@ class DataViewModel : ObservableObject {
     func saveExpense() {
         manager.save()
         //        getExpenses(filter: filter)
+    }
+    
+    //Total Cost functions
+    
+    func getTotalExpense(expenses: [ExpenseViewModel]) {
+        print("expense list: \(expenses)")
+        for expense in expenses {
+            totalVehicleCost += expense.price
+        }
+        print("sum cost : \(totalVehicleCost)")
+        self.totalExpense = totalVehicleCost
+
+    }
+    func addNewExpensePriceToTotal(expense: ExpenseState) {
+        self.totalExpense = totalVehicleCost + expense.price
+        print("Add new expense")
     }
     
 }
