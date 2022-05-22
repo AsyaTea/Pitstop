@@ -9,7 +9,7 @@ Everytime you make an expense related to your car you can report it by inserting
 Do you find annoying have to remember when you need to overhaul the car? Or change the tires? I believe yes, for most of us, that's why we implemented a notification feature...
 
 ## Features
-- Add your car
+- Add your car details
 - Add an expense, odometer count, notification reminder
 - Add document 
 - Add numbers
