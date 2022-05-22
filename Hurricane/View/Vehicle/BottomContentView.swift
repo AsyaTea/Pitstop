@@ -14,6 +14,8 @@ struct BottomContentView: View {
     @State private var viewAllDocuments = false
     @State private var showingOptions = false
     
+    @StateObject var dataVM : DataViewModel
+    
     var body: some View {
         VStack(spacing: 0){
             
@@ -21,9 +23,10 @@ struct BottomContentView: View {
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
-            categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
-            categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
-            categoryComponent(categoryName: "Fuel", date: Date.now, cost: "2302")
+            ForEach(dataVM.expenseList,id:\.self) { expense in
+                categoryComponent(categoryName: "Parking", date: expense.date, cost: String(expense.price))
+            }
+           
             
             TitleSectionComponent(sectionTitle: "Documents", binding: $viewAllDocuments)
                 .padding()

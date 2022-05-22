@@ -16,8 +16,6 @@ class AddExpenseViewModel : ObservableObject {
     let categoryReminder = ["Maintenance", "Insurance","Road tax","Tolls","Parking","Other"]
     @Published var selectedRepeat = "Never"
     let repeatTypes = ["Never", "Daily", "Weekdays","Weekends", "Weekly","Monthly","Every 3 Months","Every 6 Months","Yearly"]
-    @Published var selectedFuelType = "Default"
-    let fuelTypes = ["Default", "Secondary"]
     @Published var selectedBased = "Date"
     let basedTypes = ["Date","Distance"]
     
@@ -35,14 +33,11 @@ class AddExpenseViewModel : ObservableObject {
     @Published var reminderTab : String = "" /// Var to store the reminder title in reminder tab
     
 
-   
-    
     func resetTabFields(tab : String){
         if(tab == "Expense"){
             priceTab = ""
             selectedCategory = "Fuel"
             odometer = ""
-            selectedFuelType = "Default"
             selectedRepeat = "Never"
             date = Date.now
             note = ""

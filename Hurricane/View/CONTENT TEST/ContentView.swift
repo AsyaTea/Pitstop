@@ -7,7 +7,7 @@
 
 import SwiftUI
 import CoreData
-//
+
 struct ContentView: View {
     
     @ObservedObject var dataVM : DataViewModel
