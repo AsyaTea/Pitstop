@@ -12,6 +12,7 @@ enum FocusFieldBoarding: Hashable {
     case brand
     case model
     case fuelType
+    case plate
     
 }
 
