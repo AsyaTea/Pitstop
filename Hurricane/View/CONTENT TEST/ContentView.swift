@@ -80,7 +80,9 @@ struct ContentView: View {
         
         VStack{
             VStack{
-                Text(String(utilityVM.totalVehicleCost))
+//            Text(String(utilityVM.getTotalExpense(expenses: dataVM.expenseList)))
+            Text(String(dataVM.totalExpense))
+               
             TextField("Vehicle Name", text: $vehicleS.name)
                 .textFieldStyle(.roundedBorder)
                 .padding()
@@ -99,9 +101,9 @@ struct ContentView: View {
             Button("Remove all vehicles"){
                 dataVM.removeAllVehicles()
             }
-//            Button("Remove all expenses"){
-//                vehicleVM.removeAllExpenses()
-//            }
+            Button("Remove all expenses"){
+                dataVM.removeAllExpenses()
+            }
 //            Button ("Filter x Expenses"){
 //                filter = NSPredicate(format: "vehicle ==  %@", vehicleVM.currVehicle)
 //                vehicleVM.getExpenses(filter: filter)
@@ -161,20 +163,20 @@ struct ContentView: View {
             }
             
             //MARK: FUEL TYPE
-            Menu{
-                Picker(selection: $fuelVM.defaultFuelType, label:
-                        EmptyView()){
-                        ForEach(FuelType.allCases, id: \.self) { fuel in
-//                            Text(fuelVM.getFuelType(fuel: fuel))
-                            Text(fuel.label)
-                    }
-
-                }
-            } label: {
-               customLabel
-            }.onTapGesture {
-                isTapped = true
-            }
+//            Menu{
+//                Picker(selection: $fuelVM.defaultFuelType, label:
+//                        EmptyView()){
+//                        ForEach(FuelType.allCases, id: \.self) { fuel in
+////                            Text(fuelVM.getFuelType(fuel: fuel))
+//                            Text(fuel.label)
+//                    }
+//
+//                }
+//            } label: {
+//               customLabel
+//            }.onTapGesture {
+//                isTapped = true
+//            }
 
 //            Button {
 //                print(fuelVM.selectedFuel)
@@ -184,7 +186,7 @@ struct ContentView: View {
             
             Button {
                 dataVM.addExpense(expense: expense)
-                utilityVM.getTotalExpense(expenses: dataVM.expenseList)
+                dataVM.addNewExpensePriceToTotal(expense: expense)
                 print("expense list \(dataVM.expenseList)")
             } label: {
                 Text("Add Expenses")
@@ -193,7 +195,7 @@ struct ContentView: View {
             
             VStack{
             List(){
-               
+
                 ForEach(dataVM.vehicleList,id:\.vehicleID){ vehicle in
                     VStack(alignment: .leading){
                     Text("Vehicle name: \(vehicle.name)")
