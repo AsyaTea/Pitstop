@@ -34,8 +34,8 @@ struct CustomTabBarView: View {
         case .home:
             VehicleView(dataVM: dataVM)
         case .stats:
-            ContentView(dataVM: dataVM)
-//            AnalyticsOverviewView()
+//            ContentView(dataVM: dataVM)
+            AnalyticsOverviewView()
         case .settings:
             SettingsView(dataVM: dataVM)
         }

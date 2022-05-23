@@ -11,6 +11,7 @@ import SwiftUI
 struct AnalyticsOverviewView: View {
    
     @ObservedObject var categoryVM = CategoryViewModel()
+    @StateObject var statisticsVM = StatisticsViewModel()
 
     @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
     @State var pickedTab = ""
@@ -26,7 +27,7 @@ struct AnalyticsOverviewView: View {
     
     var body: some View {
         VStack{
-            AnalyticsHeaderView()
+            AnalyticsHeaderView(statisticsVM: statisticsVM)
             .frame(height: 30)
             
             if(categoryVM.currentPickerTab == "Overview") {
@@ -237,7 +238,7 @@ struct ListCostsAttributes: View {
 //MARK: Analytics Header 
 
 struct AnalyticsHeaderView : View {
-    
+    @ObservedObject var statisticsVM : StatisticsViewModel
     var body: some View {
         HStack{
             HStack {
@@ -260,10 +261,21 @@ struct AnalyticsHeaderView : View {
                             .frame(width: UIScreen.main.bounds.width * 0.25, height: UIScreen.main.bounds.height * 0.04)
                             .shadowGrey()
                         HStack{
-                            Text("Per month")
-                                .foregroundColor(Palette.black)
-                                .font(Typography.ControlS)
-                            Image("arrowDown")
+                            Menu {
+                                Picker(selection: $statisticsVM.selectedTimeFrame, label: EmptyView()) {
+                                    ForEach(statisticsVM.timeFrames, id: \.self) {
+                                        Text($0)
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    Text(statisticsVM.selectedTimeFrame)
+                                        .foregroundColor(Palette.black)
+                                        .font(Typography.ControlS)
+                                    Image("arrowDown")
+                                }
+                            }
+                            
                             
                         }
                     
