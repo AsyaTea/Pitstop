@@ -21,6 +21,9 @@ extension Expense {
     @NSManaged public var odometer: Float
     @NSManaged public var price: Float
     @NSManaged public var category: Int16
+    @NSManaged public var fuelType: Int16
+    @NSManaged public var liters: Float
+    @NSManaged public var priceLiter: Float
     @NSManaged public var vehicle: Vehicle?
 
 }

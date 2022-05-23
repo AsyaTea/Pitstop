@@ -50,7 +50,7 @@ struct ReminderListView: View {
                 HStack{
                     ListCategoryComponent(title: "Remind me in", iconName: "remindMe", color: Palette.colorGreen)
                     Spacer()
-                    TextField("1000",text: $addExpVM.odometer)
+                    TextField("1000",value: $addExpVM.odometer,formatter: NumberFormatter())
                         .font(Typography.headerM)
                         .foregroundColor(Palette.black)
                         .textFieldStyle(.plain)

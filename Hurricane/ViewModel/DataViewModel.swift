@@ -184,9 +184,7 @@ class DataViewModel : ObservableObject {
         }
     }
     
-    
-    //MARK: TODOOOOO
-    
+        
     func updateVehicle(_ vs : VehicleState) throws{
         
         guard let vehicleID = vs.vehicleID else {
@@ -270,6 +268,9 @@ class DataViewModel : ObservableObject {
         newExpense.odometer = expense.odometer
         newExpense.category = expense.category ?? 0
         newExpense.date = expense.date
+        newExpense.fuelType = expense.fuelType ?? 0
+        newExpense.liters = expense.liters ?? 0.0
+        newExpense.priceLiter = expense.priceLiter ?? 1.0
         print(" Expense : \(newExpense)")
         print(" Current Vehicle \(currentVehicle)")
         self.expenseList.append(ExpenseViewModel(expense: newExpense))
@@ -431,7 +432,10 @@ struct ExpenseState: Hashable {
     var note: String = ""
     var odometer: Float = 0.0
     var price: Float = 0.0
+    var liters : Float?
+    var priceLiter : Float?
     var expenseID: NSManagedObjectID?
+    var fuelType: Int16?
     
 }
 
@@ -445,6 +449,9 @@ extension ExpenseState {
         expenseS.odometer = vm.odometer
         expenseS.price = vm.price
         expenseS.expenseID = vm.expenseID
+        expenseS.fuelType = vm.fuelType
+        expenseS.liters = vm.liters
+        expenseS.priceLiter = vm.priceLiter
         return expenseS
         
     }
@@ -455,6 +462,10 @@ struct ExpenseViewModel: Hashable {
     
     var category: Int16 {
         return expense.category
+    }
+    
+    var fuelType: Int16 {
+        return expense.fuelType
     }
     
     var date: Date {
@@ -469,6 +480,14 @@ struct ExpenseViewModel: Hashable {
         return expense.odometer
     }
     
+    var liters: Float {
+        return expense.liters
+    }
+    
+    var priceLiter: Float {
+        return expense.priceLiter
+    }
+    
     var price: Float {
         return expense.price
     }
@@ -479,12 +498,3 @@ struct ExpenseViewModel: Hashable {
     
 }
 
-//struct ExpenseModel {
-//    var date : Date?
-//    var isRecursive : Bool?
-//    var note : String?
-//    var odometer : Int32?
-//    var price : Float?
-//    var type : Int16? // Enum
-//
-//}

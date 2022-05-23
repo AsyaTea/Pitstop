@@ -13,7 +13,6 @@ struct AddReportView: View {
     @StateObject var addExpVM : AddExpenseViewModel = .init()
     @StateObject var dataVM : DataViewModel
     
-    @State var expenseS : ExpenseState = ExpenseState()
     @State private var showDate = false
     
     //Custom picker tabs
@@ -34,11 +33,11 @@ struct AddReportView: View {
                 
                 //MARK: Custom TextField
                 if(addExpVM.currentPickerTab == "Expense"){
-                    NumericFieldComponent(submitField: $expenseS.price, placeholder: "42", attribute:utilityVM.currency, keyboardType: .decimalPad,focusedField: $focusedField, defaultFocus: .priceTab)
+                    NumericFieldComponent(submitField: $addExpVM.price, placeholder: "42", attribute:utilityVM.currency, keyboardType: .decimalPad,focusedField: $focusedField, defaultFocus: .priceTab)
                         .padding(.top,15)
                 }
                 else if (addExpVM.currentPickerTab == "Odometer"){
-                    NumericFieldComponent(submitField: $expenseS.odometer, placeholder: "100", attribute: utilityVM.unit, keyboardType: .numberPad,focusedField: $focusedField,defaultFocus: .odometerTab)
+                    NumericFieldComponent(submitField: $addExpVM.expenseS.odometer, placeholder: "100", attribute: utilityVM.unit, keyboardType: .numberPad,focusedField: $focusedField,defaultFocus: .odometerTab)
                         .padding(.top,15)
                 }
                 else{
@@ -54,7 +53,7 @@ struct AddReportView: View {
                 
                 //MARK: List
                 if(addExpVM.currentPickerTab == "Expense"){
-                    ExpenseListView(addExpVM: addExpVM,utilityVM: utilityVM, dataVM: dataVM, focusedField: $focusedField, expenseS: $expenseS)
+                    ExpenseListView(addExpVM: addExpVM,utilityVM: utilityVM, dataVM: dataVM, focusedField: $focusedField)
                 }
                 else if (addExpVM.currentPickerTab == "Odometer"){
                     OdometerListView(addExpVM: addExpVM,utilityVM: utilityVM, focusedField: $focusedField)
@@ -76,14 +75,15 @@ struct AddReportView: View {
                     .accentColor(Palette.greyHard),
                 trailing:
                     Button(action: {
-                        dataVM.addExpense(expense: expenseS)
+                        addExpVM.createExpense()
+                        dataVM.addExpense(expense: addExpVM.expenseS)
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Save")
                             .font(Typography.headerM)
                     })
-                    .disabled(expenseS.price == 0 && addExpVM.odometerTab.isEmpty && addExpVM.reminderTab.isEmpty)
-                    .opacity(expenseS.price == 0 && addExpVM.odometerTab.isEmpty && addExpVM.reminderTab.isEmpty ? 0.6 : 1)
+                    .disabled(addExpVM.price == 0 && addExpVM.odometerTab.isEmpty && addExpVM.reminderTab.isEmpty)
+                    .opacity(addExpVM.price == 0 && addExpVM.odometerTab.isEmpty && addExpVM.reminderTab.isEmpty ? 0.6 : 1)
             )
             .toolbar {
                 /// Keyboard focus
@@ -196,6 +196,12 @@ struct TextFieldComponent: View {
 
 struct NumericFieldComponent: View {
     
+    let formatter: NumberFormatter = {
+          let formatter = NumberFormatter()
+          formatter.numberStyle = .decimal
+          return formatter
+      }()
+    
     @Binding var submitField : Float
     var placeholder : String
     var attribute : String
@@ -207,7 +213,7 @@ struct NumericFieldComponent: View {
     var body: some View {
         HStack{
             Spacer()
-            TextField(placeholder,value: $submitField,formatter: NumberFormatter())
+            TextField(placeholder,value: $submitField,formatter: formatter)
                 .focused(focusedField, equals: defaultFocus)
                 .font(Typography.headerXXL)
                 .foregroundColor(Palette.black)

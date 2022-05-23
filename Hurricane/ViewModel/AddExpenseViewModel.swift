@@ -20,11 +20,12 @@ class AddExpenseViewModel : ObservableObject {
     let basedTypes = ["Date","Distance"]
     
     //Vars to store the input in fields
+    @Published var price : Float = 0.0
     @Published var date = Date()
-    @Published var liters : String = ""
-    @Published var pricePerLiter : String = ""
+    @Published var liters : Float = 0.0
+    @Published var pricePerLiter : Float = 0.0
     @Published var note : String = ""
-    @Published var odometer : String = "" ///Var  to store the odometer value in expense
+    @Published var odometer : Float = 0 ///Var  to store the odometer value in expense
     
     //Segmented picker tabs
     @Published var currentPickerTab : String = "Expense"
@@ -32,12 +33,23 @@ class AddExpenseViewModel : ObservableObject {
     @Published var odometerTab : String = ""  /// Var to store the odometer value in odometer tab
     @Published var reminderTab : String = "" /// Var to store the reminder title in reminder tab
     
+    @Published var expenseS = ExpenseState()
+    
+    
+    func createExpense() {
+        expenseS.price = price
+        expenseS.liters = liters
+        expenseS.priceLiter = pricePerLiter
+        expenseS.odometer = odometer
+        expenseS.note = note
+    }
 
     func resetTabFields(tab : String){
         if(tab == "Expense"){
+            price = 0
             priceTab = ""
             selectedCategory = "Fuel"
-            odometer = ""
+            odometer = 0
             selectedRepeat = "Never"
             date = Date.now
             note = ""
@@ -54,9 +66,13 @@ class AddExpenseViewModel : ObservableObject {
         }
     }
     
-//    func createExpense() -> ExpenseModel {
-//        let newExpense = ExpenseModel(date: self.date, isRecursive: false, name: "Expense 1", note: self.note, odometer: Int32(self.odometer), price: Float(self.priceTab), type: Int16(self.selectedCategory))
-//        return newExpense
-//        
+//
+//    func getLiters(cost: Float, priceLiter: Float){
+//        self.liters = cost/priceLiter
 //    }
+//
+//    func getPrice(cost: Float, liters: Float) {
+//        self.pricePerLiter = cost/liters
+//    }
+    
 }
