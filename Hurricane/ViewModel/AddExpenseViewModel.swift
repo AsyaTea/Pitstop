@@ -10,7 +10,11 @@ import Foundation
 class AddExpenseViewModel : ObservableObject {
     
     //List picker categories
-    @Published var selectedCategory = "Fuel"
+    @Published var category : Int16 = 0
+    @Published var fuel : Int16 = 0
+    @Published var selectedCategory : String = "Fuel"
+    @Published var selectedFuel : String = ""
+
     let categoryTypes = ["Fuel", "Maintenance", "Insurance","Road tax","Tolls","Fines","Parking","Other"]
     @Published var selectedCategoryReminder =  "Maintenance"
     let categoryReminder = ["Maintenance", "Insurance","Road tax","Tolls","Parking","Other"]
@@ -42,6 +46,8 @@ class AddExpenseViewModel : ObservableObject {
         expenseS.priceLiter = pricePerLiter
         expenseS.odometer = odometer
         expenseS.note = note
+        expenseS.category = category
+        expenseS.fuelType = fuel
     }
 
     func resetTabFields(tab : String){

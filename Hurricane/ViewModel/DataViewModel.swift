@@ -26,6 +26,7 @@ class DataViewModel : ObservableObject {
     @Published var totalVehicleCost : Float = 0.0
     @Published var totalExpense : Float = 0.0
     
+    
     init() {
         getVehiclesCoreData(filter:nil, storage: {storage in
             self.vehicleList = storage

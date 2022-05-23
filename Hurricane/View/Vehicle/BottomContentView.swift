@@ -10,6 +10,7 @@ import SwiftUI
 struct BottomContentView: View {
     
     @ObservedObject var homeVM : HomeViewModel
+    @StateObject var categoryVM = CategoryViewModel()
     @State private var viewAllNumbers = false
     @State private var viewAllDocuments = false
   
@@ -25,7 +26,12 @@ struct BottomContentView: View {
                 .padding(.top,10)
                 .padding(.bottom,-10)
             ForEach(dataVM.expenseList.reversed().prefix(3),id:\.self) { expense in
-                categoryComponent(categoryName: expense.note, date: expense.date, cost: String(expense.price))
+                categoryComponent(categoryName: categoryVM.defaultCategory.label, date: expense.date, cost: String(expense.price),color: categoryVM.defaultCategory.color, icon: categoryVM.defaultCategory.icon)
+                
+            }
+            //MARK: TO FIX
+            .onAppear{
+                categoryVM.selectedCategory = dataVM.expenseList.last?.category ?? 0
             }
             
             TitleSectionComponent(sectionTitle: "Documents", binding: $viewAllDocuments)
@@ -108,13 +114,14 @@ struct BottomContentView: View {
             Spacer()
             
         }
+     
         .fullScreenCover(isPresented: $viewAllNumbers){ImportantNumbersView(homeVM: homeVM)}
         .fullScreenCover(isPresented: $viewAllDocuments){Text("DocumentsView")}
         
     }
     
     @ViewBuilder
-    func categoryComponent(categoryName : String, date: Date, cost : String) -> some View {
+    func categoryComponent(categoryName : String, date: Date, cost : String, color: Color, icon : String) -> some View {
         
         let formatted = date.formatDate()
         
@@ -122,8 +129,8 @@ struct BottomContentView: View {
             ZStack{
                 Circle()
                     .frame(width: 32, height: 32)
-                    .foregroundColor(Palette.colorViolet)
-                Image("Parking")
+                    .foregroundColor(color)
+                Image(icon)
                     .resizable()
                     .frame(width: 16, height: 16)
             }

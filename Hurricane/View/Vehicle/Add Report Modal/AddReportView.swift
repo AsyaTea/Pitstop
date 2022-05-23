@@ -11,6 +11,7 @@ struct AddReportView: View {
         
     @StateObject var utilityVM : UtilityViewModel = .init()
     @StateObject var addExpVM : AddExpenseViewModel = .init()
+    @StateObject var categoryVM = CategoryViewModel()
     @StateObject var dataVM : DataViewModel
     
     @State private var showDate = false
@@ -53,7 +54,7 @@ struct AddReportView: View {
                 
                 //MARK: List
                 if(addExpVM.currentPickerTab == "Expense"){
-                    ExpenseListView(addExpVM: addExpVM,utilityVM: utilityVM, dataVM: dataVM, focusedField: $focusedField)
+                    ExpenseListView(addExpVM: addExpVM,utilityVM: utilityVM, dataVM: dataVM, categoryVM: categoryVM, focusedField: $focusedField)
                 }
                 else if (addExpVM.currentPickerTab == "Odometer"){
                     OdometerListView(addExpVM: addExpVM,utilityVM: utilityVM, focusedField: $focusedField)

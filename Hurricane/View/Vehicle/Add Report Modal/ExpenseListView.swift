@@ -12,11 +12,14 @@ struct ExpenseListView: View {
     @StateObject var addExpVM : AddExpenseViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     @StateObject var dataVM : DataViewModel
+    @StateObject var categoryVM : CategoryViewModel
+    @StateObject var fuelVM = FuelViewModel()
     
     var focusedField : FocusState<FocusField?>.Binding
     
-    @StateObject var fuelVM = FuelViewModel()
-    @State private var selectedItem : String = ""
+//    @State private var selectedFuel : String = ""
+
+
     @State private var checkmark1 = true
     @State private var checkmark2 = false
     
@@ -31,17 +34,18 @@ struct ExpenseListView: View {
     var body: some View {
         
         List{
-            //MARK: CATEGORY PICKER
-            Picker(selection: $addExpVM.selectedCategory, content: {
-                ForEach(addExpVM.categoryTypes, id: \.self) {
-                    Text($0)
-                        .font(Typography.headerM)
-                }
-                
-            },label:{
+     
+            //MARK: CUSTOM CATEGORY PICKER
+            HStack{
                 ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
-            })
-            
+                Spacer()
+            NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, categoryVM: categoryVM, checkmark: $checkmark1)){
+                Spacer()
+                Text(addExpVM.selectedCategory)
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.greyMiddle)
+            }
+            }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             //MARK: ODOMETER
@@ -66,9 +70,9 @@ struct ExpenseListView: View {
                 HStack{
                     ListCategoryComponent(title: "Fuel type", iconName: "fuelType", color: Palette.colorOrange)
                     Spacer()
-                    NavigationLink(destination: CustomFuelPicker(selectedItem: $selectedItem, dataVM: dataVM,addExpVM: addExpVM, fuelVM: fuelVM, checkmark1: $checkmark1,checkmark2: $checkmark2)){
+                    NavigationLink(destination: CustomFuelPicker(dataVM: dataVM,addExpVM: addExpVM, fuelVM: fuelVM, checkmark1: $checkmark1,checkmark2: $checkmark2)){
                         Spacer()
-                        Text(selectedItem)
+                        Text(addExpVM.selectedFuel)
                             .font(Typography.headerM)
                             .foregroundColor(Palette.greyMiddle)
                     }
@@ -162,12 +166,11 @@ struct ExpenseListView: View {
                     focusedField.wrappedValue = .priceTab
                 }
             }
-            fuelVM.defaultFuelType = dataVM.currentVehicle.first?.fuelTypeOne ?? FuelType.none
-            addExpVM.expenseS.fuelType = fuelVM.defaultSelectedFuel
-            
-            
-            if(selectedItem == ""){
-            selectedItem = dataVM.currentVehicle.first?.fuelTypeOne.label ?? ""
+         
+            if(addExpVM.selectedFuel == ""){
+                addExpVM.selectedFuel = dataVM.currentVehicle.first?.fuelTypeOne.label ?? ""
+                fuelVM.defaultFuelType = dataVM.currentVehicle.first?.fuelTypeOne ?? FuelType.none
+                addExpVM.fuel = fuelVM.defaultSelectedFuel
             }
         }
     }
@@ -182,7 +185,6 @@ struct ExpenseListView: View {
 
 struct CustomFuelPicker : View {
     
-    @Binding var selectedItem : String
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @StateObject var dataVM : DataViewModel
@@ -197,9 +199,11 @@ struct CustomFuelPicker : View {
                 withAnimation(.easeOut) {
                     checkmark1 = true
                     checkmark2 = false
-                    selectedItem = dataVM.currentVehicle.first?.fuelTypeOne.label ?? ""
+                    addExpVM.selectedFuel = dataVM.currentVehicle.first?.fuelTypeOne.label ?? ""
                     fuelVM.defaultFuelType = dataVM.currentVehicle.first?.fuelTypeOne ?? FuelType.none
-                    addExpVM.expenseS.fuelType = fuelVM.defaultSelectedFuel
+                    addExpVM.fuel = fuelVM.defaultSelectedFuel
+                    
+//                    addExpVM.expenseS.fuelType = fuelVM.defaultSelectedFuel
                     presentationMode.wrappedValue.dismiss()
                 }
             }) {
@@ -218,9 +222,9 @@ struct CustomFuelPicker : View {
                     withAnimation(.easeOut) {
                         checkmark1 = false
                         checkmark2 = true
-                        selectedItem = dataVM.currentVehicle.first?.fuelTypeTwo.label ?? ""
+                        addExpVM.selectedFuel = dataVM.currentVehicle.first?.fuelTypeTwo.label ?? ""
                         fuelVM.secondaryFuelType = dataVM.currentVehicle.first?.fuelTypeTwo ?? FuelType.none
-                        addExpVM.expenseS.fuelType = fuelVM.secondarySelectedFuel
+                        addExpVM.fuel = fuelVM.secondarySelectedFuel
                         presentationMode.wrappedValue.dismiss()
                     }
                 }) {
@@ -238,5 +242,40 @@ struct CustomFuelPicker : View {
         }
         .listStyle(.insetGrouped)
     }
+    
+}
+
+struct CustomCategoryPicker : View {
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @StateObject var dataVM : DataViewModel
+    @StateObject var addExpVM : AddExpenseViewModel
+    @StateObject var categoryVM : CategoryViewModel
+    @Binding var checkmark : Bool
+    
+    var body: some View {
+        List{
+            ForEach(Category.allCases,id:\.self){ category in
+                Button(action: {
+                    checkmark.toggle()
+                    addExpVM.selectedCategory = category.label
+                    categoryVM.defaultCategory = category
+                    addExpVM.category = categoryVM.selectedCategory
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    HStack {
+                        Text(category.label)
+                            .font(Typography.headerM)
+                            .foregroundColor(Palette.black)
+                        Spacer()
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.accentColor)
+                            .opacity(checkmark ? 1.0 : 0.0)
+                    }
+                })
+            }
+        }.listStyle(.insetGrouped)
+    }
+    
     
 }
