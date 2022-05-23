@@ -1,4 +1,4 @@
-# PitStop
+# Pitstop
 
 PitStop is an iOS App to track your car's expenses. This project is currently being developed in team with [Ivan Voloshchuk](https://github.com/IV0000), [Francesco Puzone](https://github.com/morbuen) and [Anna Antonova](https://github.com/Oneanya21).
 
