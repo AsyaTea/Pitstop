@@ -146,11 +146,11 @@ struct ContentView: View {
 //                    print("LAST ADDED IS ",vehicleS.vehicleID)
 //                }
 //            }
-            Button {
-                print(" expense list : \(dataVM.expenseList)")
-            } label: {
-                Text("print expense list")
-            }
+//            Button {
+//                print(" expense list : \(dataVM.expenseList)")
+//            } label: {
+//                Text("print expense list")
+//            }
 
             
             Button("Get current vehicle"){
@@ -206,15 +206,18 @@ struct ContentView: View {
                 }
             
         
-        
-            if !dataVM.currentVehicle.isEmpty {
-            ForEach(dataVM.expenseList, id: \.self) { expense in
-               
-                  Text("Expense: \(expense.note)")
-//                Text("ciao")
-                
-                    }.onDelete(perform: dataVM.removeExpense(indexSet:))
-            }
+                VStack {
+                if !dataVM.currentVehicle.isEmpty {
+                    List() {
+                ForEach(dataVM.expenseList, id: \.self) { expense in
+                   
+                      Text("Expense: \(expense.note)")
+    //                Text("ciao")
+                    
+                        }.onDelete(perform: dataVM.removeExpense(indexSet:))
+                    }
+                }
+                }
        
                     
             List {

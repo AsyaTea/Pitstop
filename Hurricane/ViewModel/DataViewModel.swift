@@ -328,7 +328,7 @@ class DataViewModel : ObservableObject {
 
     }
     func addNewExpensePriceToTotal(expense: ExpenseState) {
-        self.totalExpense = totalVehicleCost + expense.price
+        self.totalExpense = totalExpense + expense.price
         print("Add new expense")
     }
     

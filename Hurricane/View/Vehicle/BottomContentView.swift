@@ -12,6 +12,7 @@ struct BottomContentView: View {
     @ObservedObject var homeVM : HomeViewModel
     @State private var viewAllNumbers = false
     @State private var viewAllDocuments = false
+  
     @State private var showingOptions = false
     
     @StateObject var dataVM : DataViewModel
@@ -23,10 +24,9 @@ struct BottomContentView: View {
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
-            ForEach(dataVM.expenseList,id:\.self) { expense in
-                categoryComponent(categoryName: "Parking", date: expense.date, cost: String(expense.price))
+            ForEach(dataVM.expenseList.reversed().prefix(3),id:\.self) { expense in
+                categoryComponent(categoryName: expense.note, date: expense.date, cost: String(expense.price))
             }
-           
             
             TitleSectionComponent(sectionTitle: "Documents", binding: $viewAllDocuments)
                 .padding()
@@ -240,6 +240,7 @@ struct TitleSectionComponent : View {
     var sectionTitle : String
     @Binding var binding : Bool
     
+    
     var body: some View {
         HStack{
             Text(sectionTitle)
@@ -260,4 +261,5 @@ struct TitleSectionComponent : View {
         }
     }
 }
+
 
