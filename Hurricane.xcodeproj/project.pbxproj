@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		41176DA92834DCC3000FD885 /* FuelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41176DA82834DCC3000FD885 /* FuelViewModel.swift */; };
+		41596433283B84BA0023CADC /* LastEventsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41596432283B84BA0023CADC /* LastEventsListView.swift */; };
 		415D202F28214180004AF201 /* HurricaneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D202E28214180004AF201 /* HurricaneApp.swift */; };
 		415D203128214180004AF201 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D203028214180004AF201 /* ContentView.swift */; };
 		415D203328214182004AF201 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415D203228214182004AF201 /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 
 /* Begin PBXFileReference section */
 		41176DA82834DCC3000FD885 /* FuelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewModel.swift; sourceTree = "<group>"; };
+		41596432283B84BA0023CADC /* LastEventsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastEventsListView.swift; sourceTree = "<group>"; };
 		415D202B28214180004AF201 /* Hurricane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hurricane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		415D202E28214180004AF201 /* HurricaneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HurricaneApp.swift; sourceTree = "<group>"; };
 		415D203028214180004AF201 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				FFC52897282FB2A40013D8B6 /* BottomContentView.swift */,
 				FFC52899282FB4430013D8B6 /* AlertAddNumbers.swift */,
 				FF14DC3128302CC300CA248B /* ImportantNumbersView.swift */,
+				41596432283B84BA0023CADC /* LastEventsListView.swift */,
 				FF3616D2282926D6002ADA33 /* Add Report Modal */,
 			);
 			path = Vehicle;
@@ -382,6 +385,7 @@
 				FF106794282D38970077CCF7 /* HeaderView.swift in Sources */,
 				415D2042282145FE004AF201 /* DataViewModel.swift in Sources */,
 				FF42ADD12825201A00C66A84 /* TabData.swift in Sources */,
+				41596433283B84BA0023CADC /* LastEventsListView.swift in Sources */,
 				FF106792282D36160077CCF7 /* HomeStyleView.swift in Sources */,
 				41176DA92834DCC3000FD885 /* FuelViewModel.swift in Sources */,
 				415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */,
@@ -525,7 +529,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = 55H4ABU399;
+				DEVELOPMENT_TEAM = MYPTJXP3NK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hurricane/Info.plist;
@@ -556,7 +560,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = 55H4ABU399;
+				DEVELOPMENT_TEAM = MYPTJXP3NK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hurricane/Info.plist;

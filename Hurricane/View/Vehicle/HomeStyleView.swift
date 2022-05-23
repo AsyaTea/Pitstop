@@ -306,7 +306,8 @@ struct HeaderContent : View {
                             .foregroundColor(Palette.colorMainYellow)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
-                            Text("23,4k $")
+                            let formattedCost = String(format: "%.0f", dataVM.totalExpense)
+                            Text("\(formattedCost) $")
                                 .foregroundColor(Palette.black)
                                 .font(Typography.headerL)
                             Text("All costs")
@@ -344,10 +345,10 @@ struct HeaderContent : View {
                             .foregroundColor(Palette.colorMainYellow)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
-                            Text("23,4k $")
+                            Text("*** $")
                                 .foregroundColor(Palette.black)
                                 .font(Typography.headerL)
-                            Text("Average")
+                            Text("Coming Soon")
                                 .foregroundColor(Palette.black)
                                 .font(Typography.TextM)
                         }
