@@ -16,9 +16,9 @@ extension Expense {
         return NSFetchRequest<Expense>(entityName: "Expense")
     }
 
-    @NSManaged public var date: Date?
+    @NSManaged public var date: Date
     @NSManaged public var note: String?
-    @NSManaged public var odometer: Int32
+    @NSManaged public var odometer: Float
     @NSManaged public var price: Float
     @NSManaged public var category: Int16
     @NSManaged public var vehicle: Vehicle?

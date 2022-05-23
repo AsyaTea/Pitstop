@@ -11,8 +11,17 @@ struct ExpenseListView: View {
     
     @ObservedObject var addExpVM : AddExpenseViewModel
     @ObservedObject var utilityVM : UtilityViewModel
+    @StateObject var dataVM : DataViewModel
+    
     var focusedField : FocusState<FocusField?>.Binding
-    @Binding var expense : ExpenseState // Binding(?)
+    @Binding var expenseS : ExpenseState // Binding(?)
+    
+    @StateObject var fuelVM = FuelViewModel()
+    @State private var selectedItem : String = ""
+    @State private var checkmark1 = true
+    @State private var checkmark2 = false
+    
+    
     
     var body: some View {
         
@@ -27,14 +36,14 @@ struct ExpenseListView: View {
             },label:{
                 ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
             })
-           
+            
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             //MARK: ODOMETER
             HStack{
                 ListCategoryComponent(title: "Odometer", iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                TextField("100", text: $addExpVM.odometer)
+                TextField("100", value: $expenseS.odometer,formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .focused(focusedField, equals: .odometer)
@@ -49,19 +58,20 @@ struct ExpenseListView: View {
             
             //MARK: FUEL TYPE
             if(addExpVM.selectedCategory == "Fuel"){
-                Picker(selection: $addExpVM.selectedFuelType, content: {
-                    ForEach(addExpVM.fuelTypes, id: \.self) {
-                        Text($0)
-                            .font(Typography.headerM)
-                    }
-                }, label:{
+                HStack{
                     ListCategoryComponent(title: "Fuel type", iconName: "fuelType", color: Palette.colorOrange)
-                })
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                    Spacer()
+                    NavigationLink(destination: CustomFuelPicker(selectedItem: $selectedItem, dataVM: dataVM,checkmark1: $checkmark1,checkmark2: $checkmark2)){
+                        Spacer()
+                        Text(selectedItem)
+                            .font(Typography.headerM)
+                            .foregroundColor(Palette.greyMiddle)
+                    }
+                }.listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             }
             
             //MARK: DATE PICKER
-            DatePicker(selection: $addExpVM.date, displayedComponents: [.date]) {
+            DatePicker(selection: $expenseS.date,in: ...Date(), displayedComponents: [.date]) {
                 ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
@@ -146,6 +156,9 @@ struct ExpenseListView: View {
                     focusedField.wrappedValue = .priceTab
                 }
             }
+            if(selectedItem == ""){
+            selectedItem = dataVM.currentVehicle.first?.fuelTypeOne.label ?? ""
+            }
         }
     }
 }
@@ -155,3 +168,59 @@ struct ExpenseListView: View {
 //        ExpenseListView()
 //    }
 //}
+
+
+struct CustomFuelPicker : View {
+    
+    @Binding var selectedItem : String
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @StateObject var dataVM : DataViewModel
+    @Binding var checkmark1 : Bool
+    @Binding var checkmark2 : Bool
+    
+    var body: some View {
+        List{
+            Button(action: {
+                withAnimation(.easeOut) {
+                    checkmark1 = true
+                    checkmark2 = false
+                    selectedItem = dataVM.currentVehicle.first?.fuelTypeOne.label ?? ""
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }) {
+                HStack {
+                    Text(dataVM.currentVehicle.first?.fuelTypeOne.label ?? "")
+                        .font(Typography.headerM)
+                        .foregroundColor(Palette.black)
+                    Spacer()
+                    Image(systemName: "checkmark")
+                        .foregroundColor(.accentColor)
+                        .opacity(checkmark1 ? 1.0 : 0.0)
+                }
+            }
+            if(dataVM.currentVehicle.first?.fuelTypeTwo != FuelType.none){
+                Button(action: {
+                    withAnimation(.easeOut) {
+                        checkmark1 = false
+                        checkmark2 = true
+                        selectedItem = dataVM.currentVehicle.first?.fuelTypeTwo.label ?? ""
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }) {
+                    HStack {
+                        Text(dataVM.currentVehicle.first?.fuelTypeTwo.label ?? "")
+                            .font(Typography.headerM)
+                            .foregroundColor(Palette.black)
+                        Spacer()
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.accentColor)
+                            .opacity(checkmark2 ? 1.0 : 0.0)
+                    }
+                }
+            }
+        }
+        .listStyle(.insetGrouped)
+    }
+    
+}

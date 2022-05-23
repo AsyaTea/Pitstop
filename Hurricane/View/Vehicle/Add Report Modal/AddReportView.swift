@@ -11,8 +11,9 @@ struct AddReportView: View {
         
     @StateObject var utilityVM : UtilityViewModel = .init()
     @StateObject var addExpVM : AddExpenseViewModel = .init()
-    @ObservedObject var vehicleVM : DataViewModel = .init()
-    @State var expense : ExpenseState = ExpenseState()
+    @StateObject var dataVM : DataViewModel
+    
+    @State var expenseS : ExpenseState = ExpenseState()
     @State private var showDate = false
     
     //Custom picker tabs
@@ -33,11 +34,11 @@ struct AddReportView: View {
                 
                 //MARK: Custom TextField
                 if(addExpVM.currentPickerTab == "Expense"){
-                    TextFieldComponent(submitField: $addExpVM.priceTab, placeholder: "42", attribute:utilityVM.currency, keyboardType: .decimalPad,focusedField: $focusedField, defaultFocus: .priceTab)
+                    NumericFieldComponent(submitField: $expenseS.price, placeholder: "42", attribute:utilityVM.currency, keyboardType: .decimalPad,focusedField: $focusedField, defaultFocus: .priceTab)
                         .padding(.top,15)
                 }
                 else if (addExpVM.currentPickerTab == "Odometer"){
-                    TextFieldComponent(submitField: $addExpVM.odometerTab, placeholder: "100", attribute: utilityVM.unit, keyboardType: .numberPad,focusedField: $focusedField,defaultFocus: .odometerTab)
+                    NumericFieldComponent(submitField: $expenseS.odometer, placeholder: "100", attribute: utilityVM.unit, keyboardType: .numberPad,focusedField: $focusedField,defaultFocus: .odometerTab)
                         .padding(.top,15)
                 }
                 else{
@@ -53,7 +54,7 @@ struct AddReportView: View {
                 
                 //MARK: List
                 if(addExpVM.currentPickerTab == "Expense"){
-                    ExpenseListView(addExpVM: addExpVM,utilityVM: utilityVM, focusedField: $focusedField, expense: $expense)
+                    ExpenseListView(addExpVM: addExpVM,utilityVM: utilityVM, dataVM: dataVM, focusedField: $focusedField, expenseS: $expenseS)
                 }
                 else if (addExpVM.currentPickerTab == "Odometer"){
                     OdometerListView(addExpVM: addExpVM,utilityVM: utilityVM, focusedField: $focusedField)
@@ -75,22 +76,14 @@ struct AddReportView: View {
                     .accentColor(Palette.greyHard),
                 trailing:
                     Button(action: {
-//                        vehicleVM.addExpense(expense: expense)
+                        dataVM.addExpense(expense: expenseS)
                         self.presentationMode.wrappedValue.dismiss()
-//                        for vehicle in vehicleVM.vehicles {
-//                            vehicleVM.currVehicle = vehicle
-//                            print(vehicleVM.currVehicle)
-//                        }
-//                        vehicleVM.currVehicle = vehicleVM.vehicles[0]
-//                        let newExpense = addExpVM.createExpense()
-//                        vehicleVM.addExpense(expense: newExpense)
                     }, label: {
                         Text("Save")
                             .font(Typography.headerM)
-                    }
-                          )
-                    .disabled(addExpVM.priceTab.isEmpty && addExpVM.odometerTab.isEmpty && addExpVM.reminderTab.isEmpty)
-                    .opacity(addExpVM.priceTab.isEmpty && addExpVM.odometerTab.isEmpty && addExpVM.reminderTab.isEmpty ? 0.6 : 1)
+                    })
+                    .disabled(expenseS.price == 0 && addExpVM.odometerTab.isEmpty && addExpVM.reminderTab.isEmpty)
+                    .opacity(expenseS.price == 0 && addExpVM.odometerTab.isEmpty && addExpVM.reminderTab.isEmpty ? 0.6 : 1)
             )
             .toolbar {
                 /// Keyboard focus
@@ -144,11 +137,11 @@ struct AddReportView: View {
     }
 }
 
-struct AddReportView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddReportView()
-    }
-}
+//struct AddReportView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddReportView()
+//    }
+//}
 
 struct ListCategoryComponent: View {
     
@@ -200,6 +193,35 @@ struct TextFieldComponent: View {
         }
     }
 }
+
+struct NumericFieldComponent: View {
+    
+    @Binding var submitField : Float
+    var placeholder : String
+    var attribute : String
+    var keyboardType : UIKeyboardType
+    
+    var focusedField : FocusState<FocusField?>.Binding
+    var defaultFocus : FocusField
+    
+    var body: some View {
+        HStack{
+            Spacer()
+            TextField(placeholder,value: $submitField,formatter: NumberFormatter())
+                .focused(focusedField, equals: defaultFocus)
+                .font(Typography.headerXXL)
+                .foregroundColor(Palette.black)
+                .keyboardType(keyboardType)
+                .fixedSize(horizontal: true, vertical: true)
+            
+            Text(attribute)
+                .font(Typography.headerXXL)
+                .foregroundColor(Palette.black)
+            Spacer()
+        }
+    }
+}
+
 
 enum FocusField: Hashable {
     case priceTab
