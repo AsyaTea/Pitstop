@@ -143,6 +143,8 @@ class DataViewModel : ObservableObject {
         newVehicle.brand = vehicle.brand
         newVehicle.model = vehicle.model
         newVehicle.odometer = vehicle.odometer
+        newVehicle.plate = vehicle.plate
+        newVehicle.current = vehicle.current
         newVehicle.fuelTypeOne = vehicle.fuelTypeOne
         newVehicle.fuelTypeTwo = vehicle.fuelTypeTwo ?? 0
         print("🚓🚓🚓 ",newVehicle)

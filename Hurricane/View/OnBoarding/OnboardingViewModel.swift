@@ -29,6 +29,7 @@ class OnboardingViewModel : ObservableObject {
     
     @Published var showAlertOdometer = false
     @Published var showAlertPlate = false
+    @Published var showAlertImportantNumbers = false
     @Published var showOverlay = false
     
     func resetFields() {

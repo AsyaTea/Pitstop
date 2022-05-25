@@ -38,7 +38,7 @@ struct OnboardingView: View {
                 Page4(onboardingVM: onboardingVM)
             }
         case .page5:
-            Page5(shouldShowOnboarding: $shouldShowOnboarding,onboardingVM: onboardingVM)
+            Page5(shouldShowOnboarding: $shouldShowOnboarding,onboardingVM: onboardingVM, dataVM: dataVM)
         }
         
     }

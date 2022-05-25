@@ -112,6 +112,8 @@ class CategoryViewModel: ObservableObject {
     
     @Published var currentPickerTab : String = "Overview"
     
+    @Published var arrayCat : [Category] = []
+    
     //Function to calculate total cost of a category
     func totalCategoryCost(category: Category2) -> Double {
         

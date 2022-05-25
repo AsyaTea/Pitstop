@@ -268,6 +268,7 @@ struct TopNav : View {
             dataVM.getVehiclesCoreData(filter: filter, storage:{ storage in
                 dataVM.currentVehicle = storage
             })
+            print("FETCHING CURRENT")
         }
         .overlay(
             VStack(alignment: .center,spacing: 2){

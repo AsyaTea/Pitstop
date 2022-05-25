@@ -57,36 +57,14 @@ struct Page1 : View {
 struct Page2 : View {
     
     @StateObject var onboardingVM : OnboardingViewModel
-    
     @StateObject var fuelVM : FuelViewModel
     
     @FocusState var focusedField: FocusFieldBoarding?
     
     @State private var isTapped = false
+    @State private var showDefaultFuel = false
     
     let haptic = UIImpactFeedbackGenerator(style: .light)
-    
-    var customLabel: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 36)
-                .stroke(isTapped ? Palette.black : Palette.greyInput,lineWidth: 1)
-                .background(isTapped ? Palette.greyLight : Palette.greyBackground)
-                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
-            HStack{
-                if isTapped {
-                    Text(fuelVM.defaultFuelType.label)
-                        .font(Typography.TextM)
-                    Spacer()
-                } else {
-                    Text("Fuel Type")
-                        .font(Typography.TextM)
-                    Spacer()
-                }
-            }
-            .accentColor(isTapped ? Palette.black : Palette.greyInput)
-            .padding(.leading,40)
-        }
-    }
     
     var body: some View{
         VStack{
@@ -169,18 +147,31 @@ struct Page2 : View {
                     }
                 
                 //MARK: PRIMARY FUEL
-                Menu{
-                    Picker(selection: $fuelVM.defaultFuelType, label: EmptyView()) {
-                        ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
-                            Text(fuel.label)
+                Button(action: {
+                    showDefaultFuel.toggle()
+                    isTapped.toggle()
+                }, label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 36)
+                            .stroke(isTapped ? Palette.black : Palette.greyInput,lineWidth: 1)
+                            .background(isTapped ? Palette.greyLight : Palette.greyBackground)
+                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
+                        HStack{
+                            Text(fuelVM.defaultFuelType.label)
+                                .font(Typography.TextM)
+                            Spacer()
+                        }
+                        .padding(.leading,40)
+                    }
+                    .accentColor(Palette.black)
+                })
+                .confirmationDialog("Select a fuel type", isPresented: $showDefaultFuel, titleVisibility: .visible){
+                    ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
+                        Button(fuel.label){
+                            fuelVM.defaultFuelType = fuel
                         }
                     }
-                } label: {
-                    customLabel
-                }.onTapGesture {
-                    isTapped = true
                 }
-                
             }
             .padding(.vertical,40)
             
@@ -207,6 +198,7 @@ struct Page2 : View {
     }
     
 }
+
 
 //MARK: PAGE 3 ADD MORE INFO
 struct Page3 : View {
@@ -305,7 +297,8 @@ struct Page3 : View {
                         
                         //MARK: IMPORTANT NUMBERS
                         Button(action: {
-                            
+                            onboardingVM.showAlertImportantNumbers.toggle()
+                            onboardingVM.showOverlay = true
                         }, label: {
                             OnBoardingCard(text: "Important numbers", bgColor: Palette.colorGreen, iconName:  "phone")
                         })
@@ -388,6 +381,8 @@ struct Page3 : View {
                     withAnimation(.easeInOut){
                         onboardingVM.vehicle.fuelTypeOne = fuelVM.defaultSelectedFuel
                         onboardingVM.vehicle.fuelTypeTwo = fuelVM.secondarySelectedFuel
+                        dataVM.setAllCurrentToFalse()
+                        onboardingVM.vehicle.current = 1
                         dataVM.addVehicle(vehicle: onboardingVM.vehicle)
                         if(onboardingVM.skipNotification == true) {
                             onboardingVM.destination = .page5
@@ -419,6 +414,10 @@ struct Page3 : View {
             
             if(onboardingVM.showAlertOdometer == true){
                 AlertOdometerOB(onboardingVM: onboardingVM)
+            }
+            
+            if(onboardingVM.showAlertImportantNumbers == true){
+                AlertImportantNumbersOB(onboardingVM: onboardingVM)
             }
         }
     }
@@ -480,6 +479,8 @@ struct Page5 : View {
     
     @Binding var shouldShowOnboarding : Bool
     @ObservedObject var onboardingVM : OnboardingViewModel
+    @StateObject var dataVM : DataViewModel
+    let filter = NSPredicate(format: "current == %@","1")
     
     var body: some View {
         VStack(alignment: .center){
@@ -499,6 +500,9 @@ struct Page5 : View {
             VStack(spacing: 16){
                 Button(action: {
                     shouldShowOnboarding.toggle()
+                    dataVM.getVehiclesCoreData(filter: filter, storage:{ storage in
+                        dataVM.currentVehicle = storage
+                    })
                 }, label: {
                     OnBoardingButton(text: "Okayyyy let's go", textColor: Palette.white, color: Palette.black)
                 })
@@ -559,6 +563,7 @@ struct OnBoardingCard : View {
                         .frame(width: 32, height: 32)
                     Image(iconName)
                         .resizable()
+                        .foregroundColor(Color(rgb: 0x9A7EFF))
                         .frame(width: 16, height: 16)
                 }.padding(.horizontal,8)
                 Text(text)
