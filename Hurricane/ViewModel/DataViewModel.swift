@@ -274,6 +274,7 @@ class DataViewModel : ObservableObject {
         newExpense.fuelType = expense.fuelType ?? 0
         newExpense.liters = expense.liters ?? 0.0
         newExpense.priceLiter = expense.priceLiter ?? 1.0
+        newExpense.vehicle?.odometer += expense.odometer
         print(" Expense : \(newExpense)")
         print(" Current Vehicle \(currentVehicle)")
         self.expenseList.append(ExpenseViewModel(expense: newExpense))

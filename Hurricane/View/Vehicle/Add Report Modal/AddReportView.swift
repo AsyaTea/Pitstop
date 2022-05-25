@@ -34,11 +34,11 @@ struct AddReportView: View {
                 
                 //MARK: Custom TextField
                 if(addExpVM.currentPickerTab == "Expense"){
-                    NumericFieldComponent(submitField: $addExpVM.price, placeholder: "42", attribute:utilityVM.currency, keyboardType: .decimalPad,focusedField: $focusedField, defaultFocus: .priceTab)
+                    NumericFieldComponent(submitField: $addExpVM.price, placeholder: "4", attribute:utilityVM.currency, keyboardType: .decimalPad,focusedField: $focusedField, defaultFocus: .priceTab)
                         .padding(.top,15)
                 }
                 else if (addExpVM.currentPickerTab == "Odometer"){
-                    NumericFieldComponent(submitField: $addExpVM.expenseS.odometer, placeholder: "100", attribute: utilityVM.unit, keyboardType: .numberPad,focusedField: $focusedField,defaultFocus: .odometerTab)
+                    NumericFieldComponent(submitField: $addExpVM.odometer, placeholder: "0", attribute: utilityVM.unit, keyboardType: .decimalPad,focusedField: $focusedField,defaultFocus: .odometerTab)
                         .padding(.top,15)
                 }
                 else{
@@ -84,8 +84,8 @@ struct AddReportView: View {
                         Text("Save")
                             .font(Typography.headerM)
                     })
-                    .disabled(addExpVM.price == 0 && addExpVM.odometerTab.isEmpty && addExpVM.reminderTab.isEmpty)
-                    .opacity(addExpVM.price == 0 && addExpVM.odometerTab.isEmpty && addExpVM.reminderTab.isEmpty ? 0.6 : 1)
+                    .disabled(addExpVM.price == 0 && addExpVM.odometer == 0 && addExpVM.reminderTab.isEmpty)
+                    .opacity(addExpVM.price == 0 && addExpVM.odometer == 0 && addExpVM.reminderTab.isEmpty ? 0.6 : 1)
             )
             .toolbar {
                 /// Keyboard focus

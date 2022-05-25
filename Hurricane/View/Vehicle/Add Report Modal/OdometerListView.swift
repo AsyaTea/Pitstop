@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OdometerListView: View {
     
-    @ObservedObject var addExpVM : AddExpenseViewModel
+    @StateObject var addExpVM : AddExpenseViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     var focusedField : FocusState<FocusField?>.Binding
     
