@@ -18,8 +18,8 @@ class OnboardingViewModel : ObservableObject {
     @Published var destination : Pages = .page1
     
     var isDisabled : Bool {
-//        return vehicle.name.isEmpty  || vehicle.brand.isEmpty  || vehicle.model.isEmpty  || selectedFuel == "Fuel Type"
-        return false // debugging
+        return vehicle.name.isEmpty  || vehicle.brand.isEmpty  || vehicle.model.isEmpty  || vehicle.fuelTypeOne == 7
+//        return false // debugging
     }
     
     @Published var skipNotification = false /// Skip notiification page when adding another car
@@ -37,7 +37,7 @@ class OnboardingViewModel : ObservableObject {
         vehicle.brand = ""
         vehicle.model = ""
         vehicle.odometer = 0
-        vehicle.fuelTypeOne = 0
+        vehicle.fuelTypeOne = 7
         vehicle.fuelTypeTwo = nil
     }
     

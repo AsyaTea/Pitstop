@@ -12,6 +12,7 @@ struct ImportantNumbersView: View {
     @Environment(\.presentationMode) private var presentationMode
     
     @ObservedObject var homeVM : HomeViewModel
+    @StateObject var dataVM : DataViewModel
     
     var body: some View {
         
@@ -39,13 +40,10 @@ struct ImportantNumbersView: View {
                 .padding(.vertical,15)
                 
                 VStack(spacing: 16){
-            
-                    NumberCardView(title: "Service", number: "338293902")
-                    NumberCardView(title: "Service", number: "338293902")
-                    NumberCardView(title: "Service", number: "338293902")
-                    NumberCardView(title: "Service", number: "338293902")
+                    ForEach(dataVM.numberList, id:\.self){ number in
+                        NumberCardView(title: number.title, number: number.telephone)
+                    }
                     Spacer()
-                    
                 }
                 .padding(.vertical,20)
                 Button(action: {
@@ -62,7 +60,7 @@ struct ImportantNumbersView: View {
             )
             if(homeVM.showAlertNumbersInside){
                 Spacer()
-                AlertAddNumbersInside(homeVM: homeVM)
+                AlertAddNumbersInside(homeVM: homeVM,dataVM: dataVM)
                 Spacer()
             }
 

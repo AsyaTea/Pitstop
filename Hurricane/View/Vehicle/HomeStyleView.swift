@@ -74,7 +74,7 @@ struct HomeStyleView: View {
             //SHOW THE ALLERT IF TOGGLED
             if(homeVM.showAlertNumbers){
                 Spacer()
-                AlertAddNumbers(homeVM: homeVM)
+                AlertAddNumbers(homeVM: homeVM,dataVM: dataVM)
                 Spacer()
             }
         }
@@ -268,6 +268,11 @@ struct TopNav : View {
             dataVM.getVehiclesCoreData(filter: filter, storage:{ storage in
                 dataVM.currentVehicle = storage
             })
+            
+//            dataVM.getNumbersCoreData(filter: filter, storage: { storage in
+//                dataVM
+//            })
+            
             print("FETCHING CURRENT")
         }
         .overlay(

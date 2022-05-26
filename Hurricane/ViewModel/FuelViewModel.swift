@@ -36,7 +36,7 @@ extension FuelType : CaseIterable{
         case .electric:
             return "Electric"
         case .none:
-            return "None (?)"
+            return "None"
         }
     }
 }

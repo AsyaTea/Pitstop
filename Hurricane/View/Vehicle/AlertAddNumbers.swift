@@ -15,7 +15,8 @@ enum FocusFieldAlert: Hashable {
 
 struct AlertAddNumbers: View {
     
-    @ObservedObject var homeVM : HomeViewModel
+    @StateObject var homeVM : HomeViewModel
+    @StateObject var dataVM: DataViewModel
     
     @FocusState var focusedField: FocusFieldAlert?
     
@@ -79,6 +80,8 @@ struct AlertAddNumbers: View {
                         }
                     
                     Button(action: {
+                        homeVM.createNumber()
+                        dataVM.addNumber(number: homeVM.numberS)
                         navigateToDetail.toggle()
                         
                     }, label: {
@@ -89,7 +92,7 @@ struct AlertAddNumbers: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $navigateToDetail){ImportantNumbersView(homeVM: homeVM)}
+        .fullScreenCover(isPresented: $navigateToDetail){ImportantNumbersView(homeVM: homeVM,dataVM: dataVM)}
         .frame(width: UIScreen.main.bounds.width * 0.92, height: UIScreen.main.bounds.height * 0.28)
         .onAppear{focusedField = .numberTitle}
     }
@@ -139,6 +142,7 @@ struct BlackButton : View {
 struct AlertAddNumbersInside: View {
     
     @ObservedObject var homeVM : HomeViewModel
+    @StateObject var dataVM : DataViewModel
     
     @FocusState var focusedField: FocusFieldAlert?
     
@@ -203,7 +207,8 @@ struct AlertAddNumbersInside: View {
                     
                     Button(action: {
                         //Dismiss the alert when saving
-                        
+                        homeVM.createNumber()
+                        dataVM.addNumber(number: homeVM.numberS)
                         homeVM.resetAlertFieldsInside()
                     }, label: {
                         BlackButton(text: "Save",color: homeVM.isDisabled ? Palette.greyInput : Palette.black)

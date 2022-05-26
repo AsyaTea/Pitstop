@@ -12,13 +12,15 @@ class DataViewModel : ObservableObject {
     
     // Vehicle
     @Published var vehicleList : [VehicleViewModel] = []   //Var to store all the fetched vehicle entities
-    
     @Published var currentVehicle : [VehicleViewModel] = []
     
     //Expense
     @Published var expenseList : [ExpenseViewModel] = []
     @Published var expenses : [Expense] = []
     @Published var expenseModel = ExpenseState()
+    
+    //Important number
+    @Published var numberList: [NumberViewModel] = []
     
     //Filter
     @Published var filter : NSPredicate?
@@ -35,6 +37,11 @@ class DataViewModel : ObservableObject {
         getExpensesCoreData(filter: nil, storage:  { storage in
             self.expenseList = storage
             self.getTotalExpense(expenses: storage)
+        })
+        
+        getNumbersCoreData(filter: nil, storage: { storage in
+            self.numberList = storage
+            
         })
         
         getCurrentVehicle()
@@ -279,6 +286,18 @@ class DataViewModel : ObservableObject {
         }catch let error {
             print("🔢 Error fetching numbers: \(error.localizedDescription)")
         }
+    }
+    
+    func addNumber(number : NumberState) {
+        let newNumber = Number(context: manager.context)
+        newNumber.vehicle = getVehicle(vehicleID: currentVehicle.first!.vehicleID)
+        newNumber.telephone = number.telephone
+        newNumber.title = number.title
+        
+        print(" Number : \(newNumber)")
+        print(" Current Vehicle \(currentVehicle)")
+        self.numberList.append(NumberViewModel(number: newNumber))
+        save()
     }
     
     

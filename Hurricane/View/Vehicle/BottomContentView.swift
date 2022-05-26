@@ -13,7 +13,7 @@ struct BottomContentView: View {
     @StateObject var categoryVM = CategoryViewModel()
     @State private var viewAllNumbers = false
     @State private var viewAllDocuments = false
-  
+    
     @State private var showingOptions = false
     
     @StateObject var dataVM : DataViewModel
@@ -21,10 +21,13 @@ struct BottomContentView: View {
     var body: some View {
         VStack(spacing: 0){
             
+            //MARK: LAST EVENTS
             TitleSectionComponent(sectionTitle: "Last events",binding: $viewAllDocuments)
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
+            
+            
             ForEach(dataVM.expenseList.reversed().prefix(3),id:\.self) { expense in
                 categoryComponent(categoryName: categoryVM.defaultCategory.label, date: expense.date, cost: String(expense.price),color: categoryVM.defaultCategory.color, icon: categoryVM.defaultCategory.icon)
                 
@@ -78,12 +81,13 @@ struct BottomContentView: View {
                 VStack {
                     Spacer(minLength: 12)
                     HStack{
-                        Button(action: {
-                            UIApplication.shared.open(URL(string: "tel://32994")!)
-                        }, label: {
-                            importantNumbersComponent(title: "Service", number: "366 4925454")
-                        })
-                        
+                        ForEach(dataVM.numberList,id:\.self) { number in
+                            Button(action: {
+                                UIApplication.shared.open(URL(string: "tel://"+number.telephone)!)
+                            }, label: {
+                                importantNumbersComponent(title: number.title, number: number.telephone)
+                            })
+                        }
                         Button(action: {
                             DispatchQueue.main.asyncAfter(deadline: .now()) {
                                 withAnimation(.easeInOut){
@@ -114,8 +118,8 @@ struct BottomContentView: View {
             Spacer()
             
         }
-     
-        .fullScreenCover(isPresented: $viewAllNumbers){ImportantNumbersView(homeVM: homeVM)}
+        
+        .fullScreenCover(isPresented: $viewAllNumbers){ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)}
         .fullScreenCover(isPresented: $viewAllDocuments){WorkInProgress()}
         
     }

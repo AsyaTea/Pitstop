@@ -20,6 +20,13 @@ class HomeViewModel : ObservableObject {
     @Published var numberTitle = ""
     @Published var number = ""
     
+    @Published var numberS = NumberState()
+    
+    func createNumber(){
+        numberS.telephone = number
+        numberS.title = numberTitle
+    }
+    
     var isDisabled : Bool {
         return numberTitle.isEmpty || number.isEmpty
     }

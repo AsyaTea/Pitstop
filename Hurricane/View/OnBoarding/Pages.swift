@@ -262,11 +262,11 @@ struct Page3 : View {
                         }
                         
                         //MARK: DOCUMENTS
-                        Button(action: {
-                            
-                        }, label: {
-                            OnBoardingCard(text: "Documents", bgColor: Palette.colorViolet, iconName:  "documents")
-                        })
+//                        Button(action: {
+//
+//                        }, label: {
+//                            OnBoardingCard(text: "Documents", bgColor: Palette.colorViolet, iconName:  "documents")
+//                        })
                         
                         
                         //MARK: ODOMETER
@@ -296,49 +296,49 @@ struct Page3 : View {
                         
                         
                         //MARK: IMPORTANT NUMBERS
-                        Button(action: {
-                            onboardingVM.showAlertImportantNumbers.toggle()
-                            onboardingVM.showOverlay = true
-                        }, label: {
-                            OnBoardingCard(text: "Important numbers", bgColor: Palette.colorGreen, iconName:  "phone")
-                        })
-                        ForEach(1..<3){ i in
-                            ZStack{
-                                Rectangle()
-                                    .foregroundColor(Palette.greyLight)
-                                    .cornerRadius(12)
-                                
-                                HStack{
-                                    VStack{
-                                        
-                                        Text("Service")
-                                            .font(Typography.ControlS)
-                                            .foregroundColor(Palette.black)
-                                        Text("Numero")
-                                            .font(Typography.TextM)
-                                            .foregroundColor(Palette.greyMiddle)
-                                    }
-                                    Spacer()
-                                }
-                                .padding()
-                            }
-                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
-                            .swipeActions(allowsFullSwipe: false) {
-                                Button {
-                                    print("Muting conversation")
-                                } label: {
-                                    Label("Mute", systemImage: "bell.slash.fill")
-                                }
-                                .cornerRadius(20)
-                                .tint(.indigo)
-                                
-                                Button(role: .destructive) {
-                                    print("Deleting conversation")
-                                } label: {
-                                    Label("Delete", systemImage: "trash.fill")
-                                }
-                            }
-                        }
+//                        Button(action: {
+//                            onboardingVM.showAlertImportantNumbers.toggle()
+//                            onboardingVM.showOverlay = true
+//                        }, label: {
+//                            OnBoardingCard(text: "Important numbers", bgColor: Palette.colorGreen, iconName:  "phone")
+//                        })
+//                        ForEach(1..<3){ i in
+//                            ZStack{
+//                                Rectangle()
+//                                    .foregroundColor(Palette.greyLight)
+//                                    .cornerRadius(12)
+//                                
+//                                HStack{
+//                                    VStack{
+//                                        
+//                                        Text("Service")
+//                                            .font(Typography.ControlS)
+//                                            .foregroundColor(Palette.black)
+//                                        Text("Numero")
+//                                            .font(Typography.TextM)
+//                                            .foregroundColor(Palette.greyMiddle)
+//                                    }
+//                                    Spacer()
+//                                }
+//                                .padding()
+//                            }
+//                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
+//                            .swipeActions(allowsFullSwipe: false) {
+//                                Button {
+//                                    print("Muting conversation")
+//                                } label: {
+//                                    Label("Mute", systemImage: "bell.slash.fill")
+//                                }
+//                                .cornerRadius(20)
+//                                .tint(.indigo)
+//                                
+//                                Button(role: .destructive) {
+//                                    print("Deleting conversation")
+//                                } label: {
+//                                    Label("Delete", systemImage: "trash.fill")
+//                                }
+//                            }
+//                        }
                         
                         //MARK: SECOND FUEL TYPE
                         Button(action: {

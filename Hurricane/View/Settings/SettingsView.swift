@@ -16,7 +16,7 @@ struct SettingsView: View {
         NavigationView{
             VStack{
                 
-                Link(destination: URL(string: "https://youtu.be/y9DzkqJ1Fu8")!){
+                Link(destination: URL(string: "https://youtu.be/AZK4rSOw_PY")!){
                     PremiumBanner()
                         .padding(.top,20)
                 }
@@ -28,7 +28,8 @@ struct SettingsView: View {
                                     .font(Typography.headerM)
                                     .foregroundColor(Palette.black)
                             }
-                        }.onDelete(perform: dataVM.deleteVehicle)
+                        }
+//                        .onDelete(perform: dataVM.deleteVehicle)
                         
                         NavigationLink(destination: WorkInProgress()){
                             HStack{
@@ -56,9 +57,9 @@ struct SettingsView: View {
                     }
                     
                     Section{
-                        Text("Widget")
-                        Text("Widget")
-                        Text("Widget")
+                        Text("Coming Soon")
+                        Text("Coming Soon")
+                        Text("Coming Soon")
                     }
                 }.listStyle(.insetGrouped)
                 
