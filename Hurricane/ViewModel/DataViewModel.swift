@@ -24,6 +24,7 @@ class DataViewModel : ObservableObject {
     
     //Filter
     @Published var filter : NSPredicate?
+//    @Published var filterCurrentExpense : NSPredicate?
     
     @Published var totalVehicleCost : Float = 0.0
     @Published var totalExpense : Float = 0.0
@@ -45,6 +46,7 @@ class DataViewModel : ObservableObject {
         })
         
         getCurrentVehicle()
+
         
     }
     
@@ -97,6 +99,11 @@ class DataViewModel : ObservableObject {
             vehicle =  try manager.context.fetch(request)
             DispatchQueue.main.async{
                 self.currentVehicle = vehicle.map(VehicleViewModel.init)
+                let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (self.currentVehicle.first?.vehicleID)!)
+                self.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
+                    self.expenseList = storage
+                    self.getTotalExpense(expenses: storage)
+                })
             }
             print("CURRENT VEHICLE LIST ",vehicleList)
             
@@ -104,6 +111,34 @@ class DataViewModel : ObservableObject {
             print("🚓 Error fetching current vehicle: \(error.localizedDescription)")
         }
     }
+
+    
+    
+    
+    
+    //    func getVehicles() {
+    //
+    //        let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
+    //        let vehicle : [Vehicle]
+    //
+    //        //Sort for ID
+    //        let sort = NSSortDescriptor(keyPath: \Vehicle.objectID, ascending: true)
+    //        request.sortDescriptors = [sort]
+    //
+    //        //Filter if needed, ad esempio qua filtro per veicoli a benzina
+    //        //        let filter = NSPredicate(format: "fuelType == %@", "1")
+    //
+    //        do {
+    //            vehicle =  try manager.context.fetch(request)
+    //            DispatchQueue.main.async{
+    //                self.vehicleList = vehicle.map(VehicleViewModel.init)
+    //            }
+    //            print("VEHICLE LIST ",vehicleList)
+    //
+    //        }catch let error {
+    //            print("🚓 Error fetching vehicles: \(error.localizedDescription)")
+    //        }
+    //    }
     
 
     func addVehicle(vehicle : VehicleState) {
@@ -305,6 +340,7 @@ class DataViewModel : ObservableObject {
     // Move somewhere else
     func getTotalExpense(expenses: [ExpenseViewModel]) {
         print("expense list: \(expenses)")
+        self.totalVehicleCost = 0
         for expense in expenses {
             totalVehicleCost += expense.price
         }
