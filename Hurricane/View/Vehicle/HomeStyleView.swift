@@ -10,8 +10,8 @@ import Foundation
 
 struct HomeStyleView: View {
     
-    @StateObject var homeVM = HomeViewModel()
     @ObservedObject var dataVM : DataViewModel
+    @ObservedObject var homeVM : HomeViewModel
     
     //Scroll animation vars
     @State var offset:  CGFloat = 0
@@ -25,7 +25,7 @@ struct HomeStyleView: View {
                     
                     GeometryReader{ proxy in
                         //MARK: HEADER CONTENT
-                        HeaderContent(offset: $offset, maxHeight: maxHeight, dataVM: dataVM)
+                        HeaderContent(offset: $offset, maxHeight: maxHeight, dataVM: dataVM, homeVM: homeVM)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .opacity(
@@ -34,7 +34,7 @@ struct HomeStyleView: View {
                         
                         // sticky effect
                             .frame(height: getHeaderHeight(),alignment: .bottom)
-                            .background(Palette.colorYellow)
+                            .background(homeVM.headerBackgroundColor)
                             .overlay(
                                 //MARK: TOP NAV BAR
                                 TopNav(dataVM: dataVM, offset: offset, maxHeight: maxHeight, topEdge:topEdge)
@@ -56,7 +56,7 @@ struct HomeStyleView: View {
                         BottomContentView(homeVM: homeVM, dataVM: dataVM)
                             .background(Palette.greyBackground,in: CustomCorner(corners: [.topLeft,.topRight], radius: getCornerRadius()))
                     }
-                    .background(Palette.colorYellow)
+                    .background(homeVM.headerBackgroundColor)
                     .padding(.top,-15)
                     .zIndex(0)
                 }

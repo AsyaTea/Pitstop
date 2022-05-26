@@ -22,6 +22,9 @@ class HomeViewModel : ObservableObject {
     
     @Published var numberS = NumberState()
     
+    @Published var headerBackgroundColor = Palette.colorYellow
+    @Published var headerCardColor = Palette.colorMainYellow
+    
     func createNumber(){
         numberS.telephone = number
         numberS.title = numberTitle

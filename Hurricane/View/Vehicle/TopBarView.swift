@@ -46,6 +46,7 @@ struct TopNav : View {
                     .padding(.leading,-1)
                     .opacity(fadeOutOpacity())
                 })
+                .disabled(fadeOutOpacity() < 0.35)
                 .confirmationDialog("Select a car", isPresented: $showingAllCars, titleVisibility: .hidden) {
                     ForEach(dataVM.vehicleList,id:\.vehicleID){ vehicle in
                         Button(vehicle.name) {
@@ -79,6 +80,7 @@ struct TopNav : View {
                         .background(.black)
                         .foregroundColor(.red)
                 }
+                
                 
                 
                 Spacer()

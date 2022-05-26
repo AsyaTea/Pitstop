@@ -11,6 +11,7 @@ import SwiftUI
 struct CustomTabBarView: View {
     @State var selectedIndex: Int = 0
     @StateObject var dataVM = DataViewModel()
+    @StateObject var homeVM = HomeViewModel()
     
     init() {
         //  CUSTOM PROPRETIES FOR ALL LISTS OF THE APP
@@ -32,12 +33,12 @@ struct CustomTabBarView: View {
     func getTabView(type: TabType) -> some View {
         switch type {
         case .home:
-            VehicleView(dataVM: dataVM)
+            VehicleView(dataVM: dataVM, homeVM: homeVM)
         case .stats:
-//            WorkInProgress()
-            AnalyticsOverviewView()
+            WorkInProgress()
+//            AnalyticsOverviewView()
         case .settings:
-            SettingsView(dataVM: dataVM)
+            SettingsView(dataVM: dataVM, homeVM: homeVM)
         }
     }
 }

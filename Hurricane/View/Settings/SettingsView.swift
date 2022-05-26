@@ -11,6 +11,12 @@ import SwiftUI
 struct SettingsView: View {
     
     @ObservedObject var dataVM : DataViewModel
+    @ObservedObject var homeVM : HomeViewModel
+    
+    //High priority function pepe
+    var arrayColorBG = [Palette.colorGreen,Palette.colorYellow,Palette.colorViolet,Palette.colorBlue]
+    var arrayColorCard = [Palette.colorMainGreen,Palette.colorMainYellow,Palette.colorMainViolet,Palette.colorMainBlue]
+   @State var random = 0
     
     var body: some View {
         NavigationView{
@@ -29,7 +35,7 @@ struct SettingsView: View {
                                     .foregroundColor(Palette.black)
                             }
                         }
-//                        .onDelete(perform: dataVM.deleteVehicle)
+                        //                        .onDelete(perform: dataVM.deleteVehicle)
                         
                         NavigationLink(destination: WorkInProgress()){
                             HStack{
@@ -51,9 +57,29 @@ struct SettingsView: View {
                         
                     }
                     Section{
+                        HStack{
+                            Button(action: {
+                                random = Int.random(in: 0...3)
+                                homeVM.headerBackgroundColor = arrayColorBG[random]
+                                homeVM.headerCardColor = arrayColorCard[random]
+                            }, label: {
+                                Text("Theme")
+                                    .foregroundColor(Palette.black)
+                                    .font(Typography.headerM)
+                            })
+                            Spacer()
+                            Circle()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(homeVM.headerBackgroundColor)
+                        }
+                        
                         Text("Currency")
+                            .foregroundColor(Palette.black)
+                            .font(Typography.headerM)
                         Text("Unit")
-                        Text("Theme")
+                            .foregroundColor(Palette.black)
+                            .font(Typography.headerM)
+                       
                     }
                     
                     Section{

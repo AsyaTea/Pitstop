@@ -12,6 +12,7 @@ struct HeaderContent : View {
     var maxHeight : CGFloat
     
     @StateObject var dataVM : DataViewModel
+    @ObservedObject var homeVM: HomeViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15){
@@ -23,7 +24,7 @@ struct HeaderContent : View {
                     ZStack{
                         Rectangle()
                             .cornerRadius(16)
-                            .foregroundColor(Palette.colorMainYellow)
+                            .foregroundColor(homeVM.headerCardColor)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
                             let formattedCost = String(format: "%.0f", dataVM.totalExpense)
@@ -43,7 +44,7 @@ struct HeaderContent : View {
                     ZStack{
                         Rectangle()
                             .cornerRadius(16)
-                            .foregroundColor(Palette.colorMainYellow)
+                            .foregroundColor(homeVM.headerCardColor)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
                             Text(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)))
@@ -62,7 +63,7 @@ struct HeaderContent : View {
                     ZStack{
                         Rectangle()
                             .cornerRadius(16)
-                            .foregroundColor(Palette.colorMainYellow)
+                            .foregroundColor(homeVM.headerCardColor)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
                             Text("*** $")
