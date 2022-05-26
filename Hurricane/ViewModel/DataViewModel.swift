@@ -35,11 +35,6 @@ class DataViewModel : ObservableObject {
             self.vehicleList = storage
         })
         
-        getExpensesCoreData(filter: nil, storage:  { storage in
-            self.expenseList = storage
-            self.getTotalExpense(expenses: storage)
-        })
-        
         getNumbersCoreData(filter: nil, storage: { storage in
             self.numberList = storage
             

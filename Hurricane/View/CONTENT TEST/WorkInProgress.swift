@@ -25,6 +25,7 @@ struct WorkInProgress: View {
                 Text("Go back")
                     .font(Typography.headerL)
             })
+            Spacer()
         }
     }
 }
