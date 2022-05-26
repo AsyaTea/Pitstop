@@ -204,7 +204,6 @@ struct Page2 : View {
 struct Page3 : View {
     
     @State private var isImport = false
-    @State private var showFuelRow = false
     var dataVM = DataViewModel()
     @StateObject var onboardingVM : OnboardingViewModel
     @StateObject var fuelVM : FuelViewModel
@@ -349,14 +348,12 @@ struct Page3 : View {
                         .confirmationDialog("Select a fuel type", isPresented: $onboardingVM.showAllFuels, titleVisibility: .visible){
                             ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
                                 Button(fuel.label){
-                                    
                                     fuelVM.secondaryFuelType = fuel
-                                    showFuelRow = true
                                 }
                                 
                             }
                         }
-                        if(showFuelRow){
+                        if(fuelVM.secondaryFuelType != .none){
                             ZStack{
                                 Rectangle()
                                     .foregroundColor(Palette.greyLight)

@@ -26,7 +26,6 @@ struct ImportantNumbersView: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Cancel")
-                            .aspectRatio(contentMode: .fit)
                             .foregroundColor(Palette.greyHard)
                     })
                     .padding(.leading,20)
@@ -34,8 +33,9 @@ struct ImportantNumbersView: View {
                     Text("Useful contacts")
                         .font(Typography.headerM)
                         .foregroundColor(Palette.black)
-                        .frame(alignment: .center)
-                    Spacer(minLength: 130)
+//                        .frame(alignment: .center)
+                    Spacer(minLength: 150)
+
                 }
                 .padding(.vertical,15)
                 
