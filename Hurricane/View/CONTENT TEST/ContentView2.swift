@@ -203,3 +203,27 @@ extension Binding {
 //            print("💰 Error fetching expenses: \(error.localizedDescription)")
 //        }
 //    }
+
+//    func getVehicles() {
+//
+//        let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
+//        let vehicle : [Vehicle]
+//
+//        //Sort for ID
+//        let sort = NSSortDescriptor(keyPath: \Vehicle.objectID, ascending: true)
+//        request.sortDescriptors = [sort]
+//
+//        //Filter if needed, ad esempio qua filtro per veicoli a benzina
+//        //        let filter = NSPredicate(format: "fuelType == %@", "1")
+//
+//        do {
+//            vehicle =  try manager.context.fetch(request)
+//            DispatchQueue.main.async{
+//                self.vehicleList = vehicle.map(VehicleViewModel.init)
+//            }
+//            print("VEHICLE LIST ",vehicleList)
+//
+//        }catch let error {
+//            print("🚓 Error fetching vehicles: \(error.localizedDescription)")
+//        }
+//    }

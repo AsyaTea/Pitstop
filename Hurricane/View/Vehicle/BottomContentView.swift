@@ -17,7 +17,7 @@ struct BottomContentView: View {
     @State private var showingOptions = false
     
     @StateObject var dataVM : DataViewModel
-    
+        
     var body: some View {
         VStack(spacing: 0){
             
@@ -27,16 +27,20 @@ struct BottomContentView: View {
                 .padding(.top,10)
                 .padding(.bottom,-10)
             
-            
+            if(dataVM.expenseList.isEmpty){
+                Text("There are no events now")
+                    .font(Typography.TextM)
+            }
+            else{
             ForEach(dataVM.expenseList.reversed().prefix(3),id:\.self) { expense in
-                categoryComponent(categoryName: categoryVM.defaultCategory.label, date: expense.date, cost: String(expense.price),color: categoryVM.defaultCategory.color, icon: categoryVM.defaultCategory.icon)
-                
+                categoryComponent(
+                    category: Category.init(rawValue: Int(expense.category )) ?? .other,
+                    date: expense.date, cost: String(expense.price)
+                )
             }
-            //MARK: TO FIX
-            .onAppear{
-                categoryVM.selectedCategory = dataVM.expenseList.last?.category ?? 0
             }
-            
+
+            //MARK: DOCUMENTS
             TitleSectionComponent(sectionTitle: "Documents", binding: $viewAllDocuments)
                 .padding()
                 .padding(.top,10)
@@ -125,7 +129,7 @@ struct BottomContentView: View {
     }
     
     @ViewBuilder
-    func categoryComponent(categoryName : String, date: Date, cost : String, color: Color, icon : String) -> some View {
+    func categoryComponent(category : Category, date: Date, cost : String) -> some View {
         
         let formatted = date.formatDate()
         
@@ -133,13 +137,13 @@ struct BottomContentView: View {
             ZStack{
                 Circle()
                     .frame(width: 32, height: 32)
-                    .foregroundColor(color)
-                Image(icon)
+                    .foregroundColor(category.color)
+                Image(category.icon)
                     .resizable()
                     .frame(width: 16, height: 16)
             }
             VStack(alignment: .leading){
-                Text(categoryName)
+                Text(category.label)
                     .foregroundColor(Palette.black)
                     .font(Typography.headerS)
                 Text(formatted)

@@ -10,8 +10,8 @@ import SwiftUI
 struct VehicleView: View {
     
     //Onboarding vars
-    //    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
-//        @State var shouldShowOnboarding : Bool = true //FOR TESTING
+//        @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
+//    @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
     @ObservedObject var dataVM : DataViewModel
     @State private var showAddReport = false
