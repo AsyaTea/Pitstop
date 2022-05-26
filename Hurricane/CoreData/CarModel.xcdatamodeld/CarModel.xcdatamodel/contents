@@ -11,6 +11,11 @@
         <attribute name="priceLiter" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="vehicle" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicle" inverseName="expenses" inverseEntity="Vehicle"/>
     </entity>
+    <entity name="Number" representedClassName="Number" syncable="YES">
+        <attribute name="telephone" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="vehicle" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicle" inverseName="numbers" inverseEntity="Vehicle"/>
+    </entity>
     <entity name="Vehicle" representedClassName="Vehicle" syncable="YES">
         <attribute name="brand" optional="YES" attributeType="String"/>
         <attribute name="current" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO"/>
@@ -23,9 +28,11 @@
         <attribute name="plate" optional="YES" attributeType="String"/>
         <attribute name="year" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="expenses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Expense" inverseName="vehicle" inverseEntity="Expense"/>
+        <relationship name="numbers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Number" inverseName="vehicle" inverseEntity="Number"/>
     </entity>
     <elements>
         <element name="Expense" positionX="215.86328125" positionY="1.1640625" width="128" height="164"/>
-        <element name="Vehicle" positionX="-45" positionY="0" width="128" height="194"/>
+        <element name="Number" positionX="90" positionY="90" width="128" height="74"/>
+        <element name="Vehicle" positionX="-45" positionY="0" width="128" height="209"/>
     </elements>
 </model>

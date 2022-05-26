@@ -31,30 +31,18 @@ class DataViewModel : ObservableObject {
         getVehiclesCoreData(filter:nil, storage: {storage in
             self.vehicleList = storage
         })
+        
         getExpensesCoreData(filter: nil, storage:  { storage in
             self.expenseList = storage
             self.getTotalExpense(expenses: storage)
         })
+        
         getCurrentVehicle()
         
     }
     
-    //    func getVehicleID(id : UUID){
-    //        let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
-    //        let filter = NSPredicate(format: "vehicleID == %@", id as CVarArg)
-    //        request.predicate = filter
-    //
-    //        do {
-    //             currentVehicle =  try manager.context.fetch(request)
-    //        }catch let error {
-    //            print("🚓 Error fetching the vehicle ID: \(error.localizedDescription)")
-    //        }
-    //
-    //    }
     
-    
-    
-    //MARK: VEHICLE FUNCTIONS
+    //MARK: VEHICLE CRUD
     func getVehiclesCoreData(filter : NSPredicate?, storage: @escaping([VehicleViewModel]) -> ())  {
         let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
         let vehicle : [Vehicle]
@@ -86,7 +74,7 @@ class DataViewModel : ObservableObject {
         catch let error {
             print("🚓 Error fetching vehicles: \(error.localizedDescription)")
         }
-        saveVehicle()
+        save()
         
     }
     
@@ -110,33 +98,7 @@ class DataViewModel : ObservableObject {
         }
     }
     
-    
-    
-    
-    //    func getVehicles() {
-    //
-    //        let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
-    //        let vehicle : [Vehicle]
-    //
-    //        //Sort for ID
-    //        let sort = NSSortDescriptor(keyPath: \Vehicle.objectID, ascending: true)
-    //        request.sortDescriptors = [sort]
-    //
-    //        //Filter if needed, ad esempio qua filtro per veicoli a benzina
-    //        //        let filter = NSPredicate(format: "fuelType == %@", "1")
-    //
-    //        do {
-    //            vehicle =  try manager.context.fetch(request)
-    //            DispatchQueue.main.async{
-    //                self.vehicleList = vehicle.map(VehicleViewModel.init)
-    //            }
-    //            print("VEHICLE LIST ",vehicleList)
-    //
-    //        }catch let error {
-    //            print("🚓 Error fetching vehicles: \(error.localizedDescription)")
-    //        }
-    //    }
-    
+
     func addVehicle(vehicle : VehicleState) {
         let newVehicle = Vehicle(context: manager.context)
         newVehicle.name = vehicle.name
@@ -149,7 +111,7 @@ class DataViewModel : ObservableObject {
         newVehicle.fuelTypeTwo = vehicle.fuelTypeTwo ?? 0
         print("🚓🚓🚓 ",newVehicle)
         self.vehicleList.append(VehicleViewModel(vehicle: newVehicle)) //Add the new vehicle to the list
-        saveVehicle()
+        save()
         
     }
     
@@ -159,24 +121,18 @@ class DataViewModel : ObservableObject {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Vehicle")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         manager.removeAllItems(deleteRequest: deleteRequest)
-        saveVehicle()
+        save()
         self.vehicleList.removeAll()
         
     }
     
-    //    func removeVehicle(indexSet: IndexSet) {
-    //        guard let index = indexSet.first else { return }
-    //        let entity = vehicleList[index]
-    //        manager.container.viewContext.delete(entity)
-    //        saveVehicle()
-    //    }
     
     func deleteVehicleCoreData(vehicle : VehicleViewModel) {
         let vehicle = manager.getVehicleById(id: vehicle.vehicleID)
         if let vehicle = vehicle {
             manager.deleteVehicle(vehicle)
         }
-        saveVehicle()
+        save()
     }
     
     func deleteVehicle(at indexSet: IndexSet){
@@ -215,7 +171,7 @@ class DataViewModel : ObservableObject {
             }
         }
         
-        saveVehicle()
+        save()
         print("UPDATE DONE")
     }
     
@@ -235,25 +191,14 @@ class DataViewModel : ObservableObject {
     }
     
     
-    func saveVehicle() {
+    func save() {
         manager.save()
     }
     
     
     
-    //MARK: EXPENSE FUNCTIONS
-    //    func getExpenses(filter : NSPredicate?){
-    //
-    //        let request = NSFetchRequest<Expense>(entityName: "Expense")
-    //        request.predicate = filter
-    //
-    //        do {
-    //            self.expenses =  try manager.context.fetch(request)
-    //        }catch let error {
-    //            print("💰 Error fetching expenses: \(error.localizedDescription)")
-    //        }
-    //    }
-    
+    //MARK: EXPENSE CRUD
+
     func getExpenseByID(expenseID: NSManagedObjectID) throws -> ExpenseViewModel {
         guard let expense = manager.getExpenseById(id: expenseID) else {
             throw VehicleError.VehicleNotFound // DA FIXARE
@@ -278,7 +223,7 @@ class DataViewModel : ObservableObject {
         print(" Expense : \(newExpense)")
         print(" Current Vehicle \(currentVehicle)")
         self.expenseList.append(ExpenseViewModel(expense: newExpense))
-        saveExpense()
+        save()
     }
     
     func removeExpense(indexSet: IndexSet) {
@@ -286,7 +231,7 @@ class DataViewModel : ObservableObject {
         guard let index = indexSet.first else { return }
         let entity = expenses[index]
         manager.container.viewContext.delete(entity)
-        saveExpense()
+        save()
     }
     
     func removeAllExpenses() {
@@ -311,18 +256,34 @@ class DataViewModel : ObservableObject {
             }
             
         }catch let error {
-            print("🚓 Error fetching vehicles: \(error.localizedDescription)")
+            print("💰 Error fetching expenses: \(error.localizedDescription)")
         }
-        
     }
     
-    func saveExpense() {
-        manager.save()
-//        getExpenses(filter: filter)
+    //MARK: IMPORTANT NUMBERS CRUD
+    
+    func getNumbersCoreData(filter : NSPredicate?, storage: @escaping([NumberViewModel]) -> ())  {
+        let request = NSFetchRequest<Number>(entityName: "Number")
+        let expense : [Number]
+        
+        let sort = NSSortDescriptor(keyPath: \Number.objectID, ascending: true)
+        request.sortDescriptors = [sort]
+        request.predicate = filter
+        
+        do {
+            expense =  try manager.context.fetch(request)
+            DispatchQueue.main.async{
+                storage(expense.map(NumberViewModel.init))
+            }
+            
+        }catch let error {
+            print("🔢 Error fetching numbers: \(error.localizedDescription)")
+        }
     }
+    
     
     //Total Cost functions
-    
+    // Move somewhere else
     func getTotalExpense(expenses: [ExpenseViewModel]) {
         print("expense list: \(expenses)")
         for expense in expenses {
@@ -338,167 +299,3 @@ class DataViewModel : ObservableObject {
     }
     
 }
-
-
-struct VehicleViewModel : Hashable {
-    
-    let vehicle : Vehicle
-    
-    var expense : NSSet  {
-        return vehicle.expenses ?? NSSet()
-    }
-    
-    var current: NSNumber {
-        return vehicle.current ?? 0
-    }
-    
-    var brand : String {
-        return vehicle.brand ?? ""
-    }
-    
-    //    var document : Data {
-    //        return vehicle.date
-    //    }
-    
-    var fuelTypeOne: FuelType {
-        get {return FuelType.init(rawValue: Int(vehicle.fuelTypeOne)) ?? .gasoline}
-        set {vehicle.fuelTypeOne = Int16(newValue.rawValue)}
-    }
-    
-    var fuelTypeTwo: FuelType {
-        get {return FuelType.init(rawValue: Int(vehicle.fuelTypeTwo)) ?? .none}
-        set {vehicle.fuelTypeTwo = Int16(newValue.rawValue)}
-    }
-    
-    var model : String{
-        return vehicle.model ?? ""
-    }
-    
-    var name : String {
-        return vehicle.name ?? ""
-    }
-    
-    var odometer : Float{
-        return vehicle.odometer
-    }
-    
-    var plate : String {
-        return vehicle.plate ?? ""
-    }
-    
-    var vehicleID: NSManagedObjectID {
-        return vehicle.objectID
-    }
-    
-    var year: Int32 {
-        return vehicle.year
-    }
-}
-
-
-struct VehicleState : Hashable {
-    
-    var current : NSNumber?
-    var brand : String = ""
-    var document : Data?
-    var fuelTypeOne: Int16 = 0
-    var fuelTypeTwo: Int16?
-    var model : String = ""
-    var name : String = ""
-    var odometer : Float = 0.0
-    var plate : String = ""
-    var vehicleID: NSManagedObjectID?
-    var year: Int32 = 0
-}
-
-extension VehicleState {
-    
-    static func fromVehicleViewModel(vm: VehicleViewModel) -> VehicleState{
-        var vehicleS = VehicleState()
-        vehicleS.current = vm.current
-        vehicleS.vehicleID = vm.vehicleID
-        vehicleS.odometer = vm.odometer
-        vehicleS.brand = vm.brand
-        vehicleS.fuelTypeOne = Int16(vm.fuelTypeOne.rawValue)
-        vehicleS.fuelTypeTwo = Int16(vm.fuelTypeTwo.rawValue)
-        vehicleS.name = vm.name
-        vehicleS.year = vm.year
-        vehicleS.model = vm.model
-        vehicleS.plate = vm.plate
-        return vehicleS
-    }
-    
-}
-
-struct ExpenseState: Hashable {
-    var category: Int16?
-    var date: Date = Date.now
-    var note: String = ""
-    var odometer: Float = 0.0
-    var price: Float = 0.0
-    var liters : Float?
-    var priceLiter : Float?
-    var expenseID: NSManagedObjectID?
-    var fuelType: Int16?
-    
-}
-
-extension ExpenseState {
-    
-    static func fromExpenseViewModel(vm: ExpenseViewModel) -> ExpenseState {
-        var expenseS = ExpenseState()
-        expenseS.category = vm.category
-        expenseS.date = vm.date
-        expenseS.note = vm.note
-        expenseS.odometer = vm.odometer
-        expenseS.price = vm.price
-        expenseS.expenseID = vm.expenseID
-        expenseS.fuelType = vm.fuelType
-        expenseS.liters = vm.liters
-        expenseS.priceLiter = vm.priceLiter
-        return expenseS
-        
-    }
-}
-
-struct ExpenseViewModel: Hashable {
-    let expense : Expense
-    
-    var category: Int16 {
-        return expense.category
-    }
-    
-    var fuelType: Int16 {
-        return expense.fuelType
-    }
-    
-    var date: Date {
-        return expense.date
-    }
-    
-    var note: String {
-        return expense.note ?? ""
-    }
-    
-    var odometer: Float {
-        return expense.odometer
-    }
-    
-    var liters: Float {
-        return expense.liters
-    }
-    
-    var priceLiter: Float {
-        return expense.priceLiter
-    }
-    
-    var price: Float {
-        return expense.price
-    }
-    
-    var expenseID: NSManagedObjectID {
-        return expense.objectID
-    }
-    
-}
-

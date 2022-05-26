@@ -21,7 +21,7 @@ struct BottomContentView: View {
     var body: some View {
         VStack(spacing: 0){
             
-            TitleSectionComponent(sectionTitle: "Last events",binding: $viewAllNumbers)
+            TitleSectionComponent(sectionTitle: "Last events",binding: $viewAllDocuments)
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
@@ -116,7 +116,7 @@ struct BottomContentView: View {
         }
      
         .fullScreenCover(isPresented: $viewAllNumbers){ImportantNumbersView(homeVM: homeVM)}
-        .fullScreenCover(isPresented: $viewAllDocuments){Text("DocumentsView")}
+        .fullScreenCover(isPresented: $viewAllDocuments){WorkInProgress()}
         
     }
     

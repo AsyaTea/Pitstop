@@ -30,7 +30,7 @@ struct SettingsView: View {
                             }
                         }.onDelete(perform: dataVM.deleteVehicle)
                         
-                        NavigationLink(destination: AddNewVehicle()){
+                        NavigationLink(destination: WorkInProgress()){
                             HStack{
                                 ZStack{
                                     Circle()
