@@ -174,7 +174,7 @@ struct AlertImportantNumbersOB: View {
             VStack{
                 HStack{
                     Spacer()
-                    Text("Add important number")
+                    Text("Add useful contacts")
                         .foregroundColor(Palette.black)
                         .font(Typography.headerM)
                         .padding(.leading,40)
@@ -189,7 +189,7 @@ struct AlertImportantNumbersOB: View {
                     
                 }
                 VStack(spacing:12){
-                    TextField("Number title", value: $onboardingVM.vehicle.odometer,formatter: NumberFormatter())
+                    TextField("Contact name", value: $onboardingVM.vehicle.odometer,formatter: NumberFormatter())
                         .disableAutocorrection(true)
                         .focused($focusedField,equals: .numberTitle)
                         .keyboardType(.numberPad)

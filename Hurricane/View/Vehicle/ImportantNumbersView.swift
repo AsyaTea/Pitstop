@@ -31,7 +31,7 @@ struct ImportantNumbersView: View {
                     })
                     .padding(.leading,20)
                     Spacer()
-                    Text("Important numbers")
+                    Text("Useful contacts")
                         .font(Typography.headerM)
                         .foregroundColor(Palette.black)
                         .frame(alignment: .center)
@@ -49,7 +49,7 @@ struct ImportantNumbersView: View {
                 Button(action: {
                     homeVM.showAlertNumbersInside.toggle()
                 }, label: {
-                    BlackButton(text: "Add new number", color: Palette.black)
+                    BlackButton(text: "Add new contact", color: Palette.black)
                 })
                
             }
