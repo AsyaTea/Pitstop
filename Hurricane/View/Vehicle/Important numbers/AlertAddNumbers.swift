@@ -30,7 +30,7 @@ struct AlertAddNumbers: View {
             VStack{
                 HStack{
                     Spacer()
-                    Text("Add important number")
+                    Text("Add useful contact")
                         .foregroundColor(Palette.black)
                         .font(Typography.headerM)
                         .padding(.leading,40)
@@ -44,7 +44,7 @@ struct AlertAddNumbers: View {
                     
                 }
                 VStack(spacing:12){
-                    TextField("Number title", text: $homeVM.numberTitle)
+                    TextField("Contact name", text: $homeVM.numberTitle)
                         .disableAutocorrection(true)
                         .focused($focusedField,equals: .numberTitle)
                         .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))

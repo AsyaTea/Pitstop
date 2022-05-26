@@ -38,9 +38,9 @@ struct VehicleView: View {
         .sheet(isPresented: $showAddReport) {
             AddReportView(dataVM: dataVM)
         }
-//                .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
-//                    OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
-//                })
+                .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
+                    OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
+                })
         
     }
 }

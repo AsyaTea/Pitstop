@@ -91,7 +91,7 @@ struct Page2 : View {
             }
             VStack(spacing:20){
                 
-                TextField("Car's name", text: $onboardingVM.vehicle.name)
+                TextField("Vehicle name", text: $onboardingVM.vehicle.name)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .carName)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))

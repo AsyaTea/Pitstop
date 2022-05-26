@@ -75,7 +75,7 @@ struct BottomContentView: View {
                     .frame(width: 16)
             }
             
-            TitleSectionComponent(sectionTitle: "Important numbers", binding: $viewAllNumbers)
+            TitleSectionComponent(sectionTitle: "Useful contacts", binding: $viewAllNumbers)
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
@@ -99,7 +99,7 @@ struct BottomContentView: View {
                                 }
                             }
                         }, label: {
-                            addComponent(title: "Add number")
+                            addComponent(title: "Add contact")
                         })
                         
                     }
