@@ -204,6 +204,11 @@ struct TopNav : View {
                                     print("updato to current")
                                     dataVM.currentVehicle.removeAll()
                                     dataVM.currentVehicle.append(vehicle)
+                                    let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (dataVM.currentVehicle.first?.vehicleID)!)
+                                    dataVM.getExpensesCoreData(filter: filterCurrentExpense) { storage in
+                                        dataVM.expenseList = storage
+                                        dataVM.getTotalExpense(expenses: storage)
+                                    }
                             }
                             else{
                                 print("error")
