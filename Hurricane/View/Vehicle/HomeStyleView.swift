@@ -165,10 +165,3 @@ struct CustomCorner : Shape {
     }
 }
 
-extension Date {
-    func formatDate() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.setLocalizedDateFormatFromTemplate("MMM d, EE")
-        return dateFormatter.string(from: self)
-    }
-}

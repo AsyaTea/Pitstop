@@ -13,6 +13,7 @@ struct HeaderContent : View {
     
     @StateObject var dataVM : DataViewModel
     @ObservedObject var homeVM: HomeViewModel
+    @ObservedObject var utilityVM = UtilityViewModel()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15){
@@ -28,7 +29,7 @@ struct HeaderContent : View {
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
                             let formattedCost = String(format: "%.0f", dataVM.totalExpense)
-                            Text("\(formattedCost) $")
+                            Text("\(formattedCost) \(utilityVM.currency)")
                                 .foregroundColor(Palette.black)
                                 .font(Typography.headerL)
                             Text("All costs")

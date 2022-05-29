@@ -186,8 +186,8 @@
 				FFDAA33F283FE1A000145B35 /* TopBarView.swift */,
 				FF106793282D38960077CCF7 /* HeaderContentView.swift */,
 				FFC52897282FB2A40013D8B6 /* BottomContentView.swift */,
-				FFDAA33E283FE12B00145B35 /* Important numbers */,
 				41596432283B84BA0023CADC /* LastEventsListView.swift */,
+				FFDAA33E283FE12B00145B35 /* Important numbers */,
 				FF3616D2282926D6002ADA33 /* Add Report Modal */,
 			);
 			path = Vehicle;
