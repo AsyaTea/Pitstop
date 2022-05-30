@@ -28,6 +28,8 @@ class DataViewModel : ObservableObject {
     
     @Published var totalVehicleCost : Float = 0.0
     @Published var totalExpense : Float = 0.0
+    @Published var monthsAmount : Set<String> = []
+    @Published var totalMonthExpense : [Float] = []
     
     @Published var expenseFilteredList : [ExpenseViewModel] = []
     
@@ -304,8 +306,8 @@ class DataViewModel : ObservableObject {
     //Total Cost functions
     // Move somewhere else
     func getTotalExpense(expenses: [ExpenseViewModel]) {
-        print("expense list: \(expenses)")
-        self.totalVehicleCost = 0
+//        print("expense list: \(expenses)")
+        self.totalVehicleCost = 0.0
         for expense in expenses {
             totalVehicleCost += expense.price
         }
@@ -313,9 +315,42 @@ class DataViewModel : ObservableObject {
         self.totalExpense = totalVehicleCost
 
     }
+    
+    func getMonths(expenses: [ExpenseViewModel]) {
+        
+        var date = ""
+        for expenseList in expenseList {
+           date = expenseList.date.toString(dateFormat: "MMMM")
+            monthsAmount.insert(date)
+        }
+    }
+    
+    func getMonthsExpense(expenses: [ExpenseViewModel],month:String) ->Float {
+        
+        var totalExpense: Float = 0.0
+            for expense in expenses {
+                if ( expense.date.toString(dateFormat: "MMMM") == month){
+                    totalExpense += expense.price
+                }
+            }
+       return totalExpense
+    }
+    
     func addNewExpensePriceToTotal(expense: ExpenseState) {
         self.totalExpense = totalExpense + expense.price
         print("Add new expense")
     }
     
+}
+
+
+extension Date
+{
+    func toString( dateFormat format  : String ) -> String
+    {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: self)
+    }
+
 }

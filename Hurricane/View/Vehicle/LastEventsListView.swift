@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+
 struct LastEventsListView: View {
     
     @ObservedObject var categoryVM = CategoryViewModel()
@@ -20,6 +22,8 @@ struct LastEventsListView: View {
     
     @State var expenseToEdit = ExpenseState()
     
+    @State var isfilterSelected = true
+    
     
     var body: some View {
         NavigationView{
@@ -29,26 +33,10 @@ struct LastEventsListView: View {
                 VStack {
                     
                     //MARK: CATEGORIES FILTER
-                    FiltersRow(dataVM: dataVM)
+                    FiltersRow(dataVM: dataVM, isFilterSelected: $isfilterSelected)
                     ScrollView(.vertical, showsIndicators: false){
-                        //MARK: MONTHS
-                        ZStack{
-                            Rectangle()
-                                .frame(height: UIScreen.main.bounds.height * 0.035)
-                                .foregroundColor(Palette.greyLight)
-                            HStack{
-                                Text("June")
-                                    .foregroundColor(Palette.black)
-                                    .font(Typography.ControlS)
-                                Spacer()
-                                Text("1 984,42 $")
-                                    .foregroundColor(Palette.black)
-                                    .font(Typography.ControlS)
-                            }
-                            .padding()
-                        }
                         
-                        if(dataVM.expenseFilteredList.isEmpty){
+                        if(dataVM.expenseList.isEmpty){
                             HStack{
                                 Text("There are no events now")
                                     .font(Typography.TextM)
@@ -57,16 +45,52 @@ struct LastEventsListView: View {
                             }
                             .padding()
                         }
-                        else{
-                            ForEach(dataVM.expenseFilteredList.reversed(),id:\.self) { expense in
-                                CategoryComponent(
-                                    category: Category.init(rawValue: Int(expense.category )) ?? .other,
-                                    date: expense.date, cost: String(expense.price)
-                                )
-                                .onTapGesture {
-                                    showEditExpense.toggle()
-                                    expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
+                        
+                        //MARK: MONTHS
+                        ForEach(dataVM.monthsAmount.sorted(by: <),id:\.self){ month in
+                            
+                            ZStack{
+                                Rectangle()
+                                    .frame(height: UIScreen.main.bounds.height * 0.035)
+                                    .foregroundColor(Palette.greyLight)
+                                HStack{
+                                    Text(month)
+                                        .foregroundColor(Palette.black)
+                                        .font(Typography.ControlS)
+                                    Spacer()
+                                    Text(String(format: "%2.f",dataVM.getMonthsExpense(expenses: dataVM.expenseList, month: month)) + String(utilityVM.currency))
+                                        .foregroundColor(Palette.black)
+                                        .font(Typography.ControlS)
                                 }
+                                .padding()
+                            }
+                            
+                          
+                            if (isfilterSelected == false){
+                                ForEach(dataVM.expenseList.filter {$0.date.toString(dateFormat: "MMMM") == month},id:\.self) {
+                                    expense in
+                                    CategoryComponent(
+                                        category: Category.init(rawValue: Int(expense.category )) ?? .other,
+                                        date: expense.date, cost: String(expense.price)
+                                    )
+                                    .onTapGesture {
+                                        showEditExpense.toggle()
+                                        expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
+                                    }
+                                }
+                            }
+                            else{
+                                ForEach(dataVM.expenseFilteredList.filter {$0.date.toString(dateFormat: "MMMM") == month},id:\.self) { expense in
+                                    CategoryComponent(
+                                        category: Category.init(rawValue: Int(expense.category )) ?? .other,
+                                        date: expense.date, cost: String(expense.price)
+                                    )
+                                    .onTapGesture {
+                                        showEditExpense.toggle()
+                                        expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
+                                    }
+                                }
+                                
                             }
                         }
                         Spacer()
@@ -96,6 +120,8 @@ struct LastEventsListView: View {
                 dataVM.getExpensesCoreData(filter: nil, storage: { storage in
                     dataVM.expenseFilteredList = storage
                 })
+                dataVM.getTotalExpense(expenses: dataVM.expenseList)
+                dataVM.getMonths(expenses: dataVM.expenseList)
             }
         }
     }
@@ -138,10 +164,9 @@ struct FiltersRow: View {
     
     @StateObject var dataVM : DataViewModel
     
-    let fuelFilter = NSPredicate(format: "category == %@","0")
+    @State var curretFilter: [Int] = [] // Array to store the filters used
     
-    @State var currentFilter: Int = 0
-    @State var curreFilt: [Int] = []
+    @Binding var isFilterSelected : Bool
     
     let impactMed = UIImpactFeedbackGenerator(style: .medium)
     
@@ -153,15 +178,18 @@ struct FiltersRow: View {
                     impactMed.impactOccurred()
                     fuelIsPressed.toggle()
                     
+                    
                     if(fuelIsPressed == true){
-                        curreFilt.append(Category.fuel.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter {
-                            curreFilt.contains(Int($0.category))
-                        }
+                        isFilterSelected = true
+                        curretFilter.append(Category.fuel.rawValue)
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter {curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        if let index = curreFilt.firstIndex(of: Category.fuel.rawValue){curreFilt.remove(at: index)}
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = false
+                        if let index = curretFilter.firstIndex(of: Category.fuel.rawValue){curretFilter.remove(at: index)}
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     
                 }
@@ -171,13 +199,18 @@ struct FiltersRow: View {
                     impactMed.impactOccurred()
                     maintenanceIsPressed.toggle()
                     
+                    
                     if(maintenanceIsPressed == true){
-                        curreFilt.append(Category.maintenance.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = true
+                        curretFilter.append(Category.maintenance.rawValue)
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        if let index = curreFilt.firstIndex(of: Category.maintenance.rawValue){ curreFilt.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = false
+                        if let index = curretFilter.firstIndex(of: Category.maintenance.rawValue){ curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     
                 }
@@ -186,13 +219,18 @@ struct FiltersRow: View {
                 Button("Tolls"){
                     impactMed.impactOccurred()
                     tollsIsPressed.toggle()
+                    
                     if(tollsIsPressed == true){
-                        curreFilt.append(Category.tolls.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = true
+                        curretFilter.append(Category.tolls.rawValue)
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        if let index = curreFilt.firstIndex(of: Category.tolls.rawValue){ curreFilt.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = false
+                        if let index = curretFilter.firstIndex(of: Category.tolls.rawValue){ curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $tollsIsPressed))
@@ -202,12 +240,16 @@ struct FiltersRow: View {
                     impactMed.impactOccurred()
                     insuranceIsPressed.toggle()
                     if(insuranceIsPressed == true){
-                        curreFilt.append(Category.insurance.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = true
+                        curretFilter.append(Category.insurance.rawValue)
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        if let index = curreFilt.firstIndex(of: Category.insurance.rawValue){ curreFilt.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = false
+                        if let index = curretFilter.firstIndex(of: Category.insurance.rawValue){ curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $insuranceIsPressed))
@@ -216,12 +258,16 @@ struct FiltersRow: View {
                     impactMed.impactOccurred()
                     roadTaxIsPressed.toggle()
                     if(roadTaxIsPressed == true){
-                        curreFilt.append(Category.roadTax.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = true
+                        curretFilter.append(Category.roadTax.rawValue)
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        if let index = curreFilt.firstIndex(of: Category.roadTax.rawValue){ curreFilt.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = false
+                        if let index = curretFilter.firstIndex(of: Category.roadTax.rawValue){ curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $roadTaxIsPressed))
@@ -229,13 +275,18 @@ struct FiltersRow: View {
                 Button("Fines"){
                     impactMed.impactOccurred()
                     finesIsPressed.toggle()
+                    
                     if(finesIsPressed == true){
-                        curreFilt.append(Category.fines.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = true
+                        curretFilter.append(Category.fines.rawValue)
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        if let index = curreFilt.firstIndex(of: Category.fines.rawValue){ curreFilt.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = false
+                        if let index = curretFilter.firstIndex(of: Category.fines.rawValue){ curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $finesIsPressed))
@@ -244,12 +295,16 @@ struct FiltersRow: View {
                     impactMed.impactOccurred()
                     parkingIsPressed.toggle()
                     if(parkingIsPressed == true){
-                        curreFilt.append(Category.parking.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = true
+                        curretFilter.append(Category.parking.rawValue)
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        if let index = curreFilt.firstIndex(of: Category.parking.rawValue){ curreFilt.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = false
+                        if let index = curretFilter.firstIndex(of: Category.parking.rawValue){ curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $parkingIsPressed))
@@ -258,12 +313,16 @@ struct FiltersRow: View {
                     impactMed.impactOccurred()
                     otherIsPressed.toggle()
                     if(otherIsPressed == true){
-                        curreFilt.append(Category.other.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = true
+                        curretFilter.append(Category.other.rawValue)
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        if let index = curreFilt.firstIndex(of: Category.other.rawValue){ curreFilt.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curreFilt.contains(Int($0.category))}
+                        isFilterSelected = false
+                        if let index = curretFilter.firstIndex(of: Category.other.rawValue){ curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $otherIsPressed))
