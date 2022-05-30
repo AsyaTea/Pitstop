@@ -32,10 +32,10 @@ struct AnalyticsOverviewView: View {
             .frame(height: 30)
             
             if(categoryVM.currentPickerTab == "Overview") {
-                OverviewView()
+                OverviewView(dataVM: dataVM)
             }
             else if (categoryVM.currentPickerTab == "Cost") {
-                AnalyticsCostView(categoryVM: categoryVM)
+                AnalyticsCostView(categoryVM: categoryVM, dataVM: dataVM)
             }
             else if (categoryVM.currentPickerTab == "Fuel") {
                 AnalyticsFuelView()
@@ -120,10 +120,11 @@ struct AnalyticsOverviewView: View {
 
 //MARK: Overview page
 struct OverviewView: View {
+    @ObservedObject var dataVM : DataViewModel
     @ObservedObject var categoryVM = CategoryViewModel()
     var body: some View {
         List {
-            CostsListView(categoryVM: categoryVM)
+            CostsListView(categoryVM: categoryVM, dataVM: dataVM)
             Section {
                 FuelListView()
                     .padding(2)
@@ -141,6 +142,7 @@ struct OverviewView: View {
 struct CostsListView: View {
 
     @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var dataVM : DataViewModel
     
     var body: some View {
     

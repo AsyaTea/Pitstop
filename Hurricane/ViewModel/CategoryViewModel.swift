@@ -111,12 +111,36 @@ class CategoryViewModel: ObservableObject {
     ]
     
     @Published var currentPickerTab : String = "Overview"
-    
+    @Published var selectedCategory : Int16 = 0
     @Published var arrayCat : [Category] = []
     
+    //Computed properties, pass expenseList through view and call functions
+    @Published var fuelTotal: Float = 0.0
+    @Published var mainteinanceTotal: Float = 0.0
+    @Published var insuranceTotal: Float = 0.0
+    @Published var tollsTotal: Float = 0.0
+    @Published var finesTotal: Float = 0.0
+    @Published var parkingTotal: Float = 0.0
+    @Published var otherTotal: Float = 0.0
+    
+    @Published var categoryList = [ExpenseViewModel]()
+    
+    @Published var selectedTimeFrame = "All time"
+    let timeFrames = ["Per month", "Per 3 months", "Per year" , "All time"]
+
+    
+
 //    init() {
-//       
+//        self.fuelTotal : Float {
+//            getExpensesCategoryList(expensesList: categoryList, category: 0)
+//            return totalCategoryCost(categoryList: categoryList)
+//        }
 //    }
+    
+    var defaultCategory : Category {
+        get {return Category.init(rawValue: Int(selectedCategory)) ?? .other}
+        set {selectedCategory = Int16(newValue.rawValue)}
+    }
     
     //Function to calculate total cost of a category
     func totalCategoryCost(categoryList: [ExpenseViewModel]) -> Float {
@@ -137,26 +161,47 @@ class CategoryViewModel: ObservableObject {
         return categoryList
     }
     
+    //MARK: Fuel, remember to insert a time frame property to pass
+
+    //Refuel x month, from fuelExpenseList filter those who are in the time frame -> perform count
     
-    @Published var selectedCategory : Int16 = 0
-    
-    var defaultCategory : Category {
-        get {return Category.init(rawValue: Int(selectedCategory)) ?? .other}
-        set {selectedCategory = Int16(newValue.rawValue)}
+    func getRefuel() {
+        
     }
     
+    //Average days/refuel, map through fuelExpenseList and return days between 2 fuel expenses in a new array -> calculate avg value
+    
+    func getAverageDaysRefuel() {
+        
+    }
+    
+    //Average price, map through fuel list and return prices in a new array -> calculate avg value
+    
+    func getAveragePrice() {
+        
+    }
+    
+    //MARK: Odometer, remember to insert a time frame property
+    
+    //Average, take odometer and divide it by the given time -> calculate avg
+    
+    func getAverageOdometer() {
+        
+    }
+    
+    //Time total, take odomenter of now and the last one within time frame and subtract -> value displayed
+    
+    func getTimeTotal() {
+        
+    }
+    
+    //Estimated km/year takes odometer data from time frame, makes an average -> multiply for 12/ 4 / 1 based on time frame
+    
+    func getEstimatedOdometerPerYear() {
+        
+    }
     
 }
 
 
-/*
 
- 
- ARRAYEXPFUEL = FETCHFUEL
- VAR FUELTOTAL
- FOR ARRAYEXPFUEL { VALUE IN
-    FUELTOTAL += VALUE
- }
- 
-
- */
