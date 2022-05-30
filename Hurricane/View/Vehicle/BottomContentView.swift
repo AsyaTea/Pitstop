@@ -10,14 +10,18 @@ import SwiftUI
 struct BottomContentView: View {
     
     @ObservedObject var homeVM : HomeViewModel
+    @StateObject var dataVM : DataViewModel
+    @ObservedObject var utilityVM : UtilityViewModel
     @StateObject var categoryVM = CategoryViewModel()
+    
     @State private var viewAllNumbers = false
     @State private var viewAllDocuments = false
     @State private var viewAllEvents = false
     
     @State private var showingOptions = false
     
-    @StateObject var dataVM : DataViewModel
+    
+    
         
     var body: some View {
         VStack(spacing: 0){
@@ -27,7 +31,7 @@ struct BottomContentView: View {
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
-                .sheet(isPresented: $viewAllEvents){LastEventsListView()}
+                .sheet(isPresented: $viewAllEvents){LastEventsListView(dataVM: dataVM,utilityVM: utilityVM)}
             
             if(dataVM.expenseList.isEmpty){
                 HStack{

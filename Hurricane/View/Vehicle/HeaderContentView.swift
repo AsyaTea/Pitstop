@@ -13,7 +13,7 @@ struct HeaderContent : View {
     
     @StateObject var dataVM : DataViewModel
     @ObservedObject var homeVM: HomeViewModel
-    @ObservedObject var utilityVM = UtilityViewModel()
+    @ObservedObject var utilityVM : UtilityViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15){

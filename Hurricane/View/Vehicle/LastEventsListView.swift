@@ -15,7 +15,10 @@ struct LastEventsListView: View {
     @State private var showEditExpense = false
     @Environment(\.presentationMode) private var presentationMode
     
-    //    @ObservedObject var utilityVM : UtilityViewModel
+    @StateObject var dataVM : DataViewModel
+    @ObservedObject var utilityVM : UtilityViewModel
+    
+    
     
     var body: some View {
         NavigationView{
@@ -25,7 +28,7 @@ struct LastEventsListView: View {
                 VStack {
                     
                     //MARK: CATEGORIES FILTER
-                    FiltersRow()
+                    FiltersRow(dataVM: dataVM)
                     ScrollView(.vertical, showsIndicators: false){
                         //MARK: MONTHS
                         ZStack{
@@ -44,11 +47,23 @@ struct LastEventsListView: View {
                             .padding()
                         }
                         
-                        CategoryComponent(category: .fines, date: Date.now, cost: "3920")
-                            .onTapGesture {
-                                showEditExpense.toggle()
+                        if(dataVM.expenseFilteredList.isEmpty){
+                            HStack{
+                                Text("There are no events now")
+                                    .font(Typography.TextM)
+                                    .foregroundColor(Palette.greyMiddle)
+                                Spacer()
                             }
-                        
+                            .padding()
+                        }
+                        else{
+                            ForEach(dataVM.expenseFilteredList.reversed(),id:\.self) { expense in
+                                CategoryComponent(
+                                    category: Category.init(rawValue: Int(expense.category )) ?? .other,
+                                    date: expense.date, cost: String(expense.price)
+                                )
+                            }
+                        }
                         Spacer()
                     }
                 }
@@ -72,15 +87,20 @@ struct LastEventsListView: View {
                         .foregroundColor(Palette.black)
                 }
             }
+            .onAppear{
+                dataVM.getExpensesCoreData(filter: nil, storage: { storage in
+                    dataVM.expenseFilteredList = storage
+                })
+            }
         }
     }
 }
 
-struct LastEventsListView_Previews: PreviewProvider {
-    static var previews: some View {
-        LastEventsListView()
-    }
-}
+//struct LastEventsListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LastEventsListView()
+//    }
+//}
 
 struct FilterButton: ButtonStyle {
     
@@ -111,6 +131,11 @@ struct FiltersRow: View {
     @State private var maintenanceIsPressed = false
     @State private var roadTaxIsPressed = false
     
+    @StateObject var dataVM : DataViewModel
+    
+    let fuelFilter = NSPredicate(format: "category == %@","0")
+//    let maintFilter = NSPredicate(format: "category == %@","1")
+    
     let impactMed = UIImpactFeedbackGenerator(style: .medium)
     
     var body: some View {
@@ -118,9 +143,19 @@ struct FiltersRow: View {
             HStack{
                 
                 Button("Fuel"){
-                    
                     impactMed.impactOccurred()
                     fuelIsPressed.toggle()
+                    if(fuelIsPressed == true){
+                        dataVM.getExpensesCoreData(filter: fuelFilter, storage: { storage in
+                            dataVM.expenseFilteredList = storage
+                        })
+                    }
+                    else {
+                        dataVM.getExpensesCoreData(filter: nil, storage: { storage in
+                            dataVM.expenseFilteredList = storage
+                        })
+                    }
+                   
                 }
                 .buttonStyle(FilterButton(isPressed: $fuelIsPressed))
                 
@@ -133,6 +168,13 @@ struct FiltersRow: View {
                 Button("Maintenance"){
                     impactMed.impactOccurred()
                     maintenanceIsPressed.toggle()
+                    if(maintenanceIsPressed == true){
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter {$0.category == 1 || $0.category == Category.fuel.rawValue}
+                    }
+                    else {
+                        dataVM.expenseFilteredList = dataVM.expenseList
+                    }
+                        
                 }
                 .buttonStyle(FilterButton(isPressed: $maintenanceIsPressed))
                 
