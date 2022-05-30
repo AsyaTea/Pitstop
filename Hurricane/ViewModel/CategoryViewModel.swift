@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 enum Category: Int{
-    case fuel = 0
     case maintenance = 1
     case insurance = 2
     case roadTax = 3
@@ -17,6 +16,7 @@ enum Category: Int{
     case fines = 5
     case parking = 6
     case other = 7
+    case fuel = 8
 }
 
 extension Category : CaseIterable{
@@ -121,7 +121,7 @@ class CategoryViewModel: ObservableObject {
     }
     
     
-    @Published var selectedCategory : Int16 = 0
+    @Published var selectedCategory : Int16 = Int16(Category.fuel.rawValue)
     
     var defaultCategory : Category {
         get {return Category.init(rawValue: Int(selectedCategory)) ?? .other}
