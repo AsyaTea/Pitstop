@@ -10,30 +10,41 @@ import SwiftUI
 struct BottomContentView: View {
     
     @ObservedObject var homeVM : HomeViewModel
+    @StateObject var dataVM : DataViewModel
+    @ObservedObject var utilityVM : UtilityViewModel
     @StateObject var categoryVM = CategoryViewModel()
+    
     @State private var viewAllNumbers = false
     @State private var viewAllDocuments = false
+    @State private var viewAllEvents = false
     
     @State private var showingOptions = false
     
-    @StateObject var dataVM : DataViewModel
+    
+    
         
     var body: some View {
         VStack(spacing: 0){
             
             //MARK: LAST EVENTS
-            TitleSectionComponent(sectionTitle: "Last events",binding: $viewAllDocuments)
+            TitleSectionComponent(sectionTitle: "Last events",binding: $viewAllEvents)
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
+                .sheet(isPresented: $viewAllEvents){LastEventsListView(dataVM: dataVM,utilityVM: utilityVM)}
             
             if(dataVM.expenseList.isEmpty){
+                HStack{
                 Text("There are no events now")
                     .font(Typography.TextM)
+                    .foregroundColor(Palette.greyMiddle)
+                Spacer()
+                }
+                .padding()
             }
             else{
             ForEach(dataVM.expenseList.reversed().prefix(3),id:\.self) { expense in
-                categoryComponent(
+                CategoryComponent(
                     category: Category.init(rawValue: Int(expense.category )) ?? .other,
                     date: expense.date, cost: String(expense.price)
                 )
@@ -128,42 +139,6 @@ struct BottomContentView: View {
         
     }
     
-    @ViewBuilder
-    func categoryComponent(category : Category, date: Date, cost : String) -> some View {
-        
-        let formatted = date.formatDate()
-        
-        HStack{
-            ZStack{
-                Circle()
-                    .frame(width: 32, height: 32)
-                    .foregroundColor(category.color)
-                Image(category.icon)
-                    .resizable()
-                    .frame(width: 16, height: 16)
-            }
-            VStack(alignment: .leading){
-                Text(category.label)
-                    .foregroundColor(Palette.black)
-                    .font(Typography.headerS)
-                Text(formatted)
-                    .foregroundColor(Palette.greyMiddle)
-                    .font(Typography.TextM)
-                
-            }
-            Spacer()
-            VStack{
-                Text("–$ \(cost)")
-                    .foregroundColor(Palette.greyHard)
-                    .font(Typography.headerS)
-                Spacer()
-            }
-        }
-        .padding(.horizontal)
-        .padding(.vertical,10)
-        
-    }
-    
     
     @ViewBuilder
     func documentComponent(title: String) -> some View {
@@ -197,9 +172,9 @@ struct BottomContentView: View {
         ZStack{
             Rectangle()
                 .cornerRadius(8)
-                .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
                 .foregroundColor(Palette.white)
                 .shadowGrey()
+                .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
             VStack(alignment: .leading, spacing: 22){
                 ZStack{
                     Circle()
@@ -217,11 +192,14 @@ struct BottomContentView: View {
                     Text(number)
                         .foregroundColor(Palette.greyMiddle)
                         .font(Typography.TextM)
+                        .lineLimit(1)
+                        .frame(width: UIScreen.main.bounds.width * 0.25,alignment: .leading)
                 }
             }
             .padding(.leading,-34)
             .padding(.top,-2)
         }
+        
     }
     
     @ViewBuilder
@@ -249,6 +227,48 @@ struct BottomContentView: View {
 //        
 //    }
 //}
+
+struct CategoryComponent : View {
+    
+    var category : Category
+    var date : Date
+    var cost : String
+    
+    @ObservedObject var utilityVM = UtilityViewModel()
+    
+    var body: some View {
+       
+        HStack{
+            ZStack{
+                Circle()
+                    .frame(width: 32, height: 32)
+                    .foregroundColor(category.color)
+                Image(category.icon)
+                    .resizable()
+                    .frame(width: 16, height: 16)
+            }
+            VStack(alignment: .leading){
+                HStack{
+                Text(category.label)
+                    .foregroundColor(Palette.black)
+                    .font(Typography.headerS)
+                Spacer()
+                    Text("-\(cost) \(utilityVM.currency)")
+                        .foregroundColor(Palette.greyHard)
+                        .font(Typography.headerS)
+                        .padding(.trailing,-10)
+                }
+                Text(date.formatDate())
+                    .foregroundColor(Palette.greyMiddle)
+                    .font(Typography.TextM)
+                
+            }
+            Spacer()
+        }
+        .padding(.horizontal)
+        .padding(.vertical,10)
+    }
+}
 
 struct TitleSectionComponent : View {
     
@@ -278,3 +298,10 @@ struct TitleSectionComponent : View {
 }
 
 
+extension Date {
+    func formatDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.setLocalizedDateFormatFromTemplate("MMM d, EE")
+        return dateFormatter.string(from: self)
+    }
+}

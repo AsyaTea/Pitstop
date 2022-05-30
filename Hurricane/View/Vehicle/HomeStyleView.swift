@@ -13,6 +13,7 @@ struct HomeStyleView: View {
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var homeVM : HomeViewModel
     
+    @StateObject var utilityVM = UtilityViewModel()
     //Scroll animation vars
     @State var offset:  CGFloat = 0
     @State var topEdge : CGFloat
@@ -25,7 +26,7 @@ struct HomeStyleView: View {
                     
                     GeometryReader{ proxy in
                         //MARK: HEADER CONTENT
-                        HeaderContent(offset: $offset, maxHeight: maxHeight, dataVM: dataVM, homeVM: homeVM)
+                        HeaderContent(offset: $offset, maxHeight: maxHeight, dataVM: dataVM, homeVM: homeVM, utilityVM: utilityVM)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .opacity(
@@ -53,7 +54,7 @@ struct HomeStyleView: View {
                     //MARK: BOTTOM VIEW
                     ZStack{
                         
-                        BottomContentView(homeVM: homeVM, dataVM: dataVM)
+                        BottomContentView(homeVM: homeVM, dataVM: dataVM, utilityVM: utilityVM)
                             .background(Palette.greyBackground,in: CustomCorner(corners: [.topLeft,.topRight], radius: getCornerRadius()))
                     }
                     .background(homeVM.headerBackgroundColor)
@@ -165,10 +166,3 @@ struct CustomCorner : Shape {
     }
 }
 
-extension Date {
-    func formatDate() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.setLocalizedDateFormatFromTemplate("MMM d, EE")
-        return dateFormatter.string(from: self)
-    }
-}

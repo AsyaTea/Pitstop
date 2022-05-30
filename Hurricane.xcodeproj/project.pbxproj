@@ -186,8 +186,8 @@
 				FFDAA33F283FE1A000145B35 /* TopBarView.swift */,
 				FF106793282D38960077CCF7 /* HeaderContentView.swift */,
 				FFC52897282FB2A40013D8B6 /* BottomContentView.swift */,
-				FFDAA33E283FE12B00145B35 /* Important numbers */,
 				41596432283B84BA0023CADC /* LastEventsListView.swift */,
+				FFDAA33E283FE12B00145B35 /* Important numbers */,
 				FF3616D2282926D6002ADA33 /* Add Report Modal */,
 			);
 			path = Vehicle;
@@ -201,7 +201,6 @@
 				41C6E209282CF47D00F756B5 /* AnalyticsFuelView.swift */,
 				41C6E20B282CF49B00F756B5 /* AnalyticsOdometerView.swift */,
 				41C6E20D282D184400F756B5 /* Graph.swift */,
-				41C6E20F283185B200F756B5 /* CategoryViewModel.swift */,
 				415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */,
 			);
 			path = Statistics;
@@ -234,6 +233,7 @@
 				FF3616CA28290416002ADA33 /* AddExpenseViewModel.swift */,
 				415D2041282145FE004AF201 /* DataViewModel.swift */,
 				41176DA82834DCC3000FD885 /* FuelViewModel.swift */,
+				41C6E20F283185B200F756B5 /* CategoryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
