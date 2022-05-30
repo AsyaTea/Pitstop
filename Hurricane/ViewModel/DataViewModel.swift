@@ -40,7 +40,7 @@ class DataViewModel : ObservableObject {
             
         })
         
-//        getCurrentVehicle()
+        getCurrentVehicle()
     }
     
     

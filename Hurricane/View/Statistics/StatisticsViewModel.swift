@@ -14,16 +14,7 @@ class StatisticsViewModel : ObservableObject {
     
     @Published var categoryExpensesList = [ExpenseViewModel]()
     
-    //Takes current expense list and filters through the given category
-//    func getExpensesCategoryList(expensesList: [ExpenseViewModel], category: Int16) -> [ExpenseViewModel] {
-//        var fetchedList = [ExpenseViewModel]()
-//        fetchedList =  expensesList.map { expense in
-//            if expense.category == category {
-//                fetchedList.append(expense)
-//            }
-//        }
-//
-//    }
+
     
 }
 //

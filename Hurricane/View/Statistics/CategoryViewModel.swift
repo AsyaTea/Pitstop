@@ -114,10 +114,27 @@ class CategoryViewModel: ObservableObject {
     
     @Published var arrayCat : [Category] = []
     
+//    init() {
+//       
+//    }
+    
     //Function to calculate total cost of a category
-    func totalCategoryCost(category: Category2) -> Double {
-        
-        return 0.0
+    func totalCategoryCost(categoryList: [ExpenseViewModel]) -> Float {
+        let fetchedCost = categoryList.map ({ (ExpenseViewModel) -> Float in
+            return ExpenseViewModel.price
+        })
+        print("fetched cost :\(fetchedCost)")
+        let totalCost = fetchedCost.reduce(0, +)
+        return totalCost
+    }
+    
+//    Takes current expense list and filters through the given category
+    func getExpensesCategoryList(expensesList: [ExpenseViewModel], category: Int16) -> [ExpenseViewModel] {
+        var categoryList : [ExpenseViewModel]
+        categoryList = expensesList.filter({ expense in
+            return expense.category == category
+        })
+        return categoryList
     }
     
     
