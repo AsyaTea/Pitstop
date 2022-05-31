@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AnalyticsCostView: View {
     @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var dataVM : DataViewModel
     var body: some View {
         
             VStack{
@@ -19,7 +20,7 @@ struct AnalyticsCostView: View {
                             .frame(height: 201)
                     }
                     Section {
-                        CostsListView(categoryVM: categoryVM)
+                        CostsListView(categoryVM: categoryVM, dataVM: dataVM)
                     }
                     Section {                        
                     }

@@ -12,29 +12,30 @@ struct AnalyticsOverviewView: View {
    
     @ObservedObject var categoryVM = CategoryViewModel()
     @StateObject var statisticsVM = StatisticsViewModel()
+    @ObservedObject var dataVM : DataViewModel
 
     @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
     @State var pickedTab = ""
     
     @Namespace var animation
     
-    init() {
-        //  Change list background color
-        UITableView.appearance().separatorStyle = .singleLine
-        UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
-        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
-    }
+//    init() {
+//        //  Change list background color
+//        UITableView.appearance().separatorStyle = .singleLine
+//        UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
+//        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
+//    }
     
     var body: some View {
         VStack{
-            AnalyticsHeaderView(statisticsVM: statisticsVM)
+            AnalyticsHeaderView(statisticsVM: statisticsVM, categoryVM: categoryVM, dataVM: dataVM)
             .frame(height: 30)
             
             if(categoryVM.currentPickerTab == "Overview") {
-                OverviewView()
+                OverviewView(dataVM: dataVM)
             }
             else if (categoryVM.currentPickerTab == "Cost") {
-                AnalyticsCostView(categoryVM: categoryVM)
+                AnalyticsCostView(categoryVM: categoryVM, dataVM: dataVM)
             }
             else if (categoryVM.currentPickerTab == "Fuel") {
                 AnalyticsFuelView()
@@ -119,10 +120,11 @@ struct AnalyticsOverviewView: View {
 
 //MARK: Overview page
 struct OverviewView: View {
+    @ObservedObject var dataVM : DataViewModel
     @ObservedObject var categoryVM = CategoryViewModel()
     var body: some View {
         List {
-            CostsListView(categoryVM: categoryVM)
+            CostsListView(categoryVM: categoryVM, dataVM: dataVM)
             Section {
                 FuelListView()
                     .padding(2)
@@ -140,6 +142,7 @@ struct OverviewView: View {
 struct CostsListView: View {
 
     @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var dataVM : DataViewModel
     
     var body: some View {
     
@@ -239,6 +242,8 @@ struct ListCostsAttributes: View {
 
 struct AnalyticsHeaderView : View {
     @ObservedObject var statisticsVM : StatisticsViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var dataVM : DataViewModel
     var body: some View {
         HStack{
             HStack {
@@ -284,6 +289,9 @@ struct AnalyticsHeaderView : View {
                
                 ZStack{
                     Button(action: {
+                        let categoryList = categoryVM.getExpensesCategoryList(expensesList: dataVM.expenseList, category: 0)
+                        let totalCost = categoryVM.totalCategoryCost(categoryList: categoryList)
+                        print("this is : \(totalCost)")
                         
                     }, label: {
                         ZStack{
@@ -308,6 +316,6 @@ struct AnalyticsHeaderView : View {
 
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
-        AnalyticsOverviewView()
+        AnalyticsOverviewView(dataVM: DataViewModel())
     }
 }
