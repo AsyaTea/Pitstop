@@ -114,13 +114,6 @@ class CategoryViewModel: ObservableObject {
     
     @Published var arrayCat : [Category] = []
     
-    //Function to calculate total cost of a category
-    func totalCategoryCost(category: Category2) -> Double {
-        
-        return 0.0
-    }
-    
-    
     @Published var selectedCategory : Int16 = Int16(Category.fuel.rawValue)
     //Computed properties, pass expenseList through view and call functions
     @Published var fuelTotal: Float = 0.0

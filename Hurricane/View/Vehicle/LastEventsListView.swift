@@ -8,7 +8,6 @@
 import SwiftUI
 
 
-
 struct LastEventsListView: View {
     
     @ObservedObject var categoryVM = CategoryViewModel()
@@ -22,7 +21,7 @@ struct LastEventsListView: View {
     
     @State var expenseToEdit = ExpenseState()
     
-    @State var isfilterSelected = true
+    @State var isfilterSelected = 0 // If  == 0 no filters selected
     
     
     var body: some View {
@@ -46,9 +45,10 @@ struct LastEventsListView: View {
                             .padding()
                         }
                         
-                        //MARK: MONTHS
+                        
                         ForEach(dataVM.monthsAmount.sorted(by: <),id:\.self){ month in
                             
+                            //MARK: MONTHS
                             ZStack{
                                 Rectangle()
                                     .frame(height: UIScreen.main.bounds.height * 0.035)
@@ -58,17 +58,23 @@ struct LastEventsListView: View {
                                         .foregroundColor(Palette.black)
                                         .font(Typography.ControlS)
                                     Spacer()
-                                    Text(String(format: "%2.f",dataVM.getMonthsExpense(expenses: dataVM.expenseList, month: month)) + String(utilityVM.currency))
-                                        .foregroundColor(Palette.black)
-                                        .font(Typography.ControlS)
+                                    if(isfilterSelected == 0){
+                                        Text(String(format: "%2.f",dataVM.getMonthsExpense(expenses: dataVM.expenseList, month: month)) + String(utilityVM.currency))
+                                            .foregroundColor(Palette.black)
+                                            .font(Typography.ControlS)
+                                    }
+                                    else{
+                                        Text(String(format: "%2.f",dataVM.getMonthsExpense(expenses: dataVM.expenseFilteredList, month: month)) + String(utilityVM.currency))
+                                            .foregroundColor(Palette.black)
+                                            .font(Typography.ControlS)
+                                    }
                                 }
                                 .padding()
                             }
                             
-                          
-                            if (isfilterSelected == false){
-                                ForEach(dataVM.expenseList.filter {$0.date.toString(dateFormat: "MMMM") == month},id:\.self) {
-                                    expense in
+                            //                          MARK: LIST
+                            if (isfilterSelected == 0){
+                                ForEach(dataVM.expenseList.filter {$0.date.toString(dateFormat: "MMMM") == month} .reversed(),id:\.self) { expense in
                                     CategoryComponent(
                                         category: Category.init(rawValue: Int(expense.category )) ?? .other,
                                         date: expense.date, cost: String(expense.price)
@@ -80,7 +86,7 @@ struct LastEventsListView: View {
                                 }
                             }
                             else{
-                                ForEach(dataVM.expenseFilteredList.filter {$0.date.toString(dateFormat: "MMMM") == month},id:\.self) { expense in
+                                ForEach(dataVM.expenseFilteredList.filter {$0.date.toString(dateFormat: "MMMM") == month}.reversed(),id:\.self) { expense in
                                     CategoryComponent(
                                         category: Category.init(rawValue: Int(expense.category )) ?? .other,
                                         date: expense.date, cost: String(expense.price)
@@ -90,7 +96,6 @@ struct LastEventsListView: View {
                                         expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
                                     }
                                 }
-                                
                             }
                         }
                         Spacer()
@@ -133,23 +138,6 @@ struct LastEventsListView: View {
 //    }
 //}
 
-struct FilterButton: ButtonStyle {
-    
-    @Binding var isPressed : Bool
-    
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding(10)
-            .padding(.horizontal,7)
-            .font(Typography.ControlS)
-            .background(isPressed ? Palette.black : Palette.greyLight)
-            .foregroundColor(isPressed ? Palette.white : Palette.black)
-            .clipShape(Capsule())
-            .scaleEffect(configuration.isPressed ? 0.9 : 1)
-            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
-    }
-}
-
 
 struct FiltersRow: View {
     
@@ -166,7 +154,8 @@ struct FiltersRow: View {
     
     @State var curretFilter: [Int] = [] // Array to store the filters used
     
-    @Binding var isFilterSelected : Bool
+    @Binding var isFilterSelected : Int
+    //    @Binding var month: String
     
     let impactMed = UIImpactFeedbackGenerator(style: .medium)
     
@@ -180,16 +169,14 @@ struct FiltersRow: View {
                     
                     
                     if(fuelIsPressed == true){
-                        isFilterSelected = true
+                        isFilterSelected += 1
                         curretFilter.append(Category.fuel.rawValue)
                         dataVM.expenseFilteredList = dataVM.expenseList.filter {curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        isFilterSelected = false
+                        isFilterSelected -= 1
                         if let index = curretFilter.firstIndex(of: Category.fuel.rawValue){curretFilter.remove(at: index)}
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     
                 }
@@ -201,16 +188,14 @@ struct FiltersRow: View {
                     
                     
                     if(maintenanceIsPressed == true){
-                        isFilterSelected = true
+                        isFilterSelected += 1
                         curretFilter.append(Category.maintenance.rawValue)
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        isFilterSelected = false
+                        isFilterSelected -= 1
                         if let index = curretFilter.firstIndex(of: Category.maintenance.rawValue){ curretFilter.remove(at: index) }
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     
                 }
@@ -221,16 +206,14 @@ struct FiltersRow: View {
                     tollsIsPressed.toggle()
                     
                     if(tollsIsPressed == true){
-                        isFilterSelected = true
+                        isFilterSelected += 1
                         curretFilter.append(Category.tolls.rawValue)
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        isFilterSelected = false
+                        isFilterSelected -= 1
                         if let index = curretFilter.firstIndex(of: Category.tolls.rawValue){ curretFilter.remove(at: index) }
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $tollsIsPressed))
@@ -240,16 +223,14 @@ struct FiltersRow: View {
                     impactMed.impactOccurred()
                     insuranceIsPressed.toggle()
                     if(insuranceIsPressed == true){
-                        isFilterSelected = true
+                        isFilterSelected += 1
                         curretFilter.append(Category.insurance.rawValue)
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        isFilterSelected = false
+                        isFilterSelected -= 1
                         if let index = curretFilter.firstIndex(of: Category.insurance.rawValue){ curretFilter.remove(at: index) }
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $insuranceIsPressed))
@@ -258,16 +239,14 @@ struct FiltersRow: View {
                     impactMed.impactOccurred()
                     roadTaxIsPressed.toggle()
                     if(roadTaxIsPressed == true){
-                        isFilterSelected = true
+                        isFilterSelected += 1
                         curretFilter.append(Category.roadTax.rawValue)
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        isFilterSelected = false
+                        isFilterSelected -= 1
                         if let index = curretFilter.firstIndex(of: Category.roadTax.rawValue){ curretFilter.remove(at: index) }
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $roadTaxIsPressed))
@@ -277,16 +256,14 @@ struct FiltersRow: View {
                     finesIsPressed.toggle()
                     
                     if(finesIsPressed == true){
-                        isFilterSelected = true
+                        isFilterSelected += 1
                         curretFilter.append(Category.fines.rawValue)
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        isFilterSelected = false
+                        isFilterSelected -= 1
                         if let index = curretFilter.firstIndex(of: Category.fines.rawValue){ curretFilter.remove(at: index) }
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $finesIsPressed))
@@ -295,16 +272,14 @@ struct FiltersRow: View {
                     impactMed.impactOccurred()
                     parkingIsPressed.toggle()
                     if(parkingIsPressed == true){
-                        isFilterSelected = true
+                        isFilterSelected += 1
                         curretFilter.append(Category.parking.rawValue)
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        isFilterSelected = false
+                        isFilterSelected -= 1
                         if let index = curretFilter.firstIndex(of: Category.parking.rawValue){ curretFilter.remove(at: index) }
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $parkingIsPressed))
@@ -313,16 +288,14 @@ struct FiltersRow: View {
                     impactMed.impactOccurred()
                     otherIsPressed.toggle()
                     if(otherIsPressed == true){
-                        isFilterSelected = true
+                        isFilterSelected += 1
                         curretFilter.append(Category.other.rawValue)
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                     else {
-                        isFilterSelected = false
+                        isFilterSelected -= 1
                         if let index = curretFilter.firstIndex(of: Category.other.rawValue){ curretFilter.remove(at: index) }
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                        dataVM.getTotalExpense(expenses: dataVM.expenseFilteredList)
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $otherIsPressed))
@@ -334,5 +307,22 @@ struct FiltersRow: View {
             .padding(.top,25)
             .padding(.bottom,5)
         }
+    }
+}
+
+struct FilterButton: ButtonStyle {
+    
+    @Binding var isPressed : Bool
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding(10)
+            .padding(.horizontal,7)
+            .font(Typography.ControlS)
+            .background(isPressed ? Palette.black : Palette.greyLight)
+            .foregroundColor(isPressed ? Palette.white : Palette.black)
+            .clipShape(Capsule())
+            .scaleEffect(configuration.isPressed ? 0.9 : 1)
+            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
     }
 }

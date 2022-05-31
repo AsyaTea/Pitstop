@@ -43,7 +43,6 @@ class DataViewModel : ObservableObject {
             
         })
         
-        getCurrentVehicle()
     }
     
     
@@ -303,8 +302,7 @@ class DataViewModel : ObservableObject {
     }
     
     
-    //Total Cost functions
-    // Move somewhere else
+    //MARK: Total Cost functions
     func getTotalExpense(expenses: [ExpenseViewModel]) {
 //        print("expense list: \(expenses)")
         self.totalVehicleCost = 0.0

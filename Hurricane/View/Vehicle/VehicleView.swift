@@ -10,8 +10,8 @@ import SwiftUI
 struct VehicleView: View {
     
     //Onboarding vars
-//        @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
-//    @State var shouldShowOnboarding : Bool = true //FOR TESTING
+    //        @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
+    @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var homeVM : HomeViewModel
@@ -39,9 +39,14 @@ struct VehicleView: View {
         .sheet(isPresented: $showAddReport) {
             AddReportView(dataVM: dataVM)
         }
-//                .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
-//                    OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
-//                })
+        .onAppear{
+            if(shouldShowOnboarding == false){
+            dataVM.getCurrentVehicle()
+            }
+        }
+//        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
+//            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
+//        })
         
     }
 }
