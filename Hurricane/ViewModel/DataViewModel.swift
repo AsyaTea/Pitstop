@@ -234,13 +234,14 @@ class DataViewModel : ObservableObject {
         save()
     }
     
+    //MARK: EXPENSE DELETE
     func removeExpense(indexSet: IndexSet) {
-        
         guard let index = indexSet.first else { return }
         let entity = expenses[index]
         manager.container.viewContext.delete(entity)
         save()
     }
+    
     
     func removeAllExpenses() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Expense")

@@ -35,7 +35,9 @@ struct SettingsView: View {
                                     .foregroundColor(Palette.black)
                             }
                         }
-                        //                        .onDelete(perform: dataVM.deleteVehicle)
+//                                                .onDelete(perform: dataVM.deleteVehicle)
+                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                       
                         
                         NavigationLink(destination: WorkInProgress()){
                             HStack{
@@ -54,6 +56,7 @@ struct SettingsView: View {
                                     .foregroundColor(Palette.black)
                             }
                         }
+                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
                     }
                     Section{
@@ -87,7 +90,9 @@ struct SettingsView: View {
                         Text("Coming Soon")
                         Text("Coming Soon")
                     }
-                }.listStyle(.insetGrouped)
+                }
+                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                .listStyle(.insetGrouped)
                 
                 Spacer()
                 

@@ -18,9 +18,7 @@ struct LastEventsListView: View {
     
     @StateObject var dataVM : DataViewModel
     @ObservedObject var utilityVM : UtilityViewModel
-    
-    @State var expenseToEdit = ExpenseState()
-    
+        
     @State var isfilterSelected = 0 // If  == 0 no filters selected
     
     
@@ -72,16 +70,16 @@ struct LastEventsListView: View {
                                 .padding()
                             }
                             
-                            //                          MARK: LIST
+//                          MARK: LIST
                             if (isfilterSelected == 0){
-                                ForEach(dataVM.expenseList.filter {$0.date.toString(dateFormat: "MMMM") == month} .reversed(),id:\.self) { expense in
+                            ForEach(dataVM.expenseList.filter {$0.date.toString(dateFormat: "MMMM") == month} .reversed(),id:\.self) { expense in
                                     CategoryComponent(
                                         category: Category.init(rawValue: Int(expense.category )) ?? .other,
                                         date: expense.date, cost: String(expense.price)
                                     )
                                     .onTapGesture {
                                         showEditExpense.toggle()
-                                        expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
+                                        utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
                                     }
                                 }
                             }
@@ -93,16 +91,23 @@ struct LastEventsListView: View {
                                     )
                                     .onTapGesture {
                                         showEditExpense.toggle()
-                                        expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
+                                        utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
                                     }
                                 }
                             }
                         }
+
                         Spacer()
                     }
                 }
             }
-            .sheet(isPresented: $showEditExpense){Text(String(expenseToEdit.price))}
+            .sheet(isPresented: $showEditExpense){
+                EditEventView(
+                    utilityVM: utilityVM,
+                    dataVM : dataVM,
+                    category: Category.init(rawValue: Int(utilityVM.expenseToEdit.category ?? 0 )) ?? .other
+                )
+            }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
