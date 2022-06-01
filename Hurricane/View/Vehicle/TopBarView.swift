@@ -32,12 +32,12 @@ struct TopNav : View {
                 }, label: {
                     HStack{
                         Text(dataVM.currentVehicle.first?.name ?? "Default's car ")
-                            .foregroundColor(Palette.black)
+                            .foregroundColor(Palette.blackHeader)
                             .font(Typography.headerXL)
                             .opacity(fadeOutOpacity())
                         Image("arrowLeft")
                             .resizable()
-                            .foregroundColor(Palette.black)
+                            .foregroundColor(Palette.blackHeader)
                             .frame(width: 10, height: 14)
                             .rotationEffect(Angle(degrees: 270))
                             .padding(.top,3)
@@ -111,7 +111,7 @@ struct TopNav : View {
                         }, label: {
                             ZStack{
                                 Circle()
-                                    .foregroundColor(Palette.white)
+                                    .foregroundColor(Palette.whiteHeader)
                                     .frame(width: UIScreen.main.bounds.width * 0.09, height: UIScreen.main.bounds.height * 0.04)
                                     .shadowGrey()
                                 Image("bellHome")
@@ -122,7 +122,7 @@ struct TopNav : View {
                 .padding(.top,2)
             }
             Text(brandModelString)
-                .foregroundColor(Palette.black)
+                .foregroundColor(Palette.blackHeader)
                 .font(Typography.TextM)
                 .padding(.top,-12)
                 .opacity(fadeOutOpacity())
@@ -143,10 +143,10 @@ struct TopNav : View {
             VStack(alignment: .center,spacing: 2){
                 Text(dataVM.currentVehicle.first?.name ?? "Default's car ")
                     .font(Typography.headerM)
-                    .foregroundColor(Palette.black)
+                    .foregroundColor(Palette.blackHeader)
                 Text(brandModelString)
                     .font(Typography.TextM)
-                    .foregroundColor(Palette.black)
+                    .foregroundColor(Palette.blackHeader)
             }
                 .opacity(
                     withAnimation(.easeInOut){

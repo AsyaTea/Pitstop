@@ -10,8 +10,11 @@ import SwiftUI
 
 enum Palette {
     
-    static let white = Color(rgb: 0xFFFFFF)
-    static let black = Color(rgb: 0x0B0B0B)
+    static let white = Color(lightRGB: 0xFFFFFF, darkRGB: 0x1F1F1F)
+    static let black = Color(lightRGB: 0x0B0B0B, darkRGB: 0xFDFDFD)
+    
+    static let blackHeader = Color(rgb: 0x0B0B0B)
+    static let whiteHeader = Color(rgb: 0xFFFFFF)
     
     static let colorViolet = Color(rgb: 0xC6B3FF)
     static let colorGreen = Color(rgb: 0x8BE8BD)
@@ -19,13 +22,13 @@ enum Palette {
     static let colorBlue = Color(rgb: 0x97F1EC)
     static let colorOrange = Color(rgb: 0xF2C888)
     
-    static let greyHard = Color(rgb: 0x616161)
-    static let greyMiddle = Color(rgb: 0x8A8A8A)
-    static let greyInput = Color(rgb: 0xD2D2D2)
-    static let greyLight = Color(rgb: 0xF5F5F5)
-    static let greyEBEBEB = Color(rgb: 0xEBEBEB)
-    static let greyBackground = Color(rgb: 0xFBFBFB)
-    
+    static let greyHard = Color(lightRGB: 0x616161, darkRGB: 0xA9A9A9)
+    static let greyMiddle = Color(lightRGB: 0x8A8A8A, darkRGB: 0x6F6F6F)
+    static let greyInput = Color(lightRGB: 0xD2D2D2, darkRGB: 0x434343)
+    static let greyLight = Color(lightRGB: 0xF5F5F5, darkRGB: 0x0A0909)
+    static let greyEBEBEB = Color(lightRGB: 0xEBEBEB, darkRGB: 0x353535)
+    static let greyBackground = Color(lightRGB: 0xFBFBFB, darkRGB: 0x2C2C2C)
+
     static let colorVioletLight = Color(rgb: 0x94BCF8)
 
     static let colorMainBlue = Color(rgb: 0x9FFCF7)
