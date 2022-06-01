@@ -40,8 +40,8 @@ class DataViewModel : ObservableObject {
             self.numberList = storage
             
         })
-        
         getCurrentVehicle()
+        print("datavm recreating")
     }
     
     

@@ -12,7 +12,7 @@ struct BottomContentView: View {
     @ObservedObject var homeVM : HomeViewModel
     @StateObject var dataVM : DataViewModel
     @ObservedObject var utilityVM : UtilityViewModel
-    @StateObject var categoryVM = CategoryViewModel()
+    @ObservedObject var categoryVM : CategoryViewModel
     
     @State private var viewAllNumbers = false
     @State private var viewAllDocuments = false
@@ -31,7 +31,7 @@ struct BottomContentView: View {
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
-                .sheet(isPresented: $viewAllEvents){LastEventsListView(dataVM: dataVM,utilityVM: utilityVM)}
+                .sheet(isPresented: $viewAllEvents){LastEventsListView(dataVM: dataVM,utilityVM: utilityVM, categoryVM: categoryVM)}
             
             if(dataVM.expenseList.isEmpty){
                 HStack{

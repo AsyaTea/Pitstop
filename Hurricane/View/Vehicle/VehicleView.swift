@@ -15,13 +15,15 @@ struct VehicleView: View {
     @StateObject var onboardingVM = OnboardingViewModel()
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var homeVM : HomeViewModel
+    @ObservedObject var utilityVM : UtilityViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     @State private var showAddReport = false
     
     
     var body: some View {
         GeometryReader{ proxy in
             let topEdge = proxy.safeAreaInsets.top
-            HomeStyleView(dataVM: dataVM,homeVM:homeVM, topEdge: topEdge)
+            HomeStyleView(dataVM: dataVM,homeVM:homeVM, categoryVM: categoryVM, topEdge: topEdge)
                 .ignoresSafeArea(.all,edges: .top)
         }
         .overlay(
@@ -37,7 +39,7 @@ struct VehicleView: View {
         )
         .ignoresSafeArea(.keyboard)
         .sheet(isPresented: $showAddReport) {
-            AddReportView(dataVM: dataVM)
+            AddReportView(utilityVM: utilityVM , categoryVM: categoryVM, dataVM: dataVM)
         }
 //                .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
 //                    OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)

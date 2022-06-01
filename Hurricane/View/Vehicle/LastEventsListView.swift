@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LastEventsListView: View {
     
-    @ObservedObject var categoryVM = CategoryViewModel()
+    
     @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
     
     @State private var showEditExpense = false
@@ -17,6 +17,7 @@ struct LastEventsListView: View {
     
     @StateObject var dataVM : DataViewModel
     @ObservedObject var utilityVM : UtilityViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     
     
     

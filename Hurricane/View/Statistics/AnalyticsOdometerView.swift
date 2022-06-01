@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AnalyticsOdometerView: View {
+    @ObservedObject var dataVM : DataViewModel
     var body: some View {
         VStack {
             
@@ -63,7 +64,7 @@ struct AnalyticsOdometerView: View {
                         }
                     }
                 Section {
-                    OdometerCostsView()
+                    OdometerCostsView(dataVM: dataVM)
                         .padding(4)
                 }
                 }
@@ -76,6 +77,6 @@ struct AnalyticsOdometerView: View {
 
 struct AnalyticsOdometerView_Previews: PreviewProvider {
     static var previews: some View {
-        AnalyticsOdometerView()
+        AnalyticsOdometerView(dataVM: DataViewModel())
     }
 }

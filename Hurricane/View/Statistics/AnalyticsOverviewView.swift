@@ -9,10 +9,11 @@
 import SwiftUI
 
 struct AnalyticsOverviewView: View {
-   
-    @ObservedObject var categoryVM = CategoryViewModel()
+       
     @StateObject var statisticsVM = StatisticsViewModel()
     @ObservedObject var dataVM : DataViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var utilityVM : UtilityViewModel
 
     @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
     @State var pickedTab = ""
@@ -27,22 +28,33 @@ struct AnalyticsOverviewView: View {
 //    }
     
     var body: some View {
+       
         VStack{
             AnalyticsHeaderView(statisticsVM: statisticsVM, categoryVM: categoryVM, dataVM: dataVM)
             .frame(height: 30)
             
+            if categoryVM.expenseList.isEmpty {
+                ZStack{
+                    Palette.greyBackground.ignoresSafeArea()
+                    ProgressView()
+                }
+               
+            }
+            
             if(categoryVM.currentPickerTab == "Overview") {
-                OverviewView(dataVM: dataVM)
+                OverviewView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM)
             }
             else if (categoryVM.currentPickerTab == "Cost") {
-                AnalyticsCostView(categoryVM: categoryVM, dataVM: dataVM)
+                AnalyticsCostView(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM)
             }
             else if (categoryVM.currentPickerTab == "Fuel") {
-                AnalyticsFuelView()
+                AnalyticsFuelView(categoryVM: categoryVM)
             }
             else {
-                AnalyticsOdometerView()
+                AnalyticsOdometerView(dataVM: dataVM)
             }
+            
+            
             
         }
         
@@ -59,7 +71,7 @@ struct AnalyticsOverviewView: View {
             }
         })
         .background(Palette.greyLight)
-    }
+   }
     
     
     func CustomSegmentedPicker() -> some View{
@@ -121,16 +133,17 @@ struct AnalyticsOverviewView: View {
 //MARK: Overview page
 struct OverviewView: View {
     @ObservedObject var dataVM : DataViewModel
-    @ObservedObject var categoryVM = CategoryViewModel()
+    @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var utilityVM : UtilityViewModel
     var body: some View {
         List {
-            CostsListView(categoryVM: categoryVM, dataVM: dataVM)
+            CostsListView(utilityVM:utilityVM, categoryVM: categoryVM, dataVM: dataVM)
             Section {
-                FuelListView()
+                FuelListView(categoryVM: categoryVM)
                     .padding(2)
             }
             Section {
-                OdometerCostsView()
+                OdometerCostsView(dataVM: dataVM)
                     .padding(2)
             }
         }        
@@ -141,6 +154,7 @@ struct OverviewView: View {
 //MARK: Costs List Section
 struct CostsListView: View {
 
+    @ObservedObject var utilityVM : UtilityViewModel
     @ObservedObject var categoryVM : CategoryViewModel
     @ObservedObject var dataVM : DataViewModel
     
@@ -151,7 +165,8 @@ struct CostsListView: View {
                     Text("Costs")
                         .font(Typography.headerL)
                     Spacer()
-                    Text("$ 2089")
+                    let formattedCost = String(format: "%.0f", dataVM.totalExpense)
+                    Text("\(formattedCost) \(utilityVM.currency)")
                         .fontWeight(.semibold)
                 }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
@@ -174,6 +189,7 @@ struct CostsListView: View {
 
 //MARK: Fuel data Section
 struct FuelListView : View {
+    @ObservedObject var categoryVM : CategoryViewModel
     var body: some View {
         
         HStack {
@@ -190,7 +206,8 @@ struct FuelListView : View {
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Fuel", value: "$ 1.564")
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-        ListCostsAttributes(title: "Refuels per month", value: "13")
+        ListCostsAttributes(title: "Refuels per month", value: String(categoryVM.refuelsPerTime))
+           
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Average days/refuel", value: "26")
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
@@ -200,12 +217,13 @@ struct FuelListView : View {
 
 //MARK: Odometer Section
 struct OdometerCostsView: View {
+    @ObservedObject var dataVM : DataViewModel
     var body: some View {
         HStack {
             Text("Odometer")
                 .font(Typography.headerL)
             Spacer()
-            Text("2090 Km")
+            Text("\(String(Int(dataVM.currentVehicle.first?.odometer ?? 0))) Km")
                 .fontWeight(.semibold)
                 .font(Typography.headerM)
         }
@@ -244,6 +262,7 @@ struct AnalyticsHeaderView : View {
     @ObservedObject var statisticsVM : StatisticsViewModel
     @ObservedObject var categoryVM : CategoryViewModel
     @ObservedObject var dataVM : DataViewModel
+    @State private var selectedTimeFrame = "Per month"
     var body: some View {
         HStack{
             HStack {
@@ -267,14 +286,20 @@ struct AnalyticsHeaderView : View {
                             .shadowGrey()
                         HStack{
                             Menu {
-                                Picker(selection: $statisticsVM.selectedTimeFrame, label: EmptyView()) {
-                                    ForEach(statisticsVM.timeFrames, id: \.self) {
-                                        Text($0)
+                                Picker(selection: $selectedTimeFrame, label: Text("Time")) {
+                                    ForEach(categoryVM.timeFrames, id: \.self) { time in
+                                        Text(time).tag(time)
                                     }
-                                }
+                                        }
+                                        .onChange(of: selectedTimeFrame) { tag in
+                                        
+                                            categoryVM.setSelectedTimeFrame(timeFrame: tag)
+                                            print("tag is  \(tag)")
+                                        }
+                                
                             } label: {
                                 HStack {
-                                    Text(statisticsVM.selectedTimeFrame)
+                                    Text(categoryVM.selectedTimeFrame)
                                         .foregroundColor(Palette.black)
                                         .font(Typography.ControlS)
                                     Image("arrowDown")
@@ -289,9 +314,7 @@ struct AnalyticsHeaderView : View {
                
                 ZStack{
                     Button(action: {
-                        let categoryList = categoryVM.getExpensesCategoryList(expensesList: dataVM.expenseList, category: 0)
-                        let totalCost = categoryVM.totalCategoryCost(categoryList: categoryList)
-                        print("this is : \(totalCost)")
+                        
                         
                     }, label: {
                         ZStack{
@@ -313,9 +336,9 @@ struct AnalyticsHeaderView : View {
 
 
     
-
-struct StatsView_Previews: PreviewProvider {
-    static var previews: some View {
-        AnalyticsOverviewView(dataVM: DataViewModel())
-    }
-}
+//
+//struct StatsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AnalyticsOverviewView(dataVM: DataViewModel(), utilityVM: UtilityViewModel())
+//    }
+//}

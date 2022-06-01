@@ -12,7 +12,7 @@ struct ExpenseListView: View {
     @StateObject var addExpVM : AddExpenseViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     @StateObject var dataVM : DataViewModel
-    @StateObject var categoryVM : CategoryViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     @StateObject var fuelVM = FuelViewModel()
     
     var focusedField : FocusState<FocusField?>.Binding
@@ -250,7 +250,7 @@ struct CustomCategoryPicker : View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var dataVM : DataViewModel
     @StateObject var addExpVM : AddExpenseViewModel
-    @StateObject var categoryVM : CategoryViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     @Binding var checkmark : Bool
     
     var body: some View {
