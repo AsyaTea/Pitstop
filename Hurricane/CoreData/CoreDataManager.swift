@@ -75,4 +75,16 @@ class CoreDataManager {
             print("Failed to delete vehicle \(error)")
         }
     }
+    
+    func deleteExpense(_ expense : Expense) {
+        context.delete(expense)
+        
+        do{
+            try context.save()
+        }
+        catch{
+            context.rollback()
+            print("Failed to delete expense \(error)")
+        }
+    }
 }

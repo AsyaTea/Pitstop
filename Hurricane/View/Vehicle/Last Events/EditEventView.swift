@@ -18,7 +18,7 @@ struct EditEventView: View {
     var body: some View {
         NavigationView{
             VStack{
-                EventListFields(utilityVM: utilityVM, category: category)
+                FuelEventListFields(utilityVM: utilityVM, category: category)
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
@@ -32,12 +32,12 @@ struct EditEventView: View {
                     .accentColor(Palette.greyHard),
                 trailing:
                     Button(action: {
-//                        do {
-//                            try dataVM.updateExpense(utilityVM.expenseToEdit)
-//                        }
-//                        catch{
-//                            print(error)
-//                        }
+                        do {
+                            try dataVM.updateExpense(utilityVM.expenseToEdit)
+                        }
+                        catch{
+                            print(error)
+                        }
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Save")
@@ -55,7 +55,7 @@ struct EditEventView: View {
                 VStack{
                     Spacer(minLength: UIScreen.main.bounds.size.height * 0.78)
                     Button(action: {
-                        
+//                        dataVM.deleteExpenseCoreData(expense: )
                     }, label: {
                         DeleteButton()
                     })
@@ -88,13 +88,14 @@ struct DeleteButton : View {
     }
 }
 
-struct EventListFields: View {
+struct FuelEventListFields: View {
     
     @StateObject var utilityVM : UtilityViewModel
     var category : Category
     
     var body: some View {
         List{
+            
             //MARK: CATEGORY FUEL
             HStack{
                 ListCategoryComponent(title: "Amount", iconName: "other", color: Palette.colorViolet)
@@ -112,19 +113,32 @@ struct EventListFields: View {
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
-            HStack{
-                ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
-                Spacer()
-                Text(category.label)
-                    .font(Typography.headerM)
-                    .foregroundColor(Palette.black)
+//            HStack{
+//                ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
+//                Spacer()
+//                Text(category.label)
+//                    .font(Typography.headerM)
+//                    .foregroundColor(Palette.black)
+//            }
+//            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+            
+            DatePicker(selection: $utilityVM.expenseToEdit.date, displayedComponents: [.date]) {
+                ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             HStack{
-                ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
+                ListCategoryComponent(title: "Odometer", iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                Text("Today")
+                Text("409030")
+            }
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+            
+            HStack{
+                //MARK: TO FIX
+                ListCategoryComponent(title: "Fuel type", iconName: "fuelType", color: Palette.colorOrange)
+                Spacer()
+                Text(String(utilityVM.expenseToEdit.fuelType ?? 0))
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
@@ -144,19 +158,24 @@ struct EventListFields: View {
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             HStack{
-                ListCategoryComponent(title: "Note", iconName: "note", color: Palette.greyLight)
+                ListCategoryComponent(
+                    title: "Note",
+                    iconName: utilityVM.expenseToEdit.note.isEmpty ? "note" : "noteColored",
+                    color: utilityVM.expenseToEdit.note.isEmpty ? Palette.greyLight : Palette.colorViolet)
                 Spacer()
-                TextField("Lorem Ipsum", text: $utilityVM.expenseToEdit.note)
+                TextField("Note", text: $utilityVM.expenseToEdit.note)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .fixedSize(horizontal: true, vertical: true)
-//                    .focused(focusedField, equals: .odometer)
+    //                    .focused(focusedField, equals: .odometer)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
         }
     }
 }
+
+
 
 //struct EditEventView_Previews: PreviewProvider {
 //    static var previews: some View {

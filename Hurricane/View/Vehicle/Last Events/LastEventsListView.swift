@@ -52,7 +52,7 @@ struct LastEventsListView: View {
                                     .frame(height: UIScreen.main.bounds.height * 0.035)
                                     .foregroundColor(Palette.greyLight)
                                 HStack{
-                                    Text(month)
+                                    Text(month.capitalized)
                                         .foregroundColor(Palette.black)
                                         .font(Typography.ControlS)
                                     Spacer()
@@ -81,7 +81,7 @@ struct LastEventsListView: View {
                                         showEditExpense.toggle()
                                         utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
                                     }
-                                }
+                            }.onDelete(perform: dataVM.deleteExpense)
                             }
                             else{
                                 ForEach(dataVM.expenseFilteredList.filter {$0.date.toString(dateFormat: "MMMM") == month}.reversed(),id:\.self) { expense in

@@ -152,7 +152,7 @@ class DataViewModel : ObservableObject {
         }
     }
     
-        
+    //MARK: VEHICLE UPDATE
     func updateVehicle(_ vs : VehicleState) throws{
         
         guard let vehicleID = vs.vehicleID else {
@@ -181,7 +181,7 @@ class DataViewModel : ObservableObject {
         }
         
         save()
-        print("UPDATE DONE")
+        print("VEHICLE UPDATE DONE")
     }
     
     func getVehicleById(vehicleId : NSManagedObjectID) throws -> VehicleViewModel {
@@ -234,11 +234,57 @@ class DataViewModel : ObservableObject {
         save()
     }
     
+    //MARK: EXPENSE UPDATE
+    func updateExpense(_ es : ExpenseState) throws {
+        guard let expenseID = es.expenseID else {
+            return print("Expense ID not found during update")
+        }
+        
+        guard let expense = manager.getExpenseById(id: expenseID) else {
+            return print("Expense not found during update")
+        }
+        
+        expense.price = es.price
+        expense.odometer = es.price
+        expense.date = es.date
+        expense.priceLiter = es.priceLiter ?? 0.0
+        expense.fuelType = es.fuelType ?? 7
+        expense.liters = es.liters ?? 0.0
+        expense.category = es.category ?? 8
+        expense.note = es.note
+        
+        //PUBLISHED LIST UPDATE
+        for (index,value) in expenseList.enumerated() {
+            if(value.expenseID == es.expenseID){
+                expenseList.remove(at: index)
+                expenseList.insert(ExpenseViewModel(expense: expense), at: index)
+            }
+        }
+        
+        save()
+        print("EXPENSE UPDATE DONE")
+    }
+    
     //MARK: EXPENSE DELETE
-    func removeExpense(indexSet: IndexSet) {
-        guard let index = indexSet.first else { return }
-        let entity = expenses[index]
-        manager.container.viewContext.delete(entity)
+//    func removeExpense(indexSet: IndexSet) {
+//        guard let index = indexSet.first else { return }
+//        let entity = expenses[index]
+//        expense
+//    }
+    
+    func deleteExpense(at indexSet: IndexSet){
+        indexSet.forEach{ index in
+            let expense = expenseList[index]
+            expenseList.remove(at: index)
+            deleteExpenseCoreData(expense: expense)
+        }
+    }
+    
+    func deleteExpenseCoreData(expense : ExpenseViewModel) {
+        let expense = manager.getExpenseById(id: expense.expenseID)
+        if let expense = expense {
+            manager.deleteExpense(expense)
+        }
         save()
     }
     

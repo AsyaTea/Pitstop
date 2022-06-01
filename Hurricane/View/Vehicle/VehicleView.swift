@@ -19,6 +19,7 @@ struct VehicleView: View {
     
     
     var body: some View {
+      
         GeometryReader{ proxy in
             let topEdge = proxy.safeAreaInsets.top
             HomeStyleView(dataVM: dataVM,homeVM:homeVM, topEdge: topEdge)
