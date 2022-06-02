@@ -288,6 +288,19 @@ class DataViewModel : ObservableObject {
         save()
     }
     
+    func deleteExpenseState(expenseS : ExpenseState) {
+        guard let expenseID = expenseS.expenseID else {
+            return print("Expense ID not found during update")
+        }
+        
+        let expense = manager.getExpenseById(id: expenseID)
+        if let expense = expense {
+            manager.deleteExpense(expense)
+        }
+        save()
+    }
+    
+    
     
     func removeAllExpenses() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Expense")

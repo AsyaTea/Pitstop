@@ -14,6 +14,7 @@ struct EditEventView: View {
     @StateObject var utilityVM : UtilityViewModel
     @StateObject var dataVM : DataViewModel
     var category : Category
+    @State var showingAlert = false
     
     var body: some View {
         NavigationView{
@@ -55,13 +56,29 @@ struct EditEventView: View {
                 VStack{
                     Spacer(minLength: UIScreen.main.bounds.size.height * 0.78)
                     Button(action: {
-//                        dataVM.deleteExpenseCoreData(expense: )
+                        showingAlert.toggle()
                     }, label: {
                         DeleteButton()
                     })
                     Spacer()
                 }
             )
+            .alert(isPresented:$showingAlert) {
+                    Alert(
+                        title: Text("Are you sure you want to delete this?"),
+                        message: Text("There is no undo"),
+                        primaryButton: .destructive(Text("Delete")) {
+                            dataVM.deleteExpenseState(expenseS: utilityVM.expenseToEdit)
+                            dataVM.getExpensesCoreData(filter: nil, storage: { storage in
+                                dataVM.expenseList = storage
+                            })
+//                            dataVM.getTotalExpense(expenses: dataVM.expenseList)
+//                            dataVM.getMonths(expenses: dataVM.expenseList)
+                            self.presentationMode.wrappedValue.dismiss()
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
         }
     }
 }

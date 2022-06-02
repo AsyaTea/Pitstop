@@ -132,6 +132,7 @@ struct LastEventsListView: View {
                 })
                 dataVM.getTotalExpense(expenses: dataVM.expenseList)
                 dataVM.getMonths(expenses: dataVM.expenseList)
+//                print("appeared")
             }
         }
     }
