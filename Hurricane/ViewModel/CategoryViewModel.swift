@@ -47,6 +47,7 @@ class CategoryViewModel: ObservableObject {
     @Published var totalExpense : Float = 0.0
    
     @Published var refuelsPerTime: Int = 0
+    @Published var avgDaysRefuel: Int = 0
    
     
     @Published var selectedTimeFrame = "Per month"
@@ -136,9 +137,26 @@ class CategoryViewModel: ObservableObject {
     //Average days/refuel, map through fuelExpenseList and return days between 2 fuel expenses in a new array -> calculate avg value
     
     func getAverageDaysRefuel(timeFrame: String, fuelList: [ExpenseViewModel]) {
-//        let daysDifference = fuelList.map { (ExpenseViewModel) -> Int in
-//            <#code#>
-//        }
+        let dateArray = fuelList.map { (ExpenseViewModel) -> Date in
+            return ExpenseViewModel.date
+        }
+
+        var daysDiff = [TimeInterval]()
+        for (index,date) in dateArray.enumerated() {
+            if date != dateArray.last {
+                daysDiff.append(Date.timeDifference(lhs: date, rhs: dateArray[index+1]))
+            }
+        }
+        let daysDiffInt = daysDiff.map { sec in
+            //absolute abs floor sec / 86400
+            return Int(floor(abs(sec/86400)))
+        }
+        print("date array\(daysDiffInt)")
+        
+        self.avgDaysRefuel = (daysDiffInt.reduce(0, +))/daysDiffInt.count
+        print("avg days : \(self.avgDaysRefuel)")
+    
+        
     }
     
     //Average price, map through fuel list and return prices in a new array -> calculate avg value
@@ -208,6 +226,7 @@ class CategoryViewModel: ObservableObject {
             self.expenseList = storage
             self.assignCategories(expenseList: storage)
             self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+            self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
         })
     }
     
@@ -364,6 +383,21 @@ enum CategoryEnum {
     case mainteinance
     case fuel
     case insurance
+}
+
+extension Date {
+
+    static func timeDifference(lhs: Date, rhs: Date) -> TimeInterval {
+        return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
+    }
+    
+    static func -(recent: Date, previous: Date) -> (month: Int?, day: Int?) {
+           let day = Calendar.current.dateComponents([.day], from: previous, to: recent).day
+           let month = Calendar.current.dateComponents([.month], from: previous, to: recent).month
+
+           return (month: month, day: day)
+       }
+
 }
 
 
