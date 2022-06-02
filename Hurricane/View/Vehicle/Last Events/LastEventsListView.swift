@@ -19,7 +19,7 @@ struct LastEventsListView: View {
     
     @StateObject var dataVM : DataViewModel
     @ObservedObject var utilityVM : UtilityViewModel
-        
+    
     @State var isfilterSelected = 0 // If  == 0 no filters selected
     
     
@@ -71,29 +71,31 @@ struct LastEventsListView: View {
                                 .padding()
                             }
                             
-//                          MARK: LIST
+                            //MARK: LIST
                             if (isfilterSelected == 0){
-                            ForEach(dataVM.expenseList.filter {$0.date.toString(dateFormat: "MMMM") == month} .reversed(),id:\.self) { expense in
-                                    CategoryComponent(
-                                        category: Category.init(rawValue: Int(expense.category )) ?? .other,
-                                        date: expense.date, cost: String(expense.price)
-                                    )
-                                    .onTapGesture {
+                                ForEach(dataVM.expenseList.filter {$0.date.toString(dateFormat: "MMMM") == month} .reversed(),id:\.self) { expense in
+                                    Button(action: {
                                         showEditExpense.toggle()
                                         utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
-                                    }
-                            }.onDelete(perform: dataVM.deleteExpense)
+                                    }, label: {
+                                        CategoryComponent(
+                                            category: Category.init(rawValue: Int(expense.category )) ?? .other,
+                                            date: expense.date, cost: String(expense.price)
+                                        )
+                                    })
+                                }
                             }
                             else{
                                 ForEach(dataVM.expenseFilteredList.filter {$0.date.toString(dateFormat: "MMMM") == month}.reversed(),id:\.self) { expense in
-                                    CategoryComponent(
-                                        category: Category.init(rawValue: Int(expense.category )) ?? .other,
-                                        date: expense.date, cost: String(expense.price)
-                                    )
-                                    .onTapGesture {
+                                    Button(action: {
                                         showEditExpense.toggle()
                                         utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
-                                    }
+                                    }, label: {
+                                        CategoryComponent(
+                                            category: Category.init(rawValue: Int(expense.category )) ?? .other,
+                                            date: expense.date, cost: String(expense.price)
+                                        )
+                                    })
                                 }
                             }
                         }
@@ -132,7 +134,7 @@ struct LastEventsListView: View {
                 })
                 dataVM.getTotalExpense(expenses: dataVM.expenseList)
                 dataVM.getMonths(expenses: dataVM.expenseList)
-//                print("appeared")
+                //                print("appeared")
             }
         }
     }

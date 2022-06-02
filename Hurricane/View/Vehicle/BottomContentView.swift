@@ -30,30 +30,32 @@ struct BottomContentView: View {
                 .padding(.top,10)
                 .padding(.bottom,-10)
                 .sheet(isPresented: $viewAllEvents){LastEventsListView(categoryVM: categoryVM, dataVM: dataVM,utilityVM: utilityVM)}
-//            NavigationLink("NAVIGA",destination: LastEventsListView(dataVM: dataVM,utilityVM: utilityVM),isActive: $viewAllEvents)
-
+            //            NavigationLink("NAVIGA",destination: LastEventsListView(dataVM: dataVM,utilityVM: utilityVM),isActive: $viewAllEvents)
+            
             if(dataVM.expenseList.isEmpty){
                 HStack{
-                Text("There are no events now")
-                    .font(Typography.TextM)
-                    .foregroundColor(Palette.greyMiddle)
-                Spacer()
+                    Text("There are no events now")
+                        .font(Typography.TextM)
+                        .foregroundColor(Palette.greyMiddle)
+                    Spacer()
                 }
                 .padding()
             }
             else{
-            ForEach(dataVM.expenseList.reversed().prefix(3),id:\.self) { expense in
-                CategoryComponent(
-                    category: Category.init(rawValue: Int(expense.category )) ?? .other,
-                    date: expense.date, cost: String(expense.price)
-                )
-                .onTapGesture {
-                    utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
-                    showEventEdit.toggle()
+                ForEach(dataVM.expenseList.reversed().prefix(3),id:\.self) { expense in
+                    Button(action: {
+                        utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
+                        showEventEdit.toggle()
+                    }, label: {
+                        CategoryComponent(
+                            category: Category.init(rawValue: Int(expense.category )) ?? .other,
+                            date: expense.date, cost: String(expense.price)
+                        )
+                    })
+                    
                 }
             }
-            }
-
+            
             //MARK: DOCUMENTS
             TitleSectionComponent(sectionTitle: "Documents", binding: $viewAllDocuments)
                 .padding()
@@ -246,7 +248,7 @@ struct CategoryComponent : View {
     @ObservedObject var utilityVM = UtilityViewModel()
     
     var body: some View {
-       
+        
         HStack{
             ZStack{
                 Circle()
@@ -258,10 +260,10 @@ struct CategoryComponent : View {
             }
             VStack(alignment: .leading){
                 HStack{
-                Text(category.label)
-                    .foregroundColor(Palette.black)
-                    .font(Typography.headerS)
-                Spacer()
+                    Text(category.label)
+                        .foregroundColor(Palette.black)
+                        .font(Typography.headerS)
+                    Spacer()
                     Text("-\(cost) \(utilityVM.currency)")
                         .foregroundColor(Palette.greyHard)
                         .font(Typography.headerS)
