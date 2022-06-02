@@ -28,6 +28,8 @@ class DataViewModel : ObservableObject {
     
     @Published var totalVehicleCost : Float = 0.0
     @Published var totalExpense : Float = 0.0
+    @Published var monthsAmount : Set<String> = []
+    @Published var totalMonthExpense : [Float] = []
     
     @Published var expenseFilteredList : [ExpenseViewModel] = []
     
@@ -40,8 +42,7 @@ class DataViewModel : ObservableObject {
             self.numberList = storage
             
         })
-        getCurrentVehicle()
-        print("datavm recreating")
+
     }
     
     
@@ -151,7 +152,7 @@ class DataViewModel : ObservableObject {
         }
     }
     
-        
+    //MARK: VEHICLE UPDATE
     func updateVehicle(_ vs : VehicleState) throws{
         
         guard let vehicleID = vs.vehicleID else {
@@ -180,7 +181,7 @@ class DataViewModel : ObservableObject {
         }
         
         save()
-        print("UPDATE DONE")
+        print("VEHICLE UPDATE DONE")
     }
     
     func getVehicleById(vehicleId : NSManagedObjectID) throws -> VehicleViewModel {
@@ -233,13 +234,60 @@ class DataViewModel : ObservableObject {
         save()
     }
     
-    func removeExpense(indexSet: IndexSet) {
+    //MARK: EXPENSE UPDATE
+    func updateExpense(_ es : ExpenseState) throws {
+        guard let expenseID = es.expenseID else {
+            return print("Expense ID not found during update")
+        }
         
-        guard let index = indexSet.first else { return }
-        let entity = expenses[index]
-        manager.container.viewContext.delete(entity)
+        guard let expense = manager.getExpenseById(id: expenseID) else {
+            return print("Expense not found during update")
+        }
+        
+        expense.price = es.price
+        expense.odometer = es.price
+        expense.date = es.date
+        expense.priceLiter = es.priceLiter ?? 0.0
+        expense.fuelType = es.fuelType ?? 7
+        expense.liters = es.liters ?? 0.0
+        expense.category = es.category ?? 8
+        expense.note = es.note
+        
+        //PUBLISHED LIST UPDATE
+        for (index,value) in expenseList.enumerated() {
+            if(value.expenseID == es.expenseID){
+                expenseList.remove(at: index)
+                expenseList.insert(ExpenseViewModel(expense: expense), at: index)
+            }
+        }
+        
+        save()
+        print("EXPENSE UPDATE DONE")
+    }
+    
+    //MARK: EXPENSE DELETE
+//    func removeExpense(indexSet: IndexSet) {
+//        guard let index = indexSet.first else { return }
+//        let entity = expenses[index]
+//        expense
+//    }
+    
+    func deleteExpense(at indexSet: IndexSet){
+        indexSet.forEach{ index in
+            let expense = expenseList[index]
+            expenseList.remove(at: index)
+            deleteExpenseCoreData(expense: expense)
+        }
+    }
+    
+    func deleteExpenseCoreData(expense : ExpenseViewModel) {
+        let expense = manager.getExpenseById(id: expense.expenseID)
+        if let expense = expense {
+            manager.deleteExpense(expense)
+        }
         save()
     }
+    
     
     func removeAllExpenses() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Expense")
@@ -301,11 +349,10 @@ class DataViewModel : ObservableObject {
     }
     
     
-    //Total Cost functions
-    // Move somewhere else
+    //MARK: Total Cost functions
     func getTotalExpense(expenses: [ExpenseViewModel]) {
-        print("expense list: \(expenses)")
-        self.totalVehicleCost = 0
+//        print("expense list: \(expenses)")
+        self.totalVehicleCost = 0.0
         for expense in expenses {
             totalVehicleCost += expense.price
         }
@@ -313,9 +360,42 @@ class DataViewModel : ObservableObject {
         self.totalExpense = totalVehicleCost
 
     }
+    
+    func getMonths(expenses: [ExpenseViewModel]) {
+        
+        var date = ""
+        for expenseList in expenseList {
+           date = expenseList.date.toString(dateFormat: "MMMM")
+            monthsAmount.insert(date)
+        }
+    }
+    
+    func getMonthsExpense(expenses: [ExpenseViewModel],month:String) ->Float {
+        
+        var totalExpense: Float = 0.0
+            for expense in expenses {
+                if ( expense.date.toString(dateFormat: "MMMM") == month){
+                    totalExpense += expense.price
+                }
+            }
+       return totalExpense
+    }
+    
     func addNewExpensePriceToTotal(expense: ExpenseState) {
         self.totalExpense = totalExpense + expense.price
         print("Add new expense")
     }
     
+}
+
+
+extension Date
+{
+    func toString( dateFormat format  : String ) -> String
+    {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: self)
+    }
+
 }

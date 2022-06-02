@@ -20,9 +20,6 @@ struct BottomContentView: View {
     
     @State private var showingOptions = false
     
-    
-    
-        
     var body: some View {
         VStack(spacing: 0){
             
@@ -31,8 +28,9 @@ struct BottomContentView: View {
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
-                .sheet(isPresented: $viewAllEvents){LastEventsListView(dataVM: dataVM,utilityVM: utilityVM, categoryVM: categoryVM)}
-            
+                .sheet(isPresented: $viewAllEvents){LastEventsListView(categoryVM: categoryVM, dataVM: dataVM,utilityVM: utilityVM)}
+//            NavigationLink("NAVIGA",destination: LastEventsListView(dataVM: dataVM,utilityVM: utilityVM),isActive: $viewAllEvents)
+
             if(dataVM.expenseList.isEmpty){
                 HStack{
                 Text("There are no events now")
@@ -133,7 +131,6 @@ struct BottomContentView: View {
             Spacer()
             
         }
-        
         .fullScreenCover(isPresented: $viewAllNumbers){ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)}
         .fullScreenCover(isPresented: $viewAllDocuments){WorkInProgress()}
         
