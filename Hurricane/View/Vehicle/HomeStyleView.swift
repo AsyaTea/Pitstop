@@ -12,6 +12,7 @@ struct HomeStyleView: View {
     
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var homeVM : HomeViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     
     @StateObject var utilityVM = UtilityViewModel()
     //Scroll animation vars
@@ -54,7 +55,7 @@ struct HomeStyleView: View {
                     //MARK: BOTTOM VIEW
                     ZStack{
                         
-                        BottomContentView(homeVM: homeVM, dataVM: dataVM, utilityVM: utilityVM)
+                        BottomContentView(homeVM: homeVM, dataVM: dataVM, utilityVM: utilityVM, categoryVM: categoryVM)
                             .background(Palette.greyBackground,in: CustomCorner(corners: [.topLeft,.topRight], radius: getCornerRadius()))
                     }
                     .background(homeVM.headerBackgroundColor)

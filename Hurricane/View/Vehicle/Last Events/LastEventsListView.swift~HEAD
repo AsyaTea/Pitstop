@@ -1,11 +1,10 @@
-
-
 //
 //  LastEventsListView.swift
 //  Hurricane
 //
 //  Created by Asya Tealdi on 23/05/22.
 //
+
 import SwiftUI
 
 
@@ -133,7 +132,6 @@ struct LastEventsListView: View {
                 })
                 dataVM.getTotalExpense(expenses: dataVM.expenseList)
                 dataVM.getMonths(expenses: dataVM.expenseList)
-//                print("appeared")
             }
         }
     }
@@ -144,6 +142,7 @@ struct LastEventsListView: View {
 //        LastEventsListView()
 //    }
 //}
+
 
 struct FiltersRow: View {
     

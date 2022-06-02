@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct HurricaneApp: App {
+   
     var body: some Scene {
         WindowGroup {
             CustomTabBarView()

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct AddReportView: View {
         
-    @StateObject var utilityVM : UtilityViewModel = .init()
+    @ObservedObject var utilityVM : UtilityViewModel 
     @StateObject var addExpVM : AddExpenseViewModel = .init()
-    @StateObject var categoryVM = CategoryViewModel()
+    @ObservedObject var categoryVM : CategoryViewModel
     @StateObject var dataVM : DataViewModel
     
     @State private var showDate = false
