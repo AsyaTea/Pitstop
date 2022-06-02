@@ -247,6 +247,7 @@ class DataViewModel : ObservableObject {
         expense.price = es.price
         expense.odometer = es.price
         expense.date = es.date
+        expense.odometer = es.odometer
         expense.priceLiter = es.priceLiter ?? 0.0
         expense.fuelType = es.fuelType ?? 7
         expense.liters = es.liters ?? 0.0

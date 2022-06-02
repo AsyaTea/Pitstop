@@ -19,7 +19,12 @@ struct EditEventView: View {
     var body: some View {
         NavigationView{
             VStack{
+                if(category == .fuel){
                 FuelEventListFields(utilityVM: utilityVM, category: category)
+                }
+                else{
+                EventListFields(utilityVM: utilityVM, category: category)
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
@@ -39,6 +44,7 @@ struct EditEventView: View {
                         catch{
                             print(error)
                         }
+                        dataVM.getTotalExpense(expenses: dataVM.expenseList)
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Save")
@@ -71,7 +77,9 @@ struct EditEventView: View {
                             dataVM.deleteExpenseState(expenseS: utilityVM.expenseToEdit)
                             dataVM.getExpensesCoreData(filter: nil, storage: { storage in
                                 dataVM.expenseList = storage
+                                dataVM.expenseFilteredList = storage
                             })
+                            //SE METTO STA ROBA CRASHA, TO FIX PROSSIMAMENTE
 //                            dataVM.getTotalExpense(expenses: dataVM.expenseList)
 //                            dataVM.getMonths(expenses: dataVM.expenseList)
                             self.presentationMode.wrappedValue.dismiss()
@@ -122,7 +130,6 @@ struct FuelEventListFields: View {
                     .foregroundColor(Palette.black)
                     .keyboardType(.decimalPad)
                     .fixedSize(horizontal: true, vertical: true)
-//                    .focused(focusedField, equals: .odometer)
                    
                 Text(utilityVM.currency)
                     .font(Typography.headerM)
@@ -139,38 +146,62 @@ struct FuelEventListFields: View {
 //            }
 //            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
+            
+            //MARK: DATE
             DatePicker(selection: $utilityVM.expenseToEdit.date, displayedComponents: [.date]) {
                 ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
+            //MARK: ODOMETER
             HStack{
                 ListCategoryComponent(title: "Odometer", iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                Text("409030")
+                TextField("100", value: $utilityVM.expenseToEdit.odometer,formatter: NumberFormatter())
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.black)
+                    .keyboardType(.numberPad)
+                    .fixedSize(horizontal: true, vertical: true)
+                Text(utilityVM.unit)
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.black)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
+            //MARK: FUEL TYPE
             HStack{
-                //MARK: TO FIX
                 ListCategoryComponent(title: "Fuel type", iconName: "fuelType", color: Palette.colorOrange)
                 Spacer()
-                Text(String(utilityVM.expenseToEdit.fuelType ?? 0))
+                Text((FuelType.init(rawValue: Int(utilityVM.expenseToEdit.fuelType ?? 0)) ?? .none).label)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             HStack{
-                ListCategoryComponent(title: "Price/Liter", iconName: "priceLiter", color: Palette.greyLight)
+                ListCategoryComponent(
+                    title: "Price/Liter",
+                    iconName: utilityVM.expenseToEdit.priceLiter == 0 ? "priceLiter" : "priceLiterColored",
+                    color:utilityVM.expenseToEdit.liters == 0 ? Palette.greyLight : Palette.colorYellow)
                 Spacer()
-                Text("1.70")
+                TextField("0", value: $utilityVM.expenseToEdit.priceLiter,formatter: NumberFormatter())
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.black)
+                    .keyboardType(.decimalPad)
+                    .fixedSize(horizontal: true, vertical: true)
                 
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             HStack{
-                ListCategoryComponent(title: "Liters", iconName: "liters", color: Palette.greyLight)
+                ListCategoryComponent(
+                    title: "Liters",
+                    iconName: utilityVM.expenseToEdit.liters == 0 ? "liters" : "literColored",
+                    color: utilityVM.expenseToEdit.liters == 0 ? Palette.greyLight : Palette.colorOrange)
                 Spacer()
-                Text("20")
+                TextField("0", value: $utilityVM.expenseToEdit.liters,formatter: NumberFormatter())
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.black)
+                    .keyboardType(.decimalPad)
+                    .fixedSize(horizontal: true, vertical: true)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
@@ -192,7 +223,76 @@ struct FuelEventListFields: View {
     }
 }
 
-
+struct EventListFields: View {
+    
+    @StateObject var utilityVM : UtilityViewModel
+    var category : Category
+    
+    var body: some View {
+        List{
+            
+            HStack{
+                ListCategoryComponent(title: "Amount", iconName: "other", color: Palette.colorViolet)
+                Spacer()
+                TextField("100", value: $utilityVM.expenseToEdit.price,formatter: NumberFormatter())
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.black)
+                    .keyboardType(.decimalPad)
+                    .fixedSize(horizontal: true, vertical: true)
+                   
+                Text(utilityVM.currency)
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.black)
+            }
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+            
+//            HStack{
+//                ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
+//                Spacer()
+//                Text(category.label)
+//                    .font(Typography.headerM)
+//                    .foregroundColor(Palette.black)
+//            }
+//            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+            
+            
+            //MARK: DATE
+            DatePicker(selection: $utilityVM.expenseToEdit.date, displayedComponents: [.date]) {
+                ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
+            }
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+            
+            //MARK: ODOMETER
+            HStack{
+                ListCategoryComponent(title: "Odometer", iconName: "odometer", color: Palette.colorBlue)
+                Spacer()
+                TextField("100", value: $utilityVM.expenseToEdit.odometer,formatter: NumberFormatter())
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.black)
+                    .keyboardType(.numberPad)
+                    .fixedSize(horizontal: true, vertical: true)
+                Text(utilityVM.unit)
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.black)
+            }
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+            
+            HStack{
+                ListCategoryComponent(
+                    title: "Note",
+                    iconName: utilityVM.expenseToEdit.note.isEmpty ? "note" : "noteColored",
+                    color: utilityVM.expenseToEdit.note.isEmpty ? Palette.greyLight : Palette.colorViolet)
+                Spacer()
+                TextField("Note", text: $utilityVM.expenseToEdit.note)
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.black)
+                    .fixedSize(horizontal: true, vertical: true)
+            }
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+            
+        }
+    }
+}
 
 //struct EditEventView_Previews: PreviewProvider {
 //    static var previews: some View {

@@ -17,6 +17,7 @@ struct BottomContentView: View {
     @State private var viewAllNumbers = false
     @State private var viewAllDocuments = false
     @State private var viewAllEvents = false
+    @State private var showEventEdit = false
     
     @State private var showingOptions = false
     
@@ -46,6 +47,10 @@ struct BottomContentView: View {
                     category: Category.init(rawValue: Int(expense.category )) ?? .other,
                     date: expense.date, cost: String(expense.price)
                 )
+                .onTapGesture {
+                    utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
+                    showEventEdit.toggle()
+                }
             }
             }
 
@@ -130,6 +135,13 @@ struct BottomContentView: View {
                 .padding(.vertical,55)
             Spacer()
             
+        }
+        .sheet(isPresented: $showEventEdit){
+            EditEventView(
+                utilityVM: utilityVM,
+                dataVM: dataVM,
+                category: Category.init(rawValue: Int(utilityVM.expenseToEdit.category ?? 0 )) ?? .other
+            )
         }
         .fullScreenCover(isPresented: $viewAllNumbers){ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)}
         .fullScreenCover(isPresented: $viewAllDocuments){WorkInProgress()}

@@ -97,7 +97,6 @@ struct LastEventsListView: View {
                                 }
                             }
                         }
-
                         Spacer()
                     }
                 }
