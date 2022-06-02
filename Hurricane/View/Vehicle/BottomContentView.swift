@@ -17,6 +17,7 @@ struct BottomContentView: View {
     @State private var viewAllNumbers = false
     @State private var viewAllDocuments = false
     @State private var viewAllEvents = false
+    @State private var showEventEdit = false
     
     @State private var showingOptions = false
     
@@ -33,22 +34,28 @@ struct BottomContentView: View {
 
             if(dataVM.expenseList.isEmpty){
                 HStack{
-                Text("There are no events now")
-                    .font(Typography.TextM)
-                    .foregroundColor(Palette.greyMiddle)
-                Spacer()
+                    Text("There are no events now")
+                        .font(Typography.TextM)
+                        .foregroundColor(Palette.greyMiddle)
+                    Spacer()
                 }
                 .padding()
             }
             else{
-            ForEach(dataVM.expenseList.reversed().prefix(3),id:\.self) { expense in
-                CategoryComponent(
-                    category: Category.init(rawValue: Int(expense.category )) ?? .other,
-                    date: expense.date, cost: String(expense.price)
-                )
+                ForEach(dataVM.expenseList.reversed().prefix(3),id:\.self) { expense in
+                    Button(action: {
+                        utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
+                        showEventEdit.toggle()
+                    }, label: {
+                        CategoryComponent(
+                            category: Category.init(rawValue: Int(expense.category )) ?? .other,
+                            date: expense.date, cost: String(expense.price)
+                        )
+                    })
+                    
+                }
             }
-            }
-
+            
             //MARK: DOCUMENTS
             TitleSectionComponent(sectionTitle: "Documents", binding: $viewAllDocuments)
                 .padding()
@@ -130,6 +137,13 @@ struct BottomContentView: View {
                 .padding(.vertical,55)
             Spacer()
             
+        }
+        .sheet(isPresented: $showEventEdit){
+            EditEventView(
+                utilityVM: utilityVM,
+                dataVM: dataVM,
+                category: Category.init(rawValue: Int(utilityVM.expenseToEdit.category ?? 0 )) ?? .other
+            )
         }
         .fullScreenCover(isPresented: $viewAllNumbers){ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)}
         .fullScreenCover(isPresented: $viewAllDocuments){WorkInProgress()}
@@ -234,7 +248,7 @@ struct CategoryComponent : View {
     @ObservedObject var utilityVM = UtilityViewModel()
     
     var body: some View {
-       
+        
         HStack{
             ZStack{
                 Circle()
@@ -246,10 +260,10 @@ struct CategoryComponent : View {
             }
             VStack(alignment: .leading){
                 HStack{
-                Text(category.label)
-                    .foregroundColor(Palette.black)
-                    .font(Typography.headerS)
-                Spacer()
+                    Text(category.label)
+                        .foregroundColor(Palette.black)
+                        .font(Typography.headerS)
+                    Spacer()
                     Text("-\(cost) \(utilityVM.currency)")
                         .foregroundColor(Palette.greyHard)
                         .font(Typography.headerS)

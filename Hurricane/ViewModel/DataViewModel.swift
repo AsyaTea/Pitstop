@@ -248,6 +248,7 @@ class DataViewModel : ObservableObject {
         expense.price = es.price
         expense.odometer = es.price
         expense.date = es.date
+        expense.odometer = es.odometer
         expense.priceLiter = es.priceLiter ?? 0.0
         expense.fuelType = es.fuelType ?? 7
         expense.liters = es.liters ?? 0.0
@@ -288,6 +289,19 @@ class DataViewModel : ObservableObject {
         }
         save()
     }
+    
+    func deleteExpenseState(expenseS : ExpenseState) {
+        guard let expenseID = expenseS.expenseID else {
+            return print("Expense ID not found during update")
+        }
+        
+        let expense = manager.getExpenseById(id: expenseID)
+        if let expense = expense {
+            manager.deleteExpense(expense)
+        }
+        save()
+    }
+    
     
     
     func removeAllExpenses() {
