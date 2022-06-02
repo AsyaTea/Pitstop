@@ -42,7 +42,7 @@ class DataViewModel : ObservableObject {
             self.numberList = storage
             
         })
-
+        
     }
     
     
