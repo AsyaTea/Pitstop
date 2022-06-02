@@ -18,7 +18,7 @@ class OnboardingViewModel : ObservableObject {
     @Published var destination : Pages = .page1
     
     var isDisabled : Bool {
-        return vehicle.name.isEmpty  || vehicle.brand.isEmpty  || vehicle.model.isEmpty  || vehicle.fuelTypeOne == 7
+        return vehicle.name.isEmpty  || vehicle.brand.isEmpty  || vehicle.model.isEmpty  || vehicle.fuelTypeOne == FuelType.none.rawValue
 //        return false // debugging
     }
     
@@ -37,7 +37,7 @@ class OnboardingViewModel : ObservableObject {
         vehicle.brand = ""
         vehicle.model = ""
         vehicle.odometer = 0
-        vehicle.fuelTypeOne = 7
+        vehicle.fuelTypeOne = Int16(FuelType.none.rawValue)
         vehicle.fuelTypeTwo = nil
     }
     

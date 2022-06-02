@@ -5,6 +5,6 @@
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>Stay up to date with deadlines and the maintenance status of your vehicle</string>
 	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleLightContent</string>
+	<string>UIStatusBarStyleDefault</string>
 </dict>
 </plist>

@@ -169,6 +169,7 @@ struct Page2 : View {
                     ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
                         Button(fuel.label){
                             fuelVM.defaultFuelType = fuel
+                            onboardingVM.vehicle.fuelTypeOne = fuelVM.defaultSelectedFuel
                         }
                     }
                 }
@@ -376,7 +377,6 @@ struct Page3 : View {
                 Spacer()
                 Button(action: {
                     withAnimation(.easeInOut){
-                        onboardingVM.vehicle.fuelTypeOne = fuelVM.defaultSelectedFuel
                         onboardingVM.vehicle.fuelTypeTwo = fuelVM.secondarySelectedFuel
                         dataVM.setAllCurrentToFalse()
                         onboardingVM.vehicle.current = 1

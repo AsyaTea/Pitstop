@@ -10,7 +10,6 @@ import SwiftUI
 import CoreData
 
 enum Category: Int{
-    case fuel = 0
     case maintenance = 1
     case insurance = 2
     case roadTax = 3
@@ -18,6 +17,7 @@ enum Category: Int{
     case fines = 5
     case parking = 6
     case other = 7
+    case fuel = 8
 }
 
 extension Category : CaseIterable{
@@ -105,9 +105,10 @@ class CategoryViewModel: ObservableObject {
     @Published var categories = [Category2]()
     
     @Published var currentPickerTab : String = "Overview"
-    @Published var selectedCategory : Int16 = 0
+    
     @Published var arrayCat : [Category] = []
     
+    @Published var selectedCategory : Int16 = Int16(Category.fuel.rawValue)
     //Computed properties, pass expenseList through view and call functions
     @Published var fuelTotal: Float = 0.0
     @Published var mainteinanceTotal: Float = 0.0

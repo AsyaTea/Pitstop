@@ -10,7 +10,7 @@ import Foundation
 class AddExpenseViewModel : ObservableObject {
     
     //List picker categories
-    @Published var category : Int16 = 0
+    @Published var category : Int16 = Int16(Category.fuel.rawValue)
     @Published var fuel : Int16 = 0
     @Published var selectedCategory : String = "Fuel"
     @Published var selectedFuel : String = ""

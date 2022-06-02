@@ -214,7 +214,8 @@ struct ContentView: View {
                       Text("Expense: \(expense.note)")
     //                Text("ciao")
                     
-                        }.onDelete(perform: dataVM.removeExpense(indexSet:))
+                        }
+//                .onDelete(perform: dataVM.removeExpense(indexSet:))
                     }
                 }
                 }
