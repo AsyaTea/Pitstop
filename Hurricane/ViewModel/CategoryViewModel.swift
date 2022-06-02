@@ -110,10 +110,6 @@ class CategoryViewModel: ObservableObject {
         return monthSub
     }
     
-//    func addExpenseToCategoryList(expense: ExpenseState, categoryList: [ExpenseViewModel]) -> ExpenseViewModel{
-
-//    }
-    
     
     //MARK: Fuel, remember to insert a time frame property to pass
 
@@ -129,14 +125,12 @@ class CategoryViewModel: ObservableObject {
         let monthFuels = fuelList.filter { refuel in
             return refuel.date > monthSubtractedDate
         }
-            print("month fuels : \(monthFuels)")
+            
         self.refuelsPerTime = monthFuels.count
         print(self.refuelsPerTime)
         } else {
            self.refuelsPerTime = fuelList.count
-        }
-        
-       
+        }       
     }
     
     //Average days/refuel, map through fuelExpenseList and return days between 2 fuel expenses in a new array -> calculate avg value
@@ -207,6 +201,16 @@ class CategoryViewModel: ObservableObject {
         
     }
     
+    func retrieveAndUpdate() {
+        self.expenseList = []
+        let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (self.currentVehicle.first?.vehicleID)!)
+        self.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
+            self.expenseList = storage
+            self.assignCategories(expenseList: storage)
+            self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+        })
+    }
+    
     func getCurrentVehicle() {
         let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
         let vehicle : [Vehicle]
@@ -218,15 +222,8 @@ class CategoryViewModel: ObservableObject {
             vehicle =  try manager.context.fetch(request)
             DispatchQueue.main.async {
                 self.currentVehicle = vehicle.map(VehicleViewModel.init)
-                let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (self.currentVehicle.first?.vehicleID)!)
-                self.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
-                    self.expenseList = storage
-                    self.assignCategories(expenseList: storage)
-                    self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-                    print("categoryVM recreating \(storage)")
-                    
-                    
-                })
+                self.retrieveAndUpdate()
+                
             }
             print("CURRENT VEHICLE LIST ",vehicleList)
 
