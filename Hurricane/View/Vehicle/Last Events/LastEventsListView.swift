@@ -11,13 +11,14 @@ import SwiftUI
 
 struct LastEventsListView: View {
     
+    @StateObject var dataVM : DataViewModel
     @ObservedObject var categoryVM = CategoryViewModel()
     @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
     
     @State private var showEditExpense = false
     @Environment(\.presentationMode) private var presentationMode
     
-    @StateObject var dataVM : DataViewModel
+    
     @ObservedObject var utilityVM : UtilityViewModel
         
     @State var isfilterSelected = 0 // If  == 0 no filters selected

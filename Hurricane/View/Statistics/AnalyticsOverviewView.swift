@@ -291,8 +291,7 @@ struct AnalyticsHeaderView : View {
                                         Text(time).tag(time)
                                     }
                                         }
-                                        .onChange(of: selectedTimeFrame) { tag in
-                                        
+                                        .onChange(of: selectedTimeFrame) { tag in                                        
                                             categoryVM.setSelectedTimeFrame(timeFrame: tag)
                                             print("tag is  \(tag)")
                                         }

@@ -28,7 +28,7 @@ struct BottomContentView: View {
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
-                .sheet(isPresented: $viewAllEvents){LastEventsListView(categoryVM: categoryVM, dataVM: dataVM,utilityVM: utilityVM)}
+                .sheet(isPresented: $viewAllEvents){LastEventsListView(dataVM: dataVM, categoryVM: categoryVM,utilityVM: utilityVM)}
 //            NavigationLink("NAVIGA",destination: LastEventsListView(dataVM: dataVM,utilityVM: utilityVM),isActive: $viewAllEvents)
 
             if(dataVM.expenseList.isEmpty){
