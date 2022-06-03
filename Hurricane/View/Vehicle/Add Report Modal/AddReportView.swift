@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddReportView: View {
-        
+    
     @ObservedObject var utilityVM: UtilityViewModel
     @StateObject var addExpVM: AddExpenseViewModel = .init()
     @ObservedObject var categoryVM: CategoryViewModel
@@ -43,7 +43,7 @@ struct AddReportView: View {
                         .padding(.top,15)
                 }
                 else{
-                    TextFieldComponent(submitField: $addExpVM.reminderTab, placeholder: "-", attribute: "ㅤ", keyboardType: .default,focusedField: $focusedField,defaultFocus: .reminderTab)
+                    TextFieldComponent(submitField: $reminderVM.title, placeholder: "-", attribute: "ㅤ", keyboardType: .default,focusedField: $focusedField,defaultFocus: .reminderTab)
                         .padding(.top,15)
                 }
                 
@@ -61,7 +61,7 @@ struct AddReportView: View {
                     OdometerListView(addExpVM: addExpVM,utilityVM: utilityVM, focusedField: $focusedField)
                 }
                 else{
-                    ReminderListView(datVM: dataVM, addExpVM : addExpVM, utilityVM: utilityVM, focusedField: $focusedField)
+                    ReminderListView(datVM: dataVM, addExpVM : addExpVM, utilityVM: utilityVM, reminderVM: reminderVM, focusedField: $focusedField)
                 }
             }
             .background(Palette.greyBackground)
@@ -71,30 +71,30 @@ struct AddReportView: View {
                     Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
-                            Text("Cancel")
-                                .font(Typography.headerM)
+                        Text("Cancel")
+                            .font(Typography.headerM)
                     })
                     .accentColor(Palette.greyHard),
                 trailing:
                     Button(action: {
                         if(addExpVM.currentPickerTab == "Expense" || addExpVM.currentPickerTab == "Odometer"){
-                        addExpVM.createExpense()
-                        dataVM.addExpense(expense: addExpVM.expenseS)
+                            addExpVM.createExpense()
+                            dataVM.addExpense(expense: addExpVM.expenseS)
                             dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
-                            
                         }
                         else{
+                            reminderVM.createReminder()
                             dataVM.addReminder(reminder: reminderVM.reminderS)
                         }
-//                        categoryVM.retrieveAndUpdate()
+                        //                        categoryVM.retrieveAndUpdate()
                         self.presentationMode.wrappedValue.dismiss()
                         
                     }, label: {
                         Text("Save")
                             .font(Typography.headerM)
                     })
-                    .disabled(addExpVM.price == 0 && addExpVM.odometer == 0 && addExpVM.reminderTab.isEmpty)
-                    .opacity(addExpVM.price == 0 && addExpVM.odometer == 0 && addExpVM.reminderTab.isEmpty ? 0.6 : 1)
+                    .disabled(addExpVM.price == 0 && addExpVM.odometer == 0 && reminderVM.title.isEmpty)
+                    .opacity(addExpVM.price == 0 && addExpVM.odometer == 0 && reminderVM.title.isEmpty ? 0.6 : 1)
             )
             .toolbar {
                 /// Keyboard focus
@@ -137,11 +137,12 @@ struct AddReportView: View {
                     .containerShape(Capsule())
                     .onTapGesture {
                         withAnimation(.easeInOut){
-                            addExpVM.resetTabFields(tab: addExpVM.currentPickerTab)
                             addExpVM.currentPickerTab = tab
                             let haptic = UIImpactFeedbackGenerator(style: .soft)
                             haptic.impactOccurred()
                         }
+                        addExpVM.resetTabFields(tab: addExpVM.currentPickerTab)
+                        reminderVM.resetReminderFields(tab: addExpVM.currentPickerTab)
                     }
             }
         }
@@ -208,10 +209,10 @@ struct TextFieldComponent: View {
 struct NumericFieldComponent: View {
     
     let formatter: NumberFormatter = {
-          let formatter = NumberFormatter()
-          formatter.numberStyle = .decimal
-          return formatter
-      }()
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
     
     @Binding var submitField : Float
     var placeholder : String

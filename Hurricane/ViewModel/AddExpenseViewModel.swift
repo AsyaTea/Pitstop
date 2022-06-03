@@ -15,7 +15,6 @@ class AddExpenseViewModel : ObservableObject {
     @Published var selectedCategory : String = "Fuel"
     @Published var selectedFuel : String = ""
 
-    let categoryTypes = ["Fuel", "Maintenance", "Insurance","Road tax","Tolls","Fines","Parking","Other"]
     @Published var selectedCategoryReminder =  "Maintenance"
     let categoryReminder = ["Maintenance", "Insurance","Road tax","Tolls","Parking","Other"]
     @Published var selectedRepeat = "Never"
@@ -35,7 +34,7 @@ class AddExpenseViewModel : ObservableObject {
     @Published var currentPickerTab : String = "Expense"
     @Published var priceTab : String = ""
     @Published var odometerTab : String = ""  /// Var to store the odometer value in odometer tab
-    @Published var reminderTab : String = "" /// Var to store the reminder title in reminder tab
+//    @Published var reminderTab : String = "" /// Var to store the reminder title in reminder tab
     
     @Published var expenseS = ExpenseState()
     
@@ -63,11 +62,6 @@ class AddExpenseViewModel : ObservableObject {
         if(tab == "Odometer"){
             odometerTab = ""
             odometer = 0
-            note = ""
-            date = Date.now
-        }
-        if(tab == "Reminder"){
-            reminderTab = ""
             note = ""
             date = Date.now
         }

@@ -29,8 +29,6 @@ struct ExpenseListView: View {
           return formatter
       }()
     
-    
-    
     var body: some View {
         
         List{
@@ -44,7 +42,7 @@ struct ExpenseListView: View {
                 Text(addExpVM.selectedCategory)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.greyMiddle)
-            }
+                }
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
