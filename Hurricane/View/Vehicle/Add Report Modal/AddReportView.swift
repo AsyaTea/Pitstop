@@ -9,10 +9,11 @@ import SwiftUI
 
 struct AddReportView: View {
         
-    @ObservedObject var utilityVM : UtilityViewModel 
-    @StateObject var addExpVM : AddExpenseViewModel = .init()
-    @ObservedObject var categoryVM : CategoryViewModel
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var utilityVM: UtilityViewModel
+    @StateObject var addExpVM: AddExpenseViewModel = .init()
+    @ObservedObject var categoryVM: CategoryViewModel
+    @StateObject var dataVM: DataViewModel
+    @StateObject var reminderVM: AddReminderViewModel
     
     @State private var showDate = false
     
@@ -60,7 +61,7 @@ struct AddReportView: View {
                     OdometerListView(addExpVM: addExpVM,utilityVM: utilityVM, focusedField: $focusedField)
                 }
                 else{
-                    ReminderListView(addExpVM : addExpVM, utilityVM: utilityVM, focusedField: $focusedField)
+                    ReminderListView(datVM: dataVM, addExpVM : addExpVM, utilityVM: utilityVM, focusedField: $focusedField)
                 }
             }
             .background(Palette.greyBackground)
@@ -76,9 +77,15 @@ struct AddReportView: View {
                     .accentColor(Palette.greyHard),
                 trailing:
                     Button(action: {
+                        if(addExpVM.currentPickerTab == "Expense" || addExpVM.currentPickerTab == "Odometer"){
                         addExpVM.createExpense()
                         dataVM.addExpense(expense: addExpVM.expenseS)
-                        dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
+                            dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
+                            
+                        }
+                        else{
+                            dataVM.addReminder(reminder: reminderVM.reminderS)
+                        }
 //                        categoryVM.retrieveAndUpdate()
                         self.presentationMode.wrappedValue.dismiss()
                         

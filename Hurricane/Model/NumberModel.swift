@@ -27,7 +27,7 @@ struct NumberViewModel : Hashable {
 
 extension NumberState {
     
-    static func fromNumbeViewModel(vm:NumberViewModel ) -> NumberState{
+    static func fromNumberViewModel(vm:NumberViewModel ) -> NumberState{
         var numberS = NumberState()
         numberS.telephone = vm.telephone
         numberS.title = vm.title

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ReminderListView: View {
     
+    @ObservedObject var datVM: DataViewModel
     @ObservedObject var addExpVM : AddExpenseViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     var focusedField : FocusState<FocusField?>.Binding
