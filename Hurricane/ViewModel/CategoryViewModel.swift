@@ -48,6 +48,7 @@ class CategoryViewModel: ObservableObject {
    
     @Published var refuelsPerTime: Int = 0
     @Published var avgDaysRefuel: Int = 0
+    @Published var avgPrice : Int = 0
    
     
     @Published var selectedTimeFrame = "Per month"
@@ -134,7 +135,7 @@ class CategoryViewModel: ObservableObject {
         }       
     }
     
-    //Average days/refuel, map through fuelExpenseList and return days between 2 fuel expenses in a new array -> calculate avg value
+    //Average days/refuel, map through fuelExpenseList and return days between 2 fuel expenses in a new array -> calculate avg value --- TESTARE SE WORKA ALL INIT
     
     func getAverageDaysRefuel(timeFrame: String, fuelList: [ExpenseViewModel]) {
         let dateArray = fuelList.map { (ExpenseViewModel) -> Date in
@@ -159,9 +160,14 @@ class CategoryViewModel: ObservableObject {
         
     }
     
-    //Average price, map through fuel list and return prices in a new array -> calculate avg value
+    //Average price, map through fuel list and return prices in a new array -> calculate avg value ------ DA TESTARE
     
-    func getAveragePrice(timeFrame: String) {
+    func getAveragePrice(timeFrame: String, fuelList: [ExpenseViewModel]) {
+        let priceArray = fuelList.map { expense in
+            return expense.price
+        }
+        self.avgPrice = Int(priceArray.reduce(0, +))/priceArray.count
+        
         
     }
     
@@ -226,7 +232,10 @@ class CategoryViewModel: ObservableObject {
             self.expenseList = storage
             self.assignCategories(expenseList: storage)
             self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-            self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+            
+            if !self.fuelList.isEmpty {
+                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+            }
         })
     }
     
