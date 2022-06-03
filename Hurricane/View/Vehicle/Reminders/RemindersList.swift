@@ -53,10 +53,9 @@ struct RemindersList: View {
                                 showEditReminder.toggle()
                                 utilityVM.reminderToEdit = ReminderState.fromReminderViewModel(vm: reminder)
                             }, label: {
-                                CategoryComponent(
-                                    category: Category.init(rawValue: Int(reminder.category )) ?? .other,
-                                    date: reminder.date, cost: String(reminder.title)
-                                )
+                                ReminderComponent(
+                                    reminder: reminder,
+                                    category: Category.init(rawValue: Int(reminder.category )) ?? .other)
                             })
 
                         }
@@ -96,3 +95,49 @@ struct RemindersList: View {
 //        RemindersList()
 //    }
 //}
+
+struct ReminderComponent : View {
+    
+    var reminder : ReminderViewModel
+    var category : Category
+    
+    var body: some View {
+        HStack{
+            ZStack{
+                Circle()
+                    .frame(width: 32, height: 32)
+                    .foregroundColor(category.color)
+                Image(category.icon)
+                    .resizable()
+                    .frame(width: 16, height: 16)
+            }
+            VStack(alignment: .leading){
+                HStack{
+                    Text(reminder.title)
+                        .foregroundColor(Palette.black)
+                        .font(Typography.headerS)
+                    Spacer()
+                    if reminder.based == 0 {
+                        Text(reminder.date.toString(dateFormat: "MMM d, EEEE"))
+                        .foregroundColor(Palette.greyHard)
+                        .font(Typography.headerS)
+                        .padding(.trailing,-10)
+                    }
+                    else{
+                        Text(reminder.distance)
+                            .foregroundColor(Palette.greyHard)
+                            .font(Typography.headerS)
+                            .padding(.trailing,-10)
+                    }
+                }
+                Text(category.label)
+                    .foregroundColor(Palette.greyMiddle)
+                    .font(Typography.TextM)
+                
+            }
+            Spacer()
+        }
+        .padding(.horizontal)
+        .padding(.vertical,10)
+    }
+}

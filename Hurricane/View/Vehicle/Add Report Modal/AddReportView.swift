@@ -14,6 +14,7 @@ struct AddReportView: View {
     @ObservedObject var categoryVM: CategoryViewModel
     @StateObject var dataVM: DataViewModel
     @StateObject var reminderVM: AddReminderViewModel
+    @StateObject var notificationVM = NotificationManager()
     
     @State private var showDate = false
     
@@ -85,6 +86,8 @@ struct AddReportView: View {
                         else{
                             reminderVM.createReminder()
                             dataVM.addReminder(reminder: reminderVM.reminderS)
+                            notificationVM.requestAuthNotifications()
+                            notificationVM.createNotification(title: reminderVM.title)
                         }
                         //                        categoryVM.retrieveAndUpdate()
                         self.presentationMode.wrappedValue.dismiss()

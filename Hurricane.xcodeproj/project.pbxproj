@@ -58,6 +58,7 @@
 		FFA9315D284A5DB900C8D73C /* ReminderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA9315C284A5DB900C8D73C /* ReminderModel.swift */; };
 		FFA93160284A62B400C8D73C /* RemindersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA9315F284A62B400C8D73C /* RemindersList.swift */; };
 		FFA93162284A664800C8D73C /* AddReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA93161284A664800C8D73C /* AddReminderViewModel.swift */; };
+		FFA93164284A829B00C8D73C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA93163284A829B00C8D73C /* NotificationManager.swift */; };
 		FFC52898282FB2A50013D8B6 /* BottomContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC52897282FB2A40013D8B6 /* BottomContentView.swift */; };
 		FFC5289A282FB4430013D8B6 /* AlertAddNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC52899282FB4430013D8B6 /* AlertAddNumbers.swift */; };
 		FFC67B45283A2A920078B283 /* EditVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC67B44283A2A920078B283 /* EditVehicleView.swift */; };
@@ -124,6 +125,7 @@
 		FFA9315C284A5DB900C8D73C /* ReminderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderModel.swift; sourceTree = "<group>"; };
 		FFA9315F284A62B400C8D73C /* RemindersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersList.swift; sourceTree = "<group>"; };
 		FFA93161284A664800C8D73C /* AddReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderViewModel.swift; sourceTree = "<group>"; };
+		FFA93163284A829B00C8D73C /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		FFC52897282FB2A40013D8B6 /* BottomContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomContentView.swift; sourceTree = "<group>"; };
 		FFC52899282FB4430013D8B6 /* AlertAddNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAddNumbers.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				41176DA82834DCC3000FD885 /* FuelViewModel.swift */,
 				41C6E20F283185B200F756B5 /* CategoryViewModel.swift */,
 				FFA93161284A664800C8D73C /* AddReminderViewModel.swift */,
+				FFA93163284A829B00C8D73C /* NotificationManager.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				FF1AA1A52823FC0600AB61A2 /* Palette.swift in Sources */,
 				FF974B8A283F4E6000C33576 /* WorkInProgress.swift in Sources */,
 				41C6E1F62823E4C800F756B5 /* ContentView2.swift in Sources */,
+				FFA93164284A829B00C8D73C /* NotificationManager.swift in Sources */,
 				41C6E20A282CF47D00F756B5 /* AnalyticsFuelView.swift in Sources */,
 				41C6E20E282D184400F756B5 /* Graph.swift in Sources */,
 				FF534EB2283643330089BE94 /* AlertsOnBoarding.swift in Sources */,
