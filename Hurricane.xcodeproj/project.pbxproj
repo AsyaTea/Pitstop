@@ -10,7 +10,6 @@
 		0327B676284775C50068D73A /* StatusBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0327B675284775C50068D73A /* StatusBarAppearance.swift */; };
 		41176DA92834DCC3000FD885 /* FuelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41176DA82834DCC3000FD885 /* FuelViewModel.swift */; };
 		415773F8283BEBF800B20FA1 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */; };
-		41596433283B84BA0023CADC /* LastEventsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41596432283B84BA0023CADC /* LastEventsListView.swift */; };
 		415D202F28214180004AF201 /* HurricaneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D202E28214180004AF201 /* HurricaneApp.swift */; };
 		415D203128214180004AF201 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D203028214180004AF201 /* ContentView.swift */; };
 		415D203328214182004AF201 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415D203228214182004AF201 /* Assets.xcassets */; };
@@ -18,6 +17,7 @@
 		415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 415D203C28214215004AF201 /* CarModel.xcdatamodeld */; };
 		415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D203F282144CE004AF201 /* CoreDataManager.swift */; };
 		415D2042282145FE004AF201 /* DataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D2041282145FE004AF201 /* DataViewModel.swift */; };
+		416D26C82848B1EB00E4ECD6 /* LastEventsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D26C72848B1EB00E4ECD6 /* LastEventsListView.swift */; };
 		41C6E1F62823E4C800F756B5 /* ContentView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E1F52823E4C800F756B5 /* ContentView2.swift */; };
 		41C6E208282CEE6100F756B5 /* AnalyticsCostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E207282CEE6100F756B5 /* AnalyticsCostView.swift */; };
 		41C6E20A282CF47D00F756B5 /* AnalyticsFuelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E209282CF47D00F756B5 /* AnalyticsFuelView.swift */; };
@@ -71,7 +71,6 @@
 		0327B675284775C50068D73A /* StatusBarAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAppearance.swift; sourceTree = "<group>"; };
 		41176DA82834DCC3000FD885 /* FuelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewModel.swift; sourceTree = "<group>"; };
 		415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
-		41596432283B84BA0023CADC /* LastEventsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastEventsListView.swift; sourceTree = "<group>"; };
 		415D202B28214180004AF201 /* Hurricane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hurricane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		415D202E28214180004AF201 /* HurricaneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HurricaneApp.swift; sourceTree = "<group>"; };
 		415D203028214180004AF201 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -80,6 +79,7 @@
 		415D203D28214216004AF201 /* CarModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CarModel.xcdatamodel; sourceTree = "<group>"; };
 		415D203F282144CE004AF201 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		415D2041282145FE004AF201 /* DataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewModel.swift; sourceTree = "<group>"; };
+		416D26C72848B1EB00E4ECD6 /* LastEventsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastEventsListView.swift; sourceTree = "<group>"; };
 		41C6E1F52823E4C800F756B5 /* ContentView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView2.swift; sourceTree = "<group>"; };
 		41C6E207282CEE6100F756B5 /* AnalyticsCostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsCostView.swift; sourceTree = "<group>"; };
 		41C6E209282CF47D00F756B5 /* AnalyticsFuelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsFuelView.swift; sourceTree = "<group>"; };
@@ -285,8 +285,8 @@
 		FF4C4F3C28464D4700926F4D /* Last Events */ = {
 			isa = PBXGroup;
 			children = (
-				41596432283B84BA0023CADC /* LastEventsListView.swift */,
 				FF4C4F3D2846518500926F4D /* EditEventView.swift */,
+				416D26C72848B1EB00E4ECD6 /* LastEventsListView.swift */,
 			);
 			path = "Last Events";
 			sourceTree = "<group>";
@@ -452,7 +452,6 @@
 				FF106794282D38970077CCF7 /* HeaderContentView.swift in Sources */,
 				415D2042282145FE004AF201 /* DataViewModel.swift in Sources */,
 				FF42ADD12825201A00C66A84 /* TabData.swift in Sources */,
-				41596433283B84BA0023CADC /* LastEventsListView.swift in Sources */,
 				FF106792282D36160077CCF7 /* HomeStyleView.swift in Sources */,
 				41176DA92834DCC3000FD885 /* FuelViewModel.swift in Sources */,
 				FF7C8AF4283F598900D2EEA2 /* Number+CoreDataClass.swift in Sources */,
@@ -469,6 +468,7 @@
 				41C6E208282CEE6100F756B5 /* AnalyticsCostView.swift in Sources */,
 				FF5F2CA02823C4CD007980F3 /* Expense+CoreDataProperties.swift in Sources */,
 				FFDF855C282411FD00E0F9BF /* OldTabBarView.swift in Sources */,
+				416D26C82848B1EB00E4ECD6 /* LastEventsListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,7 +598,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = 55H4ABU399;
+				DEVELOPMENT_TEAM = MYPTJXP3NK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hurricane/Info.plist;
@@ -632,7 +632,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = 55H4ABU399;
+				DEVELOPMENT_TEAM = MYPTJXP3NK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hurricane/Info.plist;

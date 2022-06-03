@@ -10,11 +10,13 @@ import SwiftUI
 struct VehicleView: View {
     
     //Onboarding vars
-    //        @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
+//    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
     @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var homeVM : HomeViewModel
+    @ObservedObject var utilityVM : UtilityViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     @State private var showAddReport = false
     
     
@@ -22,7 +24,7 @@ struct VehicleView: View {
       
         GeometryReader{ proxy in
             let topEdge = proxy.safeAreaInsets.top
-            HomeStyleView(dataVM: dataVM,homeVM:homeVM, topEdge: topEdge)
+            HomeStyleView(dataVM: dataVM,homeVM:homeVM, categoryVM: categoryVM, topEdge: topEdge)
                 .ignoresSafeArea(.all,edges: .top)
         }
         .overlay(
@@ -38,7 +40,7 @@ struct VehicleView: View {
         )
         .ignoresSafeArea(.keyboard)
         .sheet(isPresented: $showAddReport) {
-            AddReportView(dataVM: dataVM)
+            AddReportView(utilityVM: utilityVM , categoryVM: categoryVM, dataVM: dataVM)
         }
         .onAppear{
             if(shouldShowOnboarding == false){

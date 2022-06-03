@@ -1,26 +1,24 @@
-
-
 //
 //  LastEventsListView.swift
 //  Hurricane
 //
 //  Created by Asya Tealdi on 23/05/22.
 //
+
 import SwiftUI
 
 
 struct LastEventsListView: View {
     
-    @StateObject var dataVM : DataViewModel
     @ObservedObject var categoryVM = CategoryViewModel()
     @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
     
     @State private var showEditExpense = false
     @Environment(\.presentationMode) private var presentationMode
     
-    
+    @StateObject var dataVM : DataViewModel
     @ObservedObject var utilityVM : UtilityViewModel
-    
+        
     @State var isfilterSelected = 0 // If  == 0 no filters selected
     
     
@@ -72,34 +70,33 @@ struct LastEventsListView: View {
                                 .padding()
                             }
                             
-                            //MARK: LIST
+//                          MARK: LIST
                             if (isfilterSelected == 0){
-                                ForEach(dataVM.expenseList.filter {$0.date.toString(dateFormat: "MMMM") == month} .reversed(),id:\.self) { expense in
-                                    Button(action: {
+                            ForEach(dataVM.expenseList.filter {$0.date.toString(dateFormat: "MMMM") == month} .reversed(),id:\.self) { expense in
+                                    CategoryComponent(
+                                        category: Category.init(rawValue: Int(expense.category )) ?? .other,
+                                        date: expense.date, cost: String(expense.price)
+                                    )
+                                    .onTapGesture {
                                         showEditExpense.toggle()
                                         utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
-                                    }, label: {
-                                        CategoryComponent(
-                                            category: Category.init(rawValue: Int(expense.category )) ?? .other,
-                                            date: expense.date, cost: String(expense.price)
-                                        )
-                                    })
-                                }
+                                    }
+                            }.onDelete(perform: dataVM.deleteExpense)
                             }
                             else{
                                 ForEach(dataVM.expenseFilteredList.filter {$0.date.toString(dateFormat: "MMMM") == month}.reversed(),id:\.self) { expense in
-                                    Button(action: {
+                                    CategoryComponent(
+                                        category: Category.init(rawValue: Int(expense.category )) ?? .other,
+                                        date: expense.date, cost: String(expense.price)
+                                    )
+                                    .onTapGesture {
                                         showEditExpense.toggle()
                                         utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
-                                    }, label: {
-                                        CategoryComponent(
-                                            category: Category.init(rawValue: Int(expense.category )) ?? .other,
-                                            date: expense.date, cost: String(expense.price)
-                                        )
-                                    })
+                                    }
                                 }
                             }
                         }
+
                         Spacer()
                     }
                 }
@@ -135,7 +132,6 @@ struct LastEventsListView: View {
                 })
                 dataVM.getTotalExpense(expenses: dataVM.expenseList)
                 dataVM.getMonths(expenses: dataVM.expenseList)
-                //                print("appeared")
             }
         }
     }
@@ -146,6 +142,7 @@ struct LastEventsListView: View {
 //        LastEventsListView()
 //    }
 //}
+
 
 struct FiltersRow: View {
     

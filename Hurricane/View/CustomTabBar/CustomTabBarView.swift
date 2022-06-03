@@ -12,6 +12,8 @@ struct CustomTabBarView: View {
     @State var selectedIndex: Int = 0
     @StateObject var dataVM = DataViewModel()
     @StateObject var homeVM = HomeViewModel()
+    @StateObject var utilityVM : UtilityViewModel = .init()
+    @StateObject var categoryVM = CategoryViewModel()
     
     init() {
         //  CUSTOM PROPRETIES FOR ALL LISTS OF THE APP
@@ -19,6 +21,7 @@ struct CustomTabBarView: View {
         UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
         UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
         UITableView.appearance().showsVerticalScrollIndicator = false
+    
     }
 
     
@@ -33,11 +36,11 @@ struct CustomTabBarView: View {
     func getTabView(type: TabType) -> some View {
         switch type {
         case .home:
-            VehicleView(dataVM: dataVM, homeVM: homeVM)
+            VehicleView(dataVM: dataVM, homeVM: homeVM, utilityVM: utilityVM, categoryVM: categoryVM)
                 .statusBarStyle(.darkContent, ignoreDarkMode: false)
         case .stats:
 //            WorkInProgress()
-            AnalyticsOverviewView(dataVM: dataVM)
+            AnalyticsOverviewView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM )
                 .statusBarStyle(.lightContent, ignoreDarkMode: false)
         case .settings:
             SettingsView(dataVM: dataVM, homeVM: homeVM)
