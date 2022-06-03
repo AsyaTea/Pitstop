@@ -58,7 +58,7 @@ class CategoryViewModel: ObservableObject {
 
     init()  {
 
-        getCurrentVehicle()
+//        getCurrentVehicle()
 
     }
     
@@ -225,19 +225,19 @@ class CategoryViewModel: ObservableObject {
         
     }
     
-    func retrieveAndUpdate() {
-        self.expenseList = []
-        let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (self.currentVehicle.first?.vehicleID)!)
-        self.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
-            self.expenseList = storage
-            self.assignCategories(expenseList: storage)
-            self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-            
-            if !self.fuelList.isEmpty {
-                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-            }
-        })
-    }
+//    func retrieveAndUpdate() {
+//        self.expenseList = []
+//        let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (self.currentVehicle.first?.vehicleID)!)
+//        self.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
+//            self.expenseList = storage
+//            self.assignCategories(expenseList: storage)
+//            self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+//
+//            if !self.fuelList.isEmpty {
+//                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+//            }
+//        })
+//    }
     
     func getCurrentVehicle() {
         let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
@@ -250,7 +250,7 @@ class CategoryViewModel: ObservableObject {
             vehicle =  try manager.context.fetch(request)
             DispatchQueue.main.async {
                 self.currentVehicle = vehicle.map(VehicleViewModel.init)
-                self.retrieveAndUpdate()
+//                self.retrieveAndUpdate()
                 
             }
             print("CURRENT VEHICLE LIST ",vehicleList)
@@ -304,7 +304,7 @@ class CategoryViewModel: ObservableObject {
     }
 }
     
-enum Category: Int{
+enum Category: Int,Hashable{
     case maintenance = 1
     case insurance = 2
     case roadTax = 3

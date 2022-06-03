@@ -255,7 +255,7 @@ struct CustomCategoryPicker : View {
     
     var body: some View {
         List{
-            ForEach(Category.allCases,id:\.self){ category in
+            ForEach(Category.allCases,id:\.self){category in
                 Button(action: {
                     checkmark.toggle()
                     addExpVM.selectedCategory = category.label
