@@ -10,9 +10,9 @@ import Foundation
 
 struct HomeStyleView: View {
     
-    @ObservedObject var dataVM : DataViewModel
-    @ObservedObject var homeVM : HomeViewModel
-    @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var dataVM: DataViewModel
+    @ObservedObject var homeVM: HomeViewModel
+    @ObservedObject var categoryVM: CategoryViewModel
     
     @StateObject var utilityVM = UtilityViewModel()
     //Scroll animation vars

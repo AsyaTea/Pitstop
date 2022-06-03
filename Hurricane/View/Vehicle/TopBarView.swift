@@ -12,10 +12,9 @@ struct TopNav : View {
     @StateObject var dataVM : DataViewModel
     
     var offset: CGFloat
-    let maxHeight : CGFloat
-    var topEdge : CGFloat
-    //    var homeVM : HomeViewModel
-    
+    let maxHeight: CGFloat
+    var topEdge: CGFloat
+
     @State private var showingAllCars = false
     
     let filter = NSPredicate(format: "current == %@","1")
@@ -132,12 +131,6 @@ struct TopNav : View {
             dataVM.getVehiclesCoreData(filter: filter, storage:{ storage in
                 dataVM.currentVehicle = storage
             })
-            
-//            dataVM.getNumbersCoreData(filter: filter, storage: { storage in
-//                dataVM
-//            })
-            
-            print("FETCHING CURRENT")
         }
         .overlay(
             VStack(alignment: .center,spacing: 2){
