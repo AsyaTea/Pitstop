@@ -14,6 +14,7 @@ struct ExpenseListView: View {
     @StateObject var dataVM : DataViewModel
     @ObservedObject var categoryVM : CategoryViewModel
     @StateObject var fuelVM = FuelViewModel()
+    @StateObject var reminderVM : AddReminderViewModel
     
     var focusedField : FocusState<FocusField?>.Binding
     
@@ -37,7 +38,7 @@ struct ExpenseListView: View {
             HStack{
                 ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
                 Spacer()
-            NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, categoryVM: categoryVM, checkmark: $checkmark1)){
+                NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, checkmark: $checkmark1)){
                 Spacer()
                 Text(addExpVM.selectedCategory)
                     .font(Typography.headerM)
@@ -248,6 +249,7 @@ struct CustomCategoryPicker : View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var dataVM : DataViewModel
     @StateObject var addExpVM : AddExpenseViewModel
+    @StateObject var reminderVM: AddReminderViewModel
     @ObservedObject var categoryVM : CategoryViewModel
     @Binding var checkmark : Bool
     
@@ -256,9 +258,11 @@ struct CustomCategoryPicker : View {
             ForEach(Category.allCases,id:\.self){category in
                 Button(action: {
                     checkmark.toggle()
-                    addExpVM.selectedCategory = category.label
                     categoryVM.defaultCategory = category
+                    addExpVM.selectedCategory = category.label
                     addExpVM.category = categoryVM.selectedCategory
+                    reminderVM.selectedCategory = category.label
+                    reminderVM.category = categoryVM.selectedCategory
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
                     HStack {

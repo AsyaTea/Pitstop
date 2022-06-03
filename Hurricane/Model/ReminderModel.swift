@@ -54,7 +54,7 @@ struct ReminderViewModel : Hashable {
 
 extension ReminderState{
     
-    static func fromNumberViewModel(vm:ReminderViewModel ) -> ReminderState{
+    static func fromReminderViewModel(vm:ReminderViewModel ) -> ReminderState{
         var reminderS = ReminderState()
         reminderS.title = vm.title
         reminderS.category = vm.category

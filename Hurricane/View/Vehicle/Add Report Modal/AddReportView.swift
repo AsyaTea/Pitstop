@@ -55,13 +55,13 @@ struct AddReportView: View {
                 
                 //MARK: List
                 if(addExpVM.currentPickerTab == "Expense"){
-                    ExpenseListView(addExpVM: addExpVM,utilityVM: utilityVM, dataVM: dataVM, categoryVM: categoryVM, focusedField: $focusedField)
+                    ExpenseListView(addExpVM: addExpVM,utilityVM: utilityVM, dataVM: dataVM, categoryVM: categoryVM, reminderVM: reminderVM, focusedField: $focusedField)
                 }
                 else if (addExpVM.currentPickerTab == "Odometer"){
                     OdometerListView(addExpVM: addExpVM,utilityVM: utilityVM, focusedField: $focusedField)
                 }
                 else{
-                    ReminderListView(datVM: dataVM, addExpVM : addExpVM, utilityVM: utilityVM, reminderVM: reminderVM, focusedField: $focusedField)
+                    ReminderListView(dataVM: dataVM, addExpVM : addExpVM, utilityVM: utilityVM, reminderVM: reminderVM, categoryVM: categoryVM, focusedField: $focusedField)
                 }
             }
             .background(Palette.greyBackground)

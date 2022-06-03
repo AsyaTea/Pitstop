@@ -9,13 +9,15 @@ import SwiftUI
 
 struct TopNav : View {
     
-    @StateObject var dataVM : DataViewModel
+    @StateObject var dataVM: DataViewModel
+    @StateObject var utilityVM: UtilityViewModel
     
     var offset: CGFloat
     let maxHeight: CGFloat
     var topEdge: CGFloat
 
     @State private var showingAllCars = false
+    @State private var showReminders = false
     
     let filter = NSPredicate(format: "current == %@","1")
     
@@ -106,7 +108,7 @@ struct TopNav : View {
                     
                     ZStack{
                         Button(action: {
-                            
+                            showReminders.toggle()
                         }, label: {
                             ZStack{
                                 Circle()
@@ -147,6 +149,9 @@ struct TopNav : View {
                     })
                 .padding(.bottom,15)
         )
+        .sheet(isPresented: $showReminders){
+            RemindersList(dataVM: dataVM, utilityVM: utilityVM)
+        }
     }
     
     // Opacity to let appear items in the top bar

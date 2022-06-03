@@ -18,12 +18,11 @@ struct LastEventsListView: View {
     @State private var showEditExpense = false
     @Environment(\.presentationMode) private var presentationMode
     
-    
     @ObservedObject var utilityVM : UtilityViewModel
-    
+
     @State var isfilterSelected = 0 // If  == 0 no filters selected
-    
-    
+
+
     var body: some View {
         NavigationView{
             ZStack{
@@ -44,7 +43,6 @@ struct LastEventsListView: View {
                             }
                             .padding()
                         }
-                        
                         
                         ForEach(dataVM.monthsAmount.sorted(by: <),id:\.self){ month in
                             

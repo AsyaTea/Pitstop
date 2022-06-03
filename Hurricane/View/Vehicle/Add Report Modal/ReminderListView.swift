@@ -9,24 +9,37 @@ import SwiftUI
 
 struct ReminderListView: View {
     
-    @ObservedObject var datVM: DataViewModel
+    @ObservedObject var dataVM: DataViewModel
     @ObservedObject var addExpVM : AddExpenseViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     @ObservedObject var reminderVM: AddReminderViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     var focusedField : FocusState<FocusField?>.Binding
+    
+    @State private var checkmark = false
     
     var body: some View {
         List{
             
             //MARK: CATEGORY
-            Picker(selection: $addExpVM.selectedCategoryReminder, content: {
-                ForEach(addExpVM.categoryReminder, id: \.self) {
-                    Text($0)
-                        .font(Typography.headerM)
-                }
-            },label:{
+//            Picker(selection: $addExpVM.selectedCategoryReminder, content: {
+//                ForEach(addExpVM.categoryReminder, id: \.self) {
+//                    Text($0)
+//                        .font(Typography.headerM)
+//                }
+//            },label:{
+//                ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
+//            })
+            HStack{
                 ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
-            })
+                Spacer()
+                NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, checkmark: $checkmark)){
+                Spacer()
+                Text(reminderVM.selectedCategory)
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.greyMiddle)
+                }
+            }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             //MARK: BASED ON PICKER
