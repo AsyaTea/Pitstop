@@ -79,7 +79,9 @@ struct AddReportView: View {
                         addExpVM.createExpense()
                         dataVM.addExpense(expense: addExpVM.expenseS)
                         dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
+                        categoryVM.retrieveAndUpdate()
                         self.presentationMode.wrappedValue.dismiss()
+                        
                     }, label: {
                         Text("Save")
                             .font(Typography.headerM)

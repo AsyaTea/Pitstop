@@ -202,14 +202,14 @@ struct FuelListView : View {
         }
         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
-        ListCostsAttributes(title: "Category", value: "$ 20")
+        ListCostsAttributes(title: "Category", value: String(categoryVM.fuelTotal))
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-        ListCostsAttributes(title: "Fuel", value: "$ 1.564")
+        ListCostsAttributes(title: "Average price", value: "$ 1.564")
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Refuels per month", value: String(categoryVM.refuelsPerTime))
            
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-        ListCostsAttributes(title: "Average days/refuel", value: "26")
+        ListCostsAttributes(title: "Average days/refuel", value: String(categoryVM.avgDaysRefuel))
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
     }
 }
@@ -291,8 +291,7 @@ struct AnalyticsHeaderView : View {
                                         Text(time).tag(time)
                                     }
                                         }
-                                        .onChange(of: selectedTimeFrame) { tag in
-                                        
+                                        .onChange(of: selectedTimeFrame) { tag in                                        
                                             categoryVM.setSelectedTimeFrame(timeFrame: tag)
                                             print("tag is  \(tag)")
                                         }

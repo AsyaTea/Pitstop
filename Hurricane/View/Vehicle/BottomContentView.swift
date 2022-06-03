@@ -29,9 +29,9 @@ struct BottomContentView: View {
                 .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
-                .sheet(isPresented: $viewAllEvents){LastEventsListView(categoryVM: categoryVM, dataVM: dataVM,utilityVM: utilityVM)}
-            //            NavigationLink("NAVIGA",destination: LastEventsListView(dataVM: dataVM,utilityVM: utilityVM),isActive: $viewAllEvents)
-            
+                .sheet(isPresented: $viewAllEvents){LastEventsListView(dataVM: dataVM, categoryVM: categoryVM,utilityVM: utilityVM)}
+//            NavigationLink("NAVIGA",destination: LastEventsListView(dataVM: dataVM,utilityVM: utilityVM),isActive: $viewAllEvents)
+
             if(dataVM.expenseList.isEmpty){
                 HStack{
                     Text("There are no events now")
