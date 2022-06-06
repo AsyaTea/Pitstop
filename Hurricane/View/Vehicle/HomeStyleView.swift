@@ -10,9 +10,9 @@ import Foundation
 
 struct HomeStyleView: View {
     
-    @ObservedObject var dataVM : DataViewModel
-    @ObservedObject var homeVM : HomeViewModel
-    @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var dataVM: DataViewModel
+    @ObservedObject var homeVM: HomeViewModel
+    @ObservedObject var categoryVM: CategoryViewModel
     
     @StateObject var utilityVM = UtilityViewModel()
     //Scroll animation vars
@@ -39,7 +39,7 @@ struct HomeStyleView: View {
                             .background(homeVM.headerBackgroundColor)
                             .overlay(
                                 //MARK: TOP NAV BAR
-                                TopNav(dataVM: dataVM, offset: offset, maxHeight: maxHeight, topEdge:topEdge)
+                                TopNav(dataVM: dataVM, utilityVM: utilityVM, offset: offset, maxHeight: maxHeight, topEdge:topEdge)
                                     .padding(.horizontal)
                                     .frame(height: 60)
                                     .padding(.top,topEdge+10)

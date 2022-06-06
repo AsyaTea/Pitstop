@@ -22,6 +22,9 @@ class DataViewModel : ObservableObject {
     //Important number
     @Published var numberList: [NumberViewModel] = []
     
+    //Reminder
+    @Published var reminderList: [ReminderViewModel] = []
+    
     //Filter
     @Published var filter : NSPredicate?
 //    @Published var filterCurrentExpense : NSPredicate?
@@ -206,6 +209,7 @@ class DataViewModel : ObservableObject {
     }
     
     
+    
     //MARK: EXPENSE CRUD
 
     func getExpenseByID(expenseID: NSManagedObjectID) throws -> ExpenseViewModel {
@@ -330,20 +334,60 @@ class DataViewModel : ObservableObject {
         }
     }
     
+    //MARK: - REMINDERS CRUD
+    
+    //MARK: - CREATE
+    func addReminder(reminder : ReminderState) {
+        let newReminder = Reminder(context: manager.context)
+        newReminder.title = reminder.title
+        newReminder.note = reminder.note
+        newReminder.distance = reminder.distance
+        newReminder.recurrence = reminder.recurrence ?? 0
+        newReminder.category = reminder.category ?? 0
+        newReminder.based = reminder.based ?? 0
+        newReminder.date = reminder.date
+        
+        print(" Reminder : \(newReminder)")
+        self.reminderList.append(ReminderViewModel(reminder: newReminder))
+        save()
+    }
+    
+    //MARK: - READ
+    func getRemindersCoreData(filter : NSPredicate?, storage: @escaping([ReminderViewModel]) -> ())  {
+        let request = NSFetchRequest<Reminder>(entityName: "Reminder")
+        let reminder : [Reminder]
+        
+        let sort = NSSortDescriptor(keyPath: \Reminder.objectID, ascending: true)
+        request.sortDescriptors = [sort]
+        request.predicate = filter
+        
+        do {
+            reminder =  try manager.context.fetch(request)
+            DispatchQueue.main.async{
+                storage(reminder.map(ReminderViewModel.init))
+            }
+            
+        }catch let error {
+            print("🛎 Error fetching reminders: \(error.localizedDescription)")
+        }
+    }
+    
+    
+    
     //MARK: IMPORTANT NUMBERS CRUD
     
     func getNumbersCoreData(filter : NSPredicate?, storage: @escaping([NumberViewModel]) -> ())  {
         let request = NSFetchRequest<Number>(entityName: "Number")
-        let expense : [Number]
+        let number : [Number]
         
         let sort = NSSortDescriptor(keyPath: \Number.objectID, ascending: true)
         request.sortDescriptors = [sort]
         request.predicate = filter
         
         do {
-            expense =  try manager.context.fetch(request)
+            number =  try manager.context.fetch(request)
             DispatchQueue.main.async{
-                storage(expense.map(NumberViewModel.init))
+                storage(number.map(NumberViewModel.init))
             }
             
         }catch let error {

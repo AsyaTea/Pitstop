@@ -14,6 +14,7 @@ class UtilityViewModel : ObservableObject {
     @Published var totalVehicleCost : Float = 0.0
   
     @Published var expenseToEdit = ExpenseState()
+    @Published var reminderToEdit = ReminderState()
     
     init() {
         

@@ -21,6 +21,15 @@
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="vehicle" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicle" inverseName="numbers" inverseEntity="Vehicle"/>
     </entity>
+    <entity name="Reminder" representedClassName="Reminder" syncable="YES">
+        <attribute name="based" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="category" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="distance" optional="YES" attributeType="String"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="recurrence" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Vehicle" representedClassName="Vehicle" syncable="YES">
         <attribute name="brand" optional="YES" attributeType="String"/>
         <attribute name="current" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO"/>
@@ -37,9 +46,10 @@
         <relationship name="numbers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Number" inverseName="vehicle" inverseEntity="Number"/>
     </entity>
     <elements>
+        <element name="Document" positionX="90" positionY="99" width="128" height="74"/>
         <element name="Expense" positionX="215.86328125" positionY="1.1640625" width="128" height="164"/>
         <element name="Number" positionX="90" positionY="90" width="128" height="74"/>
         <element name="Vehicle" positionX="-45" positionY="0" width="128" height="224"/>
-        <element name="Document" positionX="90" positionY="99" width="128" height="74"/>
+        <element name="Reminder" positionX="90" positionY="108" width="128" height="134"/>
     </elements>
 </model>

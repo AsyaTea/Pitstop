@@ -30,6 +30,8 @@
 		FF106794282D38970077CCF7 /* HeaderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF106793282D38960077CCF7 /* HeaderContentView.swift */; };
 		FF14DC30282FCA1F00CA248B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */; };
 		FF14DC3228302CC300CA248B /* ImportantNumbersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14DC3128302CC300CA248B /* ImportantNumbersView.swift */; };
+		FF192B0B284A5C0400F2F71C /* Reminder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF192B09284A5C0400F2F71C /* Reminder+CoreDataClass.swift */; };
+		FF192B0C284A5C0400F2F71C /* Reminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF192B0A284A5C0400F2F71C /* Reminder+CoreDataProperties.swift */; };
 		FF1AA1A32823F9C200AB61A2 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A22823F9C200AB61A2 /* Typography.swift */; };
 		FF1AA1A52823FC0600AB61A2 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A42823FC0600AB61A2 /* Palette.swift */; };
 		FF1AA1A72823FC4800AB61A2 /* extensionColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */; };
@@ -54,6 +56,10 @@
 		FF974B88283F4DF500C33576 /* ExpenseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF974B87283F4DF500C33576 /* ExpenseModel.swift */; };
 		FF974B8A283F4E6000C33576 /* WorkInProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF974B89283F4E6000C33576 /* WorkInProgress.swift */; };
 		FF974B8C283F520D00C33576 /* NumberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF974B8B283F520D00C33576 /* NumberModel.swift */; };
+		FFA9315D284A5DB900C8D73C /* ReminderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA9315C284A5DB900C8D73C /* ReminderModel.swift */; };
+		FFA93160284A62B400C8D73C /* RemindersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA9315F284A62B400C8D73C /* RemindersList.swift */; };
+		FFA93162284A664800C8D73C /* AddReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA93161284A664800C8D73C /* AddReminderViewModel.swift */; };
+		FFA93164284A829B00C8D73C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA93163284A829B00C8D73C /* NotificationManager.swift */; };
 		FFC52898282FB2A50013D8B6 /* BottomContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC52897282FB2A40013D8B6 /* BottomContentView.swift */; };
 		FFC5289A282FB4430013D8B6 /* AlertAddNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC52899282FB4430013D8B6 /* AlertAddNumbers.swift */; };
 		FFC67B45283A2A920078B283 /* EditVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC67B44283A2A920078B283 /* EditVehicleView.swift */; };
@@ -91,6 +97,8 @@
 		FF106791282D36160077CCF7 /* HomeStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStyleView.swift; sourceTree = "<group>"; };
 		FF106793282D38960077CCF7 /* HeaderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderContentView.swift; sourceTree = "<group>"; };
 		FF14DC3128302CC300CA248B /* ImportantNumbersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantNumbersView.swift; sourceTree = "<group>"; };
+		FF192B09284A5C0400F2F71C /* Reminder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FF192B0A284A5C0400F2F71C /* Reminder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FF1AA1A22823F9C200AB61A2 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		FF1AA1A42823FC0600AB61A2 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionColor.swift; sourceTree = "<group>"; };
@@ -116,6 +124,10 @@
 		FF974B87283F4DF500C33576 /* ExpenseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseModel.swift; sourceTree = "<group>"; };
 		FF974B89283F4E6000C33576 /* WorkInProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkInProgress.swift; sourceTree = "<group>"; };
 		FF974B8B283F520D00C33576 /* NumberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberModel.swift; sourceTree = "<group>"; };
+		FFA9315C284A5DB900C8D73C /* ReminderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderModel.swift; sourceTree = "<group>"; };
+		FFA9315F284A62B400C8D73C /* RemindersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersList.swift; sourceTree = "<group>"; };
+		FFA93161284A664800C8D73C /* AddReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderViewModel.swift; sourceTree = "<group>"; };
+		FFA93163284A829B00C8D73C /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		FFC52897282FB2A40013D8B6 /* BottomContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomContentView.swift; sourceTree = "<group>"; };
 		FFC52899282FB4430013D8B6 /* AlertAddNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAddNumbers.swift; sourceTree = "<group>"; };
@@ -184,6 +196,7 @@
 		FF1AA19E2823D44900AB61A2 /* Vehicle */ = {
 			isa = PBXGroup;
 			children = (
+				FFA9315E284A62A000C8D73C /* Reminders */,
 				FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */,
 				FFDF85592824104A00E0F9BF /* VehicleView.swift */,
 				FF106791282D36160077CCF7 /* HomeStyleView.swift */,
@@ -239,6 +252,8 @@
 				415D2041282145FE004AF201 /* DataViewModel.swift */,
 				41176DA82834DCC3000FD885 /* FuelViewModel.swift */,
 				41C6E20F283185B200F756B5 /* CategoryViewModel.swift */,
+				FFA93161284A664800C8D73C /* AddReminderViewModel.swift */,
+				FFA93163284A829B00C8D73C /* NotificationManager.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -265,6 +280,8 @@
 				FFFC3935282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift */,
 				FF7C8AF2283F598900D2EEA2 /* Number+CoreDataClass.swift */,
 				FF7C8AF3283F598900D2EEA2 /* Number+CoreDataProperties.swift */,
+				FF192B09284A5C0400F2F71C /* Reminder+CoreDataClass.swift */,
+				FF192B0A284A5C0400F2F71C /* Reminder+CoreDataProperties.swift */,
 				415D203F282144CE004AF201 /* CoreDataManager.swift */,
 				415D203C28214215004AF201 /* CarModel.xcdatamodeld */,
 			);
@@ -309,8 +326,17 @@
 				FF974B87283F4DF500C33576 /* ExpenseModel.swift */,
 				FF974B8B283F520D00C33576 /* NumberModel.swift */,
 				FFDAA33C283FC68400145B35 /* DocumentModel.swift */,
+				FFA9315C284A5DB900C8D73C /* ReminderModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		FFA9315E284A62A000C8D73C /* Reminders */ = {
+			isa = PBXGroup;
+			children = (
+				FFA9315F284A62B400C8D73C /* RemindersList.swift */,
+			);
+			path = Reminders;
 			sourceTree = "<group>";
 		};
 		FFC67B432838DC320078B283 /* CONTENT TEST */ = {
@@ -413,6 +439,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFA93162284A664800C8D73C /* AddReminderViewModel.swift in Sources */,
 				FF3616CF28290F21002ADA33 /* ReminderListView.swift in Sources */,
 				FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */,
 				FF974B8C283F520D00C33576 /* NumberModel.swift in Sources */,
@@ -422,6 +449,7 @@
 				FF5D5A2528299D0D006D5ABF /* OnboardingView.swift in Sources */,
 				FFDF855A2824104A00E0F9BF /* VehicleView.swift in Sources */,
 				FF7C8AF5283F598900D2EEA2 /* Number+CoreDataProperties.swift in Sources */,
+				FFA9315D284A5DB900C8D73C /* ReminderModel.swift in Sources */,
 				41C6E20C282CF49B00F756B5 /* AnalyticsOdometerView.swift in Sources */,
 				FF974B88283F4DF500C33576 /* ExpenseModel.swift in Sources */,
 				FFDAA340283FE1A000145B35 /* TopBarView.swift in Sources */,
@@ -429,6 +457,7 @@
 				0327B676284775C50068D73A /* StatusBarAppearance.swift in Sources */,
 				415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */,
 				FF1AA1A72823FC4800AB61A2 /* extensionColor.swift in Sources */,
+				FFA93160284A62B400C8D73C /* RemindersList.swift in Sources */,
 				FFC67B45283A2A920078B283 /* EditVehicleView.swift in Sources */,
 				FF974B86283F4DE400C33576 /* VehicleModel.swift in Sources */,
 				FF3616CB28290416002ADA33 /* AddExpenseViewModel.swift in Sources */,
@@ -437,12 +466,15 @@
 				41C6E210283185B200F756B5 /* CategoryViewModel.swift in Sources */,
 				FF42ADD72825251500C66A84 /* SettingsView.swift in Sources */,
 				415773F8283BEBF800B20FA1 /* StatisticsViewModel.swift in Sources */,
+				FF192B0C284A5C0400F2F71C /* Reminder+CoreDataProperties.swift in Sources */,
 				FF42ADD3282520A300C66A84 /* TabAppearance.swift in Sources */,
 				FF3616D128290F55002ADA33 /* OdometerListView.swift in Sources */,
+				FF192B0B284A5C0400F2F71C /* Reminder+CoreDataClass.swift in Sources */,
 				FF5F2C9F2823C4CD007980F3 /* Expense+CoreDataClass.swift in Sources */,
 				FF1AA1A52823FC0600AB61A2 /* Palette.swift in Sources */,
 				FF974B8A283F4E6000C33576 /* WorkInProgress.swift in Sources */,
 				41C6E1F62823E4C800F756B5 /* ContentView2.swift in Sources */,
+				FFA93164284A829B00C8D73C /* NotificationManager.swift in Sources */,
 				41C6E20A282CF47D00F756B5 /* AnalyticsFuelView.swift in Sources */,
 				41C6E20E282D184400F756B5 /* Graph.swift in Sources */,
 				FF534EB2283643330089BE94 /* AlertsOnBoarding.swift in Sources */,
@@ -598,7 +630,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = 5DPX8M9Z36;
+				DEVELOPMENT_TEAM = 55H4ABU399;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hurricane/Info.plist;
@@ -606,9 +638,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -632,7 +665,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = 5DPX8M9Z36;
+				DEVELOPMENT_TEAM = 55H4ABU399;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hurricane/Info.plist;
@@ -640,9 +673,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
