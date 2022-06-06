@@ -23,7 +23,7 @@ struct EditEventView: View {
                     FuelEventListFields(utilityVM: utilityVM, dataVM: dataVM, category: category)
                 }
                 else{
-                EventListFields(utilityVM: utilityVM, category: category)
+                    EventListFields(utilityVM: utilityVM, dataVM: dataVM, category: category)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -219,6 +219,7 @@ struct FuelEventListFields: View {
 struct EventListFields: View {
     
     @StateObject var utilityVM : UtilityViewModel
+    @StateObject var dataVM: DataViewModel
     var category : Category
     
     var body: some View {
@@ -259,7 +260,7 @@ struct EventListFields: View {
             HStack{
                 ListCategoryComponent(title: "Odometer", iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                TextField("100", value: $utilityVM.expenseToEdit.odometer,formatter: NumberFormatter())
+                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer,formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.numberPad)

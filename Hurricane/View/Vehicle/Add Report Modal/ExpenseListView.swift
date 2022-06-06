@@ -54,6 +54,10 @@ struct ExpenseListView: View {
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
             }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField.wrappedValue = .odometer
+            }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             
@@ -103,6 +107,10 @@ struct ExpenseListView: View {
                         .font(Typography.headerM)
                         .foregroundColor(Palette.black)
                 }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    focusedField.wrappedValue = .liter
+                }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                 
                 
@@ -129,6 +137,10 @@ struct ExpenseListView: View {
                     Text(utilityVM.currency)
                         .foregroundColor(Palette.black)
                 }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    focusedField.wrappedValue = .priceLiter
+                }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             }
             
@@ -147,6 +159,10 @@ struct ExpenseListView: View {
                     .focused(focusedField, equals: .note)
                     .font(Typography.headerM)
                 
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField.wrappedValue = .note
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         }
