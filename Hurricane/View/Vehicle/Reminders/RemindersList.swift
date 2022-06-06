@@ -15,6 +15,9 @@ struct RemindersList: View {
     
     @State private var showEditReminder = false
     
+    let filterExpiredReminders = NSPredicate(format: "date <= %@",NSDate())
+    let filterFutureReminders = NSPredicate(format: "date > %@",NSDate())
+    
     var body: some View {
         NavigationView{
             ZStack{
@@ -23,15 +26,6 @@ struct RemindersList: View {
                 VStack{
                     //MARK: - FILTERS TO DO
                     ScrollView(.vertical,showsIndicators: false){
-                        if dataVM.reminderList.isEmpty {
-                            HStack{
-                                Text("There are no reminders now")
-                                    .font(Typography.TextM)
-                                    .foregroundColor(Palette.greyMiddle)
-                                Spacer()
-                            }
-                            .padding()
-                        }
                         
                         //MARK: - FUTURE
                         ZStack{
@@ -47,6 +41,17 @@ struct RemindersList: View {
                             .padding()
                         }
                         
+                        
+                        if dataVM.reminderList.isEmpty {
+                            HStack{
+                                Text("There are no reminders now")
+                                    .font(Typography.TextM)
+                                    .foregroundColor(Palette.greyMiddle)
+                                Spacer()
+                            }
+                            .padding()
+                        }
+                        
                         //MARK: - REMINDERS LIST
                         ForEach(dataVM.reminderList.reversed(),id:\.self){reminder in
                             Button(action: {
@@ -55,11 +60,44 @@ struct RemindersList: View {
                             }, label: {
                                 ReminderComponent(
                                     reminder: reminder,
-                                    category: Category.init(rawValue: Int(reminder.category )) ?? .other)
+                                    category: Category.init(rawValue: Int(reminder.category )) ?? .other,
+                                    expired: false)
                             })
-
+                            
                         }
                         
+                        //MARK: - EXPIRED
+                        ZStack{
+                            Rectangle()
+                                .frame(height: UIScreen.main.bounds.height * 0.035)
+                                .foregroundColor(Palette.greyLight)
+                            HStack{
+                                Text("Expired")
+                                    .foregroundColor(Palette.black)
+                                    .font(Typography.ControlS)
+                                Spacer()
+                            }
+                            .padding()
+                        }
+                        
+                        
+                        if dataVM.expiredReminders.isEmpty {
+                            HStack{
+                                Text("There are no reminders now")
+                                    .font(Typography.TextM)
+                                    .foregroundColor(Palette.greyMiddle)
+                                Spacer()
+                            }
+                            .padding()
+                        }
+                        
+                        //MARK: - EXPIRED REMINDER
+                        ForEach(dataVM.expiredReminders.reversed(),id:\.self){reminder in
+                            ReminderComponent(
+                                reminder: reminder,
+                                category: Category.init(rawValue: Int(reminder.category )) ?? .other,
+                                expired: true)
+                        }
                     }
                 }
             }
@@ -82,8 +120,12 @@ struct RemindersList: View {
                 }
             }
             .onAppear{
-                dataVM.getRemindersCoreData(filter: nil, storage: { storage in
+                dataVM.getRemindersCoreData(filter: filterFutureReminders, storage: { storage in
                     dataVM.reminderList = storage
+                })
+                
+                dataVM.getRemindersCoreData(filter: filterExpiredReminders, storage: { storage in
+                    dataVM.expiredReminders = storage
                 })
             }
         }
@@ -100,32 +142,34 @@ struct ReminderComponent : View {
     
     var reminder : ReminderViewModel
     var category : Category
+    var expired : Bool
     
     var body: some View {
         HStack{
             ZStack{
                 Circle()
                     .frame(width: 32, height: 32)
-                    .foregroundColor(category.color)
+                    .foregroundColor(expired ? Palette.greyInput : category.color)
                 Image(category.icon)
                     .resizable()
+                    .saturation(expired ? 0 : 1)
                     .frame(width: 16, height: 16)
             }
             VStack(alignment: .leading){
                 HStack{
                     Text(reminder.title)
-                        .foregroundColor(Palette.black)
+                        .foregroundColor(expired ? Palette.greyMiddle : Palette.black)
                         .font(Typography.headerS)
                     Spacer()
                     if reminder.based == 0 {
                         Text(reminder.date.toString(dateFormat: "MMM d, EEEE"))
-                        .foregroundColor(Palette.greyHard)
-                        .font(Typography.headerS)
-                        .padding(.trailing,-10)
+                            .foregroundColor(expired ? Palette.greyMiddle : Palette.greyHard)
+                            .font(Typography.headerS)
+                            .padding(.trailing,-10)
                     }
                     else{
                         Text(reminder.distance)
-                            .foregroundColor(Palette.greyHard)
+                            .foregroundColor(expired ? Palette.greyMiddle : Palette.greyHard)
                             .font(Typography.headerS)
                             .padding(.trailing,-10)
                     }
@@ -141,3 +185,5 @@ struct ReminderComponent : View {
         .padding(.vertical,10)
     }
 }
+
+

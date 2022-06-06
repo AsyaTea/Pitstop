@@ -24,6 +24,7 @@ class DataViewModel : ObservableObject {
     
     //Reminder
     @Published var reminderList: [ReminderViewModel] = []
+    @Published var expiredReminders : [ReminderViewModel] = []
     
     //Filter
     @Published var filter : NSPredicate?
