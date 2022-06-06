@@ -67,7 +67,7 @@ class AddExpenseViewModel : ObservableObject {
             note = ""
         }
         if(tab == "Odometer"){
-//            odometerTab = ""
+            odometerTab = ""
             odometer = ""
             note = ""
             date = Date.now
