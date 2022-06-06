@@ -55,9 +55,10 @@ struct ReminderListView: View {
             
             //MARK: REMIND DATE
             if (addExpVM.selectedBased == "Date"){
-                DatePicker(selection: $reminderVM.date,in:Date()..., displayedComponents: [.date]) {
+                DatePicker(selection: $reminderVM.date,in:Date()...) {
                     ListCategoryComponent(title: "Remind me on", iconName: "remindMe", color: Palette.colorGreen)
                 }
+                .datePickerStyle(.compact)
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             }
             //MARK: REMIND DISTANCE

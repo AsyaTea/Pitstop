@@ -27,11 +27,10 @@ class NotificationManager : ObservableObject {
         content.subtitle = "Lorem ipsum doloris sit amet"
         content.sound = UNNotificationSound.default
         
-        
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
         
         //MARK: TODO - modify the identifier
-        let request = UNNotificationRequest(identifier: "3", content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request)
     }
