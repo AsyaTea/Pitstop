@@ -224,6 +224,7 @@ class DataViewModel : ObservableObject {
     
     func addExpense(expense : ExpenseState) {
         let newExpense = Expense(context: manager.context)
+        var newOdometer: Float = 0.0
         newExpense.vehicle = getVehicle(vehicleID: currentVehicle.first!.vehicleID)
         newExpense.note = expense.note
         newExpense.price = expense.price
@@ -233,7 +234,8 @@ class DataViewModel : ObservableObject {
         newExpense.fuelType = expense.fuelType ?? 0
         newExpense.liters = expense.liters ?? 0.0
         newExpense.priceLiter = expense.priceLiter ?? 1.0
-        newExpense.vehicle?.odometer += expense.odometer
+        newOdometer = expense.odometer - (newExpense.vehicle?.odometer ?? 0.0)
+        newExpense.vehicle?.odometer += newOdometer
         print(" Expense : \(newExpense)")
         print(" Current Vehicle \(currentVehicle)")
         self.expenseList.append(ExpenseViewModel(expense: newExpense))

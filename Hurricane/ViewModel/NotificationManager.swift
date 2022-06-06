@@ -27,12 +27,16 @@ class NotificationManager : ObservableObject {
         content.subtitle = "Lorem ipsum doloris sit amet"
         content.sound = UNNotificationSound.default
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: true)
         
         //MARK: TODO - modify the identifier
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
-        UNUserNotificationCenter.current().add(request)
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if let error = error {
+              print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
+                 }
+            } 
     }
     
 }

@@ -14,7 +14,8 @@ class AddExpenseViewModel : ObservableObject {
     @Published var fuel : Int16 = 0
     @Published var selectedCategory : String = "Fuel"
     @Published var selectedFuel : String = ""
-
+    
+    //Reminders
     @Published var selectedCategoryReminder =  "Maintenance"
     let categoryReminder = ["Maintenance", "Insurance","Road tax","Tolls","Parking","Other"]
     @Published var selectedRepeat = "Never"
@@ -28,13 +29,13 @@ class AddExpenseViewModel : ObservableObject {
     @Published var liters : Float = 0.0
     @Published var pricePerLiter : Float = 0.0
     @Published var note : String = ""
-    @Published var odometer : Float = 0 ///Var  to store the odometer value in expense
+    @Published var odometer : String = "" ///Var  to store the odometer value in expense
+   
     
     //Segmented picker tabs
     @Published var currentPickerTab : String = "Expense"
+    @Published var odometerTab: String = ""
     @Published var priceTab : String = ""
-    @Published var odometerTab : String = ""  /// Var to store the odometer value in odometer tab
-//    @Published var reminderTab : String = "" /// Var to store the reminder title in reminder tab
     
     @Published var expenseS = ExpenseState()
     
@@ -43,7 +44,12 @@ class AddExpenseViewModel : ObservableObject {
         expenseS.price = price
         expenseS.liters = liters
         expenseS.priceLiter = pricePerLiter
-        expenseS.odometer = odometer
+        if(!odometer.isEmpty){
+            expenseS.odometer = Float(odometer) ?? 0.0
+        }
+        else{
+            expenseS.odometer = Float(odometerTab) ?? 0.0
+        }
         expenseS.note = note
         expenseS.category = category
         expenseS.fuelType = fuel
@@ -54,14 +60,15 @@ class AddExpenseViewModel : ObservableObject {
             price = 0
             priceTab = ""
             selectedCategory = "Fuel"
-            odometer = 0
+            odometer = ""
+            odometerTab = ""
             selectedRepeat = "Never"
             date = Date.now
             note = ""
         }
         if(tab == "Odometer"){
-            odometerTab = ""
-            odometer = 0
+//            odometerTab = ""
+            odometer = ""
             note = ""
             date = Date.now
         }

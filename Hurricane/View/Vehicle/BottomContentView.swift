@@ -145,7 +145,7 @@ struct BottomContentView: View {
                 category: Category.init(rawValue: Int(utilityVM.expenseToEdit.category ?? 0 )) ?? .other
             )
         }
-        .fullScreenCover(isPresented: $viewAllNumbers){ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)}
+        .sheet(isPresented: $viewAllNumbers){ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)}
         .fullScreenCover(isPresented: $viewAllDocuments){WorkInProgress()}
         
     }

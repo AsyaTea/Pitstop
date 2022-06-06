@@ -40,7 +40,7 @@ struct AddReportView: View {
                         .padding(.top,15)
                 }
                 else if (addExpVM.currentPickerTab == "Odometer"){
-                    NumericFieldComponent(submitField: $addExpVM.odometer, placeholder: "0", attribute: utilityVM.unit, keyboardType: .decimalPad,focusedField: $focusedField,defaultFocus: .odometerTab)
+                    TextFieldComponent(submitField: $addExpVM.odometerTab, placeholder: String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), attribute: utilityVM.unit, keyboardType: .numberPad,focusedField: $focusedField,defaultFocus: .odometerTab)
                         .padding(.top,15)
                 }
                 else{
@@ -96,9 +96,18 @@ struct AddReportView: View {
                         Text("Save")
                             .font(Typography.headerM)
                     })
-                    .disabled(addExpVM.price == 0 && addExpVM.odometer == 0 && reminderVM.title.isEmpty)
-                    .opacity(addExpVM.price == 0 && addExpVM.odometer == 0 && reminderVM.title.isEmpty ? 0.6 : 1)
+                    .disabled(
+                       (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price == 0 ) &&
+                        (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
+                        reminderVM.title.isEmpty)
+                    .opacity(
+                        (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price == 0 ) &&
+                        (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
+                        reminderVM.title.isEmpty ? 0.6 : 1)
             )
+            .onAppear{
+                addExpVM.odometer = String(Int(dataVM.currentVehicle.first?.odometer ?? 0))
+            }
             .toolbar {
                 /// Keyboard focus
                 ToolbarItem(placement: .keyboard) {
@@ -209,6 +218,7 @@ struct TextFieldComponent: View {
     }
 }
 
+//MARK: - TO REMOVE IN FUTURE
 struct NumericFieldComponent: View {
     
     let formatter: NumberFormatter = {

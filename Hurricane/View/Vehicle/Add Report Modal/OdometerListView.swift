@@ -43,7 +43,7 @@ struct OdometerListView: View {
         .padding(.top,-10)
         .onAppear {
             /// Setting the keyboard focus on the price when opening the modal
-            if(addExpVM.odometerTab.isEmpty){
+            if(addExpVM.odometer.isEmpty){
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {  /// Anything over 0.5 delay seems to work
                     focusedField.wrappedValue = .odometerTab
                 }
