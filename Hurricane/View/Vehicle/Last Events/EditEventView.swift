@@ -20,7 +20,7 @@ struct EditEventView: View {
         NavigationView{
             VStack{
                 if(category == .fuel){
-                FuelEventListFields(utilityVM: utilityVM, category: category)
+                    FuelEventListFields(utilityVM: utilityVM, dataVM: dataVM, category: category)
                 }
                 else{
                 EventListFields(utilityVM: utilityVM, category: category)
@@ -50,7 +50,9 @@ struct EditEventView: View {
                         Text("Save")
                             .font(Typography.headerM)
                     })
-            )
+                    .disabled((Float(utilityVM.expenseToEdit.odometer) < dataVM.currentVehicle.first?.odometer ?? 0 ))
+                    .opacity((Float(utilityVM.expenseToEdit.odometer) < dataVM.currentVehicle.first?.odometer ?? 0 ) ? 0.6 : 1)
+                )
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text(category.label)
@@ -116,6 +118,7 @@ struct DeleteButton : View {
 struct FuelEventListFields: View {
     
     @StateObject var utilityVM : UtilityViewModel
+    @StateObject var dataVM: DataViewModel
     var category : Category
     
     var body: some View {
@@ -136,17 +139,7 @@ struct FuelEventListFields: View {
                     .foregroundColor(Palette.black)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
-//            HStack{
-//                ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
-//                Spacer()
-//                Text(category.label)
-//                    .font(Typography.headerM)
-//                    .foregroundColor(Palette.black)
-//            }
-//            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
-            
+        
             //MARK: DATE
             DatePicker(selection: $utilityVM.expenseToEdit.date, displayedComponents: [.date]) {
                 ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
@@ -157,7 +150,7 @@ struct FuelEventListFields: View {
             HStack{
                 ListCategoryComponent(title: "Odometer", iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                TextField("100", value: $utilityVM.expenseToEdit.odometer,formatter: NumberFormatter())
+                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer,formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.numberPad)
@@ -180,7 +173,7 @@ struct FuelEventListFields: View {
                 ListCategoryComponent(
                     title: "Price/Liter",
                     iconName: utilityVM.expenseToEdit.priceLiter == 0 ? "priceLiter" : "priceLiterColored",
-                    color:utilityVM.expenseToEdit.liters == 0 ? Palette.greyLight : Palette.colorYellow)
+                    color:utilityVM.expenseToEdit.priceLiter == 0 ? Palette.greyLight : Palette.colorYellow)
                 Spacer()
                 TextField("0", value: $utilityVM.expenseToEdit.priceLiter,formatter: NumberFormatter())
                     .font(Typography.headerM)

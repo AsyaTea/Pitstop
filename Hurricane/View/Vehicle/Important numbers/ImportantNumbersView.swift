@@ -21,25 +21,6 @@ struct ImportantNumbersView: View {
                 Palette.greyBackground.edgesIgnoringSafeArea(.all)
                 ScrollView(.vertical, showsIndicators: false){
                     VStack{
-                        //                        HStack{
-                        //                            Button(action: {
-                        //                                homeVM.resetAlertFields()
-                        //                                self.presentationMode.wrappedValue.dismiss()
-                        //                            }, label: {
-                        //                                Text("Cancel")
-                        //                                    .foregroundColor(Palette.greyHard)
-                        //                            })
-                        //                            .padding(.leading,20)
-                        //                            Spacer()
-                        //                            Text("Useful contacts")
-                        //                                .font(Typography.headerM)
-                        //                                .foregroundColor(Palette.black)
-                        //                            //                        .frame(alignment: .center)
-                        //                            Spacer(minLength: 150)
-                        //
-                        //                        }
-                        //                        .padding(.vertical,15)
-                        
                         VStack(spacing: 16){
                             ForEach(dataVM.numberList, id:\.self){ number in
                                 NumberCardView(title: number.title, number: number.telephone)
@@ -50,6 +31,7 @@ struct ImportantNumbersView: View {
                         
                         Button(action: {
                             homeVM.showAlertNumbersInside.toggle()
+                            homeVM.interactiveDismiss.toggle()
                         }, label: {
                             BlackButton(text: "Add new contact", color: Palette.black)
                         })
@@ -57,17 +39,13 @@ struct ImportantNumbersView: View {
                     }
                    
                 }
+              
                 if(homeVM.showAlertNumbersInside){
                     Spacer()
                     AlertAddNumbersInside(homeVM: homeVM,dataVM: dataVM)
                     Spacer()
                 }
             }
-            .overlay(
-                ZStack{
-                    homeVM.showAlertNumbersInside ? Color.black.opacity(0.4) : Color.clear
-                }.ignoresSafeArea()
-            )
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
@@ -88,13 +66,15 @@ struct ImportantNumbersView: View {
                 }
             }
             .ignoresSafeArea(.keyboard)
-            
-         
-            
         }
-        
+        .overlay(
+            ZStack{
+                homeVM.showAlertNumbersInside ? Color.black.opacity(0.4) : Color.clear
+            }.ignoresSafeArea()
+        )
+      
+      
     }
-    
 }
 
 struct NumberCardView: View {

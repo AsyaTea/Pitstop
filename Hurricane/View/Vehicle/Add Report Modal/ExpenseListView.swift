@@ -20,15 +20,8 @@ struct ExpenseListView: View {
     
 //    @State private var selectedFuel : String = ""
 
-
     @State private var checkmark1 = true
     @State private var checkmark2 = false
-    
-//    let formatter: NumberFormatter = {
-//          let formatter = NumberFormatter()
-//          formatter.numberStyle = .decimal
-//          return formatter
-//      }()
     
     var body: some View {
         

@@ -19,6 +19,7 @@ class HomeViewModel : ObservableObject {
     @Published var showAlertNumbersInside = false
     @Published var numberTitle = ""
     @Published var number = ""
+    @Published var interactiveDismiss = false
     
     @Published var numberS = NumberState()
     
