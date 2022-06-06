@@ -27,13 +27,18 @@ struct EditEventView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(category.label)
             .navigationBarItems(
                 leading:
                     Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
-                        Text("Cancel")
-                            .font(Typography.headerM)
+                        HStack{
+                            Image("arrowLeft")
+                            
+                            Text("Back")
+                                .font(Typography.headerM)
+                        }
                     })
                     .accentColor(Palette.greyHard),
                 trailing:
@@ -52,7 +57,7 @@ struct EditEventView: View {
                     })
                     .disabled((Float(utilityVM.expenseToEdit.odometer) < dataVM.currentVehicle.first?.odometer ?? 0 ))
                     .opacity((Float(utilityVM.expenseToEdit.odometer) < dataVM.currentVehicle.first?.odometer ?? 0 ) ? 0.6 : 1)
-                )
+            )
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text(category.label)
@@ -72,23 +77,23 @@ struct EditEventView: View {
                 }
             )
             .alert(isPresented:$showingAlert) {
-                    Alert(
-                        title: Text("Are you sure you want to delete this?"),
-                        message: Text("There is no undo"),
-                        primaryButton: .destructive(Text("Delete")) {
-                            dataVM.deleteExpenseState(expenseS: utilityVM.expenseToEdit)
-                            dataVM.getExpensesCoreData(filter: nil, storage: { storage in
-                                dataVM.expenseList = storage
-                                dataVM.expenseFilteredList = storage
-                            })
-                            //SE METTO STA ROBA CRASHA, TO FIX PROSSIMAMENTE
-//                            dataVM.getTotalExpense(expenses: dataVM.expenseList)
-//                            dataVM.getMonths(expenses: dataVM.expenseList)
-                            self.presentationMode.wrappedValue.dismiss()
-                        },
-                        secondaryButton: .cancel()
-                    )
-                }
+                Alert(
+                    title: Text("Are you sure you want to delete this?"),
+                    message: Text("There is no undo"),
+                    primaryButton: .destructive(Text("Delete")) {
+                        dataVM.deleteExpenseState(expenseS: utilityVM.expenseToEdit)
+                        dataVM.getExpensesCoreData(filter: nil, storage: { storage in
+                            dataVM.expenseList = storage
+                            dataVM.expenseFilteredList = storage
+                        })
+                        //SE METTO STA ROBA CRASHA, TO FIX PROSSIMAMENTE
+                        //                            dataVM.getTotalExpense(expenses: dataVM.expenseList)
+                        //                            dataVM.getMonths(expenses: dataVM.expenseList)
+                        self.presentationMode.wrappedValue.dismiss()
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
         }
     }
 }
@@ -120,6 +125,7 @@ struct FuelEventListFields: View {
     @StateObject var utilityVM : UtilityViewModel
     @StateObject var dataVM: DataViewModel
     var category : Category
+    @FocusState var focusedField: FocusField?
     
     var body: some View {
         List{
@@ -133,13 +139,18 @@ struct FuelEventListFields: View {
                     .foregroundColor(Palette.black)
                     .keyboardType(.decimalPad)
                     .fixedSize(horizontal: true, vertical: true)
-                   
+                    .focused($focusedField, equals: .priceTab)
+                
                 Text(utilityVM.currency)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
             }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField = .priceTab
+            }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-        
+            
             //MARK: DATE
             DatePicker(selection: $utilityVM.expenseToEdit.date, displayedComponents: [.date]) {
                 ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
@@ -155,9 +166,14 @@ struct FuelEventListFields: View {
                     .foregroundColor(Palette.black)
                     .keyboardType(.numberPad)
                     .fixedSize(horizontal: true, vertical: true)
+                    .focused($focusedField, equals: .odometer)
                 Text(utilityVM.unit)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField = .odometer
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
@@ -169,6 +185,7 @@ struct FuelEventListFields: View {
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
+            //MARK: PRICE LITER
             HStack{
                 ListCategoryComponent(
                     title: "Price/Liter",
@@ -180,10 +197,16 @@ struct FuelEventListFields: View {
                     .foregroundColor(Palette.black)
                     .keyboardType(.decimalPad)
                     .fixedSize(horizontal: true, vertical: true)
+                    .focused($focusedField, equals: .priceLiter)
                 
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField = .priceLiter
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
+            //MARK: LITER
             HStack{
                 ListCategoryComponent(
                     title: "Liters",
@@ -195,6 +218,11 @@ struct FuelEventListFields: View {
                     .foregroundColor(Palette.black)
                     .keyboardType(.decimalPad)
                     .fixedSize(horizontal: true, vertical: true)
+                    .focused($focusedField, equals: .liter)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField = .liter
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
@@ -208,10 +236,28 @@ struct FuelEventListFields: View {
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .fixedSize(horizontal: true, vertical: true)
-    //                    .focused(focusedField, equals: .odometer)
+                    .focused($focusedField, equals: .note)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField = .note
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
+        }
+        .toolbar{
+            /// Keyboard focus
+            ToolbarItem(placement: .keyboard) {
+                HStack{
+                    Button(action: {
+                        focusedField = nil
+                    }, label: {
+                        Image(systemName: "keyboard.chevron.compact.down")
+                            .resizable()
+                            .foregroundColor(Palette.black)
+                    })
+                }
+            }
         }
     }
 }
@@ -221,10 +267,10 @@ struct EventListFields: View {
     @StateObject var utilityVM : UtilityViewModel
     @StateObject var dataVM: DataViewModel
     var category : Category
+    @FocusState var focusedField: FocusField?
     
     var body: some View {
         List{
-            
             HStack{
                 ListCategoryComponent(title: "Amount", iconName: "other", color: Palette.colorViolet)
                 Spacer()
@@ -232,23 +278,18 @@ struct EventListFields: View {
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.decimalPad)
+                    .focused($focusedField, equals: .priceTab)
                     .fixedSize(horizontal: true, vertical: true)
-                   
+                
                 Text(utilityVM.currency)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
             }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField = .priceTab
+            }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
-//            HStack{
-//                ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
-//                Spacer()
-//                Text(category.label)
-//                    .font(Typography.headerM)
-//                    .foregroundColor(Palette.black)
-//            }
-//            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
             
             //MARK: DATE
             DatePicker(selection: $utilityVM.expenseToEdit.date, displayedComponents: [.date]) {
@@ -264,10 +305,15 @@ struct EventListFields: View {
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.numberPad)
+                    .focused($focusedField, equals: .odometer)
                     .fixedSize(horizontal: true, vertical: true)
                 Text(utilityVM.unit)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField = .odometer
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
@@ -281,9 +327,28 @@ struct EventListFields: View {
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .fixedSize(horizontal: true, vertical: true)
+                    .focused($focusedField, equals: .note)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField = .note
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
+        }
+        .toolbar{
+            /// Keyboard focus
+            ToolbarItem(placement: .keyboard) {
+                HStack{
+                    Button(action: {
+                        focusedField = nil
+                    }, label: {
+                        Image(systemName: "keyboard.chevron.compact.down")
+                            .resizable()
+                            .foregroundColor(Palette.black)
+                    })
+                }
+            }
         }
     }
 }
