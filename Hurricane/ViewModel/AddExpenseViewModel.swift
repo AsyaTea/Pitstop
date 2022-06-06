@@ -24,10 +24,10 @@ class AddExpenseViewModel : ObservableObject {
     let basedTypes = ["Date","Distance"]
     
     //Vars to store the input in fields
-    @Published var price : Float = 0.0
+    @Published var price : String = ""
     @Published var date = Date()
-    @Published var liters : Float = 0.0
-    @Published var pricePerLiter : Float = 0.0
+    @Published var liters : String = ""
+    @Published var pricePerLiter : String = ""
     @Published var note : String = ""
     @Published var odometer : String = "" ///Var  to store the odometer value in expense
    
@@ -41,9 +41,15 @@ class AddExpenseViewModel : ObservableObject {
     
     
     func createExpense() {
-        expenseS.price = price
-        expenseS.liters = liters
-        expenseS.priceLiter = pricePerLiter
+        let replacedPrice = String(price.map {
+        $0 == "," ? "." : $0 })
+        expenseS.price = Float(replacedPrice) ?? 0.0
+        let replacedLiters = String(liters.map {
+        $0 == "," ? "." : $0 })
+        expenseS.liters = Float(replacedLiters)
+        let replacedPriceLiter = String(pricePerLiter.map {
+        $0 == "," ? "." : $0 })
+        expenseS.priceLiter = Float(replacedPriceLiter)
         if(!odometer.isEmpty){
             expenseS.odometer = Float(odometer) ?? 0.0
         }
@@ -57,7 +63,7 @@ class AddExpenseViewModel : ObservableObject {
 
     func resetTabFields(tab : String){
         if(tab == "Expense"){
-            price = 0
+            price = ""
             priceTab = ""
             selectedCategory = "Fuel"
             odometer = ""

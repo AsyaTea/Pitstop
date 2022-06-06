@@ -36,7 +36,7 @@ struct AddReportView: View {
                 
                 //MARK: Custom TextField
                 if(addExpVM.currentPickerTab == "Expense"){
-                    NumericFieldComponent(submitField: $addExpVM.price, placeholder: "4", attribute:utilityVM.currency, keyboardType: .decimalPad,focusedField: $focusedField, defaultFocus: .priceTab)
+                    TextFieldComponent(submitField: $addExpVM.price, placeholder: "0", attribute: utilityVM.currency, keyboardType: .decimalPad,focusedField: $focusedField,defaultFocus: .priceTab)
                         .padding(.top,15)
                 }
                 else if (addExpVM.currentPickerTab == "Odometer"){
@@ -97,11 +97,11 @@ struct AddReportView: View {
                             .font(Typography.headerM)
                     })
                     .disabled(
-                       (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price == 0 ) &&
+                        (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty ) &&
                         (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
                         reminderVM.title.isEmpty)
                     .opacity(
-                        (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price == 0 ) &&
+                        (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty ) &&
                         (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
                         reminderVM.title.isEmpty ? 0.6 : 1)
             )
@@ -204,41 +204,6 @@ struct TextFieldComponent: View {
         HStack{
             Spacer()
             TextField(placeholder,text: $submitField)
-                .focused(focusedField, equals: defaultFocus)
-                .font(Typography.headerXXL)
-                .foregroundColor(Palette.black)
-                .keyboardType(keyboardType)
-                .fixedSize(horizontal: true, vertical: true)
-            
-            Text(attribute)
-                .font(Typography.headerXXL)
-                .foregroundColor(Palette.black)
-            Spacer()
-        }
-    }
-}
-
-//MARK: - TO REMOVE IN FUTURE
-struct NumericFieldComponent: View {
-    
-    let formatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        return formatter
-    }()
-    
-    @Binding var submitField : Float
-    var placeholder : String
-    var attribute : String
-    var keyboardType : UIKeyboardType
-    
-    var focusedField : FocusState<FocusField?>.Binding
-    var defaultFocus : FocusField
-    
-    var body: some View {
-        HStack{
-            Spacer()
-            TextField(placeholder,value: $submitField,formatter: formatter)
                 .focused(focusedField, equals: defaultFocus)
                 .font(Typography.headerXXL)
                 .foregroundColor(Palette.black)

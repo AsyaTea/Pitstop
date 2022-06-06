@@ -24,11 +24,11 @@ struct ExpenseListView: View {
     @State private var checkmark1 = true
     @State private var checkmark2 = false
     
-    let formatter: NumberFormatter = {
-          let formatter = NumberFormatter()
-          formatter.numberStyle = .decimal
-          return formatter
-      }()
+//    let formatter: NumberFormatter = {
+//          let formatter = NumberFormatter()
+//          formatter.numberStyle = .decimal
+//          return formatter
+//      }()
     
     var body: some View {
         
@@ -90,8 +90,8 @@ struct ExpenseListView: View {
                     ZStack{
                         Circle()
                             .frame(width: 32, height: 32)
-                            .foregroundColor(addExpVM.liters == 0 ? Palette.greyLight : Palette.colorOrange)
-                        Image(addExpVM.liters == 0 ? "liters" : "literColored")
+                            .foregroundColor(addExpVM.liters.isEmpty ? Palette.greyLight : Palette.colorOrange)
+                        Image(addExpVM.liters.isEmpty ? "liters" : "literColored")
                             .resizable()
                             .frame(width: 16, height: 16)
                     }
@@ -99,7 +99,7 @@ struct ExpenseListView: View {
                         .foregroundColor(Palette.black)
                         .font(Typography.headerM)
                     Spacer()
-                    TextField("0",value: $addExpVM.liters,formatter: formatter)
+                    TextField("0",text: $addExpVM.liters)
                         .disableAutocorrection(true)
                         .keyboardType(.decimalPad)
                         .focused(focusedField, equals: .liter)
@@ -117,8 +117,8 @@ struct ExpenseListView: View {
                     ZStack{
                         Circle()
                             .frame(width: 32, height: 32)
-                            .foregroundColor(addExpVM.pricePerLiter == 0.0 ? Palette.greyLight : Palette.colorYellow)
-                        Image(addExpVM.pricePerLiter == 0.0 ?  "priceLiter" : "priceLiterColored")
+                            .foregroundColor(addExpVM.pricePerLiter.isEmpty ? Palette.greyLight : Palette.colorYellow)
+                        Image(addExpVM.pricePerLiter.isEmpty ?  "priceLiter" : "priceLiterColored")
                             .resizable()
                             .frame(width: 16, height: 16)
                     }
@@ -126,7 +126,7 @@ struct ExpenseListView: View {
                         .foregroundColor(Palette.black)
                         .font(Typography.headerM)
                     Spacer()
-                    TextField("0",value: $addExpVM.pricePerLiter,formatter: formatter)
+                    TextField("0",text: $addExpVM.pricePerLiter)
                         .disableAutocorrection(true)
                         .focused(focusedField, equals: .priceLiter)
                         .fixedSize(horizontal: true, vertical: true)
