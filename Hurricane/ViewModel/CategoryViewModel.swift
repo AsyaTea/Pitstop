@@ -21,7 +21,7 @@ class CategoryViewModel: ObservableObject {
     @Published var selectedCategory : Int16 = Int16(Category.fuel.rawValue)
     //Computed properties, pass expenseList through view and call functions
     @Published var fuelTotal: Float = 0.0
-    @Published var mainteinanceTotal: Float = 0.0
+    @Published var maintenanceTotal: Float = 0.0
     @Published var insuranceTotal: Float = 0.0
     @Published var tollsTotal: Float = 0.0
     @Published var roadTaxTotal: Float = 0.0
@@ -30,7 +30,7 @@ class CategoryViewModel: ObservableObject {
     @Published var otherTotal: Float = 0.0
     
     @Published var fuelList = [ExpenseViewModel]()
-    @Published var mainteinanceList = [ExpenseViewModel]()
+    @Published var maintenanceList = [ExpenseViewModel]()
     @Published var insuranceList = [ExpenseViewModel]()
     @Published var tollsList = [ExpenseViewModel]()
     @Published var roadTaxList = [ExpenseViewModel]()
@@ -49,6 +49,9 @@ class CategoryViewModel: ObservableObject {
     @Published var refuelsPerTime: Int = 0
     @Published var avgDaysRefuel: Int = 0
     @Published var avgPrice : Int = 0
+    
+    @Published var currentOdometer: Double = 0
+    @Published var odometerTimeTotal: Double = 0
    
     
     @Published var selectedTimeFrame = "Per month"
@@ -154,7 +157,7 @@ class CategoryViewModel: ObservableObject {
         }
         print("date array\(daysDiffInt)")
         
-        self.avgDaysRefuel = (daysDiffInt.reduce(0, +))/daysDiffInt.count
+        self.avgDaysRefuel = (daysDiffInt.reduce(0, +))/1+daysDiffInt.count
         print("avg days : \(self.avgDaysRefuel)")
     
         
@@ -168,21 +171,24 @@ class CategoryViewModel: ObservableObject {
         }
         self.avgPrice = Int(priceArray.reduce(0, +))/priceArray.count
         
-        
     }
     
     //MARK: Odometer, remember to insert a time frame property
     
     //Average, take odometer and divide it by the given time -> calculate avg
     
-    func getAverageOdometer() {
-        
+    func getAverageOdometer(odometer: Double) {
+        let lastExpense : ExpenseViewModel
+        // prendi l'odometer dell ultima expense
+        //prendi odometer della prima expense nel time range
+        //sub
+        //dividi il risultato x i giorni
     }
     
-    //Time total, take odomenter of now and the last one within time frame and subtract -> value displayed
+    //Time total, take odometer of now and the last one within time frame and subtract -> value displayed
     
     func getTimeTotal() {
-        
+       //implement this in the function up here
     }
     
     //Estimated km/year takes odometer data from time frame, makes an average -> multiply for 12/ 4 / 1 based on time frame
@@ -194,7 +200,7 @@ class CategoryViewModel: ObservableObject {
     func assignCategories(expenseList: [ExpenseViewModel]) {
         
         self.fuelList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 8)
-        self.mainteinanceList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 1)
+        self.maintenanceList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 1)
         self.insuranceList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 2)
         self.roadTaxList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 3)
         self.tollsList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 4)
@@ -204,7 +210,7 @@ class CategoryViewModel: ObservableObject {
         
         
         self.fuelTotal = CategoryViewModel.totalCategoryCost(categoryList: self.fuelList)
-        self.mainteinanceTotal = CategoryViewModel.totalCategoryCost(categoryList: self.mainteinanceList)
+        self.maintenanceTotal = CategoryViewModel.totalCategoryCost(categoryList: self.maintenanceList)
         self.insuranceTotal = CategoryViewModel.totalCategoryCost(categoryList: self.insuranceList)
         self.tollsTotal = CategoryViewModel.totalCategoryCost(categoryList: self.tollsList)
         self.roadTaxTotal = CategoryViewModel.totalCategoryCost(categoryList: self.roadTaxList)
@@ -214,7 +220,7 @@ class CategoryViewModel: ObservableObject {
         
         
         self.categories = [Category2(name: "Fuel", color: Palette.colorYellow, icon: "fuelType", totalCosts: self.fuelTotal),
-                           Category2(name: "Mainteinance", color: Palette.colorGreen, icon: "maintanance", totalCosts: self.mainteinanceTotal),
+                           Category2(name: "Maintenance", color: Palette.colorGreen, icon: "maintenance", totalCosts: self.maintenanceTotal),
                            Category2(name: "Insurance", color: Palette.colorOrange, icon: "insurance", totalCosts: self.insuranceTotal),
                            Category2(name: "Tolls", color: Palette.colorOrange, icon: "Tolls", totalCosts: self.tollsTotal),
                            Category2(name: "Fines", color: Palette.colorOrange, icon: "fines", totalCosts: self.finesTotal),
@@ -225,19 +231,19 @@ class CategoryViewModel: ObservableObject {
         
     }
     
-//    func retrieveAndUpdate() {
-//        self.expenseList = []
-//        let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (self.currentVehicle.first?.vehicleID)!)
-//        self.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
-//            self.expenseList = storage
-//            self.assignCategories(expenseList: storage)
-//            self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-//
-//            if !self.fuelList.isEmpty {
-//                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-//            }
-//        })
-//    }
+    func retrieveAndUpdate() {
+        self.expenseList = []
+        let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (self.currentVehicle.first?.vehicleID)!)
+        self.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
+            self.expenseList = storage
+            self.assignCategories(expenseList: storage)
+            self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+
+            if !self.fuelList.isEmpty {
+                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+            }
+        })
+    }
     
     func getCurrentVehicle() {
         let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
@@ -250,7 +256,10 @@ class CategoryViewModel: ObservableObject {
             vehicle =  try manager.context.fetch(request)
             DispatchQueue.main.async {
                 self.currentVehicle = vehicle.map(VehicleViewModel.init)
-//                self.retrieveAndUpdate()
+                if !self.currentVehicle.isEmpty {
+                    self.retrieveAndUpdate()
+                }
+
                 
             }
             print("CURRENT VEHICLE LIST ",vehicleList)
@@ -389,7 +398,7 @@ struct Category2: Hashable {
 }
 
 enum CategoryEnum {
-    case mainteinance
+    case maintenance
     case fuel
     case insurance
 }

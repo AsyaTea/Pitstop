@@ -13,7 +13,6 @@ struct HurricaneApp: App {
     var body: some Scene {
         WindowGroup {
             CustomTabBarView()
-                .preferredColorScheme(.light)
 //            ContentView()
 //            AnalyticsOverviewView()
         }

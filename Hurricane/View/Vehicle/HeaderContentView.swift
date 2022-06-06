@@ -30,10 +30,10 @@ struct HeaderContent : View {
                         VStack(alignment: .center){
                             let formattedCost = String(format: "%.0f", dataVM.totalExpense)
                             Text("\(formattedCost) \(utilityVM.currency)")
-                                .foregroundColor(Palette.black)
+                                .foregroundColor(Palette.blackHeader)
                                 .font(Typography.headerL)
                             Text("All costs")
-                                .foregroundColor(Palette.black)
+                                .foregroundColor(Palette.blackHeader)
                                 .font(Typography.TextM)
                         }
                     }
@@ -49,10 +49,10 @@ struct HeaderContent : View {
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
                             Text(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)))
-                                .foregroundColor(Palette.black)
+                                .foregroundColor(Palette.blackHeader)
                                 .font(Typography.headerL)
                             Text("Odometer")
-                                .foregroundColor(Palette.black)
+                                .foregroundColor(Palette.blackHeader)
                                 .font(Typography.TextM)
                         }
                     }
@@ -68,10 +68,10 @@ struct HeaderContent : View {
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
                             Text("*** $")
-                                .foregroundColor(Palette.black)
+                                .foregroundColor(Palette.blackHeader)
                                 .font(Typography.headerL)
                             Text("Coming Soon")
-                                .foregroundColor(Palette.black)
+                                .foregroundColor(Palette.blackHeader)
                                 .font(Typography.TextM)
                         }
                     }

@@ -15,9 +15,9 @@ extension Color {
     init(lightRGB: UInt32, darkRGB: UInt32) {
         self.init(UIColor { traitCollection in
             if traitCollection.userInterfaceStyle == .dark {
-                return UIColor(rgb: lightRGB)
-            } else {
                 return UIColor(rgb: darkRGB)
+            } else {
+                return UIColor(rgb: lightRGB)
             }
         })
     }

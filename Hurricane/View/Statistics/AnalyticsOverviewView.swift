@@ -57,7 +57,6 @@ struct AnalyticsOverviewView: View {
             
             
         }
-        
         .background(Palette.greyBackground)
         .overlay(content: {
             VStack{
