@@ -261,6 +261,7 @@ class DataViewModel : ObservableObject {
         expense.liters = es.liters ?? 0.0
         expense.category = es.category ?? 8
         expense.note = es.note
+        expense.vehicle?.odometer = es.odometer
         
         //PUBLISHED LIST UPDATE
         for (index,value) in expenseList.enumerated() {
