@@ -49,6 +49,9 @@ class CategoryViewModel: ObservableObject {
     @Published var refuelsPerTime: Int = 0
     @Published var avgDaysRefuel: Int = 0
     @Published var avgPrice : Int = 0
+    
+    @Published var currentOdometer: Double = 0
+    @Published var odometerTimeTotal: Double = 0
    
     
     @Published var selectedTimeFrame = "Per month"
@@ -168,21 +171,24 @@ class CategoryViewModel: ObservableObject {
         }
         self.avgPrice = Int(priceArray.reduce(0, +))/priceArray.count
         
-        
     }
     
     //MARK: Odometer, remember to insert a time frame property
     
     //Average, take odometer and divide it by the given time -> calculate avg
     
-    func getAverageOdometer() {
-        
+    func getAverageOdometer(odometer: Double) {
+        let lastExpense : ExpenseViewModel
+        // prendi l'odometer dell ultima expense
+        //prendi odometer della prima expense nel time range
+        //sub
+        //dividi il risultato x i giorni
     }
     
-    //Time total, take odomenter of now and the last one within time frame and subtract -> value displayed
+    //Time total, take odometer of now and the last one within time frame and subtract -> value displayed
     
     func getTimeTotal() {
-        
+       //implement this in the function up here
     }
     
     //Estimated km/year takes odometer data from time frame, makes an average -> multiply for 12/ 4 / 1 based on time frame
@@ -225,19 +231,19 @@ class CategoryViewModel: ObservableObject {
         
     }
     
-//    func retrieveAndUpdate() {
-//        self.expenseList = []
-//        let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (self.currentVehicle.first?.vehicleID)!)
-//        self.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
-//            self.expenseList = storage
-//            self.assignCategories(expenseList: storage)
-//            self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-//
-//            if !self.fuelList.isEmpty {
-//                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-//            }
-//        })
-//    }
+    func retrieveAndUpdate() {
+        self.expenseList = []
+        let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (self.currentVehicle.first?.vehicleID)!)
+        self.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
+            self.expenseList = storage
+            self.assignCategories(expenseList: storage)
+            self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+
+            if !self.fuelList.isEmpty {
+                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+            }
+        })
+    }
     
     func getCurrentVehicle() {
         let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
@@ -250,7 +256,10 @@ class CategoryViewModel: ObservableObject {
             vehicle =  try manager.context.fetch(request)
             DispatchQueue.main.async {
                 self.currentVehicle = vehicle.map(VehicleViewModel.init)
-//                self.retrieveAndUpdate()
+                if !self.currentVehicle.isEmpty {
+                    self.retrieveAndUpdate()
+                }
+
                 
             }
             print("CURRENT VEHICLE LIST ",vehicleList)
