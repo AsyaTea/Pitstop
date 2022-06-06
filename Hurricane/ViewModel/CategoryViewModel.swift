@@ -21,7 +21,7 @@ class CategoryViewModel: ObservableObject {
     @Published var selectedCategory : Int16 = Int16(Category.fuel.rawValue)
     //Computed properties, pass expenseList through view and call functions
     @Published var fuelTotal: Float = 0.0
-    @Published var mainteinanceTotal: Float = 0.0
+    @Published var maintenanceTotal: Float = 0.0
     @Published var insuranceTotal: Float = 0.0
     @Published var tollsTotal: Float = 0.0
     @Published var roadTaxTotal: Float = 0.0
@@ -30,7 +30,7 @@ class CategoryViewModel: ObservableObject {
     @Published var otherTotal: Float = 0.0
     
     @Published var fuelList = [ExpenseViewModel]()
-    @Published var mainteinanceList = [ExpenseViewModel]()
+    @Published var maintenanceList = [ExpenseViewModel]()
     @Published var insuranceList = [ExpenseViewModel]()
     @Published var tollsList = [ExpenseViewModel]()
     @Published var roadTaxList = [ExpenseViewModel]()
@@ -153,7 +153,7 @@ class CategoryViewModel: ObservableObject {
         }
         print("date array\(daysDiffInt)")
         
-        self.avgDaysRefuel = (daysDiffInt.reduce(0, +))/daysDiffInt.count
+        self.avgDaysRefuel = (daysDiffInt.reduce(0, +))/1+daysDiffInt.count
         print("avg days : \(self.avgDaysRefuel)")
     
         
@@ -188,7 +188,7 @@ class CategoryViewModel: ObservableObject {
     func assignCategories(expenseList: [ExpenseViewModel]) {
         
         self.fuelList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 8)
-        self.mainteinanceList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 1)
+        self.maintenanceList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 1)
         self.insuranceList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 2)
         self.roadTaxList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 3)
         self.tollsList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 4)
@@ -198,7 +198,7 @@ class CategoryViewModel: ObservableObject {
         
         
         self.fuelTotal = CategoryViewModel.totalCategoryCost(categoryList: self.fuelList)
-        self.mainteinanceTotal = CategoryViewModel.totalCategoryCost(categoryList: self.mainteinanceList)
+        self.maintenanceTotal = CategoryViewModel.totalCategoryCost(categoryList: self.maintenanceList)
         self.insuranceTotal = CategoryViewModel.totalCategoryCost(categoryList: self.insuranceList)
         self.tollsTotal = CategoryViewModel.totalCategoryCost(categoryList: self.tollsList)
         self.roadTaxTotal = CategoryViewModel.totalCategoryCost(categoryList: self.roadTaxList)
@@ -208,7 +208,7 @@ class CategoryViewModel: ObservableObject {
         
         
         self.categories = [Category2(name: "Fuel", color: Palette.colorYellow, icon: "fuelType", totalCosts: self.fuelTotal),
-                           Category2(name: "Mainteinance", color: Palette.colorGreen, icon: "maintanance", totalCosts: self.mainteinanceTotal),
+                           Category2(name: "Maintenance", color: Palette.colorGreen, icon: "maintenance", totalCosts: self.maintenanceTotal),
                            Category2(name: "Insurance", color: Palette.colorOrange, icon: "insurance", totalCosts: self.insuranceTotal),
                            Category2(name: "Tolls", color: Palette.colorOrange, icon: "Tolls", totalCosts: self.tollsTotal),
                            Category2(name: "Fines", color: Palette.colorOrange, icon: "fines", totalCosts: self.finesTotal),
@@ -380,7 +380,7 @@ struct Category2: Hashable {
 }
 
 enum CategoryEnum {
-    case mainteinance
+    case maintenance
     case fuel
     case insurance
 }

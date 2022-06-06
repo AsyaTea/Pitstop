@@ -47,9 +47,9 @@ struct VehicleView: View {
             dataVM.getCurrentVehicle()
             }
         }
-//        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
-//            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
-//        })
+        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
+            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
+        })
 
     }
 }
