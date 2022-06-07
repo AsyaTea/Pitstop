@@ -51,7 +51,7 @@ struct AnalyticsOverviewView: View {
                 AnalyticsFuelView(categoryVM: categoryVM)
             }
             else {
-                AnalyticsOdometerView(dataVM: dataVM)
+                AnalyticsOdometerView(categoryVM: categoryVM, dataVM: dataVM)
             }
             
             
@@ -142,7 +142,7 @@ struct OverviewView: View {
                     .padding(2)
             }
             Section {
-                OdometerCostsView(dataVM: dataVM)
+                OdometerCostsView(categoryVM: categoryVM, dataVM: dataVM)
                     .padding(2)
             }
         }        
@@ -203,7 +203,7 @@ struct FuelListView : View {
             
         ListCostsAttributes(title: "Category", value: String(categoryVM.fuelTotal))
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-        ListCostsAttributes(title: "Average price", value: "$ 1.564")
+        ListCostsAttributes(title: "Average price", value: String(categoryVM.avgPrice))
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Refuels per month", value: String(categoryVM.refuelsPerTime))
            
@@ -216,6 +216,7 @@ struct FuelListView : View {
 
 //MARK: Odometer Section
 struct OdometerCostsView: View {
+    @ObservedObject var categoryVM : CategoryViewModel
     @ObservedObject var dataVM : DataViewModel
     var body: some View {
         HStack {
@@ -230,7 +231,7 @@ struct OdometerCostsView: View {
             
         ListCostsAttributes(title: "Average", value: "25.4 km/day")
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-        ListCostsAttributes(title: "Month Total", value: "678 km")
+        ListCostsAttributes(title: "Month Total", value: String(categoryVM.odometerTotal))
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Estimated km/year", value: "9262 km")
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))

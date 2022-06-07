@@ -52,6 +52,8 @@ class CategoryViewModel: ObservableObject {
     
     @Published var currentOdometer: Double = 0
     @Published var odometerTimeTotal: Double = 0
+    @Published var avgOdometer: Int = 0
+    @Published var odometerTotal : Int = 0
    
     
     @Published var selectedTimeFrame = "Per month"
@@ -115,6 +117,21 @@ class CategoryViewModel: ObservableObject {
         return monthSub
     }
     
+    func calculateDays(timeFrame: String) -> Int {
+        var Days : Int {
+            if timeFrame == "Per month" {
+                return 30
+            } else if timeFrame == "Per 3 months" {
+                return 90
+            } else if timeFrame == "Per year" {
+                return 365
+            } else {
+                return 0
+            }
+        }
+        return Days
+    }
+    
     
     //MARK: Fuel, remember to insert a time frame property to pass
 
@@ -125,14 +142,14 @@ class CategoryViewModel: ObservableObject {
         print("time frame is \(timeFrame)")
         let monthSub = calculateTimeFrame(timeFrame: timeFrame)
         if monthSub != 0 {
-        let monthSubtractedDate = addOrSubtractMonths(month: monthSub)
-       
-        let monthFuels = fuelList.filter { refuel in
-            return refuel.date > monthSubtractedDate
-        }
-            
-        self.refuelsPerTime = monthFuels.count
-        print(self.refuelsPerTime)
+            let monthSubtractedDate = addOrSubtractMonths(month: monthSub)
+           
+            let monthFuels = fuelList.filter { refuel in
+                return refuel.date > monthSubtractedDate
+            }
+                
+            self.refuelsPerTime = monthFuels.count
+            print(self.refuelsPerTime)
         } else {
            self.refuelsPerTime = fuelList.count
         }       
@@ -175,10 +192,24 @@ class CategoryViewModel: ObservableObject {
     
     //MARK: Odometer, remember to insert a time frame property
     
-    //Average, take odometer and divide it by the given time -> calculate avg
+    //Average, take odometer and the last one within time frame, sub and divide it by the given time -> calculate avg
     
-    func getAverageOdometer(odometer: Double) {
-        let lastExpense : ExpenseViewModel
+    func getAverageOdometer(odometer: Double, expenseList: [ExpenseViewModel], timeFrame: String) {
+        let monthSub = calculateTimeFrame(timeFrame: timeFrame)
+        let monthSubtractedDate = addOrSubtractMonths(month: monthSub)
+        
+        var expenseListTime = expenseList.filter { expense in
+            expense.date > monthSubtractedDate
+        }
+        expenseListTime.sort { expenseOne, expenseTwo in
+            return expenseOne.date > expenseTwo.date
+        }
+        self.odometerTotal = Int(expenseListTime.first?.odometer ?? 0.0) - Int(expenseListTime.last?.odometer ?? 0.0)
+        print("odometer difference : \(odometerTotal)")
+        
+        let days = calculateDays(timeFrame: timeFrame)
+        self.avgOdometer = odometerTotal / days
+        
         // prendi l'odometer dell ultima expense
         //prendi odometer della prima expense nel time range
         //sub
@@ -187,9 +218,6 @@ class CategoryViewModel: ObservableObject {
     
     //Time total, take odometer of now and the last one within time frame and subtract -> value displayed
     
-    func getTimeTotal() {
-       //implement this in the function up here
-    }
     
     //Estimated km/year takes odometer data from time frame, makes an average -> multiply for 12/ 4 / 1 based on time frame
     
