@@ -28,18 +28,20 @@ struct AnalyticsOverviewView: View {
 //    }
     
     var body: some View {
-       
+        if categoryVM.expenseList.isEmpty {
+            ZStack{
+                Palette.greyBackground.ignoresSafeArea()
+                HStack{
+                    Text("No data yet")
+                    ProgressView()
+                }
+            }
+        }
         VStack{
             AnalyticsHeaderView(statisticsVM: statisticsVM, categoryVM: categoryVM, dataVM: dataVM)
             .frame(height: 30)
             
-            if categoryVM.expenseList.isEmpty {
-                ZStack{
-                    Palette.greyBackground.ignoresSafeArea()
-                    ProgressView()
-                }
-               
-            }
+      
             
             if(categoryVM.currentPickerTab == "Overview") {
                 OverviewView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM)
@@ -53,8 +55,6 @@ struct AnalyticsOverviewView: View {
             else {
                 AnalyticsOdometerView(categoryVM: categoryVM, dataVM: dataVM)
             }
-            
-            
             
         }
         .background(Palette.greyBackground)
