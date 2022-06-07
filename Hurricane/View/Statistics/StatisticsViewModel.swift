@@ -26,7 +26,7 @@ class StatisticsViewModel : ObservableObject {
 //}
 //
 //enum CategoryEnum {
-//    case mainteinance
+//    case maintenance
 //    case fuel
 //    case insurance
 //    case tolls
@@ -39,7 +39,7 @@ class StatisticsViewModel : ObservableObject {
 //class CategoryViewModel: ObservableObject {
 //
 //     @Published var categories = [Category(name: "Fuel", color: Palette.colorYellow, icon: "fuelType", totalCosts: 20.0),
-//                       Category(name: "Mainteinance", color: Palette.colorGreen, icon: "maintanance", totalCosts: 20.0),
+//                       Category(name: "Maintenance", color: Palette.colorGreen, icon: "maintanance", totalCosts: 20.0),
 //                       Category(name: "Insurance", color: Palette.colorOrange, icon: "insurance", totalCosts: 20.0),
 //                       Category(name: "Tolls", color: Palette.colorOrange, icon: "Tolls", totalCosts: 20.0),
 //                       Category(name: "Fines", color: Palette.colorOrange, icon: "fines", totalCosts: 20.0),

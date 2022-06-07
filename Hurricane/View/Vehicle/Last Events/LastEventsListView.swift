@@ -18,7 +18,6 @@ struct LastEventsListView: View {
     @State private var showEditExpense = false
     @Environment(\.presentationMode) private var presentationMode
     
-    
     @ObservedObject var utilityVM : UtilityViewModel
     
     @State var isfilterSelected = 0 // If  == 0 no filters selected
@@ -45,9 +44,7 @@ struct LastEventsListView: View {
                             .padding()
                         }
                         
-                        
                         ForEach(dataVM.monthsAmount.sorted(by: <),id:\.self){ month in
-                            
                             //MARK: MONTHS
                             ZStack{
                                 Rectangle()
@@ -99,18 +96,27 @@ struct LastEventsListView: View {
                                     })
                                 }
                             }
+                            NavigationLink(destination:
+                                            EditEventView(
+                                                utilityVM: utilityVM,
+                                                dataVM : dataVM,
+                                                category: Category.init(rawValue: Int(utilityVM.expenseToEdit.category ?? 0 )) ?? .other
+                                            )
+                                                .navigationBarBackButtonHidden(true)
+                                                .navigationBarHidden(true),
+                                           isActive: $showEditExpense){}
                         }
                         Spacer()
                     }
                 }
             }
-            .sheet(isPresented: $showEditExpense){
-                EditEventView(
-                    utilityVM: utilityVM,
-                    dataVM : dataVM,
-                    category: Category.init(rawValue: Int(utilityVM.expenseToEdit.category ?? 0 )) ?? .other
-                )
-            }
+            //            .sheet(isPresented: $showEditExpense){
+            //                EditEventView(
+            //                    utilityVM: utilityVM,
+            //                    dataVM : dataVM,
+            //                    category: Category.init(rawValue: Int(utilityVM.expenseToEdit.category ?? 0 )) ?? .other
+            //                )
+            //            }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:

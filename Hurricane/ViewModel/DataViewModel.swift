@@ -22,6 +22,10 @@ class DataViewModel : ObservableObject {
     //Important number
     @Published var numberList: [NumberViewModel] = []
     
+    //Reminder
+    @Published var reminderList: [ReminderViewModel] = []
+    @Published var expiredReminders : [ReminderViewModel] = []
+    
     //Filter
     @Published var filter : NSPredicate?
 //    @Published var filterCurrentExpense : NSPredicate?
@@ -42,7 +46,7 @@ class DataViewModel : ObservableObject {
             self.numberList = storage
             
         })
-        getCurrentVehicle()
+//        getCurrentVehicle()
         
     }
     
@@ -206,6 +210,7 @@ class DataViewModel : ObservableObject {
     }
     
     
+    
     //MARK: EXPENSE CRUD
 
     func getExpenseByID(expenseID: NSManagedObjectID) throws -> ExpenseViewModel {
@@ -219,6 +224,7 @@ class DataViewModel : ObservableObject {
     
     func addExpense(expense : ExpenseState) {
         let newExpense = Expense(context: manager.context)
+        var newOdometer: Float = 0.0
         newExpense.vehicle = getVehicle(vehicleID: currentVehicle.first!.vehicleID)
         newExpense.note = expense.note
         newExpense.price = expense.price
@@ -228,7 +234,8 @@ class DataViewModel : ObservableObject {
         newExpense.fuelType = expense.fuelType ?? 0
         newExpense.liters = expense.liters ?? 0.0
         newExpense.priceLiter = expense.priceLiter ?? 1.0
-        newExpense.vehicle?.odometer += expense.odometer
+        newOdometer = expense.odometer - (newExpense.vehicle?.odometer ?? 0.0)
+        newExpense.vehicle?.odometer += newOdometer
         print(" Expense : \(newExpense)")
         print(" Current Vehicle \(currentVehicle)")
         self.expenseList.append(ExpenseViewModel(expense: newExpense))
@@ -254,6 +261,7 @@ class DataViewModel : ObservableObject {
         expense.liters = es.liters ?? 0.0
         expense.category = es.category ?? 8
         expense.note = es.note
+        expense.vehicle?.odometer = es.odometer
         
         //PUBLISHED LIST UPDATE
         for (index,value) in expenseList.enumerated() {
@@ -330,20 +338,60 @@ class DataViewModel : ObservableObject {
         }
     }
     
+    //MARK: - REMINDERS CRUD
+    
+    //MARK: - CREATE
+    func addReminder(reminder : ReminderState) {
+        let newReminder = Reminder(context: manager.context)
+        newReminder.title = reminder.title
+        newReminder.note = reminder.note
+        newReminder.distance = reminder.distance
+        newReminder.recurrence = reminder.recurrence ?? 0
+        newReminder.category = reminder.category ?? 0
+        newReminder.based = reminder.based ?? 0
+        newReminder.date = reminder.date
+        
+        print(" Reminder : \(newReminder)")
+        self.reminderList.append(ReminderViewModel(reminder: newReminder))
+        save()
+    }
+    
+    //MARK: - READ
+    func getRemindersCoreData(filter : NSPredicate?, storage: @escaping([ReminderViewModel]) -> ())  {
+        let request = NSFetchRequest<Reminder>(entityName: "Reminder")
+        let reminder : [Reminder]
+        
+        let sort = NSSortDescriptor(keyPath: \Reminder.objectID, ascending: true)
+        request.sortDescriptors = [sort]
+        request.predicate = filter
+        
+        do {
+            reminder =  try manager.context.fetch(request)
+            DispatchQueue.main.async{
+                storage(reminder.map(ReminderViewModel.init))
+            }
+            
+        }catch let error {
+            print("🛎 Error fetching reminders: \(error.localizedDescription)")
+        }
+    }
+    
+    
+    
     //MARK: IMPORTANT NUMBERS CRUD
     
     func getNumbersCoreData(filter : NSPredicate?, storage: @escaping([NumberViewModel]) -> ())  {
         let request = NSFetchRequest<Number>(entityName: "Number")
-        let expense : [Number]
+        let number : [Number]
         
         let sort = NSSortDescriptor(keyPath: \Number.objectID, ascending: true)
         request.sortDescriptors = [sort]
         request.predicate = filter
         
         do {
-            expense =  try manager.context.fetch(request)
+            number =  try manager.context.fetch(request)
             DispatchQueue.main.async{
-                storage(expense.map(NumberViewModel.init))
+                storage(number.map(NumberViewModel.init))
             }
             
         }catch let error {

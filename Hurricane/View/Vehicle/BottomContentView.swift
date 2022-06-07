@@ -30,8 +30,8 @@ struct BottomContentView: View {
                 .padding(.top,10)
                 .padding(.bottom,-10)
                 .sheet(isPresented: $viewAllEvents){LastEventsListView(dataVM: dataVM, categoryVM: categoryVM,utilityVM: utilityVM)}
-//            NavigationLink("NAVIGA",destination: LastEventsListView(dataVM: dataVM,utilityVM: utilityVM),isActive: $viewAllEvents)
-
+            //            NavigationLink("NAVIGA",destination: LastEventsListView(dataVM: dataVM,utilityVM: utilityVM),isActive: $viewAllEvents)
+            
             if(dataVM.expenseList.isEmpty){
                 HStack{
                     Text("There are no events now")
@@ -145,7 +145,10 @@ struct BottomContentView: View {
                 category: Category.init(rawValue: Int(utilityVM.expenseToEdit.category ?? 0 )) ?? .other
             )
         }
-        .fullScreenCover(isPresented: $viewAllNumbers){ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)}
+        .sheet(isPresented: $viewAllNumbers,onDismiss: homeVM.resetAlertFieldsInside){
+            ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)
+                .interactiveDismissDisabled(homeVM.interactiveDismiss)
+        }
         .fullScreenCover(isPresented: $viewAllDocuments){WorkInProgress()}
         
     }

@@ -10,9 +10,10 @@ import SwiftUI
 struct VehicleView: View {
     
     //Onboarding vars
-//    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
-    @State var shouldShowOnboarding : Bool = true //FOR TESTING
+    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
+//    @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
+    @StateObject var reminderVM = AddReminderViewModel()
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var homeVM : HomeViewModel
     @ObservedObject var utilityVM : UtilityViewModel
@@ -40,17 +41,17 @@ struct VehicleView: View {
         )
         .ignoresSafeArea(.keyboard)
         .sheet(isPresented: $showAddReport) {
-            AddReportView(utilityVM: utilityVM , categoryVM: categoryVM, dataVM: dataVM)
+            AddReportView(utilityVM: utilityVM , categoryVM: categoryVM, dataVM: dataVM, reminderVM: reminderVM)
         }
         .onAppear{
             if(shouldShowOnboarding == false){
             dataVM.getCurrentVehicle()
             }
         }
-//        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
-//            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
-//        })
-        
+        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
+            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
+        })
+
     }
 }
 

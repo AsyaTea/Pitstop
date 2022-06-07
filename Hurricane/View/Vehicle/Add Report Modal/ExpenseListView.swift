@@ -14,22 +14,14 @@ struct ExpenseListView: View {
     @StateObject var dataVM : DataViewModel
     @ObservedObject var categoryVM : CategoryViewModel
     @StateObject var fuelVM = FuelViewModel()
+    @StateObject var reminderVM : AddReminderViewModel
     
     var focusedField : FocusState<FocusField?>.Binding
     
 //    @State private var selectedFuel : String = ""
 
-
     @State private var checkmark1 = true
     @State private var checkmark2 = false
-    
-    let formatter: NumberFormatter = {
-          let formatter = NumberFormatter()
-          formatter.numberStyle = .decimal
-          return formatter
-      }()
-    
-    
     
     var body: some View {
         
@@ -39,12 +31,12 @@ struct ExpenseListView: View {
             HStack{
                 ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
                 Spacer()
-            NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, categoryVM: categoryVM, checkmark: $checkmark1)){
+                NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, checkmark: $checkmark1)){
                 Spacer()
                 Text(addExpVM.selectedCategory)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.greyMiddle)
-            }
+                }
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
@@ -52,7 +44,7 @@ struct ExpenseListView: View {
             HStack{
                 ListCategoryComponent(title: "Odometer", iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                TextField("100", value: $addExpVM.odometer,formatter: NumberFormatter())
+                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), text: $addExpVM.odometer)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .focused(focusedField, equals: .odometer)
@@ -61,6 +53,10 @@ struct ExpenseListView: View {
                 Text(utilityVM.unit)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField.wrappedValue = .odometer
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
@@ -91,8 +87,8 @@ struct ExpenseListView: View {
                     ZStack{
                         Circle()
                             .frame(width: 32, height: 32)
-                            .foregroundColor(addExpVM.liters == 0 ? Palette.greyLight : Palette.colorOrange)
-                        Image(addExpVM.liters == 0 ? "liters" : "literColored")
+                            .foregroundColor(addExpVM.liters.isEmpty ? Palette.greyLight : Palette.colorOrange)
+                        Image(addExpVM.liters.isEmpty ? "liters" : "literColored")
                             .resizable()
                             .frame(width: 16, height: 16)
                     }
@@ -100,7 +96,7 @@ struct ExpenseListView: View {
                         .foregroundColor(Palette.black)
                         .font(Typography.headerM)
                     Spacer()
-                    TextField("0",value: $addExpVM.liters,formatter: formatter)
+                    TextField("0",text: $addExpVM.liters)
                         .disableAutocorrection(true)
                         .keyboardType(.decimalPad)
                         .focused(focusedField, equals: .liter)
@@ -111,6 +107,10 @@ struct ExpenseListView: View {
                         .font(Typography.headerM)
                         .foregroundColor(Palette.black)
                 }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    focusedField.wrappedValue = .liter
+                }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                 
                 
@@ -118,8 +118,8 @@ struct ExpenseListView: View {
                     ZStack{
                         Circle()
                             .frame(width: 32, height: 32)
-                            .foregroundColor(addExpVM.pricePerLiter == 0.0 ? Palette.greyLight : Palette.colorYellow)
-                        Image(addExpVM.pricePerLiter == 0.0 ?  "priceLiter" : "priceLiterColored")
+                            .foregroundColor(addExpVM.pricePerLiter.isEmpty ? Palette.greyLight : Palette.colorYellow)
+                        Image(addExpVM.pricePerLiter.isEmpty ?  "priceLiter" : "priceLiterColored")
                             .resizable()
                             .frame(width: 16, height: 16)
                     }
@@ -127,7 +127,7 @@ struct ExpenseListView: View {
                         .foregroundColor(Palette.black)
                         .font(Typography.headerM)
                     Spacer()
-                    TextField("0",value: $addExpVM.pricePerLiter,formatter: formatter)
+                    TextField("0",text: $addExpVM.pricePerLiter)
                         .disableAutocorrection(true)
                         .focused(focusedField, equals: .priceLiter)
                         .fixedSize(horizontal: true, vertical: true)
@@ -136,6 +136,10 @@ struct ExpenseListView: View {
                     
                     Text(utilityVM.currency)
                         .foregroundColor(Palette.black)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    focusedField.wrappedValue = .priceLiter
                 }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             }
@@ -155,6 +159,10 @@ struct ExpenseListView: View {
                     .focused(focusedField, equals: .note)
                     .font(Typography.headerM)
                 
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                focusedField.wrappedValue = .note
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         }
@@ -250,17 +258,20 @@ struct CustomCategoryPicker : View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var dataVM : DataViewModel
     @StateObject var addExpVM : AddExpenseViewModel
+    @StateObject var reminderVM: AddReminderViewModel
     @ObservedObject var categoryVM : CategoryViewModel
     @Binding var checkmark : Bool
     
     var body: some View {
         List{
-            ForEach(Category.allCases,id:\.self){ category in
+            ForEach(Category.allCases,id:\.self){category in
                 Button(action: {
                     checkmark.toggle()
-                    addExpVM.selectedCategory = category.label
                     categoryVM.defaultCategory = category
+                    addExpVM.selectedCategory = category.label
                     addExpVM.category = categoryVM.selectedCategory
+                    reminderVM.selectedCategory = category.label
+                    reminderVM.category = categoryVM.selectedCategory
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
                     HStack {

@@ -14,8 +14,8 @@ class AddExpenseViewModel : ObservableObject {
     @Published var fuel : Int16 = 0
     @Published var selectedCategory : String = "Fuel"
     @Published var selectedFuel : String = ""
-
-    let categoryTypes = ["Fuel", "Maintenance", "Insurance","Road tax","Tolls","Fines","Parking","Other"]
+    
+    //Reminders
     @Published var selectedCategoryReminder =  "Maintenance"
     let categoryReminder = ["Maintenance", "Insurance","Road tax","Tolls","Parking","Other"]
     @Published var selectedRepeat = "Never"
@@ -24,27 +24,38 @@ class AddExpenseViewModel : ObservableObject {
     let basedTypes = ["Date","Distance"]
     
     //Vars to store the input in fields
-    @Published var price : Float = 0.0
+    @Published var price : String = ""
     @Published var date = Date()
-    @Published var liters : Float = 0.0
-    @Published var pricePerLiter : Float = 0.0
+    @Published var liters : String = ""
+    @Published var pricePerLiter : String = ""
     @Published var note : String = ""
-    @Published var odometer : Float = 0 ///Var  to store the odometer value in expense
+    @Published var odometer : String = "" ///Var  to store the odometer value in expense
+   
     
     //Segmented picker tabs
     @Published var currentPickerTab : String = "Expense"
+    @Published var odometerTab: String = ""
     @Published var priceTab : String = ""
-    @Published var odometerTab : String = ""  /// Var to store the odometer value in odometer tab
-    @Published var reminderTab : String = "" /// Var to store the reminder title in reminder tab
     
     @Published var expenseS = ExpenseState()
     
     
     func createExpense() {
-        expenseS.price = price
-        expenseS.liters = liters
-        expenseS.priceLiter = pricePerLiter
-        expenseS.odometer = odometer
+        let replacedPrice = String(price.map {
+        $0 == "," ? "." : $0 })
+        expenseS.price = Float(replacedPrice) ?? 0.0
+        let replacedLiters = String(liters.map {
+        $0 == "," ? "." : $0 })
+        expenseS.liters = Float(replacedLiters)
+        let replacedPriceLiter = String(pricePerLiter.map {
+        $0 == "," ? "." : $0 })
+        expenseS.priceLiter = Float(replacedPriceLiter)
+        if(!odometer.isEmpty){
+            expenseS.odometer = Float(odometer) ?? 0.0
+        }
+        else{
+            expenseS.odometer = Float(odometerTab) ?? 0.0
+        }
         expenseS.note = note
         expenseS.category = category
         expenseS.fuelType = fuel
@@ -52,22 +63,18 @@ class AddExpenseViewModel : ObservableObject {
 
     func resetTabFields(tab : String){
         if(tab == "Expense"){
-            price = 0
+            price = ""
             priceTab = ""
             selectedCategory = "Fuel"
-            odometer = 0
+            odometer = ""
+            odometerTab = ""
             selectedRepeat = "Never"
             date = Date.now
             note = ""
         }
         if(tab == "Odometer"){
             odometerTab = ""
-            odometer = 0
-            note = ""
-            date = Date.now
-        }
-        if(tab == "Reminder"){
-            reminderTab = ""
+            odometer = ""
             note = ""
             date = Date.now
         }

@@ -92,7 +92,7 @@ struct AlertAddNumbers: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $navigateToDetail){ImportantNumbersView(homeVM: homeVM,dataVM: dataVM)}
+        .sheet(isPresented: $navigateToDetail,onDismiss: homeVM.resetAlertFields){ImportantNumbersView(homeVM: homeVM,dataVM: dataVM)}
         .frame(width: UIScreen.main.bounds.width * 0.92, height: UIScreen.main.bounds.height * 0.28)
         .onAppear{focusedField = .numberTitle}
     }
@@ -209,6 +209,7 @@ struct AlertAddNumbersInside: View {
                         //Dismiss the alert when saving
                         homeVM.createNumber()
                         dataVM.addNumber(number: homeVM.numberS)
+                        homeVM.interactiveDismiss.toggle()
                         homeVM.resetAlertFieldsInside()
                     }, label: {
                         BlackButton(text: "Save",color: homeVM.isDisabled ? Palette.greyInput : Palette.black)
