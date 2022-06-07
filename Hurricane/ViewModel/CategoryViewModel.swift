@@ -173,10 +173,11 @@ class CategoryViewModel: ObservableObject {
     
     //MARK: Odometer, remember to insert a time frame property
     
-    //Average, take odometer and divide it by the given time -> calculate avg
+    //Average, take odometer and the last one within time frame, sub and divide it by the given time -> calculate avg
     
-    func getAverageOdometer() {
-        
+    func getAverageOdometer(lastExpense: ExpenseViewModel) {
+        let odometer = self.currentVehicle.first?.odometer ?? 0
+        print(odometer)
     }
     
     //Time total, take odomenter of now and the last one within time frame and subtract -> value displayed
