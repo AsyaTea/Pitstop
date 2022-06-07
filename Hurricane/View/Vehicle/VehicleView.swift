@@ -9,20 +9,19 @@ import SwiftUI
 
 struct VehicleView: View {
     
-    //Onboarding vars
-    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
-//    @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
     @StateObject var reminderVM = AddReminderViewModel()
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var homeVM : HomeViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     @ObservedObject var categoryVM : CategoryViewModel
+    
+//    @AppStorage("shouldShowOnboardings") var shouldShowOnboarding : Bool = true
+    @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @State private var showAddReport = false
     
     
     var body: some View {
-      
         GeometryReader{ proxy in
             let topEdge = proxy.safeAreaInsets.top
             HomeStyleView(dataVM: dataVM,homeVM:homeVM, categoryVM: categoryVM, topEdge: topEdge)
@@ -43,24 +42,16 @@ struct VehicleView: View {
         .sheet(isPresented: $showAddReport) {
             AddReportView(utilityVM: utilityVM , categoryVM: categoryVM, dataVM: dataVM, reminderVM: reminderVM)
         }
+//        .fullScreenCover(isPresented: $shouldShowOnboarding){
+//            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
+//        }
         .onAppear{
             if(shouldShowOnboarding == false){
-            dataVM.getCurrentVehicle()
+                dataVM.getCurrentVehicle()
             }
         }
-        .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
-            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
-        })
-
     }
 }
-
-//struct MainView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        VehicleView()
-//    }
-//}
-
 
 struct AddReportButton : View {
     
