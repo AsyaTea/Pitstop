@@ -12,6 +12,7 @@ struct SettingsView: View {
     
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var homeVM : HomeViewModel
+    @StateObject var onboardingVM: OnboardingViewModel
     
     //High priority function pepe
     var arrayColorBG = [Palette.colorGreen,Palette.colorYellow,Palette.colorViolet,Palette.colorBlue]
@@ -35,11 +36,13 @@ struct SettingsView: View {
                                     .foregroundColor(Palette.black)
                             }
                         }
-//                                                .onDelete(perform: dataVM.deleteVehicle)
+                        //                                                .onDelete(perform: dataVM.deleteVehicle)
                         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-                       
                         
-                        NavigationLink(destination: WorkInProgress()){
+                        Button(action: {
+                            onboardingVM.addNewVehicle = true
+                            onboardingVM.destination = .page2
+                        }, label: {
                             HStack{
                                 ZStack{
                                     Circle()
@@ -49,13 +52,13 @@ struct SettingsView: View {
                                         .resizable()
                                         .frame(width: 16, height: 16)
                                         .foregroundColor(Palette.black)
-                                    
                                 }
                                 Text("Add car")
                                     .font(Typography.headerM)
                                     .foregroundColor(Palette.black)
                             }
-                        }
+                        })
+                        
                         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
                     }
@@ -82,11 +85,11 @@ struct SettingsView: View {
                         Text("Unit")
                             .foregroundColor(Palette.black)
                             .font(Typography.headerM)
-                       
+                        
                     }
                     
                     Section{
-                        Text("Coming Soon")
+                        Text("About")
                         Text("Coming Soon")
                         Text("Coming Soon")
                     }
@@ -97,8 +100,10 @@ struct SettingsView: View {
                 Spacer()
                 
             }
+            .fullScreenCover(isPresented: $onboardingVM.addNewVehicle){
+                OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $onboardingVM.addNewVehicle)
+            }
             .background(Palette.greyBackground)
-            //            .navigationBarHidden(true)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
@@ -108,13 +113,6 @@ struct SettingsView: View {
                 
             )
         }
-        //        .task{
-        //            dataVM.getVehiclesCoreData(filter: nil, storage: {storage in
-        //                dataVM.vehicleList = storage
-        //                print("successsss")
-        //
-        //            })
-        //        }
     }
 }
 

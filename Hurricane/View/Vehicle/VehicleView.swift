@@ -9,7 +9,7 @@ import SwiftUI
 
 struct VehicleView: View {
     
-    @StateObject var onboardingVM = OnboardingViewModel()
+    @StateObject var onboardingVM : OnboardingViewModel
     @StateObject var reminderVM = AddReminderViewModel()
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var homeVM : HomeViewModel
