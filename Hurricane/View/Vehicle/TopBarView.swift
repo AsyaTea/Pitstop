@@ -11,6 +11,7 @@ struct TopNav : View {
     
     @ObservedObject var dataVM: DataViewModel
     @StateObject var utilityVM: UtilityViewModel
+    @ObservedObject var categoryVM: CategoryViewModel
     
     var offset: CGFloat
     let maxHeight: CGFloat
@@ -54,6 +55,7 @@ struct TopNav : View {
                             //DEVO SETTARE IL CURRENT VEHICLE
                             var vehicleS = VehicleState.fromVehicleViewModel(vm: vehicle)
                             dataVM.setAllCurrentToFalse()
+                            categoryVM.retrieveAndUpdate()
                             vehicleS.current = 1 // SETTO IL CURRENT TO TRUE
                     
                             do{
