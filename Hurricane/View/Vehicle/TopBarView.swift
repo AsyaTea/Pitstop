@@ -55,7 +55,6 @@ struct TopNav : View {
                             //DEVO SETTARE IL CURRENT VEHICLE
                             var vehicleS = VehicleState.fromVehicleViewModel(vm: vehicle)
                             dataVM.setAllCurrentToFalse()
-                            categoryVM.retrieveAndUpdate()
                             vehicleS.current = 1 // SETTO IL CURRENT TO TRUE
                     
                             do{
@@ -68,6 +67,7 @@ struct TopNav : View {
                                     dataVM.getExpensesCoreData(filter: filterCurrentExpense) { storage in
                                         dataVM.expenseList = storage
                                         dataVM.getTotalExpense(expenses: storage)
+                                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                                     }
                             }
                             else{

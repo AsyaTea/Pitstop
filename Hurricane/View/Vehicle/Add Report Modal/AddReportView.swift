@@ -82,7 +82,7 @@ struct AddReportView: View {
                             addExpVM.createExpense()
                             dataVM.addExpense(expense: addExpVM.expenseS)
                             dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
-                            categoryVM.retrieveAndUpdate()
+                            categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                         }
                         else{
                             reminderVM.createReminder()
