@@ -12,7 +12,7 @@ struct ImportantNumbersView: View {
     @Environment(\.presentationMode) private var presentationMode
     
     @ObservedObject var homeVM : HomeViewModel
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
     
     var body: some View {
         

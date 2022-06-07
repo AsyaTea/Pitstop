@@ -476,7 +476,7 @@ struct Page5 : View {
     
     @Binding var shouldShowOnboarding : Bool
     @ObservedObject var onboardingVM : OnboardingViewModel
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
     let filter = NSPredicate(format: "current == %@","1")
     
     var body: some View {

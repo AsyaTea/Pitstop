@@ -42,10 +42,10 @@ struct CustomTabBarView: View {
         case .stats:
 //            WorkInProgress()
             AnalyticsOverviewView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM )
-                .statusBarStyle(.lightContent, ignoreDarkMode: false)
+//                .statusBarStyle(.lightContent, ignoreDarkMode: false)
         case .settings:
             SettingsView(dataVM: dataVM, homeVM: homeVM)
-                .statusBarStyle(.lightContent, ignoreDarkMode: false)
+//                .statusBarStyle(.lightContent, ignoreDarkMode: false)
         }
     }
 }

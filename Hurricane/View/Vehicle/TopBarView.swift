@@ -9,8 +9,9 @@ import SwiftUI
 
 struct TopNav : View {
     
-    @StateObject var dataVM: DataViewModel
+    @ObservedObject var dataVM: DataViewModel
     @StateObject var utilityVM: UtilityViewModel
+    @ObservedObject var categoryVM: CategoryViewModel
     
     var offset: CGFloat
     let maxHeight: CGFloat
@@ -66,6 +67,7 @@ struct TopNav : View {
                                     dataVM.getExpensesCoreData(filter: filterCurrentExpense) { storage in
                                         dataVM.expenseList = storage
                                         dataVM.getTotalExpense(expenses: storage)
+                                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                                     }
                             }
                             else{

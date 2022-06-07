@@ -11,7 +11,7 @@ struct HeaderContent : View {
     @Binding var offset: CGFloat
     var maxHeight : CGFloat
     
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
     @ObservedObject var homeVM: HomeViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     

@@ -11,7 +11,7 @@ struct ExpenseListView: View {
     
     @StateObject var addExpVM : AddExpenseViewModel
     @ObservedObject var utilityVM : UtilityViewModel
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
     @ObservedObject var categoryVM : CategoryViewModel
     @StateObject var fuelVM = FuelViewModel()
     @StateObject var reminderVM : AddReminderViewModel
@@ -195,7 +195,7 @@ struct CustomFuelPicker : View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
     @StateObject var addExpVM : AddExpenseViewModel
     @StateObject var fuelVM : FuelViewModel
     @Binding var checkmark1 : Bool
@@ -256,7 +256,7 @@ struct CustomFuelPicker : View {
 struct CustomCategoryPicker : View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
     @StateObject var addExpVM : AddExpenseViewModel
     @StateObject var reminderVM: AddReminderViewModel
     @ObservedObject var categoryVM : CategoryViewModel

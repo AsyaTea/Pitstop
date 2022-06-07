@@ -56,6 +56,7 @@ class CategoryViewModel: ObservableObject {
     @Published var odometerTotal : Int = 0
    
     
+    
     @Published var selectedTimeFrame = "Per month"
     let timeFrames = ["Per month", "Per 3 months", "Per year" , "All time"]
 
@@ -168,12 +169,13 @@ class CategoryViewModel: ObservableObject {
             }
         }
         let daysDiffInt = daysDiff.map { sec in
-            //absolute abs floor sec / 86400
+            //absolute abs floor sec / 86400 // dividi la differenza per giorni
             return Int(floor(abs(sec/86400)))
         }
         print("date array\(daysDiffInt)")
         
-        self.avgDaysRefuel = (daysDiffInt.reduce(0, +))/1+daysDiffInt.count
+        
+        self.avgDaysRefuel = (daysDiffInt.reduce(0, +))/daysDiffInt.count
         print("avg days : \(self.avgDaysRefuel)")
     
         
@@ -258,17 +260,19 @@ class CategoryViewModel: ObservableObject {
         
     }
     
-    func retrieveAndUpdate() {
+    func retrieveAndUpdate(vehicleID: NSManagedObjectID) {
         self.expenseList = []
-        let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (self.currentVehicle.first?.vehicleID)!)
+        let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (vehicleID))
         self.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
             self.expenseList = storage
             self.assignCategories(expenseList: storage)
             self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
 
-            if !self.fuelList.isEmpty {
-                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-            }
+            //MODIFICARE IN IF FUEL LIST CONTAINS > = THAN 2 ITEMS
+//            if !self.fuelList.isEmpty {
+//                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+//            }
+            
         })
     }
     
@@ -284,7 +288,7 @@ class CategoryViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.currentVehicle = vehicle.map(VehicleViewModel.init)
                 if !self.currentVehicle.isEmpty {
-                    self.retrieveAndUpdate()
+                    self.retrieveAndUpdate(vehicleID: self.currentVehicle.first!.vehicleID)
                 }
 
                 
@@ -436,13 +440,7 @@ extension Date {
         return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
     }
     
-    static func -(recent: Date, previous: Date) -> (month: Int?, day: Int?) {
-           let day = Calendar.current.dateComponents([.day], from: previous, to: recent).day
-           let month = Calendar.current.dateComponents([.month], from: previous, to: recent).month
-
-           return (month: month, day: day)
-       }
-
+ 
 }
 
 

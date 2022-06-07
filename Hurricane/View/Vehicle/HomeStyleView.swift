@@ -39,7 +39,7 @@ struct HomeStyleView: View {
                             .background(homeVM.headerBackgroundColor)
                             .overlay(
                                 //MARK: TOP NAV BAR
-                                TopNav(dataVM: dataVM, utilityVM: utilityVM, offset: offset, maxHeight: maxHeight, topEdge:topEdge)
+                                TopNav(dataVM: dataVM, utilityVM: utilityVM, categoryVM: categoryVM, offset: offset, maxHeight: maxHeight, topEdge:topEdge)
                                     .padding(.horizontal)
                                     .frame(height: 60)
                                     .padding(.top,topEdge+10)

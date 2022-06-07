@@ -11,7 +11,7 @@ import SwiftUI
 
 struct LastEventsListView: View {
     
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
     @ObservedObject var categoryVM = CategoryViewModel()
     @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
     
@@ -157,7 +157,7 @@ struct FiltersRow: View {
     @State private var maintenanceIsPressed = false
     @State private var roadTaxIsPressed = false
     
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
     
     @State var curretFilter: [Int] = [] // Array to store the filters used
     

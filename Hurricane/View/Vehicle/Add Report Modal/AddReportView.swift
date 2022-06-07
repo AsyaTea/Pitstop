@@ -12,7 +12,7 @@ struct AddReportView: View {
     @ObservedObject var utilityVM: UtilityViewModel
     @StateObject var addExpVM: AddExpenseViewModel = .init()
     @ObservedObject var categoryVM: CategoryViewModel
-    @StateObject var dataVM: DataViewModel
+    @ObservedObject var dataVM: DataViewModel
     @StateObject var reminderVM: AddReminderViewModel
     @StateObject var notificationVM = NotificationManager()
     
@@ -82,6 +82,7 @@ struct AddReportView: View {
                             addExpVM.createExpense()
                             dataVM.addExpense(expense: addExpVM.expenseS)
                             dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
+                            categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                         }
                         else{
                             reminderVM.createReminder()
