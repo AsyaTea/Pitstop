@@ -111,23 +111,7 @@ import SwiftUI
 //    }
 //}
 //
-//struct ExpensesView: View {
-//    @ObservedObject var vehicleVM : DataViewModel
-//
-//    var body: some View {
-//        VStack {
-//            List {
-//                ForEach(vehicleVM.expenses) { expenses in
-//                    Text("\(vehicleVM.currVehicle.name ?? "")")
-//                    Text("Exp: \(expenses.note ?? "")")
-//                    Text("Vehicle appart:\(expenses.vehicle?.name ?? "" )")
-//                } .onDelete(perform: vehicleVM.removeExpense(indexSet:))
-//            }
-//
-//        }
-//
-//    }
-//}
+
 
 //struct ContentView_Previews: PreviewProvider {
 //    var vehicle = Vehicle()
@@ -145,85 +129,3 @@ extension Binding {
         Binding<T>(get: { self.wrappedValue ?? defaultValue }, set: { self.wrappedValue = $0 })
     }
 }
-
-//MARK: TO DELETE FUNCS
-//    func getVehicleID(id : UUID){
-//        let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
-//        let filter = NSPredicate(format: "vehicleID == %@", id as CVarArg)
-//        request.predicate = filter
-//
-//        do {
-//             currentVehicle =  try manager.context.fetch(request)
-//        }catch let error {
-//            print("🚓 Error fetching the vehicle ID: \(error.localizedDescription)")
-//        }
-//
-//    }
-
-
-//    func getVehicles() {
-//
-//        let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
-//        let vehicle : [Vehicle]
-//
-//        //Sort for ID
-//        let sort = NSSortDescriptor(keyPath: \Vehicle.objectID, ascending: true)
-//        request.sortDescriptors = [sort]
-//
-//        //Filter if needed, ad esempio qua filtro per veicoli a benzina
-//        //        let filter = NSPredicate(format: "fuelType == %@", "1")
-//
-//        do {
-//            vehicle =  try manager.context.fetch(request)
-//            DispatchQueue.main.async{
-//                self.vehicleList = vehicle.map(VehicleViewModel.init)
-//            }
-//            print("VEHICLE LIST ",vehicleList)
-//
-//        }catch let error {
-//            print("🚓 Error fetching vehicles: \(error.localizedDescription)")
-//        }
-//    }
-
-//    func removeVehicle(indexSet: IndexSet) {
-//        guard let index = indexSet.first else { return }
-//        let entity = vehicleList[index]
-//        manager.container.viewContext.delete(entity)
-//        saveVehicle()
-//    }
-
-//    func getExpenses(filter : NSPredicate?){
-//
-//        let request = NSFetchRequest<Expense>(entityName: "Expense")
-//        request.predicate = filter
-//
-//        do {
-//            self.expenses =  try manager.context.fetch(request)
-//        }catch let error {
-//            print("💰 Error fetching expenses: \(error.localizedDescription)")
-//        }
-//    }
-
-//    func getVehicles() {
-//
-//        let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
-//        let vehicle : [Vehicle]
-//
-//        //Sort for ID
-//        let sort = NSSortDescriptor(keyPath: \Vehicle.objectID, ascending: true)
-//        request.sortDescriptors = [sort]
-//
-//        //Filter if needed, ad esempio qua filtro per veicoli a benzina
-//        //        let filter = NSPredicate(format: "fuelType == %@", "1")
-//
-//        do {
-//            vehicle =  try manager.context.fetch(request)
-//            DispatchQueue.main.async{
-//                self.vehicleList = vehicle.map(VehicleViewModel.init)
-//            }
-//            print("VEHICLE LIST ",vehicleList)
-//
-//        }catch let error {
-//            print("🚓 Error fetching vehicles: \(error.localizedDescription)")
-//        }
-//    }

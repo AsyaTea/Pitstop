@@ -110,13 +110,6 @@ struct LastEventsListView: View {
                     }
                 }
             }
-            //            .sheet(isPresented: $showEditExpense){
-            //                EditEventView(
-            //                    utilityVM: utilityVM,
-            //                    dataVM : dataVM,
-            //                    category: Category.init(rawValue: Int(utilityVM.expenseToEdit.category ?? 0 )) ?? .other
-            //                )
-            //            }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
