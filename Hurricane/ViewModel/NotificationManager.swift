@@ -21,13 +21,16 @@ class NotificationManager : ObservableObject {
         }
     }
     
-    func createNotification(title: String) {
+    func createNotification(reminderS: ReminderState) {
         let content = UNMutableNotificationContent()
-        content.title = title
-        content.subtitle = "Lorem ipsum doloris sit amet"
+        content.title = reminderS.title
+        content.subtitle = "You have a reminder set on \(String(describing: reminderS.category))"
         content.sound = UNNotificationSound.default
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: true)
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: true)
+       
+        let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.day, .month, .year, .hour, .minute],from: reminderS.date), repeats: false)
+
         
         //MARK: TODO - modify the identifier
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)

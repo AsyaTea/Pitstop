@@ -55,8 +55,8 @@ struct EditEventView: View {
                         Text("Save")
                             .font(Typography.headerM)
                     })
-                    .disabled((Float(utilityVM.expenseToEdit.odometer) < dataVM.currentVehicle.first?.odometer ?? 0 ))
-                    .opacity((Float(utilityVM.expenseToEdit.odometer) < dataVM.currentVehicle.first?.odometer ?? 0 ) ? 0.6 : 1)
+//                    .disabled((Float(utilityVM.expenseToEdit.odometer) <= dataVM.currentVehicle.first?.odometer ?? 0 ))
+//                    .opacity((Float(utilityVM.expenseToEdit.odometer) <= dataVM.currentVehicle.first?.odometer ?? 0 ) ? 0.6 : 1)
             )
             .toolbar {
                 ToolbarItem(placement: .principal) {

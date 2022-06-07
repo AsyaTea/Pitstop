@@ -12,7 +12,7 @@ import UserNotifications
 struct OnboardingView: View {
     
     @StateObject var onboardingVM : OnboardingViewModel
-    var dataVM : DataViewModel
+    @StateObject var dataVM : DataViewModel
     @State private var destination : Pages = .page1
     @Binding var shouldShowOnboarding : Bool
     @StateObject var fuelVM = FuelViewModel()
@@ -27,6 +27,7 @@ struct OnboardingView: View {
                 //                .transition(.move(edge: .leading))
                 //                .transition( AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
             }
+            
         case .page2:
             withAnimation(.easeOut(duration: 0.2)){
                 Page2(onboardingVM: onboardingVM, fuelVM: fuelVM)
