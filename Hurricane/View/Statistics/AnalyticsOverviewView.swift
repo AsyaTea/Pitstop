@@ -205,7 +205,7 @@ struct FuelListView : View {
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Average price", value: String(categoryVM.avgPrice))
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-        ListCostsAttributes(title: "Refuels per month", value: String(categoryVM.refuelsPerTime))
+        ListCostsAttributes(title: "Refuels", value: String(categoryVM.refuelsPerTime))
            
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Average days/refuel", value: String(categoryVM.avgDaysRefuel))

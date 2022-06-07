@@ -56,6 +56,7 @@ class CategoryViewModel: ObservableObject {
     @Published var odometerTotal : Int = 0
    
     
+    
     @Published var selectedTimeFrame = "Per month"
     let timeFrames = ["Per month", "Per 3 months", "Per year" , "All time"]
 
@@ -63,7 +64,7 @@ class CategoryViewModel: ObservableObject {
 
     init()  {
 
-//        getCurrentVehicle()
+        getCurrentVehicle()
 
     }
     

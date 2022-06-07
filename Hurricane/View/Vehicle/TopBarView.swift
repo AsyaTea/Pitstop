@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TopNav : View {
     
-    @StateObject var dataVM: DataViewModel
+    @ObservedObject var dataVM: DataViewModel
     @StateObject var utilityVM: UtilityViewModel
     
     var offset: CGFloat

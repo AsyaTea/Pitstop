@@ -10,7 +10,7 @@ import SwiftUI
 struct BottomContentView: View {
     
     @ObservedObject var homeVM : HomeViewModel
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     @ObservedObject var categoryVM : CategoryViewModel
     

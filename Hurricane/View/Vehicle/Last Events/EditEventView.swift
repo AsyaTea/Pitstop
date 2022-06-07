@@ -12,7 +12,7 @@ struct EditEventView: View {
     @Environment(\.presentationMode) private var presentationMode
     
     @StateObject var utilityVM : UtilityViewModel
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
     var category : Category
     @State var showingAlert = false
     
@@ -123,7 +123,7 @@ struct DeleteButton : View {
 struct FuelEventListFields: View {
     
     @StateObject var utilityVM : UtilityViewModel
-    @StateObject var dataVM: DataViewModel
+    @ObservedObject var dataVM: DataViewModel
     var category : Category
     @FocusState var focusedField: FocusField?
     
@@ -265,7 +265,7 @@ struct FuelEventListFields: View {
 struct EventListFields: View {
     
     @StateObject var utilityVM : UtilityViewModel
-    @StateObject var dataVM: DataViewModel
+    @ObservedObject var dataVM: DataViewModel
     var category : Category
     @FocusState var focusedField: FocusField?
     

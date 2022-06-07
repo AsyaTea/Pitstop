@@ -16,7 +16,7 @@ enum FocusFieldAlert: Hashable {
 struct AlertAddNumbers: View {
     
     @StateObject var homeVM : HomeViewModel
-    @StateObject var dataVM: DataViewModel
+    @ObservedObject var dataVM: DataViewModel
     
     @FocusState var focusedField: FocusFieldAlert?
     
@@ -142,7 +142,7 @@ struct BlackButton : View {
 struct AlertAddNumbersInside: View {
     
     @ObservedObject var homeVM : HomeViewModel
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
     
     @FocusState var focusedField: FocusFieldAlert?
     

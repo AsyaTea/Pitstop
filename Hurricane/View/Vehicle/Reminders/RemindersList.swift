@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RemindersList: View {
     
-    @StateObject var dataVM: DataViewModel
+    @ObservedObject var dataVM: DataViewModel
     @StateObject var utilityVM: UtilityViewModel
     @Environment(\.presentationMode) private var presentationMode
     
