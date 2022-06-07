@@ -63,7 +63,7 @@ class CategoryViewModel: ObservableObject {
 
     init()  {
 
-//        getCurrentVehicle()
+        getCurrentVehicle()
 
     }
     
