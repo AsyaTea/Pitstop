@@ -16,8 +16,8 @@ struct VehicleView: View {
     @ObservedObject var utilityVM : UtilityViewModel
     @ObservedObject var categoryVM : CategoryViewModel
     
-//    @AppStorage("shouldShowOnboardings") var shouldShowOnboarding : Bool = true
-    @State var shouldShowOnboarding : Bool = true //FOR TESTING
+    @AppStorage("shouldShowOnboardings") var shouldShowOnboarding : Bool = true
+//    @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @State private var showAddReport = false
     
     
@@ -42,9 +42,9 @@ struct VehicleView: View {
         .sheet(isPresented: $showAddReport) {
             AddReportView(utilityVM: utilityVM , categoryVM: categoryVM, dataVM: dataVM, reminderVM: reminderVM)
         }
-//        .fullScreenCover(isPresented: $shouldShowOnboarding){
-//            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
-//        }
+        .fullScreenCover(isPresented: $shouldShowOnboarding){
+            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
+        }
         .onAppear{
             if(shouldShowOnboarding == false){
                 dataVM.getCurrentVehicle()
