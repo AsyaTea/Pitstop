@@ -64,7 +64,6 @@ class CategoryViewModel: ObservableObject {
     init()  {
 
         getCurrentVehicle()
-
     }
     
     var defaultCategory : Category {

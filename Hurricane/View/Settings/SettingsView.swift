@@ -16,7 +16,7 @@ struct SettingsView: View {
     //High priority function pepe
     var arrayColorBG = [Palette.colorGreen,Palette.colorYellow,Palette.colorViolet,Palette.colorBlue]
     var arrayColorCard = [Palette.colorMainGreen,Palette.colorMainYellow,Palette.colorMainViolet,Palette.colorMainBlue]
-   @State var random = 0
+    @State var random = 0
     
     var body: some View {
         NavigationView{
