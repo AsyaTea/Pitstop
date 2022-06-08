@@ -14,6 +14,8 @@ struct CustomTabBarView: View {
     @StateObject var homeVM = HomeViewModel()
     @StateObject var utilityVM : UtilityViewModel = .init()
     @StateObject var categoryVM = CategoryViewModel()
+    @StateObject var onboardingVM = OnboardingViewModel()
+    @StateObject var notificationVM = NotificationManager()
     
     init() {
         //  CUSTOM PROPRETIES FOR ALL LISTS OF THE APP
@@ -36,16 +38,16 @@ struct CustomTabBarView: View {
     func getTabView(type: TabType) -> some View {
         switch type {
         case .home:
-            VehicleView(dataVM: dataVM, homeVM: homeVM, utilityVM: utilityVM, categoryVM: categoryVM)
+            VehicleView(onboardingVM: onboardingVM, dataVM: dataVM, homeVM: homeVM, utilityVM: utilityVM, categoryVM: categoryVM, notificationVM: notificationVM)
 //                .statusBarStyle(.darkContent, ignoreDarkMode: true)
 //            Content_View_3()
         case .stats:
 //            WorkInProgress()
             AnalyticsOverviewView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM )
-                .statusBarStyle(.lightContent, ignoreDarkMode: false)
+//                .statusBarStyle(.lightContent, ignoreDarkMode: false)
         case .settings:
-            SettingsView(dataVM: dataVM, homeVM: homeVM)
-                .statusBarStyle(.lightContent, ignoreDarkMode: false)
+            SettingsView(dataVM: dataVM, homeVM: homeVM, onboardingVM: onboardingVM)
+//                .statusBarStyle(.lightContent, ignoreDarkMode: false)
         }
     }
 }

@@ -25,21 +25,21 @@ struct ImportantNumbersView: View {
                             ForEach(dataVM.numberList, id:\.self){ number in
                                 NumberCardView(title: number.title, number: number.telephone)
                             }
-                            Spacer()
                         }
                         .padding(.vertical,20)
-                        
+                        Spacer()
                         Button(action: {
                             homeVM.showAlertNumbersInside.toggle()
                             homeVM.interactiveDismiss.toggle()
                         }, label: {
                             BlackButton(text: "Add new contact", color: Palette.black)
                         })
-                        
                     }
-                   
                 }
-              
+                .overlay(
+                    homeVM.showAlertNumbersInside ? Color.black.opacity(0.4) : Color.clear
+                )
+                
                 if(homeVM.showAlertNumbersInside){
                     Spacer()
                     AlertAddNumbersInside(homeVM: homeVM,dataVM: dataVM)
@@ -65,15 +65,8 @@ struct ImportantNumbersView: View {
                         .foregroundColor(Palette.black)
                 }
             }
-            .ignoresSafeArea(.keyboard)
         }
-        .overlay(
-            ZStack{
-                homeVM.showAlertNumbersInside ? Color.black.opacity(0.4) : Color.clear
-            }.ignoresSafeArea()
-        )
-      
-      
+        .ignoresSafeArea(.keyboard)
     }
 }
 

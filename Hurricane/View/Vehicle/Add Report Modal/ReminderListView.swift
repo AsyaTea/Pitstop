@@ -85,7 +85,7 @@ struct ReminderListView: View {
                         .font(Typography.headerM)
                 }
             }, label:{
-                ListCategoryComponent(title: "Repeat", iconName: "repeat", color: Palette.colorViolet)
+                ListCategoryComponent(title: "Repeat", iconName: "Repeat", color: Palette.colorViolet)
             })
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             

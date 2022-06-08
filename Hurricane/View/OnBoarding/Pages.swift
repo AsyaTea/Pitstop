@@ -68,14 +68,25 @@ struct Page2 : View {
     var body: some View{
         VStack{
             HStack{
-                Button(action: {
-                    onboardingVM.destination = .page1
-                }, label: {
-                    Image(systemName: onboardingVM.removeBack ? "" : "chevron.left")
-                        .resizable()
-                        .frame(width: 12, height: 21)
-                        .foregroundColor(Palette.black)
-                })
+                if(onboardingVM.addNewVehicle == true){
+                    Button(action: {
+                        onboardingVM.addNewVehicle = false
+                    }, label: {
+                        Text("Cancel")
+                            .font(Typography.headerM)
+                    })
+                    .accentColor(Palette.greyHard)
+                }
+                else{
+                    Button(action: {
+                        onboardingVM.destination = .page1
+                    }, label: {
+                        Image(systemName: onboardingVM.removeBack ? "" : "chevron.left")
+                            .resizable()
+                            .frame(width: 12, height: 21)
+                            .foregroundColor(Palette.black)
+                    })
+                }
                 Spacer()
             }
             .padding()
@@ -261,11 +272,11 @@ struct Page3 : View {
                         }
                         
                         //MARK: DOCUMENTS
-//                        Button(action: {
-//
-//                        }, label: {
-//                            OnBoardingCard(text: "Documents", bgColor: Palette.colorViolet, iconName:  "documents")
-//                        })
+                        //                        Button(action: {
+                        //
+                        //                        }, label: {
+                        //                            OnBoardingCard(text: "Documents", bgColor: Palette.colorViolet, iconName:  "documents")
+                        //                        })
                         
                         
                         //MARK: ODOMETER
@@ -295,49 +306,49 @@ struct Page3 : View {
                         
                         
                         //MARK: IMPORTANT NUMBERS
-//                        Button(action: {
-//                            onboardingVM.showAlertImportantNumbers.toggle()
-//                            onboardingVM.showOverlay = true
-//                        }, label: {
-//                            OnBoardingCard(text: "Important numbers", bgColor: Palette.colorGreen, iconName:  "phone")
-//                        })
-//                        ForEach(1..<3){ i in
-//                            ZStack{
-//                                Rectangle()
-//                                    .foregroundColor(Palette.greyLight)
-//                                    .cornerRadius(12)
-//                                
-//                                HStack{
-//                                    VStack{
-//                                        
-//                                        Text("Service")
-//                                            .font(Typography.ControlS)
-//                                            .foregroundColor(Palette.black)
-//                                        Text("Numero")
-//                                            .font(Typography.TextM)
-//                                            .foregroundColor(Palette.greyMiddle)
-//                                    }
-//                                    Spacer()
-//                                }
-//                                .padding()
-//                            }
-//                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
-//                            .swipeActions(allowsFullSwipe: false) {
-//                                Button {
-//                                    print("Muting conversation")
-//                                } label: {
-//                                    Label("Mute", systemImage: "bell.slash.fill")
-//                                }
-//                                .cornerRadius(20)
-//                                .tint(.indigo)
-//                                
-//                                Button(role: .destructive) {
-//                                    print("Deleting conversation")
-//                                } label: {
-//                                    Label("Delete", systemImage: "trash.fill")
-//                                }
-//                            }
-//                        }
+                        //                        Button(action: {
+                        //                            onboardingVM.showAlertImportantNumbers.toggle()
+                        //                            onboardingVM.showOverlay = true
+                        //                        }, label: {
+                        //                            OnBoardingCard(text: "Important numbers", bgColor: Palette.colorGreen, iconName:  "phone")
+                        //                        })
+                        //                        ForEach(1..<3){ i in
+                        //                            ZStack{
+                        //                                Rectangle()
+                        //                                    .foregroundColor(Palette.greyLight)
+                        //                                    .cornerRadius(12)
+                        //
+                        //                                HStack{
+                        //                                    VStack{
+                        //
+                        //                                        Text("Service")
+                        //                                            .font(Typography.ControlS)
+                        //                                            .foregroundColor(Palette.black)
+                        //                                        Text("Numero")
+                        //                                            .font(Typography.TextM)
+                        //                                            .foregroundColor(Palette.greyMiddle)
+                        //                                    }
+                        //                                    Spacer()
+                        //                                }
+                        //                                .padding()
+                        //                            }
+                        //                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
+                        //                            .swipeActions(allowsFullSwipe: false) {
+                        //                                Button {
+                        //                                    print("Muting conversation")
+                        //                                } label: {
+                        //                                    Label("Mute", systemImage: "bell.slash.fill")
+                        //                                }
+                        //                                .cornerRadius(20)
+                        //                                .tint(.indigo)
+                        //
+                        //                                Button(role: .destructive) {
+                        //                                    print("Deleting conversation")
+                        //                                } label: {
+                        //                                    Label("Delete", systemImage: "trash.fill")
+                        //                                }
+                        //                            }
+                        //                        }
                         
                         //MARK: SECOND FUEL TYPE
                         Button(action: {
@@ -374,23 +385,40 @@ struct Page3 : View {
                     }.padding(.vertical,40)
                 }
                 Spacer()
-                Button(action: {
-                    withAnimation(.easeInOut){
+                
+                //MARK: ADD A NEW VEHICLE FROM SETTINGS
+                if(onboardingVM.addNewVehicle == true){
+                    Button(action: {
                         onboardingVM.vehicle.fuelTypeTwo = fuelVM.secondarySelectedFuel
                         dataVM.setAllCurrentToFalse()
                         onboardingVM.vehicle.current = 1
                         dataVM.addVehicle(vehicle: onboardingVM.vehicle)
-                        if(onboardingVM.skipNotification == true) {
-                            onboardingVM.destination = .page5
-                        }
-                        else{
-                            onboardingVM.destination = .page4
-                        }
                         fuelVM.resetSelectedFuel()
-                    }
-                }, label: {
-                    OnBoardingButton(text: "Next", textColor: Palette.white, color: Palette.black)
-                })
+                        onboardingVM.addNewVehicle = false
+                    }, label: {
+                        OnBoardingButton(text: "Add vehicle", textColor: Palette.white, color: Palette.black)
+                    })
+                }
+                else{
+                    Button(action: {
+                        withAnimation(.easeInOut){
+                            onboardingVM.vehicle.fuelTypeTwo = fuelVM.secondarySelectedFuel
+                            dataVM.setAllCurrentToFalse()
+                            onboardingVM.vehicle.current = 1
+                            dataVM.addVehicle(vehicle: onboardingVM.vehicle)
+                            if(onboardingVM.skipNotification == true) {
+                                onboardingVM.destination = .page5
+                            }
+                            else{
+                                onboardingVM.destination = .page4
+                            }
+                            fuelVM.resetSelectedFuel()
+                        }
+                    }, label: {
+                        OnBoardingButton(text: "Next", textColor: Palette.white, color: Palette.black)
+                    })
+                }
+                
             }
             .ignoresSafeArea(.keyboard)
             .background(Palette.greyBackground)

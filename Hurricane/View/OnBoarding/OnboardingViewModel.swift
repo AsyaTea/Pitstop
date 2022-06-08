@@ -27,6 +27,8 @@ class OnboardingViewModel : ObservableObject {
     
     @Published var showAllFuels = false
     
+    @Published var addNewVehicle = false
+    
     @Published var showAlertOdometer = false
     @Published var showAlertPlate = false
     @Published var showAlertImportantNumbers = false

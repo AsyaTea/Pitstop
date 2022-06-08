@@ -24,8 +24,6 @@ struct OnboardingView: View {
         case .page1:
             withAnimation(.easeOut){
                 Page1(onboardingVM: onboardingVM)
-                //                .transition(.move(edge: .leading))
-                //                .transition( AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
             }
             
         case .page2:
