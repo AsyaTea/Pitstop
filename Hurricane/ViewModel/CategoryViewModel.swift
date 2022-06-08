@@ -257,6 +257,23 @@ class CategoryViewModel: ObservableObject {
         self.estimatedOdometerPerYear = self.avgOdometer * Float(days)
     }
     
+    //COST FUNCTIONS
+    
+    func totalCostPercentage(totalCost: Float, expenseList: [ExpenseViewModel]) {
+        
+    }
+    
+//    func getTotalExpense(expenses: [ExpenseViewModel]) {
+////        print("expense list: \(expenses)")
+//        self.totalExpense = 0.0
+//        for expense in expenses {
+//            totalExpense += expense.price
+//        }
+//        print("sum cost : \(totalVehicleCost)")
+//        self.totalExpense = totalExpense
+//
+//    }
+    
     func assignCategories(expenseList: [ExpenseViewModel]) {
         
         self.fuelList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 8)
