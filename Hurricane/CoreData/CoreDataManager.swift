@@ -64,6 +64,17 @@ class CoreDataManager {
         }
     }
     
+    func getNumberById(id: NSManagedObjectID) -> Number?  {
+        
+        do{
+            return try context.existingObject(with: id) as? Number
+        }
+        catch {
+            print(error)
+            return nil
+        }
+    }
+    
     func getReminderById(id: NSManagedObjectID) -> Reminder?  {
         
         do{

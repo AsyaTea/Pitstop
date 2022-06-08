@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct HurricaneApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
    
     var body: some Scene {
         WindowGroup {

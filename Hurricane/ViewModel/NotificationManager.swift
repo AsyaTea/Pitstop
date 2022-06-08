@@ -30,12 +30,10 @@ class NotificationManager : ObservableObject {
         content.subtitle = "You have a new \(category?.label ?? "") reminder"
         content.sound = UNNotificationSound.default
         
-//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(secondsElapsed), repeats: false)
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
        
         let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.day, .month, .year, .hour, .minute],from: reminderS.date), repeats: false)
-        
-        print(reminderS.date - TimeInterval(secondsElapsed))
-        
+                
         //MARK: TODO - modify the identifier
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
@@ -45,18 +43,23 @@ class NotificationManager : ObservableObject {
                  }
             } 
     }
-    
-    func movingToBackground() {
-          print("Moving to the background")
-          notificationDate = Date()
-//          stopWatchManager.pause()
-      }
 
-      func movingToForeground() {
-          print("Moving to the foreground")
-          let deltaTime: Int = Int(Date().timeIntervalSince(notificationDate))
-          self.secondsElapsed += deltaTime
-//          stopWatchManager.start()
-      }
-    
+}
+
+
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        UNUserNotificationCenter.current().delegate = self
+        return true
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // Here we actually handle the notification
+        print("Notification received with identifier \(notification.request.identifier)")
+        // So we call the completionHandler telling that the notification should display a banner and play the notification sound - this will happen while the app is in foreground
+        completionHandler([.banner, .sound])
+    }
 }
