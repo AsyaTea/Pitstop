@@ -87,13 +87,12 @@ struct AddReportView: View {
                             categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                         }
                         else if(addExpVM.currentPickerTab == "Odometer"){
-                            vehicleS.odometer = Float(addExpVM.odometerTab) ?? 0.0
-                            do {
-                                try dataVM.updateVehicle(vehicleS)
-                            }
-                            catch{
-                                print(error)
-                            }
+                            addExpVM.category = 7 //other
+                            addExpVM.createExpense()
+                            dataVM.addExpense(expense: addExpVM.expenseS)
+                            dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
+                            categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+
                         }
                         else{
                             reminderVM.createReminder()
