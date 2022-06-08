@@ -141,7 +141,7 @@ struct BottomContentView: View {
         .sheet(isPresented: $showEventEdit){
             EditEventView(
                 utilityVM: utilityVM,
-                dataVM: dataVM,
+                dataVM: dataVM, categoryVM: categoryVM,
                 category: Category.init(rawValue: Int(utilityVM.expenseToEdit.category ?? 0 )) ?? .other
             )
         }

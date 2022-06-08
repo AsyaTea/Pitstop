@@ -13,6 +13,7 @@ struct EditEventView: View {
     
     @StateObject var utilityVM : UtilityViewModel
     @ObservedObject var dataVM : DataViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     var category : Category
     @State var showingAlert = false
     
@@ -85,6 +86,7 @@ struct EditEventView: View {
                         dataVM.getExpensesCoreData(filter: nil, storage: { storage in
                             dataVM.expenseList = storage
                             dataVM.expenseFilteredList = storage
+                            categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                         })
                         //SE METTO STA ROBA CRASHA, TO FIX PROSSIMAMENTE
                         //                            dataVM.getTotalExpense(expenses: dataVM.expenseList)

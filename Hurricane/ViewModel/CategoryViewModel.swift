@@ -40,9 +40,8 @@ class CategoryViewModel: ObservableObject {
     
     let manager = CoreDataManager.instance
     @Published var filter : NSPredicate?
-    @Published var vehicleList : [VehicleViewModel] = []   //Var to store all the fetched vehicle entities
+    @Published var vehicleList : [VehicleViewModel] = []  
     @Published var currentVehicle : [VehicleViewModel] = []
-//    var dataVM : DataViewModel
     @Published var expenseList : [ExpenseViewModel] = []
     @Published var totalExpense : Float = 0.0
    
@@ -52,8 +51,12 @@ class CategoryViewModel: ObservableObject {
     
     @Published var currentOdometer: Double = 0
     @Published var odometerTimeTotal: Double = 0
-    @Published var avgOdometer: Int = 0
-    @Published var odometerTotal : Int = 0
+    @Published var avgOdometer: Float = 0
+    @Published var odometerTotal : Float = 0
+    @Published var estimatedOdometerPerYear : Float = 0
+    var literDiff : Float = 0
+    @Published var fuelEff : Float = 0
+   
    
     
     
@@ -135,6 +138,32 @@ class CategoryViewModel: ObservableObject {
     
     
     //MARK: Fuel, remember to insert a time frame property to pass
+    
+    //Fuel Efficiency, every 100 km
+    
+    func getFuelEfficiency(timeFrame: String, fuelList: [ExpenseViewModel]) {
+        let time = calculateTimeFrame(timeFrame: timeFrame)
+        let timeSubMonth = addOrSubtractMonths(month: time)
+        
+        var expenseListTime = expenseList.filter { expense in
+            expense.date > timeSubMonth
+        }
+        expenseListTime.sort { expenseOne, expenseTwo in
+            return expenseOne.date > expenseTwo.date
+        }
+        let literArray = expenseListTime.map { expense in
+            return expense.liters
+        }
+        let literSum = literArray.reduce(0, +)
+        self.literDiff = literSum - Float(expenseListTime.last?.liters ?? 0.0)
+        print("liter sum \(literSum)")
+        let q = self.odometerTotal / 100
+        print("q is \(q)")
+        self.fuelEff = literSum / q
+        print("fuel efficiency \(self.fuelEff)")
+        
+        //self.odometerTotal
+    }
 
     //Refuel x month, from fuelExpenseList filter those who are in the time frame -> perform count
     
@@ -156,7 +185,7 @@ class CategoryViewModel: ObservableObject {
         }       
     }
     
-    //Average days/refuel, map through fuelExpenseList and return days between 2 fuel expenses in a new array -> calculate avg value --- TESTARE SE WORKA ALL INIT
+    //Average days/refuel, map through fuelExpenseList and return days between 2 fuel expenses in a new array -> calculate avg value
     
     func getAverageDaysRefuel(timeFrame: String, fuelList: [ExpenseViewModel]) {
         let dateArray = fuelList.map { (ExpenseViewModel) -> Date in
@@ -182,13 +211,17 @@ class CategoryViewModel: ObservableObject {
         
     }
     
-    //Average price, map through fuel list and return prices in a new array -> calculate avg value ------ DA TESTARE
+    //Average price x liter, map through fuel list and return prices in a new array -> calculate avg value ------ DA TESTARE
     
     func getAveragePrice(timeFrame: String, fuelList: [ExpenseViewModel]) {
         let priceArray = fuelList.map { expense in
             return expense.price
         }
-        self.avgPrice = Int(priceArray.reduce(0, +))/priceArray.count
+        let literArray = fuelList.map { expense in
+            return expense.liters
+        }
+        print("price array : \(priceArray)")
+        self.avgPrice = Int(priceArray.reduce(0, +))/Int(literArray.reduce(0, +))
         
     }
     
@@ -196,7 +229,7 @@ class CategoryViewModel: ObservableObject {
     
     //Average, take odometer and the last one within time frame, sub and divide it by the given time -> calculate avg
     
-    func getAverageOdometer(odometer: Double, expenseList: [ExpenseViewModel], timeFrame: String) {
+    func getAverageOdometer(expenseList: [ExpenseViewModel], timeFrame: String) {
         let monthSub = calculateTimeFrame(timeFrame: timeFrame)
         let monthSubtractedDate = addOrSubtractMonths(month: monthSub)
         
@@ -206,11 +239,11 @@ class CategoryViewModel: ObservableObject {
         expenseListTime.sort { expenseOne, expenseTwo in
             return expenseOne.date > expenseTwo.date
         }
-        self.odometerTotal = Int(expenseListTime.first?.odometer ?? 0.0) - Int(expenseListTime.last?.odometer ?? 0.0)
+        self.odometerTotal = Float(expenseListTime.first?.odometer ?? 0.0) - Float(expenseListTime.last?.odometer ?? 0.0)
         print("odometer difference : \(odometerTotal)")
         
         let days = calculateDays(timeFrame: timeFrame)
-        self.avgOdometer = odometerTotal / days
+        self.avgOdometer = odometerTotal / Float(days)
         
         // prendi l'odometer dell ultima expense
         //prendi odometer della prima expense nel time range
@@ -218,13 +251,11 @@ class CategoryViewModel: ObservableObject {
         //dividi il risultato x i giorni
     }
     
-    //Time total, take odometer of now and the last one within time frame and subtract -> value displayed
-    
-    
     //Estimated km/year takes odometer data from time frame, makes an average -> multiply for 12/ 4 / 1 based on time frame
     
-    func getEstimatedOdometerPerYear() {
-        
+    func getEstimatedOdometerPerYear(timeFrame: String) {
+        let days = calculateDays(timeFrame: timeFrame)
+        self.estimatedOdometerPerYear = self.avgOdometer * Float(days)
     }
     
     func assignCategories(expenseList: [ExpenseViewModel]) {
@@ -252,13 +283,12 @@ class CategoryViewModel: ObservableObject {
         self.categories = [Category2(name: "Fuel", color: Palette.colorYellow, icon: "fuelType", totalCosts: self.fuelTotal),
                            Category2(name: "Maintenance", color: Palette.colorGreen, icon: "maintenance", totalCosts: self.maintenanceTotal),
                            Category2(name: "Insurance", color: Palette.colorOrange, icon: "insurance", totalCosts: self.insuranceTotal),
-                           Category2(name: "Tolls", color: Palette.colorOrange, icon: "Tolls", totalCosts: self.tollsTotal),
+                           Category2(name: "Road Tax", color: Palette.colorOrange, icon: "roadTax", totalCosts: self.roadTaxTotal),
                            Category2(name: "Fines", color: Palette.colorOrange, icon: "fines", totalCosts: self.finesTotal),
+                           Category2(name: "Tolls", color: Palette.colorOrange, icon: "Tolls", totalCosts: self.tollsTotal),
                            Category2(name: "Parking", color: Palette.colorViolet, icon: "parking", totalCosts: self.parkingTotal),
-                           Category2(name: "Road Tax", color: Palette.colorViolet, icon: "other", totalCosts: self.roadTaxTotal),
                            Category2(name: "Other", color: Palette.colorViolet, icon: "other", totalCosts: self.otherTotal)
                 ]
-        
     }
     
     func retrieveAndUpdate(vehicleID: NSManagedObjectID) {
@@ -268,12 +298,16 @@ class CategoryViewModel: ObservableObject {
             self.expenseList = storage
             self.assignCategories(expenseList: storage)
             self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-
-            //MODIFICARE IN IF FUEL LIST CONTAINS > = THAN 2 ITEMS
-//            if !self.fuelList.isEmpty {
-//                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-//            }
+                    
+            if self.fuelList.count >= 2 {
+                self.getAverageOdometer(expenseList: self.expenseList, timeFrame: self.selectedTimeFrame)
+                self.getEstimatedOdometerPerYear(timeFrame: self.selectedTimeFrame)
+                self.getFuelEfficiency(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+                self.getAveragePrice(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+            }
             
+           
         })
     }
     

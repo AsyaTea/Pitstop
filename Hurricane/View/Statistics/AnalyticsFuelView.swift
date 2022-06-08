@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AnalyticsFuelView: View {
     @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var utilityVM : UtilityViewModel
     var body: some View {
         
             
@@ -69,7 +70,7 @@ struct AnalyticsFuelView: View {
                 }
                 
                 Section {
-                    FuelListView(categoryVM: categoryVM)
+                    FuelListView(categoryVM: categoryVM, utilityVM: utilityVM)
                         .padding(4)
                 }
             }
@@ -81,6 +82,6 @@ struct AnalyticsFuelView: View {
 
 struct AnalyticsFuelView_Previews: PreviewProvider {
     static var previews: some View {
-        AnalyticsFuelView(categoryVM: CategoryViewModel())
+        AnalyticsFuelView(categoryVM: CategoryViewModel(), utilityVM: UtilityViewModel())
     }
 }

@@ -16,7 +16,7 @@ struct AnalyticsCostView: View {
             VStack{
                 List {
                     Section {
-                        CostGraphView()
+                        CostGraphView(utilityVM: utilityVM, dataVM: dataVM)
                             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                             .frame(height: 201)
                     }
@@ -36,13 +36,16 @@ struct AnalyticsCostView: View {
 }
     
 struct CostGraphView : View {
+    @ObservedObject var utilityVM : UtilityViewModel
+    @ObservedObject var dataVM : DataViewModel
     var value = "50%"
     var body: some View {
         VStack {
             HStack {
                 VStack(alignment: .leading){
                     
-                    Text("$ 2089")
+                    let formattedCost = String(format: "%.0f", dataVM.totalExpense)
+                    Text("\(formattedCost) \(utilityVM.currency)")
                         .font(Typography.headerL)
                         .padding(1)
                     Text("Cost structure")
@@ -67,57 +70,53 @@ struct CostGraphView : View {
             Spacer()
            
             //LABELS
-            HStack{
-                VStack{
-                    HStack{
-                        RoundedRectangle(cornerRadius: 5)
-                            .frame(width: 16, height: 16, alignment: .topLeading)
-                            .foregroundColor(Palette.colorBlue)
-                        Text("Label")
-                        Text(value)
-                            .foregroundColor(Palette.greyHard)
-                        RoundedRectangle(cornerRadius: 5)
-                            .frame(width: 16, height: 16, alignment: .topLeading)
-                            .foregroundColor(Palette.colorOrange)
-                        Text("Label")
-                        Text(value)
-                            .foregroundColor(Palette.greyHard)
-                        }
-                    
-                    HStack{
-                        RoundedRectangle(cornerRadius: 5)
-                            .frame(width: 16, height: 16, alignment: .topLeading)
-                            .foregroundColor(Palette.colorGreen)
-                        Text("Label")
-                        Text(value)
-                            .foregroundColor(Palette.greyHard)
-                        RoundedRectangle(cornerRadius: 5)
-                            .frame(width: 16, height: 16, alignment: .topLeading)
-                            .foregroundColor(Palette.greyInput)
-                        Text("Label")
-                        Text(value)
-                            .foregroundColor(Palette.greyHard)
-                    }
-                    
-                    HStack{
+            VStack{
+                
+                    VStack{
+                        HStack{
                         RoundedRectangle(cornerRadius: 5)
                             .frame(width: 16, height: 16, alignment: .topLeading)
                             .foregroundColor(Palette.colorYellow)
-                        Text("Label")
+                        Text("Fuel  ")
                         Text(value)
                             .foregroundColor(Palette.greyHard)
+                            
+                        RoundedRectangle(cornerRadius: 5)
+                            .frame(width: 16, height: 16, alignment: .topLeading)
+                            .foregroundColor(Palette.colorOrange)
+                        Text("Taxes")
+                        Text(value)
+                            .foregroundColor(Palette.greyHard)
+                            Spacer()
+                        }
+                        }
+                    
+                    VStack{
+                        HStack {
                         RoundedRectangle(cornerRadius: 5)
                             .frame(width: 16, height: 16, alignment: .topLeading)
                             .foregroundColor(Palette.colorViolet)
-                        Text("Label")
+                        Text("Other")
                         Text(value)
                             .foregroundColor(Palette.greyHard)
+                            
+                            
+                        RoundedRectangle(cornerRadius: 5)
+                            .frame(width: 16, height: 16, alignment: .center)
+                            .foregroundColor(Palette.colorGreen)
+                        Text("Maintainance")
+                        Text(value)
+                            .foregroundColor(Palette.greyHard)
+                            Spacer()
+                            }
+                            
+                        
+                        
                     }
-                   
                 }
-                
+                .padding(.leading,5)
                 Spacer()
-            }
+            
             
         }
         
@@ -177,8 +176,8 @@ struct LineGraph: View {
     
 }
 
-//struct AnalyticsCostView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AnalyticsCostView()
-//    }
-//}
+struct AnalyticsCostView_Previews: PreviewProvider {
+    static var previews: some View {
+        AnalyticsCostView(categoryVM: CategoryViewModel(), dataVM: DataViewModel(), utilityVM: UtilityViewModel())
+    }
+}

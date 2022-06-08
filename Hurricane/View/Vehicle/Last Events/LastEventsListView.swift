@@ -99,7 +99,7 @@ struct LastEventsListView: View {
                             NavigationLink(destination:
                                             EditEventView(
                                                 utilityVM: utilityVM,
-                                                dataVM : dataVM,
+                                                dataVM : dataVM, categoryVM: categoryVM,
                                                 category: Category.init(rawValue: Int(utilityVM.expenseToEdit.category ?? 0 )) ?? .other
                                             )
                                                 .navigationBarBackButtonHidden(true)

@@ -40,6 +40,7 @@ struct AnalyticsOverviewView: View {
         VStack{
             AnalyticsHeaderView(statisticsVM: statisticsVM, categoryVM: categoryVM, dataVM: dataVM)
             .frame(height: 30)
+            .padding(10)
             
       
             
@@ -50,10 +51,10 @@ struct AnalyticsOverviewView: View {
                 AnalyticsCostView(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM)
             }
             else if (categoryVM.currentPickerTab == "Fuel") {
-                AnalyticsFuelView(categoryVM: categoryVM)
+                AnalyticsFuelView(categoryVM: categoryVM, utilityVM: utilityVM)
             }
             else {
-                AnalyticsOdometerView(categoryVM: categoryVM, dataVM: dataVM)
+                AnalyticsOdometerView(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM)
             }
             
         }
@@ -138,11 +139,11 @@ struct OverviewView: View {
         List {
             CostsListView(utilityVM:utilityVM, categoryVM: categoryVM, dataVM: dataVM)
             Section {
-                FuelListView(categoryVM: categoryVM)
+                FuelListView(categoryVM: categoryVM, utilityVM: utilityVM)
                     .padding(2)
             }
             Section {
-                OdometerCostsView(categoryVM: categoryVM, dataVM: dataVM)
+                OdometerCostsView(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM)
                     .padding(2)
             }
         }        
@@ -189,13 +190,14 @@ struct CostsListView: View {
 //MARK: Fuel data Section
 struct FuelListView : View {
     @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var utilityVM : UtilityViewModel
     var body: some View {
         
         HStack {
             Text("Fuel")
                 .font(Typography.headerL)
             Spacer()
-            Text("8,71L/100 Km")
+            Text("\(String(categoryVM.fuelEff)) L/100 \(utilityVM.unit)")
                 .fontWeight(.semibold)
                 .font(Typography.headerM)
         }
@@ -203,7 +205,7 @@ struct FuelListView : View {
             
         ListCostsAttributes(title: "Category", value: String(categoryVM.fuelTotal))
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-        ListCostsAttributes(title: "Average price", value: String(categoryVM.avgPrice))
+        ListCostsAttributes(title: "Average price", value: "\(String(categoryVM.avgPrice)) \(utilityVM.currency)/L")
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Refuels", value: String(categoryVM.refuelsPerTime))
            
@@ -218,6 +220,7 @@ struct FuelListView : View {
 struct OdometerCostsView: View {
     @ObservedObject var categoryVM : CategoryViewModel
     @ObservedObject var dataVM : DataViewModel
+    @ObservedObject var utilityVM : UtilityViewModel
     var body: some View {
         HStack {
             Text("Odometer")
@@ -229,11 +232,13 @@ struct OdometerCostsView: View {
         }
         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
-        ListCostsAttributes(title: "Average", value: "25.4 km/day")
+        let formattedAvgOdo = String(format: "%.0f", categoryVM.avgOdometer)
+        ListCostsAttributes(title: "Average", value: " \(formattedAvgOdo) \(utilityVM.unit)/day")
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Month Total", value: String(categoryVM.odometerTotal))
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-        ListCostsAttributes(title: "Estimated km/year", value: "9262 km")
+        let formattedEstimatedOdo = String(format: "%.0f", categoryVM.estimatedOdometerPerYear)
+        ListCostsAttributes(title: "Estimated km/year", value: "\(formattedEstimatedOdo) \(utilityVM.unit)")
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
        
 
@@ -268,7 +273,7 @@ struct AnalyticsHeaderView : View {
             HStack {
                 Text("Analytics")                    
                     .font(Typography.headerXL)
-                    .padding(.leading,20)
+                    .padding(.leading,5)
             }
             .frame(alignment: .topLeading)
             
@@ -291,8 +296,11 @@ struct AnalyticsHeaderView : View {
                                         Text(time).tag(time)
                                     }
                                         }
-                                        .onChange(of: selectedTimeFrame) { tag in                                        
+                                        .onChange(of: selectedTimeFrame) { tag in
                                             categoryVM.setSelectedTimeFrame(timeFrame: tag)
+                                            categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                                            
+                                            
                                             print("tag is  \(tag)")
                                         }
                                 
@@ -302,6 +310,7 @@ struct AnalyticsHeaderView : View {
                                         .foregroundColor(Palette.black)
                                         .font(Typography.ControlS)
                                     Image("arrowDown")
+                                       
                                 }
                             }
                             
@@ -322,6 +331,8 @@ struct AnalyticsHeaderView : View {
                                 .frame(width: UIScreen.main.bounds.width * 0.09, height: UIScreen.main.bounds.height * 0.04)
                                 .shadowGrey()
                             Image("download")
+                                .frame(alignment: .center)
+                                .padding()
                         }
                     })
                 }

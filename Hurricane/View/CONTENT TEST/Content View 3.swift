@@ -11,7 +11,7 @@ struct Content_View_3: View {
     
     @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
-    @StateObject var dataVM = DataViewModel()
+    @ObservedObject var dataVM = DataViewModel()
     
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)

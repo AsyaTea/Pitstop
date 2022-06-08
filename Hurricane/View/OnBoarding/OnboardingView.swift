@@ -12,7 +12,7 @@ import UserNotifications
 struct OnboardingView: View {
     
     @StateObject var onboardingVM : OnboardingViewModel
-    @StateObject var dataVM : DataViewModel
+    @ObservedObject var dataVM : DataViewModel
     @State private var destination : Pages = .page1
     @Binding var shouldShowOnboarding : Bool
     @StateObject var fuelVM = FuelViewModel()
