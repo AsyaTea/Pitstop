@@ -79,19 +79,10 @@ struct SettingsView: View {
                                 .foregroundColor(homeVM.headerBackgroundColor)
                         }
                         
-                        Text("Currency")
-                            .foregroundColor(Palette.black)
-                            .font(Typography.headerM)
-                        Text("Unit")
+                        Text("About")
                             .foregroundColor(Palette.black)
                             .font(Typography.headerM)
                         
-                    }
-                    
-                    Section{
-                        Text("About")
-                        Text("Coming Soon")
-                        Text("Coming Soon")
                     }
                 }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))

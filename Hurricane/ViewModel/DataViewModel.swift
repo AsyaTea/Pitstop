@@ -172,6 +172,7 @@ class DataViewModel : ObservableObject {
         vehicle.brand = vs.brand
         vehicle.model = vs.model
         vehicle.current = vs.current
+        vehicle.odometer = vs.odometer
         vehicle.plate = vs.plate
         vehicle.fuelTypeOne = vs.fuelTypeOne
         vehicle.fuelTypeTwo = vs.fuelTypeTwo ?? 7
@@ -186,7 +187,7 @@ class DataViewModel : ObservableObject {
         }
         
         save()
-        print("VEHICLE UPDATE DONE")
+        print("VEHICLE UPDATE DONE ",vehicle.odometer)
     }
     
     func getVehicleById(vehicleId : NSManagedObjectID) throws -> VehicleViewModel {

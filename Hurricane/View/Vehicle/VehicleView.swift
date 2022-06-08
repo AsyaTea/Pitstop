@@ -15,6 +15,7 @@ struct VehicleView: View {
     @ObservedObject var homeVM : HomeViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var notificationVM: NotificationManager
     
     @AppStorage("shouldShowOnboardings") var shouldShowOnboarding : Bool = true
 //    @State var shouldShowOnboarding : Bool = true //FOR TESTING
@@ -50,6 +51,16 @@ struct VehicleView: View {
                 dataVM.getCurrentVehicle()
             }
         }
+        .onReceive(NotificationCenter.default.publisher(
+                            for: UIApplication.willResignActiveNotification
+                )) { _ in
+                    notificationVM.movingToBackground()
+                }
+        .onReceive(NotificationCenter.default.publisher(
+            for: UIApplication.didBecomeActiveNotification
+                )) { _ in
+                    notificationVM.movingToForeground()
+                }
     }
 }
 
