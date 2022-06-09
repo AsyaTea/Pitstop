@@ -16,7 +16,7 @@ struct AnalyticsCostView: View {
             VStack{
                 List {
                     Section {
-                        CostGraphView(utilityVM: utilityVM, dataVM: dataVM)
+                        CostGraphView(utilityVM: utilityVM, categoryVM: categoryVM, dataVM: dataVM)
                             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                             .frame(height: 201)
                     }
@@ -37,6 +37,7 @@ struct AnalyticsCostView: View {
     
 struct CostGraphView : View {
     @ObservedObject var utilityVM : UtilityViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     @ObservedObject var dataVM : DataViewModel
     var value = "50%"
     var body: some View {
@@ -64,7 +65,7 @@ struct CostGraphView : View {
             //GRAPH LINE
 //            RoundedRectangle(cornerRadius: 5)
 //                .frame(width: 340, height: 20, alignment: .bottom)
-            LineGraph()
+            LineGraph(categoryVM: categoryVM)
             
             
             Spacer()
@@ -78,14 +79,17 @@ struct CostGraphView : View {
                             .frame(width: 16, height: 16, alignment: .topLeading)
                             .foregroundColor(Palette.colorYellow)
                         Text("Fuel  ")
-                        Text(value)
+                            let formattedPerc = String(format: "%.0f", categoryVM.fuelPercentage)
+                            Text("\(formattedPerc) %")
+//                            Text(String(categoryVM.fuelPercentage))
                             .foregroundColor(Palette.greyHard)
                             
                         RoundedRectangle(cornerRadius: 5)
                             .frame(width: 16, height: 16, alignment: .topLeading)
                             .foregroundColor(Palette.colorOrange)
                         Text("Taxes")
-                        Text(value)
+                            let formattedTaxesPerc = String(format: "%.0f", categoryVM.taxesPercentage)
+                            Text("\(formattedTaxesPerc) %")
                             .foregroundColor(Palette.greyHard)
                             Spacer()
                         }
@@ -97,7 +101,8 @@ struct CostGraphView : View {
                             .frame(width: 16, height: 16, alignment: .topLeading)
                             .foregroundColor(Palette.colorViolet)
                         Text("Other")
-                        Text(value)
+                            let formattedOtherPerc = String(format: "%.0f", categoryVM.otherPercentage)
+                            Text("\(formattedOtherPerc) %")
                             .foregroundColor(Palette.greyHard)
                             
                             
@@ -105,7 +110,8 @@ struct CostGraphView : View {
                             .frame(width: 16, height: 16, alignment: .center)
                             .foregroundColor(Palette.colorGreen)
                         Text("Maintainance")
-                        Text(value)
+                            let formattedMainPerc = String(format: "%.0f", categoryVM.maintainancePercentage)
+                            Text("\(formattedMainPerc) %")
                             .foregroundColor(Palette.greyHard)
                             Spacer()
                             }
@@ -128,6 +134,7 @@ struct LineGraph: View {
     var percent1: CGFloat = 0.4
     var percent2: CGFloat = 0.2
     var percent3: CGFloat = 0.1
+    @ObservedObject var categoryVM : CategoryViewModel
 
         var body: some View {
             VStack(alignment: .leading) {
@@ -145,25 +152,20 @@ struct LineGraph: View {
                         ZStack(alignment: .leading) {
                             HStack{
                                 Rectangle()
-                                    .foregroundColor(Palette.colorBlue)
-                                    .frame(width: geometry.size.width * percent1, height: geometry.size.height)
+                                    .foregroundColor(Palette.colorYellow)
+                                    .frame(width: geometry.size.width * CGFloat(categoryVM.fuelPercentage / 100), height: geometry.size.height)
+                                    .padding(-5)
+                                Rectangle()
+                                    .foregroundColor(Palette.colorOrange)
+                                    .frame(width: geometry.size.width * CGFloat(categoryVM.taxesPercentage / 100), height: geometry.size.height)
+                                    .padding(-2)
+                                Rectangle()
+                                    .foregroundColor(Palette.colorViolet)
+                                    .frame(width: geometry.size.width * CGFloat(categoryVM.otherPercentage / 100), height: geometry.size.height)
                                     .padding(-5)
                                 Rectangle()
                                     .foregroundColor(Palette.colorGreen)
-                                    .frame(width: geometry.size.width * percent2, height: geometry.size.height)
-                                    .padding(-2)
-                                Rectangle()
-                                    .foregroundColor(Palette.colorOrange)
-                                    .frame(width: geometry.size.width * percent3, height: geometry.size.height)
-                                    .padding(-5)
-                                Rectangle()
-                                    .foregroundColor(Palette.colorYellow)
-                                    .padding(-2)
-                                Rectangle()
-                                    .foregroundColor(Palette.greyLight)
-                                    .padding(-5)
-                                Rectangle()
-                                    .foregroundColor(Palette.colorViolet)
+//                                    .frame(width: geometry.size.width * percent3, height: geometry.size.height)
                                     .padding(-2)
                                     
                             }

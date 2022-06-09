@@ -291,7 +291,7 @@ struct AnalyticsHeaderView : View {
                             .shadowGrey()
                         HStack{
                             Menu {
-                                Picker(selection: $selectedTimeFrame, label: Text("Time")) {
+                                Picker(selection: $categoryVM.selectedTimeFrame, label: Text("Time")) {
                                     ForEach(categoryVM.timeFrames, id: \.self) { time in
                                         Text(time).tag(time)
                                     }
@@ -299,8 +299,7 @@ struct AnalyticsHeaderView : View {
                                         .onChange(of: selectedTimeFrame) { tag in
                                             categoryVM.setSelectedTimeFrame(timeFrame: tag)
                                             categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
-                                            
-                                            
+                                          
                                             print("tag is  \(tag)")
                                         }
                                 

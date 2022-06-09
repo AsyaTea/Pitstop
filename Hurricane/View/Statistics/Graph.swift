@@ -57,6 +57,7 @@ struct FuelGraphView: View {
     @State var showPlot = false
     @State var translation : CGFloat = 0
     var data: [CGFloat]
+    
     var body: some View {
         
         HStack {
@@ -314,7 +315,7 @@ struct OdometerGraphView: View {
                         
                         let index = max(min(Int((translation / width).rounded() + 1), data.count - 1), 0)
                         
-                        currentPlot = "$ \(data[index])"
+                        currentPlot = "L \(data[index])"
                         self.translation = translation
                         
                         offset = CGSize(width: points[index].x - 40, height: points[index].y - height)
@@ -367,4 +368,4 @@ struct GraphPractice_Previews: PreviewProvider {
     }
 }
 
-let sampleData: [CGFloat] = [900, 400, 300, 700, 250, 150, 550, 600, 1250, 450, 550, 600,900, 400, 300, 700, 250, 150, 550, 600, 1250, 450, 550, 600,900, 400, 300, 700, 250, 150, 550, 600]
+let sampleData: [CGFloat] = [8.5, 9, 7, 8, 9.5, 10]

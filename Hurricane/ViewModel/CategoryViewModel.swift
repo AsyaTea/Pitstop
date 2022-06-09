@@ -56,8 +56,14 @@ class CategoryViewModel: ObservableObject {
     @Published var estimatedOdometerPerYear : Float = 0
     var literDiff : Float = 0
     @Published var fuelEff : Float = 0
+    
+    @Published var taxesCost: Float = 0
+    @Published var otherCost: Float = 0
    
-   
+    var fuelPercentage : Float = 0
+    var taxesPercentage: Float = 0
+    var maintainancePercentage : Float = 0
+    var otherPercentage : Float = 0
     
     
     @Published var selectedTimeFrame = "Per month"
@@ -66,7 +72,7 @@ class CategoryViewModel: ObservableObject {
     
 
     init()  {
-
+        print("categoryVM recreating")
         getCurrentVehicle()
     }
     
@@ -224,6 +230,8 @@ class CategoryViewModel: ObservableObject {
         
     }
     
+  
+    
     //MARK: Odometer, remember to insert a time frame property
     
     //Average, take odometer and the last one within time frame, sub and divide it by the given time -> calculate avg
@@ -258,21 +266,31 @@ class CategoryViewModel: ObservableObject {
     }
     
     //COST FUNCTIONS
+//
+//    func getMacroCategoriesCost() {
+//
+//    }
     
     func totalCostPercentage(totalCost: Float, expenseList: [ExpenseViewModel]) {
+        print("total cost is \(totalCost) and ")
+        self.fuelPercentage = (self.fuelTotal / totalCost) * 100
+        print("fuel percentage is \(self.fuelPercentage)")
+        self.taxesPercentage = ((self.insuranceTotal + self.roadTaxTotal + self.finesTotal + self.tollsTotal) / totalCost ) * 100
+        print("taxes percentage is \(self.taxesPercentage)")
+        self.maintainancePercentage = (self.maintenanceTotal / totalCost) * 100
+        self.otherPercentage = ((self.otherTotal + self.parkingTotal) / totalCost) * 100
         
     }
     
-//    func getTotalExpense(expenses: [ExpenseViewModel]) {
-////        print("expense list: \(expenses)")
-//        self.totalExpense = 0.0
-//        for expense in expenses {
-//            totalExpense += expense.price
-//        }
-//        print("sum cost : \(totalVehicleCost)")
-//        self.totalExpense = totalExpense
-//
-//    }
+    func getTotalExpense(expenses: [ExpenseViewModel]) {
+        self.totalExpense = 0.0
+        for expense in expenses {
+            totalExpense += expense.price
+        }
+        print("sum cost : \(totalExpense)")
+        self.totalExpense = totalExpense
+
+    }
     
     func assignCategories(expenseList: [ExpenseViewModel]) {
         
@@ -298,12 +316,12 @@ class CategoryViewModel: ObservableObject {
         
         self.categories = [Category2(name: "Fuel", color: Palette.colorYellow, icon: "fuelType", totalCosts: self.fuelTotal),
                            Category2(name: "Maintenance", color: Palette.colorGreen, icon: "maintenance", totalCosts: self.maintenanceTotal),
-                           Category2(name: "Insurance", color: Palette.colorOrange, icon: "insurance", totalCosts: self.insuranceTotal),
+                           Category2(name: "Insurance", color: Palette.colorOrange, icon: "Insurance", totalCosts: self.insuranceTotal),
                            Category2(name: "Road Tax", color: Palette.colorOrange, icon: "roadTax", totalCosts: self.roadTaxTotal),
                            Category2(name: "Fines", color: Palette.colorOrange, icon: "fines", totalCosts: self.finesTotal),
-                           Category2(name: "Tolls", color: Palette.colorOrange, icon: "Tolls", totalCosts: self.tollsTotal),
-                           Category2(name: "Parking", color: Palette.colorViolet, icon: "parking", totalCosts: self.parkingTotal),
-                           Category2(name: "Other", color: Palette.colorViolet, icon: "other", totalCosts: self.otherTotal)
+                           Category2(name: "Tolls", color: Palette.colorOrange, icon: "tolls", totalCosts: self.tollsTotal),
+                           Category2(name: "Parking", color: Palette.colorViolet, icon: "Parking", totalCosts: self.parkingTotal),
+                           Category2(name: "Other", color: Palette.colorViolet, icon: "Other", totalCosts: self.otherTotal)
                 ]
     }
     
@@ -321,9 +339,9 @@ class CategoryViewModel: ObservableObject {
                 self.getFuelEfficiency(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
                 self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
                 self.getAveragePrice(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+                self.getTotalExpense(expenses: self.expenseList)
+                self.totalCostPercentage(totalCost: self.totalExpense, expenseList: self.expenseList)
             }
-            
-           
         })
     }
     
