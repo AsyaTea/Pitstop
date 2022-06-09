@@ -51,16 +51,7 @@ struct VehicleView: View {
                 dataVM.getCurrentVehicle()
             }
         }
-        .onReceive(NotificationCenter.default.publisher(
-                            for: UIApplication.willResignActiveNotification
-                )) { _ in
-                    notificationVM.movingToBackground()
-                }
-        .onReceive(NotificationCenter.default.publisher(
-            for: UIApplication.didBecomeActiveNotification
-                )) { _ in
-                    notificationVM.movingToForeground()
-                }
+        
     }
 }
 

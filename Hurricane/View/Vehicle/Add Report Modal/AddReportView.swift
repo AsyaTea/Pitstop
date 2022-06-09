@@ -16,8 +16,6 @@ struct AddReportView: View {
     @StateObject var reminderVM: AddReminderViewModel
     @StateObject var notificationVM = NotificationManager()
     
-    @State var vehicleS = VehicleState()
-    
     @State private var showDate = false
     
     //Custom picker tabs
@@ -118,8 +116,6 @@ struct AddReportView: View {
             )
             .onAppear{
                 addExpVM.odometer = String(Int(dataVM.currentVehicle.first?.odometer ?? 0))
-                vehicleS = VehicleState.fromVehicleViewModel(vm: dataVM.currentVehicle.first!) //Possible crush
-                print(vehicleS.vehicleID)
             }
             .toolbar {
                 /// Keyboard focus
