@@ -16,6 +16,7 @@ struct EditNumbers: View {
     @ObservedObject var dataVM : DataViewModel
     
     @State var numberToEdit : NumberState
+    @State private var showAlert = false
     var isDisabled: Bool {
         return numberToEdit.title.isEmpty || numberToEdit.telephone.isEmpty
     }
@@ -62,6 +63,28 @@ struct EditNumbers: View {
                     }
                 
                 Spacer()
+                Button(action: {
+                    showAlert.toggle()
+                }, label: {
+                    DeleteButton(title: "Delete contact")
+                })
+                .alert(isPresented:$showAlert) {
+                    Alert(
+                        title: Text("Are you sure you want to delete this contact?"),
+                        message: Text("There is no undo"),
+                        primaryButton: .destructive(Text("Delete")) {
+//                            dataVM.deleteExpenseState(expenseS: utilityVM.expenseToEdit)
+//                            dataVM.getExpensesCoreData(filter: nil, storage: { storage in
+//                                dataVM.expenseList = storage
+//                                dataVM.expenseFilteredList = storage
+//                            })
+
+                            self.presentationMode.wrappedValue.dismiss()
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
+                
             }
             .padding(.top,40)
             .navigationBarBackButtonHidden(true)
@@ -107,3 +130,5 @@ struct EditNumbers: View {
 //        EditNumbers()
 //    }
 //}
+
+
