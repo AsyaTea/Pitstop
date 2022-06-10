@@ -130,10 +130,6 @@ struct CostGraphView : View {
 }
 
 struct LineGraph: View {
-    
-    var percent1: CGFloat = 0.4
-    var percent2: CGFloat = 0.2
-    var percent3: CGFloat = 0.1
     @ObservedObject var categoryVM : CategoryViewModel
 
         var body: some View {

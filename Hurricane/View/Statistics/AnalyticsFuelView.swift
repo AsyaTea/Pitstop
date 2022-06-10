@@ -51,7 +51,7 @@ struct AnalyticsFuelView: View {
                             }
                             .font(.subheadline)
                             .foregroundColor(Palette.greyMiddle)
-                            FuelGraphView(data: sampleData)
+                            FuelGraphView(categoryVM: categoryVM, data: categoryVM.fuelGraphData)
                                 .frame(height: 200)
                                 .padding(.top, 25)
                                 .padding(-15)

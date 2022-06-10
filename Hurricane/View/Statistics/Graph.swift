@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Graph: View {
     
-    
+    @ObservedObject var categoryVM : CategoryViewModel
     var body: some View {
         VStack {
                 //if tab is fuel
@@ -52,6 +52,7 @@ struct Graph: View {
 
 struct FuelGraphView: View {
     
+    @ObservedObject var categoryVM : CategoryViewModel
     @State var currentPlot = ""
     @State var offset: CGSize = .zero
     @State var showPlot = false
@@ -369,7 +370,7 @@ struct OdometerGraphView: View {
 
 struct GraphPractice_Previews: PreviewProvider {
     static var previews: some View {
-        Graph()
+        Graph(categoryVM: CategoryViewModel())
     }
 }
 
