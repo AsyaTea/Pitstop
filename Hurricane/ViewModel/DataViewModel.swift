@@ -283,23 +283,23 @@ class DataViewModel : ObservableObject {
 //        expense
 //    }
     
-    func deleteExpense(at indexSet: IndexSet){
-        indexSet.forEach{ index in
-            let expense = expenseList[index]
-            expenseList.remove(at: index)
-            deleteExpenseCoreData(expense: expense)
-        }
-    }
+//    func deleteExpense(at indexSet: IndexSet){
+//        indexSet.forEach{ index in
+//            let expense = expenseList[index]
+//            expenseList.remove(at: index)
+//            deleteExpenseCoreData(expense: expense)
+//        }
+//    }
     
-    func deleteExpenseCoreData(expense : ExpenseViewModel) {
-        let expense = manager.getExpenseById(id: expense.expenseID)
-        if let expense = expense {
-            manager.deleteExpense(expense)
-        }
-        save()
-    }
+//    func deleteExpenseCoreData(expense : ExpenseViewModel) {
+//        let expense = manager.getExpenseById(id: expense.expenseID)
+//        if let expense = expense {
+//            manager.deleteExpense(expense)
+//        }
+//        save()
+//    }
     
-    func deleteExpenseState(expenseS : ExpenseState) {
+    func deleteExpense(expenseS : ExpenseState) {
         guard let expenseID = expenseS.expenseID else {
             return print("Expense ID not found during update")
         }
@@ -312,12 +312,10 @@ class DataViewModel : ObservableObject {
     }
     
     
-    
     func removeAllExpenses() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Expense")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         manager.removeAllItems(deleteRequest: deleteRequest)
-        //        getExpenses(filter: filter)
     }
     
     func getExpensesCoreData(filter : NSPredicate?, storage: @escaping([ExpenseViewModel]) -> ())  {
@@ -378,6 +376,15 @@ class DataViewModel : ObservableObject {
     }
     
     
+    func removeExpiredReminders() {
+        let filterExpiredReminders = NSPredicate(format: "date <= %@",NSDate())
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Reminder")
+        fetchRequest.predicate = filterExpiredReminders
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        manager.removeAllItems(deleteRequest: deleteRequest)
+        self.expiredReminders.removeAll()
+    }
+    
     
     //MARK: IMPORTANT NUMBERS CRUD
     
@@ -433,6 +440,19 @@ class DataViewModel : ObservableObject {
         }
         save()
         print("Numbers update done")
+    }
+    
+    func deleteNumber(numberS : NumberState) {
+        guard let numberID = numberS.numberID else {
+            return print("NumberID not found during update")
+        }
+        
+        let number = manager.getNumberById(id: numberID)
+        if let number = number {
+            manager.deleteNumber(number)
+        }
+       
+        save()
     }
     
     

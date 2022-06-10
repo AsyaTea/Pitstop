@@ -41,7 +41,6 @@ struct RemindersList: View {
                             .padding()
                         }
                         
-                        
                         if dataVM.reminderList.isEmpty {
                             HStack{
                                 Text("There are no reminders now")
@@ -108,6 +107,14 @@ struct RemindersList: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Cancel")
+                            .font(Typography.headerM)
+                    })
+                    .accentColor(Palette.greyHard),
+                trailing:
+                    Button(action: {
+                        dataVM.removeExpiredReminders()
+                    }, label: {
+                        Text("Clear expired")
                             .font(Typography.headerM)
                     })
                     .accentColor(Palette.greyHard)
