@@ -16,24 +16,16 @@ struct ReminderListView: View {
     @ObservedObject var categoryVM : CategoryViewModel
     var focusedField : FocusState<FocusField?>.Binding
     
-    @State private var checkmark = false
+    @State private var selectedItem: Category = .maintenance
     
     var body: some View {
         List{
             
             //MARK: CATEGORY
-//            Picker(selection: $addExpVM.selectedCategoryReminder, content: {
-//                ForEach(addExpVM.categoryReminder, id: \.self) {
-//                    Text($0)
-//                        .font(Typography.headerM)
-//                }
-//            },label:{
-//                ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
-//            })
             HStack{
                 ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
                 Spacer()
-                NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, checkmark: $checkmark)){
+                NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)){
                 Spacer()
                 Text(reminderVM.selectedCategory)
                     .font(Typography.headerM)
