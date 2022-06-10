@@ -315,14 +315,14 @@ class CategoryViewModel: ObservableObject {
         
         
         self.categories = [Category2(name: "Fuel", color: Palette.colorYellow, icon: "fuelType", totalCosts: self.fuelTotal),
-                           Category2(name: "Maintenance", color: Palette.colorGreen, icon: "maintenance", totalCosts: self.maintenanceTotal),
-                           Category2(name: "Insurance", color: Palette.colorOrange, icon: "Insurance", totalCosts: self.insuranceTotal),
-                           Category2(name: "Road Tax", color: Palette.colorOrange, icon: "roadTax", totalCosts: self.roadTaxTotal),
-                           Category2(name: "Fines", color: Palette.colorOrange, icon: "fines", totalCosts: self.finesTotal),
-                           Category2(name: "Tolls", color: Palette.colorOrange, icon: "tolls", totalCosts: self.tollsTotal),
-                           Category2(name: "Parking", color: Palette.colorViolet, icon: "Parking", totalCosts: self.parkingTotal),
-                           Category2(name: "Other", color: Palette.colorViolet, icon: "Other", totalCosts: self.otherTotal)
-        ]
+                                   Category2(name: "Maintenance", color: Palette.colorGreen, icon: "maintenance", totalCosts: self.maintenanceTotal),
+                                   Category2(name: "Insurance", color: Palette.colorOrange, icon: "insurance", totalCosts: self.insuranceTotal),
+                                   Category2(name: "Road Tax", color: Palette.colorOrange, icon: "roadTax", totalCosts: self.roadTaxTotal),
+                                   Category2(name: "Fines", color: Palette.colorOrange, icon: "fines", totalCosts: self.finesTotal),
+                                   Category2(name: "Tolls", color: Palette.colorOrange, icon: "Tolls", totalCosts: self.tollsTotal),
+                                   Category2(name: "Parking", color: Palette.colorViolet, icon: "parking", totalCosts: self.parkingTotal),
+                                   Category2(name: "Other", color: Palette.colorViolet, icon: "other", totalCosts: self.otherTotal)
+                ]
     }
     
     func retrieveAndUpdate(vehicleID: NSManagedObjectID) {
@@ -339,9 +339,10 @@ class CategoryViewModel: ObservableObject {
                 self.getFuelEfficiency(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
                 self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
                 self.getAveragePrice(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-                self.getTotalExpense(expenses: self.expenseList)
-                self.totalCostPercentage(totalCost: self.totalExpense, expenseList: self.expenseList)
+                
             }
+            self.getTotalExpense(expenses: self.expenseList)
+            self.totalCostPercentage(totalCost: self.totalExpense, expenseList: self.expenseList)
         })
     }
     
@@ -457,7 +458,7 @@ extension Category : CaseIterable{
         case .roadTax:
             return "roadTax"
         case .tolls:
-            return "tolls"
+            return "Tolls"
         case .fines:
             return "fines"
         case .parking:
