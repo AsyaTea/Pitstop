@@ -14,6 +14,8 @@ struct ImportantNumbersView: View {
     @ObservedObject var homeVM : HomeViewModel
     @ObservedObject var dataVM : DataViewModel
     
+    @State private var showEdit = false
+    
     var body: some View {
         
         NavigationView{
@@ -23,7 +25,11 @@ struct ImportantNumbersView: View {
                     VStack{
                         VStack(spacing: 16){
                             ForEach(dataVM.numberList, id:\.self){ number in
-                                NumberCardView(title: number.title, number: number.telephone)
+                                NavigationLink(
+                                    destination: EditNumbers(dataVM: dataVM, numberToEdit: NumberState.fromNumberViewModel(vm: number))
+                                ){
+                                    NumberCardView(title: number.title, number: number.telephone)
+                                }
                             }
                         }
                         .padding(.vertical,20)

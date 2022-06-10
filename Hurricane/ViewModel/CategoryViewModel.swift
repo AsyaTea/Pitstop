@@ -40,11 +40,11 @@ class CategoryViewModel: ObservableObject {
     
     let manager = CoreDataManager.instance
     @Published var filter : NSPredicate?
-    @Published var vehicleList : [VehicleViewModel] = []  
+    @Published var vehicleList : [VehicleViewModel] = []
     @Published var currentVehicle : [VehicleViewModel] = []
     @Published var expenseList : [ExpenseViewModel] = []
     @Published var totalExpense : Float = 0.0
-   
+    
     @Published var refuelsPerTime: Int = 0
     @Published var avgDaysRefuel: Int = 0
     @Published var avgPrice : Int = 0
@@ -59,7 +59,7 @@ class CategoryViewModel: ObservableObject {
     
     @Published var taxesCost: Float = 0
     @Published var otherCost: Float = 0
-   
+    
     var fuelPercentage : Float = 0
     var taxesPercentage: Float = 0
     var maintainancePercentage : Float = 0
@@ -68,9 +68,9 @@ class CategoryViewModel: ObservableObject {
     
     @Published var selectedTimeFrame = "Per month"
     let timeFrames = ["Per month", "Per 3 months", "Per year" , "All time"]
-
     
-
+    
+    
     init()  {
         print("categoryVM recreating")
         getCurrentVehicle()
@@ -92,12 +92,12 @@ class CategoryViewModel: ObservableObject {
         let fetchedCost = categoryList.map ({ (ExpenseViewModel) -> Float in
             return ExpenseViewModel.price
         })
-//        print("fetched cost :\(fetchedCost)")
+        //        print("fetched cost :\(fetchedCost)")
         let totalCost = fetchedCost.reduce(0, +)
         return totalCost
     }
     
-//    Takes current expense list and filters through the given category
+    //    Takes current expense list and filters through the given category
     static func getExpensesCategoryList(expensesList: [ExpenseViewModel], category: Int16) -> [ExpenseViewModel] {
         var categoryList : [ExpenseViewModel]
         categoryList = expensesList.filter({ expense in
@@ -169,7 +169,7 @@ class CategoryViewModel: ObservableObject {
         
         //self.odometerTotal
     }
-
+    
     //Refuel x month, from fuelExpenseList filter those who are in the time frame -> perform count
     
     func getRefuel(timeFrame: String, fuelList: [ExpenseViewModel])  {
@@ -178,16 +178,16 @@ class CategoryViewModel: ObservableObject {
         let monthSub = calculateTimeFrame(timeFrame: timeFrame)
         if monthSub != 0 {
             let monthSubtractedDate = addOrSubtractMonths(month: monthSub)
-           
+            
             let monthFuels = fuelList.filter { refuel in
                 return refuel.date > monthSubtractedDate
             }
-                
+            
             self.refuelsPerTime = monthFuels.count
             print(self.refuelsPerTime)
         } else {
-           self.refuelsPerTime = fuelList.count
-        }       
+            self.refuelsPerTime = fuelList.count
+        }
     }
     
     //Average days/refuel, map through fuelExpenseList and return days between 2 fuel expenses in a new array -> calculate avg value
@@ -196,7 +196,7 @@ class CategoryViewModel: ObservableObject {
         let dateArray = fuelList.map { (ExpenseViewModel) -> Date in
             return ExpenseViewModel.date
         }
-
+        
         var daysDiff = [TimeInterval]()
         for (index,date) in dateArray.enumerated() {
             if date != dateArray.last {
@@ -212,7 +212,6 @@ class CategoryViewModel: ObservableObject {
         
         self.avgDaysRefuel = (daysDiffInt.reduce(0, +))/daysDiffInt.count
         print("avg days : \(self.avgDaysRefuel)")
-    
         
     }
     
@@ -226,11 +225,12 @@ class CategoryViewModel: ObservableObject {
             return expense.liters
         }
         print("price array : \(priceArray)")
-        self.avgPrice = Int(priceArray.reduce(0, +))/Int(literArray.reduce(0, +))
-        
+        if literArray.reduce(0, +) != 0 {
+            self.avgPrice = Int(priceArray.reduce(0, +))/Int(literArray.reduce(0, +))
+        }
     }
     
-  
+    
     
     //MARK: Odometer, remember to insert a time frame property
     
@@ -266,10 +266,10 @@ class CategoryViewModel: ObservableObject {
     }
     
     //COST FUNCTIONS
-//
-//    func getMacroCategoriesCost() {
-//
-//    }
+    //
+    //    func getMacroCategoriesCost() {
+    //
+    //    }
     
     func totalCostPercentage(totalCost: Float, expenseList: [ExpenseViewModel]) {
         print("total cost is \(totalCost) and ")
@@ -289,7 +289,7 @@ class CategoryViewModel: ObservableObject {
         }
         print("sum cost : \(totalExpense)")
         self.totalExpense = totalExpense
-
+        
     }
     
     func assignCategories(expenseList: [ExpenseViewModel]) {
@@ -332,7 +332,7 @@ class CategoryViewModel: ObservableObject {
             self.expenseList = storage
             self.assignCategories(expenseList: storage)
             self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-                    
+            
             if self.fuelList.count >= 2 {
                 self.getAverageOdometer(expenseList: self.expenseList, timeFrame: self.selectedTimeFrame)
                 self.getEstimatedOdometerPerYear(timeFrame: self.selectedTimeFrame)
@@ -349,10 +349,10 @@ class CategoryViewModel: ObservableObject {
     func getCurrentVehicle() {
         let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
         let vehicle : [Vehicle]
-
+        
         let filter = NSPredicate(format: "current == %@","1")
         request.predicate = filter
-
+        
         do {
             vehicle =  try manager.context.fetch(request)
             DispatchQueue.main.async {
@@ -360,11 +360,11 @@ class CategoryViewModel: ObservableObject {
                 if !self.currentVehicle.isEmpty {
                     self.retrieveAndUpdate(vehicleID: self.currentVehicle.first!.vehicleID)
                 }
-
+                
                 
             }
             print("CURRENT VEHICLE LIST ",vehicleList)
-
+            
         }catch let error {
             print("🚓 Error fetching current vehicle: \(error.localizedDescription)")
         }
@@ -373,36 +373,36 @@ class CategoryViewModel: ObservableObject {
     func getVehiclesCoreData(filter : NSPredicate?, storage: @escaping([VehicleViewModel]) -> ())  {
         let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
         let vehicle : [Vehicle]
-
+        
         let sort = NSSortDescriptor(keyPath: \Vehicle.objectID, ascending: true)
         request.sortDescriptors = [sort]
         request.predicate = filter
-
+        
         do {
             vehicle =  try manager.context.fetch(request)
             DispatchQueue.main.async{
                 storage(vehicle.map(VehicleViewModel.init))
             }
-
+            
         }catch let error {
             print("🚓 Error fetching vehicles: \(error.localizedDescription)")
         }
     }
-
+    
     func getExpensesCoreData(filter : NSPredicate?, storage: @escaping([ExpenseViewModel]) -> ())  {
         let request = NSFetchRequest<Expense>(entityName: "Expense")
         let expense : [Expense]
-
+        
         let sort = NSSortDescriptor(keyPath: \Expense.objectID, ascending: true)
         request.sortDescriptors = [sort]
         request.predicate = filter
-
+        
         do {
             expense =  try manager.context.fetch(request)
             DispatchQueue.main.async{
                 storage(expense.map(ExpenseViewModel.init))
             }
-
+            
         }catch let error {
             print("💰 Error fetching expenses: \(error.localizedDescription)")
         }
@@ -413,7 +413,7 @@ class CategoryViewModel: ObservableObject {
         return vehicle
     }
 }
-    
+
 enum Category: Int,Hashable{
     case maintenance = 1
     case insurance = 2
@@ -488,7 +488,7 @@ extension Category : CaseIterable{
             return Palette.colorViolet
         }
     }
-
+    
 }
 
 struct Category2: Hashable {
@@ -505,12 +505,12 @@ enum CategoryEnum {
 }
 
 extension Date {
-
+    
     static func timeDifference(lhs: Date, rhs: Date) -> TimeInterval {
         return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
     }
     
- 
+    
 }
 
 

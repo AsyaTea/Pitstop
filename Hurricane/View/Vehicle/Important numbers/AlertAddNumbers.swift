@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum FocusFieldAlert: Hashable {
+enum FocusFieldNumbers: Hashable {
     case numberTitle
     case number
     
@@ -18,7 +18,7 @@ struct AlertAddNumbers: View {
     @StateObject var homeVM : HomeViewModel
     @ObservedObject var dataVM: DataViewModel
     
-    @FocusState var focusedField: FocusFieldAlert?
+    @FocusState var focusedField: FocusFieldNumbers?
     
     @State private var navigateToDetail = false
     
@@ -144,7 +144,7 @@ struct AlertAddNumbersInside: View {
     @ObservedObject var homeVM : HomeViewModel
     @ObservedObject var dataVM : DataViewModel
     
-    @FocusState var focusedField: FocusFieldAlert?
+    @FocusState var focusedField: FocusFieldNumbers?
     
     @State private var navigateToDetail = false
     

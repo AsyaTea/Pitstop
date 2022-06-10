@@ -23,7 +23,7 @@ struct EditVehicleView : View {
     
     @StateObject var fuelVM = FuelViewModel()
     
-    var isDisabled : Bool {
+    var isDisabled: Bool {
         return vehicleS.name.isEmpty || vehicleS.brand.isEmpty || vehicleS.model.isEmpty || vehicleS.fuelTypeOne == 7
     }
     
@@ -116,14 +116,14 @@ struct EditVehicleView : View {
                             .background(isTapped ? Palette.greyLight : Palette.greyBackground)
                             .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
                         HStack{
-                                Text(vehicle.fuelTypeOne.label)
-                                    .font(Typography.TextM)
-                                Spacer()
-                            }
-                            .padding(.leading,40)
+                            Text(vehicle.fuelTypeOne.label)
+                                .font(Typography.TextM)
+                            Spacer()
                         }
-                        .accentColor(Palette.black)
-                    })
+                        .padding(.leading,40)
+                    }
+                    .accentColor(Palette.black)
+                })
                 .confirmationDialog("Select a default fuel type", isPresented: $defaultFuelPicker, titleVisibility: .visible){
                     ForEach(FuelType.allCases, id: \.self) { fuel in
                         
@@ -148,14 +148,14 @@ struct EditVehicleView : View {
                             .background(isTapped2 ? Palette.greyLight : Palette.greyBackground)
                             .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
                         HStack{
-                                Text(vehicle.fuelTypeTwo.label)
-                                    .font(Typography.TextM)
-                                Spacer()
-                            }
-                            .padding(.leading,40)
+                            Text(vehicle.fuelTypeTwo.label)
+                                .font(Typography.TextM)
+                            Spacer()
                         }
-                        .accentColor(Palette.black)
-                    })
+                        .padding(.leading,40)
+                    }
+                    .accentColor(Palette.black)
+                })
                 .confirmationDialog("Select a second fuel type", isPresented: $secondaryFuelPicker, titleVisibility: .visible){
                     ForEach(FuelType.allCases, id: \.self) { fuel in
                         
@@ -167,50 +167,50 @@ struct EditVehicleView : View {
                         }
                     }
                 }
-                    
-                    
-                    Spacer()
-                }
-                .padding(.vertical,30)
-                .navigationBarBackButtonHidden(true)
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(
-                    leading:
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }, label: {
-                            Image("arrowLeft")
-                        })
-                        .accentColor(Palette.greyHard),
-                    trailing:
-                        Button(action: {
-                            do {
-                                try dataVM.updateVehicle(vehicleS)
-                            }
-                            catch{
-                                print(error)
-                            }
-                            presentationMode.wrappedValue.dismiss()
-                            fuelVM.resetSelectedFuel()
-                        }, label: {
-                            Text("Save")
-                                .font(Typography.headerM)
-                        }
-                              )
-                        .disabled(isDisabled)
-                        .opacity(isDisabled ? 0.6 : 1)
-                )
-                .toolbar{
-                    ToolbarItem(placement: .principal) {
-                        Text(vehicle.name)
-                            .font(Typography.headerM)
-                            .foregroundColor(Palette.black)
-                    }
-                }
                 
+                
+                Spacer()
             }
+            .padding(.vertical,30)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                leading:
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Image("arrowLeft")
+                    })
+                    .accentColor(Palette.greyHard),
+                trailing:
+                    Button(action: {
+                        do {
+                            try dataVM.updateVehicle(vehicleS)
+                        }
+                        catch{
+                            print(error)
+                        }
+                        presentationMode.wrappedValue.dismiss()
+                        fuelVM.resetSelectedFuel()
+                    }, label: {
+                        Text("Save")
+                            .font(Typography.headerM)
+                    }
+                          )
+                    .disabled(isDisabled)
+                    .opacity(isDisabled ? 0.6 : 1)
+            )
+            .toolbar{
+                ToolbarItem(placement: .principal) {
+                    Text(vehicle.name)
+                        .font(Typography.headerM)
+                        .foregroundColor(Palette.black)
+                }
+            }
+            
         }
     }
+}
 
 //struct EditVehicleView_Previews: PreviewProvider {
 //    static var previews: some View {
