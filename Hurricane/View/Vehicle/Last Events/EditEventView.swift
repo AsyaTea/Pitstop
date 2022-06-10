@@ -72,7 +72,7 @@ struct EditEventView: View {
                     Button(action: {
                         showingAlert.toggle()
                     }, label: {
-                        DeleteButton()
+                        DeleteButton(title:"Delete report")
                     })
                     Spacer()
                 }
@@ -86,8 +86,10 @@ struct EditEventView: View {
                         dataVM.getExpensesCoreData(filter: nil, storage: { storage in
                             dataVM.expenseList = storage
                             dataVM.expenseFilteredList = storage
-                            categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                            
                         })
+//                       categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                        
                         //SE METTO STA ROBA CRASHA, TO FIX PROSSIMAMENTE
                         //                            dataVM.getTotalExpense(expenses: dataVM.expenseList)
                         //                            dataVM.getMonths(expenses: dataVM.expenseList)
@@ -102,6 +104,9 @@ struct EditEventView: View {
 
 
 struct DeleteButton : View {
+    
+    var title: String
+    
     var body: some View {
         ZStack{
             Capsule(style: .continuous)
@@ -113,7 +118,7 @@ struct DeleteButton : View {
                     .resizable()
                     .foregroundColor(Palette.white)
                     .frame(width: 14, height: 14)
-                Text("Delete report")
+                Text(title)
                     .foregroundColor(Palette.white)
                     .font(Typography.ControlS)
                 Spacer()

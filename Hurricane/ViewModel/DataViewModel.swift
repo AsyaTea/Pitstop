@@ -412,28 +412,28 @@ class DataViewModel : ObservableObject {
         save()
     }
     
-//    func updateNumber(_ ns : NumberState) throws {
-//        guard let numberID = ns.numberID else {
-//            return print("Expense ID not found during update")
-//        }
-//        
-//        guard let number = manager.getNumberById(id: numberID) else {
-//            return print("Expense not found during update")
-//        }
-//        
-//        number.title = ns.title
-//        number.telephone = ns.telephone
-//        
-//        //PUBLISHED LIST UPDATE
-//        for (index,value) in numberList.enumerated() {
-//            if(value.numberdID == ns.numberID){
-//                numberList.remove(at: index)
-//                numberList.insert(NumberViewModel(number: number), at: index)
-//            }
-//        }
-//        save()
-//        print("Numbers update done")
-//    }
+    func updateNumber(_ ns : NumberState) throws {
+        guard let numberID = ns.numberID else {
+            return print("Expense ID not found during update")
+        }
+        
+        guard let number = manager.getNumberById(id: numberID) else {
+            return print("Expense not found during update")
+        }
+        
+        number.title = ns.title
+        number.telephone = ns.telephone
+        
+        //PUBLISHED LIST UPDATE
+        for (index,value) in numberList.enumerated() {
+            if(value.numberID == ns.numberID){
+                numberList.remove(at: index)
+                numberList.insert(NumberViewModel(number: number), at: index)
+            }
+        }
+        save()
+        print("Numbers update done")
+    }
     
     
     //MARK: Total Cost functions
