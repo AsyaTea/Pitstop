@@ -36,29 +36,41 @@ struct AnalyticsFuelView: View {
                         HStack{
                             VStack(alignment: .trailing){
                                 Text("10")
-                                Text("9.5")
-                                Text("9")
-                                Text("8.5")
+                                Spacer()
                                 Text("8")
-                                Text("7.5")
+                                Spacer()
+                                VStack{
+                                    Text("6")
+                                    Spacer()
+                                }
+                                Text("4")
+                                Spacer()
+                                Text("2")
+                                Spacer()
+                                Text("0")
                             }
-                           
                             .font(.subheadline)
                             .foregroundColor(Palette.greyMiddle)
                             FuelGraphView(data: sampleData)
                                 .frame(height: 200)
                                 .padding(.top, 25)
-                                .padding(-10)
+                                .padding(-15)
                         }
                         .padding(-15)
                         
                         HStack(alignment: .bottom) {
                             Text("Dec")
+                            Spacer()
                             Text("Jan")
+                            Spacer()
                             Text("Feb")
-                            Text("Mar")
-                            Text("Apr")
+                            HStack{                                
+                                Text("Mar")
+                                Text("Apr")
+                            }
+                            Spacer()
                             Text("May")
+                            Spacer()
                             Text("Jun")
                         }
                         .font(.subheadline)

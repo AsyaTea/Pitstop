@@ -62,12 +62,15 @@ struct FuelGraphView: View {
         
         HStack {
             GeometryReader { proxy in
+                let newData = data.map { data in
+                    return data * 100
+                }
                 let height = proxy.size.height
-                let width = (proxy.size.width) / CGFloat (data.count - 1)
+                let width = (proxy.size.width) / CGFloat (newData.count - 1)
                 
-                let maxPoint = (data.max() ?? 0) + 100
+                let maxPoint = (newData.max() ?? 0) + 100
                 
-                let points = data.enumerated().compactMap { item -> CGPoint in
+                let points = newData.enumerated().compactMap { item -> CGPoint in
                     
                     let progress = item.element / maxPoint
                     
@@ -75,7 +78,7 @@ struct FuelGraphView: View {
                     
                     let pathWidht = width * CGFloat(item.offset)
                     
-                    return  CGPoint(x: pathWidht, y: -pathHeight + height)
+                    return  CGPoint(x: pathWidht,y: -pathHeight + height)
                 }
                 
                 ZStack{
@@ -171,15 +174,17 @@ struct FuelGraphView: View {
             }
 //            .overlay(
 //                VStack(alignment: .leading) {
+//                    var newData = data.map { data in
+//                        return data * 100
+//                    }
+//                    let  max = newData.max() ?? 0
 //
-//                    let  max = data.max() ?? 0
-//
-//                    Text("$ \(Int(max))")
+//                    Text("L \(Int(max))")
 //                        .font(.caption.bold())
 //
 //                    Spacer()
 //
-//                    Text("$ 0")
+//                    Text("L 0")
 //                        .font(.caption.bold())
 //                }
 //                    .frame(maxWidth: .infinity, alignment: .leading)
@@ -368,4 +373,4 @@ struct GraphPractice_Previews: PreviewProvider {
     }
 }
 
-let sampleData: [CGFloat] = [8.5, 9, 7, 8, 9.5, 10]
+let sampleData: [CGFloat] = [8.5, 9, 7, 8, 9.5, 10, 8.5, 9, 7, 8, 9.5, 10, 8.5, 9, 7, 8, 9.5, 10]
