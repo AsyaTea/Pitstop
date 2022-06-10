@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RemindersList: View {
+struct ReminderView: View {
     
     @ObservedObject var dataVM: DataViewModel
     @StateObject var utilityVM: UtilityViewModel
@@ -52,7 +52,7 @@ struct RemindersList: View {
                         }
                         
                         //MARK: - REMINDERS LIST
-                        ForEach(dataVM.reminderList.reversed(),id:\.self){reminder in
+                        ForEach(dataVM.reminderList.sorted(),id:\.self){reminder in
                             Button(action: {
                                 showEditReminder.toggle()
                                 utilityVM.reminderToEdit = ReminderState.fromReminderViewModel(vm: reminder)
@@ -97,6 +97,9 @@ struct RemindersList: View {
                                 category: Category.init(rawValue: Int(reminder.category )) ?? .other,
                                 expired: true)
                         }
+                        
+                        //MARK: - NAVIGATE TO EDIT
+                        NavigationLink(destination: EditReminderView(dataVM: dataVM, utilityVM: utilityVM),isActive: $showEditReminder){}
                     }
                 }
             }

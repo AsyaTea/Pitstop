@@ -169,14 +169,14 @@ struct BottomContentView: View {
                         .foregroundColor(Palette.greyLight)
                     Image("documents")
                         .resizable()
-                        .frame(width: 12, height: 12)
+                        .frame(width: 14, height: 14)
                         .foregroundColor(Palette.black)
                 }
                 Text(title)
                     .foregroundColor(Palette.black)
                     .font(Typography.ControlS)
             }
-            .padding(.leading,-28)
+            .padding(.leading,-34)
             .padding(.top,-2)
         }
     }

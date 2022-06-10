@@ -59,8 +59,9 @@
 		FFA0E713284E5722008B3ED9 /* Content View 3.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E712284E5722008B3ED9 /* Content View 3.swift */; };
 		FFA0E715284FB684008B3ED9 /* Utility Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E714284FB684008B3ED9 /* Utility Extensions.swift */; };
 		FFA0E71928533191008B3ED9 /* EditNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E71828533191008B3ED9 /* EditNumbers.swift */; };
+		FFA0E71B28535329008B3ED9 /* EditReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E71A28535329008B3ED9 /* EditReminderView.swift */; };
 		FFA9315D284A5DB900C8D73C /* ReminderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA9315C284A5DB900C8D73C /* ReminderModel.swift */; };
-		FFA93160284A62B400C8D73C /* RemindersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA9315F284A62B400C8D73C /* RemindersList.swift */; };
+		FFA93160284A62B400C8D73C /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA9315F284A62B400C8D73C /* ReminderView.swift */; };
 		FFA93162284A664800C8D73C /* AddReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA93161284A664800C8D73C /* AddReminderViewModel.swift */; };
 		FFA93164284A829B00C8D73C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA93163284A829B00C8D73C /* NotificationManager.swift */; };
 		FFC52898282FB2A50013D8B6 /* BottomContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC52897282FB2A40013D8B6 /* BottomContentView.swift */; };
@@ -130,8 +131,9 @@
 		FFA0E712284E5722008B3ED9 /* Content View 3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Content View 3.swift"; sourceTree = "<group>"; };
 		FFA0E714284FB684008B3ED9 /* Utility Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utility Extensions.swift"; sourceTree = "<group>"; };
 		FFA0E71828533191008B3ED9 /* EditNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNumbers.swift; sourceTree = "<group>"; };
+		FFA0E71A28535329008B3ED9 /* EditReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReminderView.swift; sourceTree = "<group>"; };
 		FFA9315C284A5DB900C8D73C /* ReminderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderModel.swift; sourceTree = "<group>"; };
-		FFA9315F284A62B400C8D73C /* RemindersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersList.swift; sourceTree = "<group>"; };
+		FFA9315F284A62B400C8D73C /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
 		FFA93161284A664800C8D73C /* AddReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderViewModel.swift; sourceTree = "<group>"; };
 		FFA93163284A829B00C8D73C /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -341,7 +343,8 @@
 		FFA9315E284A62A000C8D73C /* Reminders */ = {
 			isa = PBXGroup;
 			children = (
-				FFA9315F284A62B400C8D73C /* RemindersList.swift */,
+				FFA0E71A28535329008B3ED9 /* EditReminderView.swift */,
+				FFA9315F284A62B400C8D73C /* ReminderView.swift */,
 			);
 			path = Reminders;
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFA0E71B28535329008B3ED9 /* EditReminderView.swift in Sources */,
 				FFA93162284A664800C8D73C /* AddReminderViewModel.swift in Sources */,
 				FF3616CF28290F21002ADA33 /* ReminderListView.swift in Sources */,
 				FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */,
@@ -467,7 +471,7 @@
 				0327B676284775C50068D73A /* StatusBarAppearance.swift in Sources */,
 				415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */,
 				FF1AA1A72823FC4800AB61A2 /* extensionColor.swift in Sources */,
-				FFA93160284A62B400C8D73C /* RemindersList.swift in Sources */,
+				FFA93160284A62B400C8D73C /* ReminderView.swift in Sources */,
 				FFC67B45283A2A920078B283 /* EditVehicleView.swift in Sources */,
 				FF974B86283F4DE400C33576 /* VehicleModel.swift in Sources */,
 				FF3616CB28290416002ADA33 /* AddExpenseViewModel.swift in Sources */,

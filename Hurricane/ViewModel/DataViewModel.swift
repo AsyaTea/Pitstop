@@ -212,7 +212,7 @@ class DataViewModel : ObservableObject {
     
     
     
-    //MARK: EXPENSE CRUD
+    //MARK: - EXPENSE CRUD
 
     func getExpenseByID(expenseID: NSManagedObjectID) throws -> ExpenseViewModel {
         guard let expense = manager.getExpenseById(id: expenseID) else {
@@ -339,7 +339,6 @@ class DataViewModel : ObservableObject {
     
     //MARK: - REMINDERS CRUD
     
-    //MARK: - CREATE
     func addReminder(reminder : ReminderState) {
         let newReminder = Reminder(context: manager.context)
         newReminder.title = reminder.title
@@ -355,7 +354,6 @@ class DataViewModel : ObservableObject {
         save()
     }
     
-    //MARK: - READ
     func getRemindersCoreData(filter : NSPredicate?, storage: @escaping([ReminderViewModel]) -> ())  {
         let request = NSFetchRequest<Reminder>(entityName: "Reminder")
         let reminder : [Reminder]
@@ -375,6 +373,17 @@ class DataViewModel : ObservableObject {
         }
     }
     
+    func deleteReminder(reminderS : ReminderState) {
+        guard let reminderID = reminderS.reminderID else {
+            return print("NumberID not found during update")
+        }
+        
+        let reminder = manager.getReminderById(id: reminderID)
+        if let reminder = reminder {
+            manager.deleteReminder(reminder)
+        }
+        save()
+    }
     
     func removeExpiredReminders() {
         let filterExpiredReminders = NSPredicate(format: "date <= %@",NSDate())
@@ -386,7 +395,7 @@ class DataViewModel : ObservableObject {
     }
     
     
-    //MARK: IMPORTANT NUMBERS CRUD
+    //MARK: - IMPORTANT NUMBERS CRUD
     
     func getNumbersCoreData(filter : NSPredicate?, storage: @escaping([NumberViewModel]) -> ())  {
         let request = NSFetchRequest<Number>(entityName: "Number")

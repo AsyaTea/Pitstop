@@ -10,9 +10,6 @@ import NotificationCenter
 
 class NotificationManager : ObservableObject {
     
-    @Published var notificationDate: Date = Date()
-    @Published var secondsElapsed: Int = 0
-    
     func requestAuthNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
@@ -26,24 +23,35 @@ class NotificationManager : ObservableObject {
     func createNotification(reminderS: ReminderState) {
         let category = Category.init(rawValue: Int(reminderS.category ?? 0))
         let content = UNMutableNotificationContent()
+        let id = reminderS.reminderID?.uriRepresentation().absoluteString ?? ""
         content.title = reminderS.title
         content.subtitle = "You have a new \(category?.label ?? "") reminder"
         content.sound = UNNotificationSound.default
         
-//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-       
         let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.day, .month, .year, .hour, .minute],from: reminderS.date), repeats: false)
-                
-        //MARK: TODO - modify the identifier
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: id , content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {
-              print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
-                 }
-            } 
+                print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
+            }
+        }
     }
-
+    
+    func removeNotification(reminderS: ReminderState){
+        let id = reminderS.reminderID?.uriRepresentation().absoluteString ?? ""
+        
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (notificationRequests) in
+            var identifiers: [String] = []
+            for notification:UNNotificationRequest in notificationRequests {
+                if notification.identifier == id {
+                    identifiers.append(notification.identifier)
+                }
+            }
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
+            print("Notification Unscheduled")
+        }
+    }
 }
 
 
