@@ -45,7 +45,6 @@ struct EditNumbers: View {
                 
                 TextField("Number", text: $numberToEdit.telephone)
                     .disableAutocorrection(true)
-                    .keyboardType(.numberPad)
                     .focused($focusedField,equals: .number)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
                     .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
@@ -73,11 +72,10 @@ struct EditNumbers: View {
                         title: Text("Are you sure you want to delete this contact?"),
                         message: Text("There is no undo"),
                         primaryButton: .destructive(Text("Delete")) {
-//                            dataVM.deleteExpenseState(expenseS: utilityVM.expenseToEdit)
-//                            dataVM.getExpensesCoreData(filter: nil, storage: { storage in
-//                                dataVM.expenseList = storage
-//                                dataVM.expenseFilteredList = storage
-//                            })
+                            dataVM.deleteNumber(numberS: numberToEdit)
+                            dataVM.getNumbersCoreData(filter: nil, storage: { storage in
+                                dataVM.numberList = storage
+                            })
 
                             self.presentationMode.wrappedValue.dismiss()
                         },
@@ -86,6 +84,7 @@ struct EditNumbers: View {
                 }
                 
             }
+            .ignoresSafeArea(.keyboard)
             .padding(.top,40)
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
@@ -94,7 +93,11 @@ struct EditNumbers: View {
                     Button(action: {
                         presentationMode.wrappedValue.dismiss()
                     }, label: {
-                        Image("arrowLeft")
+                        HStack{
+                            Image("arrowLeft")
+                            Text("Back")
+                                .font(Typography.headerM)
+                        }
                     })
                     .accentColor(Palette.greyHard),
                 trailing:

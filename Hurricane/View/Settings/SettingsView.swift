@@ -39,6 +39,7 @@ struct SettingsView: View {
                         //                                                .onDelete(perform: dataVM.deleteVehicle)
                         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
+                        //MARK: - ADD NEW VEHICLE
                         Button(action: {
                             onboardingVM.addNewVehicle = true
                             onboardingVM.destination = .page2
@@ -53,7 +54,7 @@ struct SettingsView: View {
                                         .frame(width: 16, height: 16)
                                         .foregroundColor(Palette.black)
                                 }
-                                Text("Add car")
+                                Text("Add vehicle")
                                     .font(Typography.headerM)
                                     .foregroundColor(Palette.black)
                             }
