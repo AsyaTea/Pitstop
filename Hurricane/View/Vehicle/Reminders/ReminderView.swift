@@ -14,6 +14,7 @@ struct ReminderView: View {
     @Environment(\.presentationMode) private var presentationMode
     
     @State private var showEditReminder = false
+    @State private var showExpiredReminder = false
     
     let filterExpiredReminders = NSPredicate(format: "date <= %@",NSDate())
     let filterFutureReminders = NSPredicate(format: "date > %@",NSDate())
@@ -92,14 +93,21 @@ struct ReminderView: View {
                         
                         //MARK: - EXPIRED REMINDER
                         ForEach(dataVM.expiredReminders.reversed(),id:\.self){reminder in
-                            ReminderComponent(
-                                reminder: reminder,
-                                category: Category.init(rawValue: Int(reminder.category )) ?? .other,
-                                expired: true)
+                            Button(action: {
+                                showExpiredReminder.toggle()
+                                utilityVM.reminderToEdit = ReminderState.fromReminderViewModel(vm: reminder)
+                            }, label: {
+                                ReminderComponent(
+                                    reminder: reminder,
+                                    category: Category.init(rawValue: Int(reminder.category )) ?? .other,
+                                    expired: true)
+                            })
+                           
                         }
                         
                         //MARK: - NAVIGATE TO EDIT
                         NavigationLink(destination: EditReminderView(dataVM: dataVM, utilityVM: utilityVM),isActive: $showEditReminder){}
+                        NavigationLink(destination: ExpiredReminder(dataVM: dataVM, utilityVM: utilityVM),isActive: $showExpiredReminder){}
                     }
                 }
             }

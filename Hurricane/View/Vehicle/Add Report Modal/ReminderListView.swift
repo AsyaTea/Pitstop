@@ -71,15 +71,15 @@ struct ReminderListView: View {
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             }
             //MARK: REPEAT
-            Picker(selection: $addExpVM.selectedRepeat, content: {
-                ForEach(addExpVM.repeatTypes, id: \.self) {
-                    Text($0)
-                        .font(Typography.headerM)
-                }
-            }, label:{
-                ListCategoryComponent(title: "Repeat", iconName: "Repeat", color: Palette.colorViolet)
-            })
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+//            Picker(selection: $addExpVM.selectedRepeat, content: {
+//                ForEach(addExpVM.repeatTypes, id: \.self) {
+//                    Text($0)
+//                        .font(Typography.headerM)
+//                }
+//            }, label:{
+//                ListCategoryComponent(title: "Repeat", iconName: "Repeat", color: Palette.colorViolet)
+//            })
+//            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             //MARK: NOTE
             HStack{

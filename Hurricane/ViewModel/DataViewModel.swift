@@ -501,10 +501,9 @@ class DataViewModel : ObservableObject {
     }
     
     func getMonths(expenses: [ExpenseViewModel]) {
-        
         var date = ""
         for expenseList in expenseList {
-           date = expenseList.date.toString(dateFormat: "MMMM")
+            date = expenseList.date.toString(dateFormat: "MMMM")
             monthsAmount.insert(date)
         }
     }
