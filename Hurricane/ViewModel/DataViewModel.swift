@@ -373,6 +373,29 @@ class DataViewModel : ObservableObject {
         }
     }
     
+    func updateReminder(_ rs : ReminderState) throws {
+        guard let reminderID = rs.reminderID else {
+            return print("Reminder ID not found during update")
+        }
+        
+        guard let reminder = manager.getReminderById(id: reminderID) else {
+            return print("Reminder not found during update")
+        }
+        
+        reminder.note = rs.note
+        reminder.date = rs.date
+        reminder.title = rs.title
+        reminder.category = rs.category ?? 1
+     
+        for (index,value) in reminderList.enumerated() {
+            if(value.reminderID == rs.reminderID){
+                reminderList.remove(at: index)
+            }
+        }
+        save()
+        print("Reminder update done")
+    }
+    
     func deleteReminder(reminderS : ReminderState) {
         guard let reminderID = reminderS.reminderID else {
             return print("NumberID not found during update")

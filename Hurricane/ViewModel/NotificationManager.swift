@@ -10,6 +10,8 @@ import NotificationCenter
 
 class NotificationManager : ObservableObject {
     
+    @Published var id : String = ""
+    
     func requestAuthNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
@@ -23,7 +25,8 @@ class NotificationManager : ObservableObject {
     func createNotification(reminderS: ReminderState) {
         let category = Category.init(rawValue: Int(reminderS.category ?? 0))
         let content = UNMutableNotificationContent()
-        let id = reminderS.reminderID?.uriRepresentation().absoluteString ?? ""
+        self.id = reminderS.reminderID?.uriRepresentation().absoluteString ?? UUID().uuidString
+//        print(id)
         content.title = reminderS.title
         content.subtitle = "You have a new \(category?.label ?? "") reminder"
         content.sound = UNNotificationSound.default
@@ -39,12 +42,12 @@ class NotificationManager : ObservableObject {
     }
     
     func removeNotification(reminderS: ReminderState){
-        let id = reminderS.reminderID?.uriRepresentation().absoluteString ?? ""
+        
         
         UNUserNotificationCenter.current().getPendingNotificationRequests { (notificationRequests) in
             var identifiers: [String] = []
             for notification:UNNotificationRequest in notificationRequests {
-                if notification.identifier == id {
+                if notification.identifier == self.id {
                     identifiers.append(notification.identifier)
                 }
             }

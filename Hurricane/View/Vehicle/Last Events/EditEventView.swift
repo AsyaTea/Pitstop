@@ -136,7 +136,7 @@ struct FuelEventListFields: View {
     var body: some View {
         List{
             
-            //MARK: CATEGORY FUEL
+            //MARK: AMOUNT
             HStack{
                 ListCategoryComponent(title: "Amount", iconName: "other", color: Palette.colorViolet)
                 Spacer()

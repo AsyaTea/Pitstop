@@ -11,7 +11,8 @@ struct EditReminderView: View {
     
     @Environment(\.presentationMode) private var presentationMode
     @ObservedObject var dataVM: DataViewModel
-    @ObservedObject var utilityVM: UtilityViewModel
+    @StateObject var utilityVM: UtilityViewModel
+    
     @StateObject var notificationVM = NotificationManager()
     
     @State private var showingAlert = false
@@ -37,13 +38,14 @@ struct EditReminderView: View {
                 .accentColor(Palette.greyHard),
             trailing:
                 Button(action: {
-                    //                    do {
-                    //                        try dataVM.updateExpense(utilityVM.expenseToEdit)
-                    //                    }
-                    //                    catch{
-                    //                        print(error)
-                    //                    }
-                    //                    dataVM.getTotalExpense(expenses: dataVM.expenseList)
+                    do {
+                        try dataVM.updateReminder(utilityVM.reminderToEdit)
+                    }
+                    catch{
+                        print(error)
+                    }
+                    notificationVM.removeNotification(reminderS: utilityVM.reminderToEdit)
+                    notificationVM.createNotification(reminderS: utilityVM.reminderToEdit)
                     self.presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text("Save")
@@ -88,8 +90,10 @@ struct EditReminderView: View {
 
 struct ReminderList: View {
     
-    @ObservedObject var utilityVM : UtilityViewModel
-    @FocusState var focusedField : FocusFieldReminder?
+    @StateObject var utilityVM : UtilityViewModel
+    //    @ObservedObject var reminderVM: AddReminderViewModel
+    @FocusState var focusedField: FocusFieldReminder?
+    @State private var selectedItem: Category = .other
     
     var body: some View {
         List{
@@ -107,6 +111,31 @@ struct ReminderList: View {
             .onTapGesture {
                 focusedField = .title
             }
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+            
+            //MARK: - CATEGORY
+            HStack{
+                ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
+                NavigationLink(destination:
+                                EditReminderCategoryPicker(
+                                    utilityVM: utilityVM,
+                                    selectedItem: $selectedItem)
+                )
+                {
+                    Spacer()
+                    Text(Category.init(rawValue:Int(utilityVM.reminderToEdit.category ?? 0))?.label ?? "")
+                        .font(Typography.headerM)
+                        .foregroundColor(Palette.greyMiddle)
+                }
+            }
+            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+            
+            
+            //MARK: - DATE
+            DatePicker(selection: $utilityVM.reminderToEdit.date, in: Date()...) {
+                ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
+            }
+            .datePickerStyle(.compact)
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             //MARK: - NOTE
@@ -131,4 +160,39 @@ struct ReminderList: View {
 enum FocusFieldReminder: Hashable {
     case title
     case note
+}
+
+
+struct EditReminderCategoryPicker: View {
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @StateObject var utilityVM: UtilityViewModel
+    @Binding var selectedItem: Category
+    
+    var body: some View {
+        List {
+            ForEach(Category.allCases,id:\.self){category in
+                Button(action: {
+                    withAnimation{
+                        if(selectedItem != category){
+                            selectedItem = category
+                            utilityVM.reminderToEdit.category = Int16(category.rawValue)
+                        }
+                    }
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    HStack {
+                        Text(category.label)
+                            .font(Typography.headerM)
+                            .foregroundColor(Palette.black)
+                        Spacer()
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.accentColor)
+                            .opacity(selectedItem == category ? 1.0 : 0.0)
+                    }
+                })
+            }
+        }.listStyle(.insetGrouped)
+    }
 }
