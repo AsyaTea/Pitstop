@@ -32,7 +32,7 @@ struct DocumentViewModel : Hashable {
     }
 }
 
-extension NumberState {
+extension DocumentState {
     
     static func fromDocumentViewModel(vm:DocumentViewModel ) -> DocumentState{
         var documentS = DocumentState()

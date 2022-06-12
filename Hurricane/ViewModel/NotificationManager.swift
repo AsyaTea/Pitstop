@@ -26,9 +26,9 @@ class NotificationManager : ObservableObject {
         let category = Category.init(rawValue: Int(reminderS.category ?? 0))
         let content = UNMutableNotificationContent()
         self.id = reminderS.reminderID?.uriRepresentation().absoluteString ?? UUID().uuidString
-//        print(id)
         content.title = reminderS.title
-        content.subtitle = "You have a new \(category?.label ?? "") reminder"
+        content.body = "You have a new \(category?.label.lowercased() ?? "") reminder"
+        
         content.sound = UNNotificationSound.default
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.day, .month, .year, .hour, .minute],from: reminderS.date), repeats: false)
@@ -42,8 +42,6 @@ class NotificationManager : ObservableObject {
     }
     
     func removeNotification(reminderS: ReminderState){
-        
-        
         UNUserNotificationCenter.current().getPendingNotificationRequests { (notificationRequests) in
             var identifiers: [String] = []
             for notification:UNNotificationRequest in notificationRequests {
@@ -68,9 +66,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        // Here we actually handle the notification
         print("Notification received with identifier \(notification.request.identifier)")
-        // So we call the completionHandler telling that the notification should display a banner and play the notification sound - this will happen while the app is in foreground
         completionHandler([.banner, .sound])
     }
 }

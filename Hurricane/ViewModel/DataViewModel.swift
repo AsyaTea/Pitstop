@@ -48,6 +48,10 @@ class DataViewModel : ObservableObject {
             self.numberList = storage
             
         })
+        
+        getDocumentsCoreData(filter: nil, storage: { storage in
+            self.documentsList = storage
+        })
 //        getCurrentVehicle()
         
     }
@@ -131,15 +135,12 @@ class DataViewModel : ObservableObject {
         
     }
     
-    
-    //In case we need it
     func removeAllVehicles() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Vehicle")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         manager.removeAllItems(deleteRequest: deleteRequest)
         save()
         self.vehicleList.removeAll()
-        
     }
     
     
@@ -492,6 +493,25 @@ class DataViewModel : ObservableObject {
     
     //MARK: - DOCUMENTS CRUD
     
+    func getDocumentsCoreData(filter : NSPredicate?, storage: @escaping([DocumentViewModel]) -> ())  {
+        let request = NSFetchRequest<Document>(entityName: "Document")
+        let document : [Document]
+        
+        let sort = NSSortDescriptor(keyPath: \Document.objectID, ascending: true)
+        request.sortDescriptors = [sort]
+        request.predicate = filter
+        
+        do {
+            document =  try manager.context.fetch(request)
+            DispatchQueue.main.async{
+                storage(document.map(DocumentViewModel.init))
+            }
+            
+        }catch let error {
+            print("🔢 Error fetching documents: \(error.localizedDescription)")
+        }
+    }
+    
     func addDocument(documentS : DocumentState) {
         let newDocument = Document(context: manager.context)
         newDocument.title = documentS.title
@@ -502,6 +522,13 @@ class DataViewModel : ObservableObject {
         save()
     }
     
+    func removeAllDocuments() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Document")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        manager.removeAllItems(deleteRequest: deleteRequest)
+        save()
+        self.documentsList.removeAll()
+    }
     
     //MARK: - OTHER FUNCS
     func getTotalExpense(expenses: [ExpenseViewModel]) {

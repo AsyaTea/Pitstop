@@ -56,7 +56,6 @@ struct BottomContentView: View {
                             date: expense.date, cost: String(expense.price)
                         )
                     })
-                    
                 }
             }
             
@@ -70,11 +69,14 @@ struct BottomContentView: View {
                 VStack {
                     Spacer(minLength: 12)
                     HStack{
-                        Button(action: {
-                            showPDF.toggle()
-                        }, label: {
-                            documentComponent(title: "Don't click me")
-                        })
+                        ForEach(dataVM.documentsList,id:\.self) { document in
+                            Button(action: {
+                                showPDF.toggle()
+                                pdfVM.documentState = DocumentState.fromDocumentViewModel(vm: document)
+                            }, label: {
+                                documentComponent(title: document.title)
+                            })
+                        }
                         Button(action: {
                             presentImporter.toggle()
                         }, label: {
@@ -87,8 +89,12 @@ struct BottomContentView: View {
                 .fileImporter(isPresented: $presentImporter, allowedContentTypes: [.pdf]) { result in
                     switch result {
                     case .success(let url):
-                        pdfVM.documentState.url = url
-                        pdfVM.documentState.title = url.lastPathComponent.replacingOccurrences(of: ".pdf", with: "")
+                        if url.startAccessingSecurityScopedResource() {
+                            pdfVM.documentState.url = url
+                            pdfVM.documentState.title = url.lastPathComponent.replacingOccurrences(of: ".pdf", with: "")
+                            dataVM.addDocument(documentS: pdfVM.documentState)
+                        }
+                        url.stopAccessingSecurityScopedResource()
                     case .failure(let error):
                         print(error)
                     }
@@ -162,20 +168,15 @@ struct BottomContentView: View {
             ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)
                 .interactiveDismissDisabled(homeVM.interactiveDismiss)
         }
-        .fullScreenCover(isPresented: $viewAllDocuments){WorkInProgress()}
+        .fullScreenCover(isPresented: $viewAllDocuments){WorkInProgress(dataVM: dataVM)}
         .fullScreenCover(isPresented: $showPDF){DocumentView(pdfVM: pdfVM)}
     }
     
     
     @ViewBuilder
     func documentComponent(title: String) -> some View {
-        ZStack{
-            Rectangle()
-                .cornerRadius(8)
-                .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
-                .foregroundColor(Palette.white)
-                .shadowGrey()
-            VStack(alignment: .leading, spacing: 40){
+     
+            VStack(alignment: .leading, spacing: 0){
                 ZStack{
                     Circle()
                         .frame(width: 24, height: 24)
@@ -185,13 +186,24 @@ struct BottomContentView: View {
                         .frame(width: 14, height: 14)
                         .foregroundColor(Palette.black)
                 }
+                Spacer()
                 Text(title)
+                    .frame(width:  UIScreen.main.bounds.width * 0.33,height: UIScreen.main.bounds.height * 0.03,alignment: .leading)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: false)
                     .foregroundColor(Palette.black)
                     .font(Typography.ControlS)
             }
-            .padding(.leading,-34)
-            .padding(.top,-2)
-        }
+            .padding()
+            .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
+            .background{
+                Rectangle()
+                    .cornerRadius(8)
+                    .foregroundColor(Palette.white)
+                .shadowGrey()
+            }
+           
+      
     }
     
     @ViewBuilder

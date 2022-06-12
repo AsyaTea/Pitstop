@@ -12,6 +12,7 @@ struct DocumentView: View {
     
     @ObservedObject var pdfVM: PdfViewModel
 
+    @State var url = URL(fileURLWithPath: "")
     @Environment(\.presentationMode) private var presentationMode
     var body: some View {
         
@@ -39,8 +40,16 @@ struct DocumentView: View {
             }
         }
         .onAppear{
-            // Needed to show the pdf
-            print(pdfVM.documentState.url?.startAccessingSecurityScopedResource() as Any)
+            // Needed to read the pdf
+            if  ((pdfVM.documentState.url?.startAccessingSecurityScopedResource()) != nil){
+                guard let url = pdfVM.documentState.url else {return}
+                self.url = url
+            }
+            print(pdfVM.documentState.url?.startAccessingSecurityScopedResource())
+           
+            pdfVM.documentState.url?.stopAccessingSecurityScopedResource()
+            
+            
         }
         
     }
