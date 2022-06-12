@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PDFKit
 
 struct BottomContentView: View {
     
@@ -13,6 +14,7 @@ struct BottomContentView: View {
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     @ObservedObject var categoryVM : CategoryViewModel
+    @StateObject var pdfVM = PdfViewModel()
     
     @State private var viewAllNumbers = false
     @State private var viewAllDocuments = false
@@ -20,6 +22,9 @@ struct BottomContentView: View {
     @State private var showEventEdit = false
     
     @State private var showingOptions = false
+    
+    @State private var presentImporter = false
+    @State private var showPDF = false
     
     var body: some View {
         VStack(spacing: 0){
@@ -30,7 +35,6 @@ struct BottomContentView: View {
                 .padding(.top,10)
                 .padding(.bottom,-10)
                 .sheet(isPresented: $viewAllEvents){LastEventsListView(dataVM: dataVM, categoryVM: categoryVM,utilityVM: utilityVM)}
-            //            NavigationLink("NAVIGA",destination: LastEventsListView(dataVM: dataVM,utilityVM: utilityVM),isActive: $viewAllEvents)
             
             if(dataVM.expenseList.isEmpty){
                 HStack{
@@ -67,18 +71,27 @@ struct BottomContentView: View {
                     Spacer(minLength: 12)
                     HStack{
                         Button(action: {
-                            
+                            showPDF.toggle()
                         }, label: {
-                            documentComponent(title: "Driving license")
+                            documentComponent(title: "Don't click me")
                         })
                         Button(action: {
-                            
+                            presentImporter.toggle()
                         }, label: {
                             addComponent(title: "Add document")
                         })
                         
                     }
                     Spacer(minLength: 16)
+                }
+                .fileImporter(isPresented: $presentImporter, allowedContentTypes: [.pdf]) { result in
+                    switch result {
+                    case .success(let url):
+                        pdfVM.documentState.url = url
+                        pdfVM.documentState.title = url.lastPathComponent.replacingOccurrences(of: ".pdf", with: "")
+                    case .failure(let error):
+                        print(error)
+                    }
                 }
                 
             }
@@ -150,7 +163,7 @@ struct BottomContentView: View {
                 .interactiveDismissDisabled(homeVM.interactiveDismiss)
         }
         .fullScreenCover(isPresented: $viewAllDocuments){WorkInProgress()}
-        
+        .fullScreenCover(isPresented: $showPDF){DocumentView(pdfVM: pdfVM)}
     }
     
     

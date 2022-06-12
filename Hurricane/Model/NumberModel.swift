@@ -39,5 +39,4 @@ extension NumberState {
         numberS.numberID = vm.numberID
         return numberS
     }
-        
 }

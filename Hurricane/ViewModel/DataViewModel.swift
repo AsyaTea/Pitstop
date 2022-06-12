@@ -37,6 +37,8 @@ class DataViewModel : ObservableObject {
     
     @Published var expenseFilteredList : [ExpenseViewModel] = []
     
+    @Published var documentsList: [DocumentViewModel] = []
+    
     init() {
         getVehiclesCoreData(filter:nil, storage: {storage in
             self.vehicleList = storage
@@ -488,7 +490,20 @@ class DataViewModel : ObservableObject {
     }
     
     
-    //MARK: Total Cost functions
+    //MARK: - DOCUMENTS CRUD
+    
+    func addDocument(documentS : DocumentState) {
+        let newDocument = Document(context: manager.context)
+        newDocument.title = documentS.title
+        newDocument.url = documentS.url
+        
+        print("Document: \(newDocument)")
+        self.documentsList.append(DocumentViewModel(document: newDocument))
+        save()
+    }
+    
+    
+    //MARK: - OTHER FUNCS
     func getTotalExpense(expenses: [ExpenseViewModel]) {
 //        print("expense list: \(expenses)")
         self.totalVehicleCost = 0.0
