@@ -28,7 +28,7 @@ class DataViewModel : ObservableObject {
     
     //Filter
     @Published var filter : NSPredicate?
-//    @Published var filterCurrentExpense : NSPredicate?
+    //    @Published var filterCurrentExpense : NSPredicate?
     
     @Published var totalVehicleCost : Float = 0.0
     @Published var totalExpense : Float = 0.0
@@ -52,7 +52,7 @@ class DataViewModel : ObservableObject {
         getDocumentsCoreData(filter: nil, storage: { storage in
             self.documentsList = storage
         })
-//        getCurrentVehicle()
+        //        getCurrentVehicle()
         
     }
     
@@ -117,7 +117,7 @@ class DataViewModel : ObservableObject {
             print("🚓 Error fetching current vehicle: \(error.localizedDescription)")
         }
     }
-
+    
     
     func addVehicle(vehicle : VehicleState) {
         let newVehicle = Vehicle(context: manager.context)
@@ -216,7 +216,7 @@ class DataViewModel : ObservableObject {
     
     
     //MARK: - EXPENSE CRUD
-
+    
     func getExpenseByID(expenseID: NSManagedObjectID) throws -> ExpenseViewModel {
         guard let expense = manager.getExpenseById(id: expenseID) else {
             throw VehicleError.VehicleNotFound // DA FIXARE
@@ -280,27 +280,27 @@ class DataViewModel : ObservableObject {
     }
     
     //MARK: EXPENSE DELETE
-//    func removeExpense(indexSet: IndexSet) {
-//        guard let index = indexSet.first else { return }
-//        let entity = expenses[index]
-//        expense
-//    }
+    //    func removeExpense(indexSet: IndexSet) {
+    //        guard let index = indexSet.first else { return }
+    //        let entity = expenses[index]
+    //        expense
+    //    }
     
-//    func deleteExpense(at indexSet: IndexSet){
-//        indexSet.forEach{ index in
-//            let expense = expenseList[index]
-//            expenseList.remove(at: index)
-//            deleteExpenseCoreData(expense: expense)
-//        }
-//    }
+    //    func deleteExpense(at indexSet: IndexSet){
+    //        indexSet.forEach{ index in
+    //            let expense = expenseList[index]
+    //            expenseList.remove(at: index)
+    //            deleteExpenseCoreData(expense: expense)
+    //        }
+    //    }
     
-//    func deleteExpenseCoreData(expense : ExpenseViewModel) {
-//        let expense = manager.getExpenseById(id: expense.expenseID)
-//        if let expense = expense {
-//            manager.deleteExpense(expense)
-//        }
-//        save()
-//    }
+    //    func deleteExpenseCoreData(expense : ExpenseViewModel) {
+    //        let expense = manager.getExpenseById(id: expense.expenseID)
+    //        if let expense = expense {
+    //            manager.deleteExpense(expense)
+    //        }
+    //        save()
+    //    }
     
     func deleteExpense(expenseS : ExpenseState) {
         guard let expenseID = expenseS.expenseID else {
@@ -389,7 +389,7 @@ class DataViewModel : ObservableObject {
         reminder.date = rs.date
         reminder.title = rs.title
         reminder.category = rs.category ?? 1
-     
+        
         for (index,value) in reminderList.enumerated() {
             if(value.reminderID == rs.reminderID){
                 reminderList.remove(at: index)
@@ -486,7 +486,7 @@ class DataViewModel : ObservableObject {
         if let number = number {
             manager.deleteNumber(number)
         }
-       
+        
         save()
     }
     
@@ -512,10 +512,29 @@ class DataViewModel : ObservableObject {
         }
     }
     
-    func addDocument(documentS : DocumentState) {
+    func addDocument(documentS : DocumentState,url: URL) {
         let newDocument = Document(context: manager.context)
         newDocument.title = documentS.title
-        newDocument.url = documentS.url
+        //        newDocument.url = documentS.url
+        
+        do {
+            // Start accessing a security-scoped resource.
+            guard (url.startAccessingSecurityScopedResource()) else {
+                // Handle the failure here.
+                return
+            }
+            
+            defer { url.stopAccessingSecurityScopedResource() }
+            
+            let bookmarkData = try url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
+            
+            newDocument.bookmark = bookmarkData
+            
+        }
+        catch {
+            // Handle the error here.
+            print("Error creating the bookmark")
+        }
         
         print("Document: \(newDocument)")
         self.documentsList.append(DocumentViewModel(document: newDocument))
@@ -532,14 +551,14 @@ class DataViewModel : ObservableObject {
     
     //MARK: - OTHER FUNCS
     func getTotalExpense(expenses: [ExpenseViewModel]) {
-//        print("expense list: \(expenses)")
+        //        print("expense list: \(expenses)")
         self.totalVehicleCost = 0.0
         for expense in expenses {
             totalVehicleCost += expense.price
         }
         print("sum cost : \(totalVehicleCost)")
         self.totalExpense = totalVehicleCost
-
+        
     }
     
     func getMonths(expenses: [ExpenseViewModel]) {
@@ -553,12 +572,12 @@ class DataViewModel : ObservableObject {
     func getMonthsExpense(expenses: [ExpenseViewModel],month:String) ->Float {
         
         var totalExpense: Float = 0.0
-            for expense in expenses {
-                if ( expense.date.toString(dateFormat: "MMMM") == month){
-                    totalExpense += expense.price
-                }
+        for expense in expenses {
+            if ( expense.date.toString(dateFormat: "MMMM") == month){
+                totalExpense += expense.price
             }
-       return totalExpense
+        }
+        return totalExpense
     }
     
     func addNewExpensePriceToTotal(expense: ExpenseState) {
@@ -577,5 +596,5 @@ extension Date
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: self)
     }
-
+    
 }
