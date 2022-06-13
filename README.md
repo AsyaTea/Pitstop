@@ -28,3 +28,4 @@ The design pattern we adopted is **MVVM** with different view models for handlin
 
 
 ## Testflight or Appstore
+Try Pitstop on [Testflight](https://testflight.apple.com/join/wOTnWIPW)!
