@@ -34,47 +34,33 @@ struct AnalyticsFuelView: View {
                         }
                         .padding(-3)
                         HStack{
-                            VStack(alignment: .trailing){
-                                Text("10")
-                                Spacer()
-                                Text("8")
-                                Spacer()
-                                VStack{
-                                    Text("6")
-                                    Spacer()
-                                }
-                                Text("4")
-                                Spacer()
-                                Text("2")
-                                Spacer()
-                                Text("0")
-                            }
-                            .font(.subheadline)
-                            .foregroundColor(Palette.greyMiddle)
-                            FuelGraphView(data: sampleData)
+                            FuelGraphView(categoryVM: categoryVM, data: categoryVM.fuelGraphData)
                                 .frame(height: 200)
                                 .padding(.top, 25)
-                                .padding(-15)
+                                .padding(1)
                         }
                         .padding(-15)
-                        
-                        HStack(alignment: .bottom) {
-                            Text("Dec")
-                            Spacer()
-                            Text("Jan")
-                            Spacer()
-                            Text("Feb")
-                            HStack{                                
-                                Text("Mar")
-                                Text("Apr")
-                            }
-                            Spacer()
-                            Text("May")
-                            Spacer()
-                            Text("Jun")
-                        }
-                        .font(.subheadline)
-                        .foregroundColor(Palette.greyMiddle)
+                     
+//                        HStack(alignment: .bottom) {
+//                            
+//                    
+//                                Text("Jan")
+//                      
+//
+//                            Spacer()
+//                            Text("Mar")
+//                        
+//                                Spacer()
+//                                Text("May")
+//                                Spacer()
+//                                Text("Jun")
+//                     
+//                            
+//                    }
+//                        .padding(-15)
+//                    .font(.subheadline)
+//                    .foregroundColor(Palette.greyMiddle)
+                Spacer()
                         
                     }
                     

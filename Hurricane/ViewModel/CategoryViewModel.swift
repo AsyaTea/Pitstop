@@ -60,10 +60,13 @@ class CategoryViewModel: ObservableObject {
     @Published var taxesCost: Float = 0
     @Published var otherCost: Float = 0
     
+   
     var fuelPercentage : Float = 0
     var taxesPercentage: Float = 0
     var maintainancePercentage : Float = 0
     var otherPercentage : Float = 0
+    
+    var fuelGraphData : [CGFloat] = []
     
     
     @Published var selectedTimeFrame = "Per month"
@@ -228,6 +231,7 @@ class CategoryViewModel: ObservableObject {
         if literArray.reduce(0, +) != 0 {
             self.avgPrice = Int(priceArray.reduce(0, +))/Int(literArray.reduce(0, +))
         }
+        
     }
     
     
@@ -292,6 +296,24 @@ class CategoryViewModel: ObservableObject {
         
     }
     
+    func getLitersData(expenses: [ExpenseViewModel]) {
+        let litersArray = expenses.map { expense -> Float in
+            return expense.liters
+        }
+        print("liters array: \(litersArray)")
+        let liters = litersArray.filter { liter in
+            liter > 0
+        }
+        print("liter are \(liters)")
+        
+        self.fuelGraphData = liters.map({ liter in
+            return CGFloat(liter)
+        })
+                
+    }
+    
+    
+    
     func assignCategories(expenseList: [ExpenseViewModel]) {
         
         self.fuelList = CategoryViewModel.getExpensesCategoryList(expensesList: self.expenseList, category: 8)
@@ -339,10 +361,11 @@ class CategoryViewModel: ObservableObject {
                 self.getFuelEfficiency(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
                 self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
                 self.getAveragePrice(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-                
+               
             }
             self.getTotalExpense(expenses: self.expenseList)
             self.totalCostPercentage(totalCost: self.totalExpense, expenseList: self.expenseList)
+            self.getLitersData(expenses: self.expenseList)
         })
     }
     

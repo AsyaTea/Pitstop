@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Graph: View {
     
-    
+    @ObservedObject var categoryVM : CategoryViewModel
     var body: some View {
         VStack {
                 //if tab is fuel
@@ -52,6 +52,7 @@ struct Graph: View {
 
 struct FuelGraphView: View {
     
+    @ObservedObject var categoryVM : CategoryViewModel
     @State var currentPlot = ""
     @State var offset: CGSize = .zero
     @State var showPlot = false
@@ -62,15 +63,13 @@ struct FuelGraphView: View {
         
         HStack {
             GeometryReader { proxy in
-                let newData = data.map { data in
-                    return data * 100
-                }
+                
                 let height = proxy.size.height
-                let width = (proxy.size.width) / CGFloat (newData.count - 1)
+                let width = (proxy.size.width) / CGFloat (data.count - 1)
                 
-                let maxPoint = (newData.max() ?? 0) + 100
+                let maxPoint = (data.max() ?? 0) 
                 
-                let points = newData.enumerated().compactMap { item -> CGPoint in
+                let points = data.enumerated().compactMap { item -> CGPoint in
                     
                     let progress = item.element / maxPoint
                     
@@ -172,23 +171,30 @@ struct FuelGraphView: View {
                     showPlot = false
                 }))
             }
-//            .overlay(
-//                VStack(alignment: .leading) {
+            .overlay(
+                VStack(alignment: .leading) {
 //                    var newData = data.map { data in
 //                        return data * 100
 //                    }
-//                    let  max = newData.max() ?? 0
-//
-//                    Text("L \(Int(max))")
-//                        .font(.caption.bold())
-//
-//                    Spacer()
-//
-//                    Text("L 0")
-//                        .font(.caption.bold())
-//                }
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//            )
+                    let  max = data.max() ?? 0
+
+                    Text("L \(Int(max))")
+                        .font(.subheadline)
+                        .foregroundColor(Palette.greyMiddle)
+
+                    Spacer()
+                    
+                    Text("\(Int(max / 2))")
+                        .font(.subheadline)
+                        .foregroundColor(Palette.greyMiddle)
+                    
+                    Spacer()
+                    Text("L 0")
+                        .font(.subheadline)
+                        .foregroundColor(Palette.greyMiddle)
+                }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            )
             .padding(.horizontal, 10)
         }
         
@@ -329,21 +335,21 @@ struct OdometerGraphView: View {
                     showPlot = false
                 }))
             }
-//            .overlay(
-//                VStack(alignment: .leading) {
-//
-//                    let  max = data.max() ?? 0
-//
-//                    Text("$ \(Int(max))")
-//                        .font(.caption.bold())
-//
-//                    Spacer()
-//
-//                    Text("$ 0")
-//                        .font(.caption.bold())
-//                }
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//            )
+            .overlay(
+                VStack(alignment: .leading) {
+
+                    let  max = data.max() ?? 0
+
+                    Text("$ \(Int(max))")
+                        .font(.caption.bold())
+
+                    Spacer()
+
+                    Text("$ 0")
+                        .font(.caption.bold())
+                }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            )
             .padding(.horizontal, 10)
         }
         
@@ -369,8 +375,8 @@ struct OdometerGraphView: View {
 
 struct GraphPractice_Previews: PreviewProvider {
     static var previews: some View {
-        Graph()
+        Graph(categoryVM: CategoryViewModel())
     }
 }
 
-let sampleData: [CGFloat] = [8.5, 9, 7, 8, 9.5, 10, 8.5, 9, 7, 8, 9.5, 10, 8.5, 9, 7, 8, 9.5, 10]
+let sampleData: [CGFloat] = [8.5, 7, 9.5, 5, 5.5, 8, 8.5, 7, 9.5, 5, 5.5, 8, 10]
