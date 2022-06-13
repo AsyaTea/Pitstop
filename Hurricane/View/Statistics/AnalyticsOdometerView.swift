@@ -20,7 +20,7 @@ struct AnalyticsOdometerView: View {
                             HStack {
                                 VStack(alignment: .leading){
                                     Spacer()
-                                    Text("2090 km")
+                                    Text("\(String(Int(dataVM.currentVehicle.first?.odometer ?? 0))) Km")
                                         .font(Typography.headerL)
                                         .padding(1)
                                     Text("Odometer")
@@ -33,36 +33,37 @@ struct AnalyticsOdometerView: View {
                             }
                             .padding(-3)
                             HStack{
-                                VStack(alignment: .trailing){
-                                    Text("10")
-                                    Text("9.5")
-                                    Text("9")
-                                    Text("8.5")
-                                    Text("8")
-                                    Text("7.5")
-                                }
-                               
-                                .font(.subheadline)
-                                .foregroundColor(Palette.greyMiddle)
-                                OdometerGraphView(data: sampleData)
+//                                VStack(alignment: .trailing){
+//                                    Text("10")
+//                                    Text("9.5")
+//                                    Text("9")
+//                                    Text("8.5")
+//                                    Text("8")
+//                                    Text("7.5")
+//                                }
+//                               
+//                                .font(.subheadline)
+//                                .foregroundColor(Palette.greyMiddle)
+                                OdometerGraphView(data: categoryVM.odometerGraphData)
                                     .frame(height: 200)
                                     .padding(.top, 25)
-                                    .padding(-10)
+                                    .padding(1)
                             }
                             .padding(-15)
                             
-                            HStack(alignment: .bottom) {
-                                Text("Dec")
-                                Text("Jan")
-                                Text("Feb")
-                                Text("Mar")
-                                Text("Apr")
-                                Text("May")
-                                Text("Jun")
-                            }
-                            .font(.subheadline)
-                            .foregroundColor(Palette.greyMiddle)
-                            
+//                            HStack(alignment: .bottom) {
+//                                Text("Dec")
+//                                Text("Jan")
+//                                Text("Feb")
+//                                Text("Mar")
+//                                Text("Apr")
+//                                Text("May")
+//                                Text("Jun")
+//                            }
+//                            .font(.subheadline)
+//                            .foregroundColor(Palette.greyMiddle)
+//
+                            Spacer()
                         }
                     }
                 Section {
@@ -77,8 +78,8 @@ struct AnalyticsOdometerView: View {
     }
 
 
-//struct AnalyticsOdometerView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AnalyticsOdometerView(categoryVM: CategoryViewModel(), dataVM: DataViewModel())
-//    }
-//}
+struct AnalyticsOdometerView_Previews: PreviewProvider {
+    static var previews: some View {
+        AnalyticsOdometerView(categoryVM: CategoryViewModel(), dataVM: DataViewModel(), utilityVM: UtilityViewModel())
+    }
+}

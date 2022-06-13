@@ -21,7 +21,8 @@ struct AnalyticsFuelView: View {
                         HStack {
                             VStack(alignment: .leading){
                                 Spacer()
-                                Text("8.71 L/100km")
+                                let formattedCost = String(format: "%.2f", categoryVM.fuelEff)
+                                Text("\(formattedCost) L/100 \(utilityVM.unit)")
                                     .font(Typography.headerL)
                                     .padding(1)
                                 Text("Efficiency")

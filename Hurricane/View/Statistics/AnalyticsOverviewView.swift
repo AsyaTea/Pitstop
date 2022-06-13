@@ -197,7 +197,8 @@ struct FuelListView : View {
             Text("Fuel")
                 .font(Typography.headerL)
             Spacer()
-            Text("\(String(categoryVM.fuelEff)) L/100 \(utilityVM.unit)")
+            let formattedCost = String(format: "%.2f", categoryVM.fuelEff)
+            Text("\(formattedCost) L/100 \(utilityVM.unit)")
                 .fontWeight(.semibold)
                 .font(Typography.headerM)
         }
