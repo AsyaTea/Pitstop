@@ -305,10 +305,14 @@ class CategoryViewModel: ObservableObject {
             liter > 0
         }
         print("liter are \(liters)")
-//        self.fuelGraphData = liters
         
-        
+        self.fuelGraphData = liters.map({ liter in
+            return CGFloat(liter)
+        })
+                
     }
+    
+    
     
     func assignCategories(expenseList: [ExpenseViewModel]) {
         
