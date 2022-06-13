@@ -82,11 +82,10 @@ struct EditEventView: View {
                     title: Text("Are you sure you want to delete this?"),
                     message: Text("There is no undo"),
                     primaryButton: .destructive(Text("Delete")) {
-                        dataVM.deleteExpenseState(expenseS: utilityVM.expenseToEdit)
+                        dataVM.deleteExpense(expenseS: utilityVM.expenseToEdit)
                         dataVM.getExpensesCoreData(filter: nil, storage: { storage in
                             dataVM.expenseList = storage
                             dataVM.expenseFilteredList = storage
-                            
                         })
 //                       categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                         
@@ -137,7 +136,7 @@ struct FuelEventListFields: View {
     var body: some View {
         List{
             
-            //MARK: CATEGORY FUEL
+            //MARK: AMOUNT
             HStack{
                 ListCategoryComponent(title: "Amount", iconName: "other", color: Palette.colorViolet)
                 Spacer()

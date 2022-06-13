@@ -10,8 +10,7 @@ import NotificationCenter
 
 class NotificationManager : ObservableObject {
     
-    @Published var notificationDate: Date = Date()
-    @Published var secondsElapsed: Int = 0
+    @Published var id : String = ""
     
     func requestAuthNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
@@ -26,24 +25,34 @@ class NotificationManager : ObservableObject {
     func createNotification(reminderS: ReminderState) {
         let category = Category.init(rawValue: Int(reminderS.category ?? 0))
         let content = UNMutableNotificationContent()
+        self.id = reminderS.reminderID?.uriRepresentation().absoluteString ?? UUID().uuidString
         content.title = reminderS.title
-        content.subtitle = "You have a new \(category?.label ?? "") reminder"
+        content.body = "You have a new \(category?.label.lowercased() ?? "") reminder"
+        
         content.sound = UNNotificationSound.default
         
-//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-       
         let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.day, .month, .year, .hour, .minute],from: reminderS.date), repeats: false)
-                
-        //MARK: TODO - modify the identifier
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: id , content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {
-              print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
-                 }
-            } 
+                print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
+            }
+        }
     }
-
+    
+    func removeNotification(reminderS: ReminderState){
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (notificationRequests) in
+            var identifiers: [String] = []
+            for notification:UNNotificationRequest in notificationRequests {
+                if notification.identifier == self.id {
+                    identifiers.append(notification.identifier)
+                }
+            }
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
+            print("Notification Unscheduled")
+        }
+    }
 }
 
 
@@ -57,9 +66,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        // Here we actually handle the notification
         print("Notification received with identifier \(notification.request.identifier)")
-        // So we call the completionHandler telling that the notification should display a banner and play the notification sound - this will happen while the app is in foreground
         completionHandler([.banner, .sound])
     }
 }

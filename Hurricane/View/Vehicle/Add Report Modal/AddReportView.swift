@@ -30,6 +30,7 @@ struct AddReportView: View {
     //To dismiss the modal
     @Environment(\.presentationMode) private var presentationMode
     
+    
     var body: some View {
         NavigationView{
             VStack {

@@ -39,15 +39,11 @@ struct CustomTabBarView: View {
         switch type {
         case .home:
             VehicleView(onboardingVM: onboardingVM, dataVM: dataVM, homeVM: homeVM, utilityVM: utilityVM, categoryVM: categoryVM, notificationVM: notificationVM)
-//                .statusBarStyle(.darkContent, ignoreDarkMode: true)
-//            Content_View_3()
         case .stats:
-//            WorkInProgress()
             AnalyticsOverviewView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM )
-//                .statusBarStyle(.lightContent, ignoreDarkMode: false)
         case .settings:
             SettingsView(dataVM: dataVM, homeVM: homeVM, onboardingVM: onboardingVM)
-//                .statusBarStyle(.lightContent, ignoreDarkMode: false)
+
         }
     }
 }

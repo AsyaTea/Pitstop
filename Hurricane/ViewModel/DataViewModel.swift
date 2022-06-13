@@ -37,6 +37,8 @@ class DataViewModel : ObservableObject {
     
     @Published var expenseFilteredList : [ExpenseViewModel] = []
     
+    @Published var documentsList: [DocumentViewModel] = []
+    
     init() {
         getVehiclesCoreData(filter:nil, storage: {storage in
             self.vehicleList = storage
@@ -45,6 +47,10 @@ class DataViewModel : ObservableObject {
         getNumbersCoreData(filter: nil, storage: { storage in
             self.numberList = storage
             
+        })
+        
+        getDocumentsCoreData(filter: nil, storage: { storage in
+            self.documentsList = storage
         })
 //        getCurrentVehicle()
         
@@ -129,15 +135,12 @@ class DataViewModel : ObservableObject {
         
     }
     
-    
-    //In case we need it
     func removeAllVehicles() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Vehicle")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         manager.removeAllItems(deleteRequest: deleteRequest)
         save()
         self.vehicleList.removeAll()
-        
     }
     
     
@@ -212,7 +215,7 @@ class DataViewModel : ObservableObject {
     
     
     
-    //MARK: EXPENSE CRUD
+    //MARK: - EXPENSE CRUD
 
     func getExpenseByID(expenseID: NSManagedObjectID) throws -> ExpenseViewModel {
         guard let expense = manager.getExpenseById(id: expenseID) else {
@@ -283,23 +286,23 @@ class DataViewModel : ObservableObject {
 //        expense
 //    }
     
-    func deleteExpense(at indexSet: IndexSet){
-        indexSet.forEach{ index in
-            let expense = expenseList[index]
-            expenseList.remove(at: index)
-            deleteExpenseCoreData(expense: expense)
-        }
-    }
+//    func deleteExpense(at indexSet: IndexSet){
+//        indexSet.forEach{ index in
+//            let expense = expenseList[index]
+//            expenseList.remove(at: index)
+//            deleteExpenseCoreData(expense: expense)
+//        }
+//    }
     
-    func deleteExpenseCoreData(expense : ExpenseViewModel) {
-        let expense = manager.getExpenseById(id: expense.expenseID)
-        if let expense = expense {
-            manager.deleteExpense(expense)
-        }
-        save()
-    }
+//    func deleteExpenseCoreData(expense : ExpenseViewModel) {
+//        let expense = manager.getExpenseById(id: expense.expenseID)
+//        if let expense = expense {
+//            manager.deleteExpense(expense)
+//        }
+//        save()
+//    }
     
-    func deleteExpenseState(expenseS : ExpenseState) {
+    func deleteExpense(expenseS : ExpenseState) {
         guard let expenseID = expenseS.expenseID else {
             return print("Expense ID not found during update")
         }
@@ -312,12 +315,10 @@ class DataViewModel : ObservableObject {
     }
     
     
-    
     func removeAllExpenses() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Expense")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         manager.removeAllItems(deleteRequest: deleteRequest)
-        //        getExpenses(filter: filter)
     }
     
     func getExpensesCoreData(filter : NSPredicate?, storage: @escaping([ExpenseViewModel]) -> ())  {
@@ -341,7 +342,6 @@ class DataViewModel : ObservableObject {
     
     //MARK: - REMINDERS CRUD
     
-    //MARK: - CREATE
     func addReminder(reminder : ReminderState) {
         let newReminder = Reminder(context: manager.context)
         newReminder.title = reminder.title
@@ -357,7 +357,6 @@ class DataViewModel : ObservableObject {
         save()
     }
     
-    //MARK: - READ
     func getRemindersCoreData(filter : NSPredicate?, storage: @escaping([ReminderViewModel]) -> ())  {
         let request = NSFetchRequest<Reminder>(entityName: "Reminder")
         let reminder : [Reminder]
@@ -377,9 +376,52 @@ class DataViewModel : ObservableObject {
         }
     }
     
+    func updateReminder(_ rs : ReminderState) throws {
+        guard let reminderID = rs.reminderID else {
+            return print("Reminder ID not found during update")
+        }
+        
+        guard let reminder = manager.getReminderById(id: reminderID) else {
+            return print("Reminder not found during update")
+        }
+        
+        reminder.note = rs.note
+        reminder.date = rs.date
+        reminder.title = rs.title
+        reminder.category = rs.category ?? 1
+     
+        for (index,value) in reminderList.enumerated() {
+            if(value.reminderID == rs.reminderID){
+                reminderList.remove(at: index)
+            }
+        }
+        save()
+        print("Reminder update done")
+    }
+    
+    func deleteReminder(reminderS : ReminderState) {
+        guard let reminderID = reminderS.reminderID else {
+            return print("NumberID not found during update")
+        }
+        
+        let reminder = manager.getReminderById(id: reminderID)
+        if let reminder = reminder {
+            manager.deleteReminder(reminder)
+        }
+        save()
+    }
+    
+    func removeExpiredReminders() {
+        let filterExpiredReminders = NSPredicate(format: "date <= %@",NSDate())
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Reminder")
+        fetchRequest.predicate = filterExpiredReminders
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        manager.removeAllItems(deleteRequest: deleteRequest)
+        self.expiredReminders.removeAll()
+    }
     
     
-    //MARK: IMPORTANT NUMBERS CRUD
+    //MARK: - IMPORTANT NUMBERS CRUD
     
     func getNumbersCoreData(filter : NSPredicate?, storage: @escaping([NumberViewModel]) -> ())  {
         let request = NSFetchRequest<Number>(entityName: "Number")
@@ -435,8 +477,60 @@ class DataViewModel : ObservableObject {
         print("Numbers update done")
     }
     
+    func deleteNumber(numberS : NumberState) {
+        guard let numberID = numberS.numberID else {
+            return print("NumberID not found during update")
+        }
+        
+        let number = manager.getNumberById(id: numberID)
+        if let number = number {
+            manager.deleteNumber(number)
+        }
+       
+        save()
+    }
     
-    //MARK: Total Cost functions
+    
+    //MARK: - DOCUMENTS CRUD
+    
+    func getDocumentsCoreData(filter : NSPredicate?, storage: @escaping([DocumentViewModel]) -> ())  {
+        let request = NSFetchRequest<Document>(entityName: "Document")
+        let document : [Document]
+        
+        let sort = NSSortDescriptor(keyPath: \Document.objectID, ascending: true)
+        request.sortDescriptors = [sort]
+        request.predicate = filter
+        
+        do {
+            document =  try manager.context.fetch(request)
+            DispatchQueue.main.async{
+                storage(document.map(DocumentViewModel.init))
+            }
+            
+        }catch let error {
+            print("🔢 Error fetching documents: \(error.localizedDescription)")
+        }
+    }
+    
+    func addDocument(documentS : DocumentState) {
+        let newDocument = Document(context: manager.context)
+        newDocument.title = documentS.title
+        newDocument.url = documentS.url
+        
+        print("Document: \(newDocument)")
+        self.documentsList.append(DocumentViewModel(document: newDocument))
+        save()
+    }
+    
+    func removeAllDocuments() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Document")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        manager.removeAllItems(deleteRequest: deleteRequest)
+        save()
+        self.documentsList.removeAll()
+    }
+    
+    //MARK: - OTHER FUNCS
     func getTotalExpense(expenses: [ExpenseViewModel]) {
 //        print("expense list: \(expenses)")
         self.totalVehicleCost = 0.0
@@ -449,10 +543,9 @@ class DataViewModel : ObservableObject {
     }
     
     func getMonths(expenses: [ExpenseViewModel]) {
-        
         var date = ""
         for expenseList in expenseList {
-           date = expenseList.date.toString(dateFormat: "MMMM")
+            date = expenseList.date.toString(dateFormat: "MMMM")
             monthsAmount.insert(date)
         }
     }

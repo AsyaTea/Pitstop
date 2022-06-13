@@ -24,10 +24,6 @@ struct VehicleViewModel : Hashable {
         return vehicle.brand ?? ""
     }
     
-    //    var document : Data {
-    //        return vehicle.date
-    //    }
-    
     var fuelTypeOne: FuelType {
         get {return FuelType.init(rawValue: Int(vehicle.fuelTypeOne)) ?? .gasoline}
         set {vehicle.fuelTypeOne = Int16(newValue.rawValue)}
@@ -68,7 +64,6 @@ struct VehicleState : Hashable {
     
     var current : NSNumber?
     var brand : String = ""
-    var document : Data?
     var fuelTypeOne: Int16 = 0
     var fuelTypeTwo: Int16?
     var model : String = ""

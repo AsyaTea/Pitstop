@@ -59,8 +59,15 @@
 		FFA0E713284E5722008B3ED9 /* Content View 3.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E712284E5722008B3ED9 /* Content View 3.swift */; };
 		FFA0E715284FB684008B3ED9 /* Utility Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E714284FB684008B3ED9 /* Utility Extensions.swift */; };
 		FFA0E71928533191008B3ED9 /* EditNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E71828533191008B3ED9 /* EditNumbers.swift */; };
+		FFA0E71B28535329008B3ED9 /* EditReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E71A28535329008B3ED9 /* EditReminderView.swift */; };
+		FFA0E71D28553D15008B3ED9 /* ExpiredReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E71C28553D15008B3ED9 /* ExpiredReminder.swift */; };
+		FFA0E72028554495008B3ED9 /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E71F28554495008B3ED9 /* DocumentView.swift */; };
+		FFA0E722285548B1008B3ED9 /* PdfViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E721285548B1008B3ED9 /* PdfViewModel.swift */; };
+		FFA0E72428554A96008B3ED9 /* PDFKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E72328554A96008B3ED9 /* PDFKitView.swift */; };
+		FFA0E72B28555014008B3ED9 /* Document+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E72728555014008B3ED9 /* Document+CoreDataClass.swift */; };
+		FFA0E72C28555014008B3ED9 /* Document+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E72828555014008B3ED9 /* Document+CoreDataProperties.swift */; };
 		FFA9315D284A5DB900C8D73C /* ReminderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA9315C284A5DB900C8D73C /* ReminderModel.swift */; };
-		FFA93160284A62B400C8D73C /* RemindersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA9315F284A62B400C8D73C /* RemindersList.swift */; };
+		FFA93160284A62B400C8D73C /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA9315F284A62B400C8D73C /* ReminderView.swift */; };
 		FFA93162284A664800C8D73C /* AddReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA93161284A664800C8D73C /* AddReminderViewModel.swift */; };
 		FFA93164284A829B00C8D73C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA93163284A829B00C8D73C /* NotificationManager.swift */; };
 		FFC52898282FB2A50013D8B6 /* BottomContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC52897282FB2A40013D8B6 /* BottomContentView.swift */; };
@@ -130,8 +137,15 @@
 		FFA0E712284E5722008B3ED9 /* Content View 3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Content View 3.swift"; sourceTree = "<group>"; };
 		FFA0E714284FB684008B3ED9 /* Utility Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utility Extensions.swift"; sourceTree = "<group>"; };
 		FFA0E71828533191008B3ED9 /* EditNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNumbers.swift; sourceTree = "<group>"; };
+		FFA0E71A28535329008B3ED9 /* EditReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReminderView.swift; sourceTree = "<group>"; };
+		FFA0E71C28553D15008B3ED9 /* ExpiredReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiredReminder.swift; sourceTree = "<group>"; };
+		FFA0E71F28554495008B3ED9 /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
+		FFA0E721285548B1008B3ED9 /* PdfViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewModel.swift; sourceTree = "<group>"; };
+		FFA0E72328554A96008B3ED9 /* PDFKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitView.swift; sourceTree = "<group>"; };
+		FFA0E72728555014008B3ED9 /* Document+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Document+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FFA0E72828555014008B3ED9 /* Document+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Document+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FFA9315C284A5DB900C8D73C /* ReminderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderModel.swift; sourceTree = "<group>"; };
-		FFA9315F284A62B400C8D73C /* RemindersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersList.swift; sourceTree = "<group>"; };
+		FFA9315F284A62B400C8D73C /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
 		FFA93161284A664800C8D73C /* AddReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderViewModel.swift; sourceTree = "<group>"; };
 		FFA93163284A829B00C8D73C /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -202,6 +216,7 @@
 		FF1AA19E2823D44900AB61A2 /* Vehicle */ = {
 			isa = PBXGroup;
 			children = (
+				FFA0E71E28554476008B3ED9 /* Documents */,
 				FFA9315E284A62A000C8D73C /* Reminders */,
 				FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */,
 				FFDF85592824104A00E0F9BF /* VehicleView.swift */,
@@ -257,6 +272,7 @@
 				FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */,
 				FF3616CA28290416002ADA33 /* AddExpenseViewModel.swift */,
 				415D2041282145FE004AF201 /* DataViewModel.swift */,
+				FFA0E721285548B1008B3ED9 /* PdfViewModel.swift */,
 				41176DA82834DCC3000FD885 /* FuelViewModel.swift */,
 				41C6E20F283185B200F756B5 /* CategoryViewModel.swift */,
 				FFA93161284A664800C8D73C /* AddReminderViewModel.swift */,
@@ -289,6 +305,8 @@
 				FF7C8AF3283F598900D2EEA2 /* Number+CoreDataProperties.swift */,
 				FF192B09284A5C0400F2F71C /* Reminder+CoreDataClass.swift */,
 				FF192B0A284A5C0400F2F71C /* Reminder+CoreDataProperties.swift */,
+				FFA0E72728555014008B3ED9 /* Document+CoreDataClass.swift */,
+				FFA0E72828555014008B3ED9 /* Document+CoreDataProperties.swift */,
 				415D203F282144CE004AF201 /* CoreDataManager.swift */,
 				415D203C28214215004AF201 /* CarModel.xcdatamodeld */,
 			);
@@ -338,10 +356,21 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		FFA0E71E28554476008B3ED9 /* Documents */ = {
+			isa = PBXGroup;
+			children = (
+				FFA0E71F28554495008B3ED9 /* DocumentView.swift */,
+				FFA0E72328554A96008B3ED9 /* PDFKitView.swift */,
+			);
+			path = Documents;
+			sourceTree = "<group>";
+		};
 		FFA9315E284A62A000C8D73C /* Reminders */ = {
 			isa = PBXGroup;
 			children = (
-				FFA9315F284A62B400C8D73C /* RemindersList.swift */,
+				FFA0E71A28535329008B3ED9 /* EditReminderView.swift */,
+				FFA0E71C28553D15008B3ED9 /* ExpiredReminder.swift */,
+				FFA9315F284A62B400C8D73C /* ReminderView.swift */,
 			);
 			path = Reminders;
 			sourceTree = "<group>";
@@ -448,6 +477,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFA0E71B28535329008B3ED9 /* EditReminderView.swift in Sources */,
 				FFA93162284A664800C8D73C /* AddReminderViewModel.swift in Sources */,
 				FF3616CF28290F21002ADA33 /* ReminderListView.swift in Sources */,
 				FFFC3936282176F400F7E0A8 /* Vehicle+CoreDataClass.swift in Sources */,
@@ -457,17 +487,20 @@
 				FFDAA33D283FC68400145B35 /* DocumentModel.swift in Sources */,
 				FF5D5A2528299D0D006D5ABF /* OnboardingView.swift in Sources */,
 				FFDF855A2824104A00E0F9BF /* VehicleView.swift in Sources */,
+				FFA0E72C28555014008B3ED9 /* Document+CoreDataProperties.swift in Sources */,
 				FFA0E713284E5722008B3ED9 /* Content View 3.swift in Sources */,
 				FF7C8AF5283F598900D2EEA2 /* Number+CoreDataProperties.swift in Sources */,
+				FFA0E71D28553D15008B3ED9 /* ExpiredReminder.swift in Sources */,
 				FFA9315D284A5DB900C8D73C /* ReminderModel.swift in Sources */,
 				41C6E20C282CF49B00F756B5 /* AnalyticsOdometerView.swift in Sources */,
+				FFA0E72028554495008B3ED9 /* DocumentView.swift in Sources */,
 				FF974B88283F4DF500C33576 /* ExpenseModel.swift in Sources */,
 				FFDAA340283FE1A000145B35 /* TopBarView.swift in Sources */,
 				FF14DC3228302CC300CA248B /* ImportantNumbersView.swift in Sources */,
 				0327B676284775C50068D73A /* StatusBarAppearance.swift in Sources */,
 				415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */,
 				FF1AA1A72823FC4800AB61A2 /* extensionColor.swift in Sources */,
-				FFA93160284A62B400C8D73C /* RemindersList.swift in Sources */,
+				FFA93160284A62B400C8D73C /* ReminderView.swift in Sources */,
 				FFC67B45283A2A920078B283 /* EditVehicleView.swift in Sources */,
 				FF974B86283F4DE400C33576 /* VehicleModel.swift in Sources */,
 				FF3616CB28290416002ADA33 /* AddExpenseViewModel.swift in Sources */,
@@ -488,6 +521,7 @@
 				41C6E20A282CF47D00F756B5 /* AnalyticsFuelView.swift in Sources */,
 				41C6E20E282D184400F756B5 /* Graph.swift in Sources */,
 				FF534EB2283643330089BE94 /* AlertsOnBoarding.swift in Sources */,
+				FFA0E72B28555014008B3ED9 /* Document+CoreDataClass.swift in Sources */,
 				FF14DC30282FCA1F00CA248B /* HomeViewModel.swift in Sources */,
 				415D203128214180004AF201 /* ContentView.swift in Sources */,
 				FF534EB0283636EA0089BE94 /* AddNewVehicleView.swift in Sources */,
@@ -499,6 +533,7 @@
 				FF7C8AF4283F598900D2EEA2 /* Number+CoreDataClass.swift in Sources */,
 				415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */,
 				FF10676E282C03E20077CCF7 /* Pages.swift in Sources */,
+				FFA0E722285548B1008B3ED9 /* PdfViewModel.swift in Sources */,
 				415D202F28214180004AF201 /* HurricaneApp.swift in Sources */,
 				FFCC308628258B6C00391BD5 /* UtilityViewModel.swift in Sources */,
 				FF42ADD52825250B00C66A84 /* AnalyticsOverviewView.swift in Sources */,
@@ -512,6 +547,7 @@
 				41C6E208282CEE6100F756B5 /* AnalyticsCostView.swift in Sources */,
 				FF5F2CA02823C4CD007980F3 /* Expense+CoreDataProperties.swift in Sources */,
 				FFDF855C282411FD00E0F9BF /* OldTabBarView.swift in Sources */,
+				FFA0E72428554A96008B3ED9 /* PDFKitView.swift in Sources */,
 				416D26C82848B1EB00E4ECD6 /* LastEventsListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -640,7 +676,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
 				DEVELOPMENT_TEAM = MYPTJXP3NK;
 				ENABLE_PREVIEWS = YES;
@@ -675,7 +711,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
 				DEVELOPMENT_TEAM = MYPTJXP3NK;
 				ENABLE_PREVIEWS = YES;

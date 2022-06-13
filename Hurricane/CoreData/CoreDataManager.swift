@@ -110,6 +110,18 @@ class CoreDataManager {
         }
     }
     
+    func deleteNumber(_ number : Number) {
+        context.delete(number)
+        
+        do{
+            try context.save()
+        }
+        catch{
+            context.rollback()
+            print("Failed to delete number \(error)")
+        }
+    }
+    
     func deleteReminder(_ reminder : Reminder) {
         context.delete(reminder)
         

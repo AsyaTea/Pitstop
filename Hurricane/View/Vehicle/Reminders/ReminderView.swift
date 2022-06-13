@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-struct RemindersList: View {
+struct ReminderView: View {
     
     @ObservedObject var dataVM: DataViewModel
     @StateObject var utilityVM: UtilityViewModel
     @Environment(\.presentationMode) private var presentationMode
     
     @State private var showEditReminder = false
+    @State private var showExpiredReminder = false
     
     let filterExpiredReminders = NSPredicate(format: "date <= %@",NSDate())
     let filterFutureReminders = NSPredicate(format: "date > %@",NSDate())
@@ -41,7 +42,6 @@ struct RemindersList: View {
                             .padding()
                         }
                         
-                        
                         if dataVM.reminderList.isEmpty {
                             HStack{
                                 Text("There are no reminders now")
@@ -53,7 +53,7 @@ struct RemindersList: View {
                         }
                         
                         //MARK: - REMINDERS LIST
-                        ForEach(dataVM.reminderList.reversed(),id:\.self){reminder in
+                        ForEach(dataVM.reminderList.sorted(),id:\.self){reminder in
                             Button(action: {
                                 showEditReminder.toggle()
                                 utilityVM.reminderToEdit = ReminderState.fromReminderViewModel(vm: reminder)
@@ -93,11 +93,21 @@ struct RemindersList: View {
                         
                         //MARK: - EXPIRED REMINDER
                         ForEach(dataVM.expiredReminders.reversed(),id:\.self){reminder in
-                            ReminderComponent(
-                                reminder: reminder,
-                                category: Category.init(rawValue: Int(reminder.category )) ?? .other,
-                                expired: true)
+                            Button(action: {
+                                showExpiredReminder.toggle()
+                                utilityVM.reminderToEdit = ReminderState.fromReminderViewModel(vm: reminder)
+                            }, label: {
+                                ReminderComponent(
+                                    reminder: reminder,
+                                    category: Category.init(rawValue: Int(reminder.category )) ?? .other,
+                                    expired: true)
+                            })
+                           
                         }
+                        
+                        //MARK: - NAVIGATE TO EDIT
+                        NavigationLink(destination: EditReminderView(dataVM: dataVM, utilityVM: utilityVM),isActive: $showEditReminder){}
+                        NavigationLink(destination: ExpiredReminder(dataVM: dataVM, utilityVM: utilityVM),isActive: $showExpiredReminder){}
                     }
                 }
             }
@@ -108,6 +118,14 @@ struct RemindersList: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Cancel")
+                            .font(Typography.headerM)
+                    })
+                    .accentColor(Palette.greyHard),
+                trailing:
+                    Button(action: {
+                        dataVM.removeExpiredReminders()
+                    }, label: {
+                        Text("Clear expired")
                             .font(Typography.headerM)
                     })
                     .accentColor(Palette.greyHard)

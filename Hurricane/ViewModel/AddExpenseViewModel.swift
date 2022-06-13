@@ -21,7 +21,7 @@ class AddExpenseViewModel : ObservableObject {
     @Published var selectedRepeat = "Never"
     let repeatTypes = ["Never", "Daily", "Weekdays","Weekends", "Weekly","Monthly","Every 3 Months","Every 6 Months","Yearly"]
     @Published var selectedBased = "Date"
-    let basedTypes = ["Date","Distance"]
+    let basedTypes = ["Date"] 
     
     //Vars to store the input in fields
     @Published var price : String = ""

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PDFKit
 
 struct BottomContentView: View {
     
@@ -13,6 +14,7 @@ struct BottomContentView: View {
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     @ObservedObject var categoryVM : CategoryViewModel
+    @StateObject var pdfVM = PdfViewModel()
     
     @State private var viewAllNumbers = false
     @State private var viewAllDocuments = false
@@ -20,6 +22,9 @@ struct BottomContentView: View {
     @State private var showEventEdit = false
     
     @State private var showingOptions = false
+    
+    @State private var presentImporter = false
+    @State private var showPDF = false
     
     var body: some View {
         VStack(spacing: 0){
@@ -30,7 +35,6 @@ struct BottomContentView: View {
                 .padding(.top,10)
                 .padding(.bottom,-10)
                 .sheet(isPresented: $viewAllEvents){LastEventsListView(dataVM: dataVM, categoryVM: categoryVM,utilityVM: utilityVM)}
-            //            NavigationLink("NAVIGA",destination: LastEventsListView(dataVM: dataVM,utilityVM: utilityVM),isActive: $viewAllEvents)
             
             if(dataVM.expenseList.isEmpty){
                 HStack{
@@ -52,7 +56,6 @@ struct BottomContentView: View {
                             date: expense.date, cost: String(expense.price)
                         )
                     })
-                    
                 }
             }
             
@@ -66,19 +69,35 @@ struct BottomContentView: View {
                 VStack {
                     Spacer(minLength: 12)
                     HStack{
+                        ForEach(dataVM.documentsList,id:\.self) { document in
+                            Button(action: {
+                                showPDF.toggle()
+                                pdfVM.documentState = DocumentState.fromDocumentViewModel(vm: document)
+                            }, label: {
+                                documentComponent(title: document.title)
+                            })
+                        }
                         Button(action: {
-                            
-                        }, label: {
-                            documentComponent(title: "Driving license")
-                        })
-                        Button(action: {
-                            
+                            presentImporter.toggle()
                         }, label: {
                             addComponent(title: "Add document")
                         })
                         
                     }
                     Spacer(minLength: 16)
+                }
+                .fileImporter(isPresented: $presentImporter, allowedContentTypes: [.pdf]) { result in
+                    switch result {
+                    case .success(let url):
+                        if url.startAccessingSecurityScopedResource() {
+                            pdfVM.documentState.url = url
+                            pdfVM.documentState.title = url.lastPathComponent.replacingOccurrences(of: ".pdf", with: "")
+                            dataVM.addDocument(documentS: pdfVM.documentState)
+                        }
+                        url.stopAccessingSecurityScopedResource()
+                    case .failure(let error):
+                        print(error)
+                    }
                 }
                 
             }
@@ -149,36 +168,42 @@ struct BottomContentView: View {
             ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)
                 .interactiveDismissDisabled(homeVM.interactiveDismiss)
         }
-        .fullScreenCover(isPresented: $viewAllDocuments){WorkInProgress()}
-        
+        .fullScreenCover(isPresented: $viewAllDocuments){WorkInProgress(dataVM: dataVM)}
+        .fullScreenCover(isPresented: $showPDF){DocumentView(pdfVM: pdfVM)}
     }
     
     
     @ViewBuilder
     func documentComponent(title: String) -> some View {
-        ZStack{
-            Rectangle()
-                .cornerRadius(8)
-                .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
-                .foregroundColor(Palette.white)
-                .shadowGrey()
-            VStack(alignment: .leading, spacing: 40){
+     
+            VStack(alignment: .leading, spacing: 0){
                 ZStack{
                     Circle()
                         .frame(width: 24, height: 24)
                         .foregroundColor(Palette.greyLight)
                     Image("documents")
                         .resizable()
-                        .frame(width: 12, height: 12)
+                        .frame(width: 14, height: 14)
                         .foregroundColor(Palette.black)
                 }
+                Spacer()
                 Text(title)
+                    .frame(width:  UIScreen.main.bounds.width * 0.33,height: UIScreen.main.bounds.height * 0.03,alignment: .leading)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: false)
                     .foregroundColor(Palette.black)
                     .font(Typography.ControlS)
             }
-            .padding(.leading,-28)
-            .padding(.top,-2)
-        }
+            .padding()
+            .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
+            .background{
+                Rectangle()
+                    .cornerRadius(8)
+                    .foregroundColor(Palette.white)
+                .shadowGrey()
+            }
+           
+      
     }
     
     @ViewBuilder

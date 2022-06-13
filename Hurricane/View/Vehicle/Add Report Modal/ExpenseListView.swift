@@ -17,9 +17,8 @@ struct ExpenseListView: View {
     @StateObject var reminderVM : AddReminderViewModel
     
     var focusedField : FocusState<FocusField?>.Binding
-    
-//    @State private var selectedFuel : String = ""
-
+       
+    @State var selectedItem: Category = .fuel
     @State private var checkmark1 = true
     @State private var checkmark2 = false
     
@@ -31,7 +30,7 @@ struct ExpenseListView: View {
             HStack{
                 ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
                 Spacer()
-                NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, checkmark: $checkmark1)){
+                NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)){
                 Spacer()
                 Text(addExpVM.selectedCategory)
                     .font(Typography.headerM)
@@ -260,18 +259,22 @@ struct CustomCategoryPicker : View {
     @StateObject var addExpVM : AddExpenseViewModel
     @StateObject var reminderVM: AddReminderViewModel
     @ObservedObject var categoryVM : CategoryViewModel
-    @Binding var checkmark : Bool
+    @Binding var selectedItem: Category
     
     var body: some View {
         List{
             ForEach(Category.allCases,id:\.self){category in
                 Button(action: {
-                    checkmark.toggle()
-                    categoryVM.defaultCategory = category
-                    addExpVM.selectedCategory = category.label
-                    addExpVM.category = categoryVM.selectedCategory
-                    reminderVM.selectedCategory = category.label
-                    reminderVM.category = categoryVM.selectedCategory
+                    withAnimation{
+                    if(selectedItem != category){
+                        selectedItem = category
+                        categoryVM.defaultCategory = category
+                        addExpVM.selectedCategory = category.label
+                        addExpVM.category = categoryVM.selectedCategory
+                        reminderVM.selectedCategory = category.label
+                        reminderVM.category = categoryVM.selectedCategory
+                    }
+                    }
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
                     HStack {
@@ -281,7 +284,7 @@ struct CustomCategoryPicker : View {
                         Spacer()
                         Image(systemName: "checkmark")
                             .foregroundColor(.accentColor)
-                            .opacity(checkmark ? 1.0 : 0.0)
+                            .opacity(selectedItem == category ? 1.0 : 0.0)
                     }
                 })
             }

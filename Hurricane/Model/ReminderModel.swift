@@ -17,9 +17,14 @@ struct ReminderState: Hashable {
     var note: String = ""
     var date: Date = Date.now
     var distance: String = ""
+    var reminderID: NSManagedObjectID?
 }
 
-struct ReminderViewModel : Hashable {
+struct ReminderViewModel: Hashable,Comparable{
+    static func < (lhs: ReminderViewModel, rhs: ReminderViewModel) -> Bool {
+        lhs.date < rhs.date
+    }
+    
     let reminder: Reminder
     
     var title: String {
@@ -50,6 +55,10 @@ struct ReminderViewModel : Hashable {
     var distance: String {
         return reminder.distance ?? ""
     }
+    
+    var reminderID: NSManagedObjectID {
+        return reminder.objectID
+    }
 }
 
 extension ReminderState{
@@ -63,6 +72,7 @@ extension ReminderState{
         reminderS.note = vm.note
         reminderS.date = vm.date
         reminderS.distance = vm.distance
+        reminderS.reminderID = vm.reminderID
         return reminderS
     }
         
