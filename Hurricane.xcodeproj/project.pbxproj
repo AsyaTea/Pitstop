@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		030A39922858D36500218628 /* HTML View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030A39912858D36500218628 /* HTML View.swift */; };
-		030A39942858D43E00218628 /* TTC-2.html in Resources */ = {isa = PBXBuildFile; fileRef = 030A39932858D43E00218628 /* TTC-2.html */; };
+		030A39942858D43E00218628 /* TermsOfService.html in Resources */ = {isa = PBXBuildFile; fileRef = 030A39932858D43E00218628 /* TermsOfService.html */; };
 		0327B676284775C50068D73A /* StatusBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0327B675284775C50068D73A /* StatusBarAppearance.swift */; };
 		41176DA92834DCC3000FD885 /* FuelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41176DA82834DCC3000FD885 /* FuelViewModel.swift */; };
 		415773F8283BEBF800B20FA1 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */; };
@@ -90,7 +90,7 @@
 
 /* Begin PBXFileReference section */
 		030A39912858D36500218628 /* HTML View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTML View.swift"; sourceTree = "<group>"; };
-		030A39932858D43E00218628 /* TTC-2.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "TTC-2.html"; sourceTree = "<group>"; };
+		030A39932858D43E00218628 /* TermsOfService.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = TermsOfService.html; sourceTree = "<group>"; };
 		0327B675284775C50068D73A /* StatusBarAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAppearance.swift; sourceTree = "<group>"; };
 		41176DA82834DCC3000FD885 /* FuelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewModel.swift; sourceTree = "<group>"; };
 		415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 				FF7439AD28574C8E00E113CA /* ThemePickerView.swift */,
 				FFC67B44283A2A920078B283 /* EditVehicleView.swift */,
 				FF534EAF283636EA0089BE94 /* AddNewVehicleView.swift */,
-				030A39932858D43E00218628 /* TTC-2.html */,
+				030A39932858D43E00218628 /* TermsOfService.html */,
 				030A39912858D36500218628 /* HTML View.swift */,
 			);
 			path = Settings;
@@ -483,7 +483,7 @@
 				FFD1224A285892DB004686CA /* loadingStats.gif in Resources */,
 				415D203628214182004AF201 /* Preview Assets.xcassets in Resources */,
 				415D203328214182004AF201 /* Assets.xcassets in Resources */,
-				030A39942858D43E00218628 /* TTC-2.html in Resources */,
+				030A39942858D43E00218628 /* TermsOfService.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
