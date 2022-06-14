@@ -13,6 +13,8 @@ struct ThemePickerView: View {
     @ObservedObject var homeVM : HomeViewModel
     
     var body: some View {
+        ZStack{
+            Palette.greyBackground.ignoresSafeArea()
         VStack(spacing:170){
             Spacer()
             HStack(spacing:40){
@@ -56,6 +58,7 @@ struct ThemePickerView: View {
                     .foregroundColor(Palette.black)
             }
         }
+        }
 
     }
 }
@@ -94,13 +97,14 @@ struct ColorButton: View {
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .frame(width: 150, height: 150)
-                .foregroundColor(press ? color : Palette.black)
+                .foregroundColor(color)
+                .opacity(press ? 1 : 0.5)
                 .rotationEffect(Angle(degrees: tap ? 90 : 0))
                 .animation(.easeInOut)
                 .overlay(
                     Circle()
                         .trim(from: tap ? 0.001 : 1 , to: 1)
-                        .stroke(color,style: StrokeStyle(lineWidth:4,lineCap: .round))
+                        .stroke(Palette.white,style: StrokeStyle(lineWidth:4,lineCap: .round))
                         .rotationEffect(Angle(degrees: 90))
                         .rotation3DEffect(Angle(degrees: 180),axis: (x: 1, y: 0, z: 0))
                         .animation(.easeInOut(duration: 0.5))

@@ -35,7 +35,7 @@ struct Page1 : View {
             }
             Spacer()
             Image("page1")
-            Spacer()
+            Spacer(minLength: 65)
             VStack(spacing: 16){
                 Button(action: {
                     withAnimation(.easeInOut){
@@ -43,10 +43,13 @@ struct Page1 : View {
                     }
                 }, label: {
                     OnBoardingButton(text: "Add a new vehicle", textColor: Palette.white, color: Palette.black)
+                        
                 })
-                OnBoardingButton(text: "Import data", textColor: Palette.black, color: Palette.white)
-                OnBoardingButton(text: "Restore from iCloud", textColor: Palette.black, color: Palette.white)
+               
+//                OnBoardingButton(text: "Import data", textColor: Palette.black, color: Palette.white)
+//                OnBoardingButton(text: "Restore from iCloud", textColor: Palette.black, color: Palette.white)
             }
+            Spacer()
             
         }.background(Palette.greyBackground)
     }
