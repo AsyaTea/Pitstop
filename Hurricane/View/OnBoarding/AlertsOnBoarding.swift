@@ -40,12 +40,13 @@ struct AlertOdometerOB: View {
                         onboardingVM.showOverlay = false
                     }, label: {
                         buttonComponent(iconName: "ics")
+                            .foregroundColor(Palette.black)
                             .padding(.trailing,20)
                     })
                     
                 }
                 VStack(spacing:12){
-                    TextField("Previous 0 km", value: $onboardingVM.vehicle.odometer,formatter: NumberFormatter())
+                    TextField("Previously 0 km", value: $onboardingVM.vehicle.odometer,formatter: NumberFormatter())
                         .disableAutocorrection(true)
                         .focused($focusedField,equals: .odometer)
                         .keyboardType(.numberPad)
@@ -112,6 +113,7 @@ struct AlertPlateOB: View {
                         onboardingVM.showOverlay = false
                     }, label: {
                         buttonComponent(iconName: "ics")
+                            .foregroundColor(Palette.black)
                             .padding(.trailing,20)
                     })
                     
@@ -183,7 +185,7 @@ struct AlertImportantNumbersOB: View {
                         onboardingVM.showAlertImportantNumbers.toggle()
                         onboardingVM.showOverlay = false
                     }, label: {
-                        buttonComponent(iconName: "ics")
+                        buttonComponent(iconName: "ics")                .foregroundColor(Palette.black)
                             .padding(.trailing,20)
                     })
                     

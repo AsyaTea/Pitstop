@@ -103,6 +103,8 @@ struct AlertAddNumbers: View {
                 .frame(width: 24, height: 24)
                 .foregroundColor(Palette.greyLight)
             Image("ics")
+                .foregroundColor(Palette.black)
+
         }
     }
 }
@@ -233,6 +235,7 @@ struct AlertAddNumbersInside: View {
                 .frame(width: 24, height: 24)
                 .foregroundColor(Palette.greyLight)
             Image("ics")
+                .foregroundColor(Palette.black)
         }
     }
 }
