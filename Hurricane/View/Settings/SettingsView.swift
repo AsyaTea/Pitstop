@@ -13,6 +13,8 @@ struct SettingsView: View {
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var homeVM : HomeViewModel
     @StateObject var onboardingVM: OnboardingViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
+   
     
     //High priority function pepe
     var arrayColorBG = [Palette.colorGreen,Palette.colorYellow,Palette.colorViolet,Palette.colorBlue]
@@ -93,7 +95,7 @@ struct SettingsView: View {
                 
             }
             .fullScreenCover(isPresented: $onboardingVM.addNewVehicle){
-                OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $onboardingVM.addNewVehicle)
+                OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, categoryVM: categoryVM, shouldShowOnboarding: $onboardingVM.addNewVehicle)
             }
             .background(Palette.greyBackground)
             .navigationBarTitleDisplayMode(.inline)

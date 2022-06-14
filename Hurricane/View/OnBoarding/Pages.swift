@@ -218,6 +218,7 @@ struct Page3 : View {
     var dataVM = DataViewModel()
     @StateObject var onboardingVM : OnboardingViewModel
     @StateObject var fuelVM : FuelViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     
     var body: some View {
         ZStack{
@@ -394,6 +395,7 @@ struct Page3 : View {
                         onboardingVM.vehicle.current = 1
                         dataVM.addVehicle(vehicle: onboardingVM.vehicle)
                         fuelVM.resetSelectedFuel()
+                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                         onboardingVM.addNewVehicle = false
                     }, label: {
                         OnBoardingButton(text: "Add vehicle", textColor: Palette.white, color: Palette.black)

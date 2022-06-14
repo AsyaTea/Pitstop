@@ -42,25 +42,6 @@ struct AnalyticsFuelView: View {
                         }
                         .padding(-15)
                      
-//                        HStack(alignment: .bottom) {
-//                            
-//                    
-//                                Text("Jan")
-//                      
-//
-//                            Spacer()
-//                            Text("Mar")
-//                        
-//                                Spacer()
-//                                Text("May")
-//                                Spacer()
-//                                Text("Jun")
-//                     
-//                            
-//                    }
-//                        .padding(-15)
-//                    .font(.subheadline)
-//                    .foregroundColor(Palette.greyMiddle)
                 Spacer()
                         
                     }

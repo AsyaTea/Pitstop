@@ -14,6 +14,7 @@ struct HeaderContent : View {
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var homeVM: HomeViewModel
     @ObservedObject var utilityVM : UtilityViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15){
@@ -31,7 +32,7 @@ struct HeaderContent : View {
                             let formattedCost = String(format: "%.0f", dataVM.totalExpense)
                             Text("\(formattedCost) \(utilityVM.currency)")
                                 .foregroundColor(Palette.blackHeader)
-                                .font(Typography.headerL)
+                                .font(Typography.headerLM)
                             Text("All costs")
                                 .foregroundColor(Palette.blackHeader)
                                 .font(Typography.TextM)
@@ -48,9 +49,9 @@ struct HeaderContent : View {
                             .foregroundColor(homeVM.headerCardColor)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
-                            Text(String(Int64(dataVM.currentVehicle.first?.odometer ?? 0)))
+                            Text(String("\(Int64(dataVM.currentVehicle.first?.odometer ?? 0)) \(utilityVM.unit)"))
                                 .foregroundColor(Palette.blackHeader)
-                                .font(Typography.headerL)
+                                .font(Typography.headerLM)
                             Text("Odometer")
                                 .foregroundColor(Palette.blackHeader)
                                 .font(Typography.TextM)
@@ -67,10 +68,11 @@ struct HeaderContent : View {
                             .foregroundColor(homeVM.headerCardColor)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center){
-                            Text("*** $")
+                            let formattedFuel = String(format: "%.1f", categoryVM.fuelEff)
+                            Text("\(formattedFuel) / 100")
                                 .foregroundColor(Palette.blackHeader)
-                                .font(Typography.headerL)
-                            Text("Coming Soon")
+                                .font(Typography.headerLM)
+                            Text("Efficiency (L/\(utilityVM.unit))")
                                 .foregroundColor(Palette.blackHeader)
                                 .font(Typography.TextM)
                         }

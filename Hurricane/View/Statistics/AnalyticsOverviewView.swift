@@ -27,6 +27,7 @@ struct AnalyticsOverviewView: View {
 //        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
 //    }
     
+    
     var body: some View {
         if categoryVM.expenseList.isEmpty {
             ZStack{
@@ -135,6 +136,17 @@ struct OverviewView: View {
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var categoryVM : CategoryViewModel
     @ObservedObject var utilityVM : UtilityViewModel
+    
+    init(dataVM: DataViewModel, categoryVM: CategoryViewModel, utilityVM: UtilityViewModel) {
+            //  Change list background color
+        UITableView.appearance().separatorStyle = .singleLine
+        UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
+        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
+        self.dataVM = dataVM
+        self.categoryVM = categoryVM
+        self.utilityVM = utilityVM
+        }
+    
     var body: some View {
         List {
             CostsListView(utilityVM:utilityVM, categoryVM: categoryVM, dataVM: dataVM)
@@ -146,7 +158,9 @@ struct OverviewView: View {
                 OdometerCostsView(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM)
                     .padding(2)
             }
-        }        
+            Section {
+            }
+        }
     }
 }
 
@@ -227,7 +241,7 @@ struct OdometerCostsView: View {
             Text("Odometer")
                 .font(Typography.headerL)
             Spacer()
-            Text("\(String(Int(dataVM.currentVehicle.first?.odometer ?? 0))) Km")
+            Text("\(String(Int(dataVM.currentVehicle.first?.odometer ?? 0))) km")
                 .fontWeight(.semibold)
                 .font(Typography.headerM)
         }
@@ -313,30 +327,32 @@ struct AnalyticsHeaderView : View {
                                        
                                 }
                             }
+                            .padding()
                             
                             
                         }
+                        
                     
                     }
                 })
                
-                ZStack{
-                    Button(action: {
-                        
-                        
-                    }, label: {
-                        ZStack{
-                            Circle()
-                                .foregroundColor(Palette.white)
-                                .frame(width: UIScreen.main.bounds.width * 0.09, height: UIScreen.main.bounds.height * 0.04)
-                                .shadowGrey()
-                            Image("download")
-                                .frame(alignment: .center)
-                                .padding()
-                        }
-                    })
-                }
-                .padding()
+//                ZStack{
+//                    Button(action: {
+//
+//
+//                    }, label: {
+//                        ZStack{
+//                            Circle()
+//                                .foregroundColor(Palette.white)
+//                                .frame(width: UIScreen.main.bounds.width * 0.09, height: UIScreen.main.bounds.height * 0.04)
+//                                .shadowGrey()
+//                            Image("download")
+//                                .frame(alignment: .center)
+//                                .padding()
+//                        }
+//                    })
+//                }
+//                .padding()
             }
             .padding(.top,2)
         }
