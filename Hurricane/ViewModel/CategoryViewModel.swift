@@ -169,12 +169,10 @@ class CategoryViewModel: ObservableObject {
         let q = self.odometerTotal / 100
         print("q is \(q)")
         if q != 0.0 {
-                    self.fuelEff = literSum / q
-                } else {
-                    self.fuelEff = q
-                }
-        print("fuel efficiency (self.fuelEff)")
-        self.fuelEff = literSum / q
+            self.fuelEff = literSum / q
+        } else {
+            self.fuelEff = q
+        }
         print("fuel efficiency \(self.fuelEff)")
         
         //self.odometerTotal
@@ -373,11 +371,12 @@ class CategoryViewModel: ObservableObject {
             if self.fuelList.count >= 2 {
                 self.getAverageOdometer(expenseList: self.expenseList, timeFrame: self.selectedTimeFrame)
                 self.getEstimatedOdometerPerYear(timeFrame: self.selectedTimeFrame)
-                self.getFuelEfficiency(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+                
                 self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
                 self.getAveragePrice(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
                 
             }
+            self.getFuelEfficiency(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
             self.getTotalExpense(expenses: self.expenseList)
             self.totalCostPercentage(totalCost: self.totalExpense, expenseList: self.expenseList)
             self.getLitersData(expenses: self.expenseList)
