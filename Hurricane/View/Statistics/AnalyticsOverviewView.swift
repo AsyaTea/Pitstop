@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+
+
 struct AnalyticsOverviewView: View {
        
     @StateObject var statisticsVM = StatisticsViewModel()
@@ -33,6 +35,7 @@ struct AnalyticsOverviewView: View {
             ZStack{
                 Palette.greyBackground.ignoresSafeArea()
                 HStack{
+                   
                     Text("No data yet")
                     ProgressView()
                 }
@@ -148,8 +151,13 @@ struct OverviewView: View {
         }
     
     var body: some View {
+       
         List {
-            CostsListView(utilityVM:utilityVM, categoryVM: categoryVM, dataVM: dataVM)
+            Section {
+                CostsListView(utilityVM:utilityVM, categoryVM: categoryVM, dataVM: dataVM)
+            }
+           
+                
             Section {
                 FuelListView(categoryVM: categoryVM, utilityVM: utilityVM)
                     .padding(2)
@@ -161,6 +169,8 @@ struct OverviewView: View {
             Section {
             }
         }
+        
+        
     }
 }
 

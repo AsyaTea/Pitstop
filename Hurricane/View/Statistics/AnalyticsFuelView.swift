@@ -29,9 +29,9 @@ struct AnalyticsFuelView: View {
                                     .foregroundColor(Palette.greyHard)
                             }
                             Spacer()
-                            Text(" ▼ 12 % ")
-                                .font(Typography.headerS)
-                                .foregroundColor(Palette.greenHighlight)
+//                            Text(" ▼ 12 % ")
+//                                .font(Typography.headerS)
+//                                .foregroundColor(Palette.greenHighlight)
                         }
                         .padding(-3)
                         HStack{

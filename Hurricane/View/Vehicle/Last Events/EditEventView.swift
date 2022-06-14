@@ -86,8 +86,9 @@ struct EditEventView: View {
                         dataVM.getExpensesCoreData(filter: nil, storage: { storage in
                             dataVM.expenseList = storage
                             dataVM.expenseFilteredList = storage
+                            categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                         })
-//                       categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                       
                         
                         //SE METTO STA ROBA CRASHA, TO FIX PROSSIMAMENTE
                         //                            dataVM.getTotalExpense(expenses: dataVM.expenseList)
