@@ -11,11 +11,8 @@ struct AnalyticsFuelView: View {
     @ObservedObject var categoryVM : CategoryViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     var body: some View {
-        
-            
-        VStack {            
-            
-            List {                
+        VStack {
+            List {
                 Section {
                     VStack{
                         HStack {
@@ -41,27 +38,27 @@ struct AnalyticsFuelView: View {
                                 .padding(1)
                         }
                         .padding(-15)
-                     
-//                        HStack(alignment: .bottom) {
-//                            
-//                    
-//                                Text("Jan")
-//                      
-//
-//                            Spacer()
-//                            Text("Mar")
-//                        
-//                                Spacer()
-//                                Text("May")
-//                                Spacer()
-//                                Text("Jun")
-//                     
-//                            
-//                    }
-//                        .padding(-15)
-//                    .font(.subheadline)
-//                    .foregroundColor(Palette.greyMiddle)
-                Spacer()
+                        
+                        //                        HStack(alignment: .bottom) {
+                        //
+                        //
+                        //                                Text("Jan")
+                        //
+                        //
+                        //                            Spacer()
+                        //                            Text("Mar")
+                        //
+                        //                                Spacer()
+                        //                                Text("May")
+                        //                                Spacer()
+                        //                                Text("Jun")
+                        //
+                        //
+                        //                    }
+                        //                        .padding(-15)
+                        //                    .font(.subheadline)
+                        //                    .foregroundColor(Palette.greyMiddle)
+                        Spacer()
                         
                     }
                     
