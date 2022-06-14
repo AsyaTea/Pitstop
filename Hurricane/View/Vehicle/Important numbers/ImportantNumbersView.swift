@@ -85,7 +85,7 @@ struct NumberCardView: View {
         ZStack{
             Rectangle()
                 .cornerRadius(12)
-                .foregroundColor(Palette.greyBackground)
+                .foregroundColor(Palette.white)
                 .shadowGrey()
             HStack{
                 VStack(alignment: .leading,spacing: 5){

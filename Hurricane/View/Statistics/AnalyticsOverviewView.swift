@@ -339,7 +339,7 @@ struct AnalyticsHeaderView : View {
                                         .foregroundColor(Palette.black)
                                         .font(Typography.ControlS)
                                     Image("arrowDown")
-                                       
+                                        .foregroundColor(Palette.black)
                                 }
                             }
                             .padding()

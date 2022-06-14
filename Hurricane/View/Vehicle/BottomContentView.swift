@@ -38,7 +38,7 @@ struct BottomContentView: View {
             
             if(dataVM.expenseList.isEmpty){
                 HStack{
-                    Text("There are no events now")
+                    Text("There are no events to show")
                         .font(Typography.TextM)
                         .foregroundColor(Palette.greyMiddle)
                     Spacer()
@@ -60,8 +60,12 @@ struct BottomContentView: View {
             }
             
             //MARK: DOCUMENTS
-            TitleSectionComponent(sectionTitle: "Documents", binding: $viewAllDocuments)
-                .padding()
+            HStack{
+                Text("Documents")
+                    .foregroundColor(Palette.black)
+                    .font(Typography.headerL)
+                Spacer()
+            }                .padding()
                 .padding(.top,10)
                 .padding(.bottom,-10)
             

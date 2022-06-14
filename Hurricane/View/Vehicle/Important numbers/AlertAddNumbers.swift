@@ -156,7 +156,7 @@ struct AlertAddNumbersInside: View {
             VStack{
                 HStack{
                     Spacer()
-                    Text("Add important number")
+                    Text("Add an useful contact")
                         .foregroundColor(Palette.black)
                         .font(Typography.headerM)
                         .padding(.leading,40)
