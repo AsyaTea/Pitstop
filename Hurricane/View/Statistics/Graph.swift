@@ -13,12 +13,16 @@ struct Graph: View {
     var body: some View {
         VStack {
                 //if tab is fuel
-            
-            
+            if !categoryVM.fuelGraphData.isEmpty {
                 //if tab is odometer
                 OdometerGraphView(data: sampleData)
                     .frame(height: 200)
                     .padding(.top, 25)
+            } else {
+                ProgressView()
+            }
+            
+           
         }
     }
 }
