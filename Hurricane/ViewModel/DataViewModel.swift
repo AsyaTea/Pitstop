@@ -344,6 +344,7 @@ class DataViewModel : ObservableObject {
     
     func addReminder(reminder : ReminderState) {
         let newReminder = Reminder(context: manager.context)
+        print("reminderID",reminder.reminderID)
         newReminder.title = reminder.title
         newReminder.note = reminder.note
         newReminder.distance = reminder.distance
@@ -396,7 +397,7 @@ class DataViewModel : ObservableObject {
             }
         }
         save()
-        print("Reminder update done")
+        print("Reminder update done: ",reminder)
     }
     
     func deleteReminder(reminderS : ReminderState) {

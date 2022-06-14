@@ -34,12 +34,12 @@ struct ImportantNumbersView: View {
                         }
                         .padding(.vertical,20)
                         Spacer()
-                        Button(action: {
-                            homeVM.showAlertNumbersInside.toggle()
-                            homeVM.interactiveDismiss.toggle()
-                        }, label: {
-                            BlackButton(text: "Add new contact", color: Palette.black)
-                        })
+//                        Button(action: {
+//                            homeVM.showAlertNumbersInside.toggle()
+//                            homeVM.interactiveDismiss.toggle()
+//                        }, label: {
+//                            BlackButton(text: "Add new contact", color: Palette.black)
+//                        })
                     }
                 }
                 .overlay(

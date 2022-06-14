@@ -60,7 +60,7 @@ class CategoryViewModel: ObservableObject {
     @Published var taxesCost: Float = 0
     @Published var otherCost: Float = 0
     
-   
+    
     var fuelPercentage : Float = 0
     var taxesPercentage: Float = 0
     var maintainancePercentage : Float = 0
@@ -168,6 +168,12 @@ class CategoryViewModel: ObservableObject {
         print("liter sum \(literSum)")
         let q = self.odometerTotal / 100
         print("q is \(q)")
+        if q != 0.0 {
+                    self.fuelEff = literSum / q
+                } else {
+                    self.fuelEff = q
+                }
+        print("fuel efficiency (self.fuelEff)")
         self.fuelEff = literSum / q
         print("fuel efficiency \(self.fuelEff)")
         
@@ -266,15 +272,15 @@ class CategoryViewModel: ObservableObject {
     //Estimated km/year takes odometer data from time frame, makes an average -> multiply for 12/ 4 / 1 based on time frame
     
     func getEstimatedOdometerPerYear(timeFrame: String) {
-//        let days = calculateDays(timeFrame: timeFrame)
+        //        let days = calculateDays(timeFrame: timeFrame)
         self.estimatedOdometerPerYear = self.avgOdometer * Float(365)
     }
     
-
+    
     
     func totalCostPercentage(totalCost: Float, expenseList: [ExpenseViewModel]) {
         
-       
+        
         self.fuelPercentage = (self.fuelTotal / totalCost) * 100
         self.taxesPercentage = ((self.insuranceTotal + self.roadTaxTotal + self.finesTotal + self.tollsTotal) / totalCost ) * 100
         self.maintainancePercentage = (self.maintenanceTotal / totalCost) * 100
@@ -305,7 +311,7 @@ class CategoryViewModel: ObservableObject {
         self.fuelGraphData = liters.map({ liter in
             return CGFloat(liter)
         })
-                
+        
     }
     
     func getOdometersData(expenses: [ExpenseViewModel]) {
@@ -346,14 +352,14 @@ class CategoryViewModel: ObservableObject {
         
         
         self.categories = [Category2(name: "Fuel", color: Palette.colorYellow, icon: "fuelType", totalCosts: self.fuelTotal),
-                                   Category2(name: "Maintenance", color: Palette.colorGreen, icon: "maintenance", totalCosts: self.maintenanceTotal),
-                                   Category2(name: "Insurance", color: Palette.colorOrange, icon: "insurance", totalCosts: self.insuranceTotal),
-                                   Category2(name: "Road Tax", color: Palette.colorOrange, icon: "roadTax", totalCosts: self.roadTaxTotal),
-                                   Category2(name: "Fines", color: Palette.colorOrange, icon: "fines", totalCosts: self.finesTotal),
-                                   Category2(name: "Tolls", color: Palette.colorOrange, icon: "Tolls", totalCosts: self.tollsTotal),
-                                   Category2(name: "Parking", color: Palette.colorViolet, icon: "parking", totalCosts: self.parkingTotal),
-                                   Category2(name: "Other", color: Palette.colorViolet, icon: "other", totalCosts: self.otherTotal)
-                ]
+                           Category2(name: "Maintenance", color: Palette.colorGreen, icon: "maintenance", totalCosts: self.maintenanceTotal),
+                           Category2(name: "Insurance", color: Palette.colorOrange, icon: "insurance", totalCosts: self.insuranceTotal),
+                           Category2(name: "Road Tax", color: Palette.colorOrange, icon: "roadTax", totalCosts: self.roadTaxTotal),
+                           Category2(name: "Fines", color: Palette.colorOrange, icon: "fines", totalCosts: self.finesTotal),
+                           Category2(name: "Tolls", color: Palette.colorOrange, icon: "Tolls", totalCosts: self.tollsTotal),
+                           Category2(name: "Parking", color: Palette.colorViolet, icon: "parking", totalCosts: self.parkingTotal),
+                           Category2(name: "Other", color: Palette.colorViolet, icon: "other", totalCosts: self.otherTotal)
+        ]
     }
     
     func retrieveAndUpdate(vehicleID: NSManagedObjectID) {
@@ -370,7 +376,7 @@ class CategoryViewModel: ObservableObject {
                 self.getFuelEfficiency(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
                 self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
                 self.getAveragePrice(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-               
+                
             }
             self.getTotalExpense(expenses: self.expenseList)
             self.totalCostPercentage(totalCost: self.totalExpense, expenseList: self.expenseList)
