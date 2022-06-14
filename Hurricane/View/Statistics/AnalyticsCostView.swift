@@ -55,9 +55,7 @@ struct CostGraphView : View {
                 }
                 
                 Spacer()
-//                Text(" ▼ 12 % ")
-//                    .font(Typography.headerS)
-//                    .foregroundColor(Palette.greenHighlight)
+
             }
             
             Spacer()
@@ -135,13 +133,15 @@ struct LineGraph: View {
         var body: some View {
             VStack(alignment: .leading) {
                 cell()
+            
             }
+//            .frame(width: 340, height: 0)
         }
 
         @ViewBuilder
         func cell() -> some View {
             RoundedRectangle(cornerRadius: 5)
-                .frame(width: 340, height: 20, alignment: .bottom)
+                .frame(width: 340, height: 23, alignment: .top)
                 .foregroundColor(.white)
                 .overlay(content: {
                     GeometryReader { geometry in
@@ -150,26 +150,26 @@ struct LineGraph: View {
                                 Rectangle()
                                     .foregroundColor(Palette.colorYellow)
                                     .frame(width: geometry.size.width * CGFloat(categoryVM.fuelPercentage / 100), height: geometry.size.height)
-                                    .padding(-5)
+                                    .padding(-2)
                                 Rectangle()
                                     .foregroundColor(Palette.colorOrange)
                                     .frame(width: geometry.size.width * CGFloat(categoryVM.taxesPercentage / 100), height: geometry.size.height)
-                                    .padding(-2)
+                                    .padding(-5)
+                              
                                 Rectangle()
                                     .foregroundColor(Palette.colorViolet)
                                     .frame(width: geometry.size.width * CGFloat(categoryVM.otherPercentage / 100), height: geometry.size.height)
-                                    .padding(-5)
+                                    .padding(-2)
                                 Rectangle()
                                     .foregroundColor(Palette.colorGreen)
                                     .frame(width: geometry.size.width * CGFloat(categoryVM.maintainancePercentage / 100), height: geometry.size.height)
-                                    .padding(-2)
-                                    
+                                    .padding(-5)
                             }
                             
                         }
                     }
                 })
-                .clipShape(RoundedRectangle(cornerRadius: 5))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
         }
     
 }
