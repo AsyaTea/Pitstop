@@ -13,6 +13,7 @@ struct AnalyticsFuelView: View {
     var body: some View {
         VStack {
             List {
+                if categoryVM.fuelGraphData.count >= 2 {
                 Section {
                     VStack{
                         HStack {
@@ -32,10 +33,12 @@ struct AnalyticsFuelView: View {
                         }
                         .padding(-3)
                         HStack{
-                            FuelGraphView(categoryVM: categoryVM, data: categoryVM.fuelGraphData)
-                                .frame(height: 200)
-                                .padding(.top, 25)
-                                .padding(1)
+                           
+                                FuelGraphView(categoryVM: categoryVM, data: categoryVM.fuelGraphData)
+                                    .frame(height: 200)
+                                    .padding(.top, 25)
+                                    .padding(1)
+                           
                         }
                         .padding(-15)
                      
@@ -43,7 +46,7 @@ struct AnalyticsFuelView: View {
                         
                     }
                     
-                    
+                }
                 }
                 
                 Section {
