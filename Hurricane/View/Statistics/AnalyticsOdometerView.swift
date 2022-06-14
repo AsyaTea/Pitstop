@@ -15,6 +15,7 @@ struct AnalyticsOdometerView: View {
         VStack {
             
             List {
+                if categoryVM.odometerGraphData.count >= 2 {
                 Section {
                         VStack{
                             HStack {
@@ -43,6 +44,7 @@ struct AnalyticsOdometerView: View {
                             Spacer()
                         }
                     }
+                }
                 Section {
                     OdometerCostsView(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM)
                         .padding(4)
