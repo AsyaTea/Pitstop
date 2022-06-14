@@ -50,6 +50,7 @@
 		FF5D5A2528299D0D006D5ABF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D5A2428299D0D006D5ABF /* OnboardingView.swift */; };
 		FF5F2C9F2823C4CD007980F3 /* Expense+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */; };
 		FF5F2CA02823C4CD007980F3 /* Expense+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */; };
+		FF7439AE28574C8E00E113CA /* ThemePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7439AD28574C8E00E113CA /* ThemePickerView.swift */; };
 		FF7C8AF4283F598900D2EEA2 /* Number+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7C8AF2283F598900D2EEA2 /* Number+CoreDataClass.swift */; };
 		FF7C8AF5283F598900D2EEA2 /* Number+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7C8AF3283F598900D2EEA2 /* Number+CoreDataProperties.swift */; };
 		FF974B86283F4DE400C33576 /* VehicleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF974B85283F4DE400C33576 /* VehicleModel.swift */; };
@@ -128,6 +129,7 @@
 		FF5D5A262829AE2F006D5ABF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FF7439AD28574C8E00E113CA /* ThemePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerView.swift; sourceTree = "<group>"; };
 		FF7C8AF2283F598900D2EEA2 /* Number+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF7C8AF3283F598900D2EEA2 /* Number+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FF974B85283F4DE400C33576 /* VehicleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleModel.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				FF42ADD62825251500C66A84 /* SettingsView.swift */,
+				FF7439AD28574C8E00E113CA /* ThemePickerView.swift */,
 				FFC67B44283A2A920078B283 /* EditVehicleView.swift */,
 				FF534EAF283636EA0089BE94 /* AddNewVehicleView.swift */,
 			);
@@ -495,6 +498,7 @@
 				41C6E20C282CF49B00F756B5 /* AnalyticsOdometerView.swift in Sources */,
 				FFA0E72028554495008B3ED9 /* DocumentView.swift in Sources */,
 				FF974B88283F4DF500C33576 /* ExpenseModel.swift in Sources */,
+				FF7439AE28574C8E00E113CA /* ThemePickerView.swift in Sources */,
 				FFDAA340283FE1A000145B35 /* TopBarView.swift in Sources */,
 				FF14DC3228302CC300CA248B /* ImportantNumbersView.swift in Sources */,
 				0327B676284775C50068D73A /* StatusBarAppearance.swift in Sources */,
@@ -678,7 +682,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = MYPTJXP3NK;
+				DEVELOPMENT_TEAM = 55H4ABU399;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hurricane/Info.plist;
@@ -713,7 +717,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = MYPTJXP3NK;
+				DEVELOPMENT_TEAM = 55H4ABU399;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hurricane/Info.plist;

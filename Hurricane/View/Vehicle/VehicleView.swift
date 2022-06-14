@@ -50,6 +50,8 @@ struct VehicleView: View {
             if(shouldShowOnboarding == false){
                 dataVM.getCurrentVehicle()
             }
+            homeVM.headerBackgroundColor = homeVM.loadColor(key: homeVM.COLOR_KEY)
+            homeVM.headerCardColor = homeVM.loadColor(key: homeVM.COLOR_KEY_CARD)
         }
         
     }

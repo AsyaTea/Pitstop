@@ -73,6 +73,7 @@ struct BottomContentView: View {
                             Button(action: {
                                 showPDF.toggle()
                                 pdfVM.documentState = DocumentState.fromDocumentViewModel(vm: document)
+                                pdfVM.loadBookmark()
                             }, label: {
                                 documentComponent(title: document.title)
                             })
@@ -90,9 +91,8 @@ struct BottomContentView: View {
                     switch result {
                     case .success(let url):
                         if url.startAccessingSecurityScopedResource() {
-                            pdfVM.documentState.url = url
                             pdfVM.documentState.title = url.lastPathComponent.replacingOccurrences(of: ".pdf", with: "")
-                            dataVM.addDocument(documentS: pdfVM.documentState)
+                            dataVM.addDocument(documentS: pdfVM.documentState,url: url)
                         }
                         url.stopAccessingSecurityScopedResource()
                     case .failure(let error):

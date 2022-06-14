@@ -17,9 +17,9 @@ struct SettingsView: View {
    
     
     //High priority function pepe
-    var arrayColorBG = [Palette.colorGreen,Palette.colorYellow,Palette.colorViolet,Palette.colorBlue]
-    var arrayColorCard = [Palette.colorMainGreen,Palette.colorMainYellow,Palette.colorMainViolet,Palette.colorMainBlue]
-    @State var random = 0
+//    var arrayColorBG = [Palette.colorGreen,Palette.colorYellow,Palette.colorViolet,Palette.colorBlue]
+//    var arrayColorCard = [Palette.colorMainGreen,Palette.colorMainYellow,Palette.colorMainViolet,Palette.colorMainBlue]
+//    @State var random = 0
     
     var body: some View {
         NavigationView{
@@ -66,21 +66,26 @@ struct SettingsView: View {
                         
                     }
                     Section{
-                        HStack{
-                            Button(action: {
-                                random = Int.random(in: 0...3)
-                                homeVM.headerBackgroundColor = arrayColorBG[random]
-                                homeVM.headerCardColor = arrayColorCard[random]
-                            }, label: {
-                                Text("Theme")
-                                    .foregroundColor(Palette.black)
-                                    .font(Typography.headerM)
-                            })
-                            Spacer()
-                            Circle()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(homeVM.headerBackgroundColor)
-                        }
+//                        HStack{
+//                            Button(action: {
+//                                random = Int.random(in: 0...3)
+//                                homeVM.headerBackgroundColor = arrayColorBG[random]
+//                                homeVM.headerCardColor = arrayColorCard[random]
+//                            }, label: {
+//                                Text("Theme")
+//                                    .foregroundColor(Palette.black)
+//                                    .font(Typography.headerM)
+//                            })
+//                            Spacer()
+//                            Circle()
+//                                .frame(width: 20, height: 20)
+//                                .foregroundColor(homeVM.headerBackgroundColor)
+//                        }
+                        
+                        NavigationLink(destination: ThemePickerView(homeVM: homeVM)){
+                            Text("Theme")
+                                .foregroundColor(Palette.black)
+                                .font(Typography.headerM)}
                         
                         Text("About")
                             .foregroundColor(Palette.black)
