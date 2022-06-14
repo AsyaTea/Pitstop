@@ -67,6 +67,7 @@ class CategoryViewModel: ObservableObject {
     var otherPercentage : Float = 0
     
     var fuelGraphData : [CGFloat] = []
+    var odometerGraphData : [CGFloat] = []
     
     
     @Published var selectedTimeFrame = "Per month"
@@ -265,15 +266,11 @@ class CategoryViewModel: ObservableObject {
     //Estimated km/year takes odometer data from time frame, makes an average -> multiply for 12/ 4 / 1 based on time frame
     
     func getEstimatedOdometerPerYear(timeFrame: String) {
-        let days = calculateDays(timeFrame: timeFrame)
-        self.estimatedOdometerPerYear = self.avgOdometer * Float(days)
+//        let days = calculateDays(timeFrame: timeFrame)
+        self.estimatedOdometerPerYear = self.avgOdometer * Float(365)
     }
     
-    //COST FUNCTIONS
-    //
-    //    func getMacroCategoriesCost() {
-    //
-    //    }
+
     
     func totalCostPercentage(totalCost: Float, expenseList: [ExpenseViewModel]) {
         print("total cost is \(totalCost) and ")
@@ -310,6 +307,19 @@ class CategoryViewModel: ObservableObject {
             return CGFloat(liter)
         })
                 
+    }
+    
+    func getOdometersData(expenses: [ExpenseViewModel]) {
+        let odometerArray = expenses.map { expense in
+            return expense.odometer
+        }
+        let odometers = odometerArray.filter { odometer in
+            odometer > 0
+        }
+        print("odometer array is \(odometerArray)")
+        self.odometerGraphData = odometers.map({ odometer in
+            return CGFloat(odometer)
+        })
     }
     
     
@@ -366,6 +376,7 @@ class CategoryViewModel: ObservableObject {
             self.getTotalExpense(expenses: self.expenseList)
             self.totalCostPercentage(totalCost: self.totalExpense, expenseList: self.expenseList)
             self.getLitersData(expenses: self.expenseList)
+            self.getOdometersData(expenses: self.expenseList)
         })
     }
     

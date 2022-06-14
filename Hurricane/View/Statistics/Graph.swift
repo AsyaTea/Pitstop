@@ -231,7 +231,7 @@ struct OdometerGraphView: View {
                 let height = proxy.size.height
                 let width = (proxy.size.width) / CGFloat (data.count - 1)
                 
-                let maxPoint = (data.max() ?? 0) + 100
+                let maxPoint = (data.max() ?? 0)
                 
                 let points = data.enumerated().compactMap { item -> CGPoint in
                     
@@ -326,7 +326,7 @@ struct OdometerGraphView: View {
                         
                         let index = max(min(Int((translation / width).rounded() + 1), data.count - 1), 0)
                         
-                        currentPlot = "L \(data[index])"
+                        currentPlot = "Km \(data[index])"
                         self.translation = translation
                         
                         offset = CGSize(width: points[index].x - 40, height: points[index].y - height)
@@ -340,13 +340,15 @@ struct OdometerGraphView: View {
 
                     let  max = data.max() ?? 0
 
-                    Text("$ \(Int(max))")
-                        .font(.caption.bold())
+                    Text("\(Int(max))")
+                        .font(.subheadline)
+                        .foregroundColor(Palette.greyMiddle)
 
                     Spacer()
 
-                    Text("$ 0")
-                        .font(.caption.bold())
+                    Text("0")
+                        .font(.subheadline)
+                        .foregroundColor(Palette.greyMiddle)
                 }
                     .frame(maxWidth: .infinity, alignment: .leading)
             )
@@ -379,4 +381,4 @@ struct GraphPractice_Previews: PreviewProvider {
     }
 }
 
-let sampleData: [CGFloat] = [8.5, 7, 9.5, 5, 5.5, 8, 8.5, 7, 9.5, 5, 5.5, 8, 10]
+let sampleData: [CGFloat] = [0, 8.5, 7, 9.5, 5, 5.5, 8, 8.5, 7, 9.5, 5, 5.5, 8, 10]
