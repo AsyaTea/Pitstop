@@ -94,7 +94,7 @@ struct ColorButton: View {
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .frame(width: 150, height: 150)
-                .foregroundColor(press ? color : Palette.white)
+                .foregroundColor(press ? color : Palette.black)
                 .rotationEffect(Angle(degrees: tap ? 90 : 0))
                 .animation(.easeInOut)
                 .overlay(

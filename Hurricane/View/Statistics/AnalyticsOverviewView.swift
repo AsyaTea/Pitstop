@@ -316,7 +316,7 @@ struct AnalyticsHeaderView : View {
                                         .foregroundColor(Palette.black)
                                         .font(Typography.ControlS)
                                     Image("arrowDown")
-                                       
+                                        .foregroundColor(Palette.black)
                                 }
                             }
                             
@@ -337,6 +337,7 @@ struct AnalyticsHeaderView : View {
                                 .frame(width: UIScreen.main.bounds.width * 0.09, height: UIScreen.main.bounds.height * 0.04)
                                 .shadowGrey()
                             Image("download")
+                                .foregroundColor(Palette.black)
                                 .frame(alignment: .center)
                                 .padding()
                         }
