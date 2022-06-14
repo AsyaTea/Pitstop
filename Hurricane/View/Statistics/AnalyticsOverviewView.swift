@@ -30,11 +30,17 @@ struct AnalyticsOverviewView: View {
     var body: some View {
         if categoryVM.expenseList.isEmpty {
             ZStack{
-                Palette.greyBackground.ignoresSafeArea()
-                HStack{
-                    Text("No data yet")
-                    ProgressView()
+                Palette.white.ignoresSafeArea()
+                VStack{
+                    Spacer()
+                    GifView("loadingStats")
+                        .frame(width: 300, height: 300)
+                    Text("No data to show")
+                        .foregroundColor(Palette.black)
+                        .font(Typography.headerM)
+                    Spacer()
                 }
+                
             }
         }
         VStack{

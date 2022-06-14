@@ -50,7 +50,7 @@ class NotificationManager : ObservableObject {
                 }
             }
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
-            print("Notification Unscheduled")
+            print("Notification Unscheduled with",identifiers)
         }
     }
 }
