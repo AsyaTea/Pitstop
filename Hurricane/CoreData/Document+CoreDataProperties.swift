@@ -18,6 +18,7 @@ extension Document {
 
     @NSManaged public var title: String?
     @NSManaged public var url: URL?
+    @NSManaged public var bookmark: Data?
 
 }
 

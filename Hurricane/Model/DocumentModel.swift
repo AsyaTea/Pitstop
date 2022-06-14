@@ -14,6 +14,7 @@ struct DocumentState: Hashable {
     var title: String = ""
     var url : URL?
     var documentID: NSManagedObjectID?
+    var bookmark: Data?
 }
 
 struct DocumentViewModel : Hashable {
@@ -30,6 +31,10 @@ struct DocumentViewModel : Hashable {
     var documentID: NSManagedObjectID {
         return document.objectID
     }
+    
+    var bookmark: Data {
+        return document.bookmark ?? Data()
+    }
 }
 
 extension DocumentState {
@@ -39,6 +44,7 @@ extension DocumentState {
         documentS.title = vm.title
         documentS.url = vm.url
         documentS.documentID = vm.documentID
+        documentS.bookmark = vm.bookmark
         return documentS
     }
 }

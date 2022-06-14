@@ -80,6 +80,11 @@ struct SettingsView: View {
                                 .foregroundColor(homeVM.headerBackgroundColor)
                         }
                         
+                        NavigationLink(destination: ThemePickerView(homeVM: homeVM)){
+                            Text("Theme")
+                                .foregroundColor(Palette.black)
+                                .font(Typography.headerM)}
+                        
                         Text("About")
                             .foregroundColor(Palette.black)
                             .font(Typography.headerM)
