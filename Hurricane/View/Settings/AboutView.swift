@@ -11,6 +11,7 @@ struct AboutView: View {
     
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     
+    @Environment(\.openURL) var openURL
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
@@ -25,14 +26,14 @@ struct AboutView: View {
                 List{
                     Section(header:Text("The team")){
                         Button(action: {
-                            
+                            openURL(URL(string: "https://oneanya.com")!)
                         }, label: {
                             HStack{
                                 VStack(alignment: .leading){
                                     Text("Anna Antonova")
                                         .foregroundColor(Palette.black)
                                         .font(Typography.headerS)
-                                    Text("Designer")
+                                    Text("UI/UX Designer")
                                         .foregroundColor(Palette.black)
                                         .font(Typography.TextM)
                                 }
@@ -41,6 +42,7 @@ struct AboutView: View {
                                     Circle()
                                         .frame(width: 25, height: 25)
                                         .foregroundColor(Palette.greyLight)
+                                    
                                     Image(systemName: "link")
                                         .resizable()
                                         .frame(width: 15, height: 15)
@@ -51,7 +53,7 @@ struct AboutView: View {
                         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
                         Button(action: {
-                            
+                            openURL(URL(string: "https://www.linkedin.com/in/francesco-puzone/")!)
                         }, label: {
                             HStack{
                                 VStack(alignment: .leading){
@@ -77,14 +79,14 @@ struct AboutView: View {
                         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
                         Button(action: {
-                            
+                            openURL(URL(string: "https://github.com/AsyaTea")!)
                         }, label: {
                             HStack{
                                 VStack(alignment: .leading){
                                     Text("Asya Tealdi")
                                         .foregroundColor(Palette.black)
                                         .font(Typography.headerS)
-                                    Text("Coder")
+                                    Text("Developer")
                                         .foregroundColor(Palette.black)
                                         .font(Typography.TextM)
                                 }
@@ -103,14 +105,14 @@ struct AboutView: View {
                         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                         
                         Button(action: {
-                            
+                            openURL(URL(string: "https://github.com/IV0000")!)
                         }, label: {
                             HStack{
                                 VStack(alignment: .leading){
                                     Text("Ivan Voloshchuk")
                                         .foregroundColor(Palette.black)
                                         .font(Typography.headerS)
-                                    Text("Coder")
+                                    Text("Developer")
                                         .foregroundColor(Palette.black)
                                         .font(Typography.TextM)
                                 }
