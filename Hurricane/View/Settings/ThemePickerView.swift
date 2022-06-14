@@ -6,34 +6,33 @@
 //
 
 import SwiftUI
-import CoreHaptics
 
 struct ThemePickerView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @ObservedObject var homeVM : HomeViewModel
     
     var body: some View {
         VStack(spacing:170){
             Spacer()
             HStack(spacing:40){
                 Spacer()
-                ColorButton(color: Palette.colorBlue, title: "Pick one")
+                ColorButton(color: Palette.colorBlue, cardColor: Palette.colorMainBlue, title: "Pick one", homeVM: homeVM)
+                
                 Spacer()
                 
-                ColorButton(color: Palette.colorYellow, title: "Pick one")
-                
-                    .accentColor(.none)
+                ColorButton(color: Palette.colorYellow,cardColor: Palette.colorMainYellow, title: "Pick one", homeVM: homeVM)
                 Spacer()
             }
             
             HStack(spacing:40){
                 Spacer()
                 
-                ColorButton(color: Palette.colorGreen, title: "Pick one")
+                ColorButton(color: Palette.colorGreen,cardColor: Palette.colorMainGreen, title: "Pick one", homeVM: homeVM)
                 
                 Spacer()
                 
-                ColorButton(color: Palette.colorViolet, title: "Pick one")
+                ColorButton(color: Palette.colorViolet,cardColor: Palette.colorMainViolet,title: "Pick one", homeVM: homeVM)
                 
                 Spacer()
             }
@@ -61,16 +60,18 @@ struct ThemePickerView: View {
     }
 }
 
-struct ThemePickerView_Previews: PreviewProvider {
-    static var previews: some View {
-        ThemePickerView()
-    }
-}
+//struct ThemePickerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ThemePickerView()
+//    }
+//}
 
 struct ColorButton: View {
+    
     var color : Color
+    var cardColor: Color
     var title : String
-    @State private var engine: CHHapticEngine?
+   
     @GestureState var tap = false
     @State private var press = false
     let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
@@ -112,48 +113,9 @@ struct ColorButton: View {
             }
                 .onEnded{ value in
                     self.press.toggle()
+                    homeVM.headerBackgroundColor = color
+                    homeVM.headerCardColor = cardColor
                 }
         )
-        .onAppear(perform: prepareHaptics)
     }
-    
-    func prepareHaptics() {
-        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
-        
-        do {
-            engine = try CHHapticEngine()
-            try engine?.start()
-        } catch {
-            print("There was an error creating the engine: \(error.localizedDescription)")
-        }
-    }
-    //
-    //    func complexSuccess() {
-    //         let initialIntensity: Float = 1.0
-    //         let initialSharpness: Float = 0.5
-    //        // make sure that the device supports haptics
-    //        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
-    //        var events = [CHHapticEvent]()
-    //
-    //        // create one intense, sharp tap
-    //        let intensity = CHHapticEventParameter(parameterID: .hapticIntensity,value: initialIntensity)
-    //
-    //        // Create a sharpness parameter:
-    //        let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness,value: initialSharpness)
-    //
-    //        // Create a continuous event with a long duration from the parameters.
-    //        let continuousEvent = CHHapticEvent(eventType: tap ? .hapticContinuous,parameters: [intensity, sharpness],relativeTime: 0,duration: 10)
-    //
-    //        // convert those events into a pattern and play it immediately
-    //        do {
-    //            let pattern = try CHHapticPattern(events: [continuousEvent], parameters: [])
-    //            let player = try engine?.makePlayer(with: pattern)
-    //            try player?.start(atTime: 0)
-    //        } catch {
-    //            print("Failed to play pattern: \(error.localizedDescription).")
-    //        }
-    //    }
-    
-    
 }
-
