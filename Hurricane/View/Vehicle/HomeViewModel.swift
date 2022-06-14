@@ -26,6 +26,41 @@ class HomeViewModel : ObservableObject {
     @Published var headerBackgroundColor = Palette.colorYellow
     @Published var headerCardColor = Palette.colorMainYellow
     
+    @Published var COLOR_KEY = "COLOR_KEY"
+    @Published var COLOR_KEY_CARD = "COLOR_KEY_CARD"
+    
+    
+    private let userDefaults = UserDefaults.standard
+    
+    func saveColor(color: Color,key: String){
+        let color = UIColor(color).cgColor
+        
+        if let components = color.components {
+            userDefaults.set(components, forKey: key)
+            print(components)
+            print("Color saved")
+            
+        }
+    }
+    
+    func loadColor(key: String) -> Color {
+        
+        guard let array = userDefaults.object(forKey: key) as? [CGFloat] else {
+            
+            if key == COLOR_KEY {
+                return Palette.colorYellow
+            }
+            else {return Palette.colorMainYellow}
+        
+        }
+        let color = Color(.sRGB, red: array[0],green: array[1],blue: array[2],opacity: array[3])
+        
+        print(color)
+        print("Color loaded")
+        return color
+    }
+    
+    
     func createNumber(){
         numberS.telephone = number
         numberS.title = numberTitle
@@ -65,5 +100,33 @@ class HomeViewModel : ObservableObject {
         let opacity = 1 - progress
         
         return offset < 0 ? opacity : 1
+    }
+}
+
+
+struct ColorData {
+    private var COLOR_KEY = "COLOR_KEY"
+    private let userDefaults = UserDefaults.standard
+    
+    func saveColor(color: Color){
+        let color = UIColor(color).cgColor
+        
+        if let components = color.components {
+            userDefaults.set(components, forKey: COLOR_KEY)
+            print(components)
+            print("Color saved")
+            
+        }
+    }
+    
+    func loadColor() -> Color {
+        
+        guard let array = userDefaults.object(forKey: COLOR_KEY) as? [CGFloat] else {return Palette.black}
+        
+        let color = Color(.sRGB, red: array[0],green: array[1],blue: array[2],opacity: array[3])
+        
+        print(color)
+        print("Color loaded")
+        return color
     }
 }

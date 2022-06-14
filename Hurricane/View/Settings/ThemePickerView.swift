@@ -78,6 +78,8 @@ struct ColorButton: View {
     
     @ObservedObject var homeVM : HomeViewModel
     
+    
+    
     var body: some View {
         
         HStack{
@@ -92,7 +94,7 @@ struct ColorButton: View {
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .frame(width: 150, height: 150)
-                .foregroundColor(press ? color : Palette.blackHeader)
+                .foregroundColor(press ? color : Palette.white)
                 .rotationEffect(Angle(degrees: tap ? 90 : 0))
                 .animation(.easeInOut)
                 .overlay(
@@ -113,6 +115,8 @@ struct ColorButton: View {
             }
                 .onEnded{ value in
                     self.press.toggle()
+                    homeVM.saveColor(color: color, key: homeVM.COLOR_KEY)
+                    homeVM.saveColor(color: cardColor, key: homeVM.COLOR_KEY_CARD)
                     homeVM.headerBackgroundColor = color
                     homeVM.headerCardColor = cardColor
                 }
