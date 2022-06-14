@@ -3,16 +3,6 @@
     {
       "filename" : "Maintance.pdf",
       "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "Service.pdf",
-      "idiom" : "universal"
     }
   ],
   "info" : {
