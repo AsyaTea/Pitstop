@@ -38,7 +38,7 @@ struct HeaderContent : View {
                                 .font(Typography.TextM)
                         }
                     }
-                })
+                }).disabled(true)
                 
                 Button(action: {
                     
@@ -57,7 +57,7 @@ struct HeaderContent : View {
                                 .font(Typography.TextM)
                         }
                     }
-                })
+                }).disabled(true)
                 
                 Button(action: {
                     
@@ -77,7 +77,7 @@ struct HeaderContent : View {
                                 .font(Typography.TextM)
                         }
                     }
-                })
+                }).disabled(true)
             }
         }
         .padding()
