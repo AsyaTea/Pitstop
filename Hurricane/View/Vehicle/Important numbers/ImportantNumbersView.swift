@@ -21,8 +21,8 @@ struct ImportantNumbersView: View {
         NavigationView{
             ZStack{
                 Palette.greyBackground.edgesIgnoringSafeArea(.all)
-                ScrollView(.vertical, showsIndicators: false){
                     VStack{
+                        ScrollView(.vertical, showsIndicators: false){
                         VStack(spacing: 16){
                             ForEach(dataVM.numberList, id:\.self){ number in
                                 NavigationLink(
@@ -32,16 +32,16 @@ struct ImportantNumbersView: View {
                                 }
                             }
                         }
+                        }
                         .padding(.vertical,20)
                         Spacer()
-                        Button(action: {
-                            homeVM.showAlertNumbersInside.toggle()
-                            homeVM.interactiveDismiss.toggle()
-                        }, label: {
-                            BlackButton(text: "Add new contact", color: Palette.black)
-                        })
+//                        Button(action: {
+//                            homeVM.showAlertNumbersInside.toggle()
+//                            homeVM.interactiveDismiss.toggle()
+//                        }, label: {
+//                            BlackButton(text: "Add new contact", color: Palette.black)
+//                        })
                     }
-                }
                 .overlay(
                     homeVM.showAlertNumbersInside ? Color.black.opacity(0.4) : Color.clear
                 )

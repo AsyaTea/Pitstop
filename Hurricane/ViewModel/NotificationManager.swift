@@ -26,13 +26,14 @@ class NotificationManager : ObservableObject {
         let category = Category.init(rawValue: Int(reminderS.category ?? 0))
         let content = UNMutableNotificationContent()
         self.id = reminderS.reminderID?.uriRepresentation().absoluteString ?? UUID().uuidString
+        print(id)
         content.title = reminderS.title
         content.body = "You have a new \(category?.label.lowercased() ?? "") reminder"
         
         content.sound = UNNotificationSound.default
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.day, .month, .year, .hour, .minute],from: reminderS.date), repeats: false)
-        let request = UNNotificationRequest(identifier: id , content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: self.id , content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {

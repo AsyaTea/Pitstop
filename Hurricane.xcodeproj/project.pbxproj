@@ -78,6 +78,9 @@
 		FFCC308628258B6C00391BD5 /* UtilityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */; };
 		FFD1224628588CB7004686CA /* GifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1224528588CB7004686CA /* GifView.swift */; };
 		FFD1224A285892DB004686CA /* loadingStats.gif in Resources */ = {isa = PBXBuildFile; fileRef = FFD12249285892DB004686CA /* loadingStats.gif */; };
+		FFD1224C2858BD6C004686CA /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1224B2858BD6C004686CA /* AboutView.swift */; };
+		FFD1224E2858BDB8004686CA /* aboutPlaceholder.gif in Resources */ = {isa = PBXBuildFile; fileRef = FFD1224D2858BDB7004686CA /* aboutPlaceholder.gif */; };
+		FFD122502858CB0D004686CA /* comingSoon.gif in Resources */ = {isa = PBXBuildFile; fileRef = FFD1224F2858CB0D004686CA /* comingSoon.gif */; };
 		FFDAA33D283FC68400145B35 /* DocumentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAA33C283FC68400145B35 /* DocumentModel.swift */; };
 		FFDAA340283FE1A000145B35 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAA33F283FE1A000145B35 /* TopBarView.swift */; };
 		FFDF855A2824104A00E0F9BF /* VehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF85592824104A00E0F9BF /* VehicleView.swift */; };
@@ -160,6 +163,9 @@
 		FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityViewModel.swift; sourceTree = "<group>"; };
 		FFD1224528588CB7004686CA /* GifView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifView.swift; sourceTree = "<group>"; };
 		FFD12249285892DB004686CA /* loadingStats.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loadingStats.gif; sourceTree = "<group>"; };
+		FFD1224B2858BD6C004686CA /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		FFD1224D2858BDB7004686CA /* aboutPlaceholder.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = aboutPlaceholder.gif; sourceTree = "<group>"; };
+		FFD1224F2858CB0D004686CA /* comingSoon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = comingSoon.gif; sourceTree = "<group>"; };
 		FFDAA33C283FC68400145B35 /* DocumentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentModel.swift; sourceTree = "<group>"; };
 		FFDAA33F283FE1A000145B35 /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		FFDF85592824104A00E0F9BF /* VehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleView.swift; sourceTree = "<group>"; };
@@ -200,6 +206,8 @@
 			children = (
 				FF5D5A262829AE2F006D5ABF /* Info.plist */,
 				FFD12249285892DB004686CA /* loadingStats.gif */,
+				FFD1224D2858BDB7004686CA /* aboutPlaceholder.gif */,
+				FFD1224F2858CB0D004686CA /* comingSoon.gif */,
 				415D202E28214180004AF201 /* HurricaneApp.swift */,
 				FF249C45282151A20062613A /* CoreData */,
 				FF974B84283F4DBF00C33576 /* Model */,
@@ -259,6 +267,7 @@
 				FF7439AD28574C8E00E113CA /* ThemePickerView.swift */,
 				FFC67B44283A2A920078B283 /* EditVehicleView.swift */,
 				FF534EAF283636EA0089BE94 /* AddNewVehicleView.swift */,
+				FFD1224B2858BD6C004686CA /* AboutView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -477,6 +486,8 @@
 				FFD1224A285892DB004686CA /* loadingStats.gif in Resources */,
 				415D203628214182004AF201 /* Preview Assets.xcassets in Resources */,
 				415D203328214182004AF201 /* Assets.xcassets in Resources */,
+				FFD122502858CB0D004686CA /* comingSoon.gif in Resources */,
+				FFD1224E2858BDB8004686CA /* aboutPlaceholder.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,6 +517,7 @@
 				FFA0E72028554495008B3ED9 /* DocumentView.swift in Sources */,
 				FF974B88283F4DF500C33576 /* ExpenseModel.swift in Sources */,
 				FF7439AE28574C8E00E113CA /* ThemePickerView.swift in Sources */,
+				FFD1224C2858BD6C004686CA /* AboutView.swift in Sources */,
 				FFDAA340283FE1A000145B35 /* TopBarView.swift in Sources */,
 				FF14DC3228302CC300CA248B /* ImportantNumbersView.swift in Sources */,
 				0327B676284775C50068D73A /* StatusBarAppearance.swift in Sources */,
@@ -690,7 +702,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = MYPTJXP3NK;
+				DEVELOPMENT_TEAM = 55H4ABU399;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hurricane/Info.plist;
@@ -725,7 +737,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = MYPTJXP3NK;
+				DEVELOPMENT_TEAM = 55H4ABU399;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hurricane/Info.plist;
