@@ -11,11 +11,8 @@ struct AnalyticsFuelView: View {
     @ObservedObject var categoryVM : CategoryViewModel
     @ObservedObject var utilityVM : UtilityViewModel
     var body: some View {
-        
-            
-        VStack {            
-            
-            List {                
+        VStack {
+            List {
                 Section {
                     VStack{
                         HStack {

@@ -76,6 +76,8 @@
 		FFC67B45283A2A920078B283 /* EditVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC67B44283A2A920078B283 /* EditVehicleView.swift */; };
 		FFCC308428252F5B00391BD5 /* AddReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC308328252F5B00391BD5 /* AddReportView.swift */; };
 		FFCC308628258B6C00391BD5 /* UtilityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */; };
+		FFD1224628588CB7004686CA /* GifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1224528588CB7004686CA /* GifView.swift */; };
+		FFD1224A285892DB004686CA /* loadingStats.gif in Resources */ = {isa = PBXBuildFile; fileRef = FFD12249285892DB004686CA /* loadingStats.gif */; };
 		FFDAA33D283FC68400145B35 /* DocumentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAA33C283FC68400145B35 /* DocumentModel.swift */; };
 		FFDAA340283FE1A000145B35 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAA33F283FE1A000145B35 /* TopBarView.swift */; };
 		FFDF855A2824104A00E0F9BF /* VehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF85592824104A00E0F9BF /* VehicleView.swift */; };
@@ -156,6 +158,8 @@
 		FFC67B44283A2A920078B283 /* EditVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVehicleView.swift; sourceTree = "<group>"; };
 		FFCC308328252F5B00391BD5 /* AddReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReportView.swift; sourceTree = "<group>"; };
 		FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityViewModel.swift; sourceTree = "<group>"; };
+		FFD1224528588CB7004686CA /* GifView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifView.swift; sourceTree = "<group>"; };
+		FFD12249285892DB004686CA /* loadingStats.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loadingStats.gif; sourceTree = "<group>"; };
 		FFDAA33C283FC68400145B35 /* DocumentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentModel.swift; sourceTree = "<group>"; };
 		FFDAA33F283FE1A000145B35 /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		FFDF85592824104A00E0F9BF /* VehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleView.swift; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				FF5D5A262829AE2F006D5ABF /* Info.plist */,
+				FFD12249285892DB004686CA /* loadingStats.gif */,
 				415D202E28214180004AF201 /* HurricaneApp.swift */,
 				FF249C45282151A20062613A /* CoreData */,
 				FF974B84283F4DBF00C33576 /* Model */,
@@ -242,6 +247,7 @@
 				41C6E20B282CF49B00F756B5 /* AnalyticsOdometerView.swift */,
 				41C6E20D282D184400F756B5 /* Graph.swift */,
 				415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */,
+				FFD1224528588CB7004686CA /* GifView.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -468,6 +474,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFD1224A285892DB004686CA /* loadingStats.gif in Resources */,
 				415D203628214182004AF201 /* Preview Assets.xcassets in Resources */,
 				415D203328214182004AF201 /* Assets.xcassets in Resources */,
 			);
@@ -523,6 +530,7 @@
 				41C6E1F62823E4C800F756B5 /* ContentView2.swift in Sources */,
 				FFA93164284A829B00C8D73C /* NotificationManager.swift in Sources */,
 				41C6E20A282CF47D00F756B5 /* AnalyticsFuelView.swift in Sources */,
+				FFD1224628588CB7004686CA /* GifView.swift in Sources */,
 				41C6E20E282D184400F756B5 /* Graph.swift in Sources */,
 				FF534EB2283643330089BE94 /* AlertsOnBoarding.swift in Sources */,
 				FFA0E72B28555014008B3ED9 /* Document+CoreDataClass.swift in Sources */,
