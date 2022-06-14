@@ -27,7 +27,7 @@ struct HomeStyleView: View {
                     
                     GeometryReader{ proxy in
                         //MARK: HEADER CONTENT
-                        HeaderContent(offset: $offset, maxHeight: maxHeight, dataVM: dataVM, homeVM: homeVM, utilityVM: utilityVM)
+                        HeaderContent(offset: $offset, maxHeight: maxHeight, dataVM: dataVM, homeVM: homeVM, utilityVM: utilityVM, categoryVM: categoryVM)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .opacity(

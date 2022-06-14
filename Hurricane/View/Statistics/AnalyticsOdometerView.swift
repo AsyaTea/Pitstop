@@ -20,48 +20,25 @@ struct AnalyticsOdometerView: View {
                             HStack {
                                 VStack(alignment: .leading){
                                     Spacer()
-                                    Text("\(String(Int(dataVM.currentVehicle.first?.odometer ?? 0))) Km")
+                                    Text("\(String(Int(dataVM.currentVehicle.first?.odometer ?? 0))) km")
                                         .font(Typography.headerL)
                                         .padding(1)
                                     Text("Odometer")
                                         .foregroundColor(Palette.greyHard)
                                 }
                                 Spacer()
-                                Text(" ▼ 12 % ")
-                                    .font(Typography.headerS)
-                                    .foregroundColor(Palette.greenHighlight)
+//                                Text(" ▼ 12 % ")
+//                                    .font(Typography.headerS)
+//                                    .foregroundColor(Palette.greenHighlight)
                             }
                             .padding(-3)
                             HStack{
-//                                VStack(alignment: .trailing){
-//                                    Text("10")
-//                                    Text("9.5")
-//                                    Text("9")
-//                                    Text("8.5")
-//                                    Text("8")
-//                                    Text("7.5")
-//                                }
-//                               
-//                                .font(.subheadline)
-//                                .foregroundColor(Palette.greyMiddle)
                                 OdometerGraphView(data: categoryVM.odometerGraphData)
                                     .frame(height: 200)
                                     .padding(.top, 25)
                                     .padding(1)
                             }
                             .padding(-15)
-                            
-//                            HStack(alignment: .bottom) {
-//                                Text("Dec")
-//                                Text("Jan")
-//                                Text("Feb")
-//                                Text("Mar")
-//                                Text("Apr")
-//                                Text("May")
-//                                Text("Jun")
-//                            }
-//                            .font(.subheadline)
-//                            .foregroundColor(Palette.greyMiddle)
 //
                             Spacer()
                         }

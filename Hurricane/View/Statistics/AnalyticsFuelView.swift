@@ -26,9 +26,9 @@ struct AnalyticsFuelView: View {
                                     .foregroundColor(Palette.greyHard)
                             }
                             Spacer()
-                            Text(" ▼ 12 % ")
-                                .font(Typography.headerS)
-                                .foregroundColor(Palette.greenHighlight)
+//                            Text(" ▼ 12 % ")
+//                                .font(Typography.headerS)
+//                                .foregroundColor(Palette.greenHighlight)
                         }
                         .padding(-3)
                         HStack{
@@ -38,27 +38,8 @@ struct AnalyticsFuelView: View {
                                 .padding(1)
                         }
                         .padding(-15)
-                        
-                        //                        HStack(alignment: .bottom) {
-                        //
-                        //
-                        //                                Text("Jan")
-                        //
-                        //
-                        //                            Spacer()
-                        //                            Text("Mar")
-                        //
-                        //                                Spacer()
-                        //                                Text("May")
-                        //                                Spacer()
-                        //                                Text("Jun")
-                        //
-                        //
-                        //                    }
-                        //                        .padding(-15)
-                        //                    .font(.subheadline)
-                        //                    .foregroundColor(Palette.greyMiddle)
-                        Spacer()
+                     
+                Spacer()
                         
                     }
                     

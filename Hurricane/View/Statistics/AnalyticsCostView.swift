@@ -55,9 +55,9 @@ struct CostGraphView : View {
                 }
                 
                 Spacer()
-                Text(" ▼ 12 % ")
-                    .font(Typography.headerS)
-                    .foregroundColor(Palette.greenHighlight)
+//                Text(" ▼ 12 % ")
+//                    .font(Typography.headerS)
+//                    .foregroundColor(Palette.greenHighlight)
             }
             
             Spacer()
@@ -161,7 +161,7 @@ struct LineGraph: View {
                                     .padding(-5)
                                 Rectangle()
                                     .foregroundColor(Palette.colorGreen)
-//                                    .frame(width: geometry.size.width * percent3, height: geometry.size.height)
+                                    .frame(width: geometry.size.width * CGFloat(categoryVM.maintainancePercentage / 100), height: geometry.size.height)
                                     .padding(-2)
                                     
                             }

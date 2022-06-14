@@ -273,11 +273,10 @@ class CategoryViewModel: ObservableObject {
 
     
     func totalCostPercentage(totalCost: Float, expenseList: [ExpenseViewModel]) {
-        print("total cost is \(totalCost) and ")
+        
+       
         self.fuelPercentage = (self.fuelTotal / totalCost) * 100
-        print("fuel percentage is \(self.fuelPercentage)")
         self.taxesPercentage = ((self.insuranceTotal + self.roadTaxTotal + self.finesTotal + self.tollsTotal) / totalCost ) * 100
-        print("taxes percentage is \(self.taxesPercentage)")
         self.maintainancePercentage = (self.maintenanceTotal / totalCost) * 100
         self.otherPercentage = ((self.otherTotal + self.parkingTotal) / totalCost) * 100
         

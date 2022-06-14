@@ -13,6 +13,7 @@ struct OnboardingView: View {
     
     @StateObject var onboardingVM : OnboardingViewModel
     @ObservedObject var dataVM : DataViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     @State private var destination : Pages = .page1
     @Binding var shouldShowOnboarding : Bool
     @StateObject var fuelVM = FuelViewModel()
@@ -31,7 +32,7 @@ struct OnboardingView: View {
                 Page2(onboardingVM: onboardingVM, fuelVM: fuelVM)
             }
         case .page3:
-            Page3(dataVM:dataVM, onboardingVM: onboardingVM,fuelVM: fuelVM)
+            Page3(dataVM:dataVM, onboardingVM: onboardingVM,fuelVM: fuelVM, categoryVM: categoryVM)
         case .page4:
             withAnimation(.easeInOut(duration: 0.2)){
                 Page4(onboardingVM: onboardingVM)
