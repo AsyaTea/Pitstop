@@ -31,6 +31,7 @@ struct AnalyticsOverviewView: View {
     
     
     var body: some View {
+       
         if categoryVM.expenseList.isEmpty {
             ZStack{
                 Palette.white.ignoresSafeArea()
@@ -48,8 +49,9 @@ struct AnalyticsOverviewView: View {
         }
         VStack{
             AnalyticsHeaderView(statisticsVM: statisticsVM, categoryVM: categoryVM, dataVM: dataVM)
-            .frame(height: 30)
-            .padding(10)
+                .padding(10)
+            .frame(height: 40)
+           
             
       
             
@@ -81,6 +83,8 @@ struct AnalyticsOverviewView: View {
         })
         .background(Palette.greyLight)
    }
+        
+    
     
     
     func CustomSegmentedPicker() -> some View{
@@ -137,6 +141,7 @@ struct AnalyticsOverviewView: View {
         .padding(.horizontal, 3)
         }
     }
+    
 }
 
 //MARK: Overview page
@@ -233,7 +238,7 @@ struct FuelListView : View {
         }
         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
-        ListCostsAttributes(title: "Category", value: String(categoryVM.fuelTotal))
+        ListCostsAttributes(title: "Expense", value: String(categoryVM.fuelTotal))
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Average price", value: "\(String(categoryVM.avgPrice)) \(utilityVM.currency)/L")
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))

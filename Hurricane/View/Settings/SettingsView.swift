@@ -23,6 +23,16 @@ struct SettingsView: View {
     var body: some View {
         NavigationView{
             VStack{
+//                HStack {
+//                    Text("Settings")
+//                        .font(Typography.headerXL)
+//                        .padding(5)
+//                    Spacer()
+//                }
+//                .padding(10)
+//                .frame(height: 30, alignment: .topLeading)
+//
+               
                 
                 PremiumBanner()
                     .padding(.top,20)
@@ -109,7 +119,7 @@ struct SettingsView: View {
                     Text("Settings")
                     .foregroundColor(Palette.black)
                     .font(Typography.headerXL)
-                    .padding(.top,23)
+                    .padding(.top,15)
                 
             )
         }
