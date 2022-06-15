@@ -360,7 +360,7 @@ struct Page3 : View {
                         }, label: {
                             OnBoardingCard(text: "Second fuel type", bgColor: Palette.colorYellow, iconName:  "fuel")
                         })
-                        .confirmationDialog("Select a fuel type", isPresented: $onboardingVM.showAllFuels, titleVisibility: .visible){
+                        .confirmationDialog(String(localized: "Select a fuel type"), isPresented: $onboardingVM.showAllFuels, titleVisibility: .visible){
                             ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
                                 Button(fuel.label){
                                     fuelVM.secondaryFuelType = fuel
@@ -542,7 +542,7 @@ struct Page5 : View {
                         onboardingVM.resetFields()
                     }
                 }, label: {
-                    OnBoardingButton(text: "Add new car", textColor: Palette.black, color: Palette.white)
+                    OnBoardingButton(text: "Add a new vehicle", textColor: Palette.black, color: Palette.white)
                 })
             }
             
@@ -575,7 +575,7 @@ struct OnBoardingButton : View {
 
 struct OnBoardingCard : View {
     
-    var text : String
+    var text : LocalizedStringKey
     var bgColor : Color
     var iconName : String
     

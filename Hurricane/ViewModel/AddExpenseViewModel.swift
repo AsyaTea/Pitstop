@@ -21,7 +21,7 @@ class AddExpenseViewModel : ObservableObject {
 //    let categoryReminder = ["Maintenance", "Insurance","Road tax","Tolls","Parking","Other"]
     @Published var selectedRepeat = "Never"
     let repeatTypes = ["Never", "Daily", "Weekdays","Weekends", "Weekly","Monthly","Every 3 Months","Every 6 Months","Yearly"]
-    @Published var selectedBased = "Date"
+    @Published var selectedBased = NSLocalizedString("Date", comment: "")
     let basedTypes = ["Date"] 
     
     //Vars to store the input in fields

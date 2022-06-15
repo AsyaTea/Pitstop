@@ -35,7 +35,7 @@ class AddReminderViewModel : ObservableObject {
         note = ""
         distance = ""
         category = 1
-        selectedCategory = "Maintenance"
+        selectedCategory = String(localized: "Maintenance")
         date = Date.now
     }
     

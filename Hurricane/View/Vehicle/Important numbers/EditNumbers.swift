@@ -25,7 +25,7 @@ struct EditNumbers: View {
         ZStack{
             Palette.greyBackground.ignoresSafeArea()
             VStack(spacing:20){
-                TextField("Contact name", text: $numberToEdit.title)
+                TextField(String(localized: "Contact name"), text: $numberToEdit.title)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .numberTitle)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -43,7 +43,7 @@ struct EditNumbers: View {
                         focusedField = .number
                     }
                 
-                TextField("Number", text: $numberToEdit.telephone)
+                TextField(String(localized: "Number"), text: $numberToEdit.telephone)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .number)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -70,8 +70,8 @@ struct EditNumbers: View {
                 .alert(isPresented:$showAlert) {
                     Alert(
                         title: Text("Are you sure you want to delete this contact?"),
-                        message: Text("There is no undo"),
-                        primaryButton: .destructive(Text("Delete")) {
+                        message: Text("This action cannot be undone"),
+                        primaryButton: .destructive(Text(String(localized: "Delete"))) {
                             dataVM.deleteNumber(numberS: numberToEdit)
                             dataVM.getNumbersCoreData(filter: nil, storage: { storage in
                                 dataVM.numberList = storage

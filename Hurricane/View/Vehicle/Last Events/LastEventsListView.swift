@@ -36,7 +36,7 @@ struct LastEventsListView: View {
                         
                         if(dataVM.expenseList.isEmpty){
                             HStack{
-                                Text("There are no events now")
+                                Text(String(localized: "There are no events to show"))
                                     .font(Typography.TextM)
                                     .foregroundColor(Palette.greyMiddle)
                                 Spacer()

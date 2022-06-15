@@ -51,7 +51,7 @@ struct ContentView: View {
                         .font(Typography.TextM)
                     Spacer()
                 } else {
-                    Text("Fuel Type")
+                    Text(String(localized: "Fuel Type"))
                         .font(Typography.TextM)
                     Spacer()
                 }

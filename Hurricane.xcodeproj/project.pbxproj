@@ -11,7 +11,7 @@
 		030A39942858D43E00218628 /* TermsOfService.html in Resources */ = {isa = PBXBuildFile; fileRef = 030A39932858D43E00218628 /* TermsOfService.html */; };
 		0327B676284775C50068D73A /* StatusBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0327B675284775C50068D73A /* StatusBarAppearance.swift */; };
 		03305E9C28592590001E52B7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03305E9E28592590001E52B7 /* Localizable.strings */; };
-		03305EA428592A51001E52B7 /* InfoPlist (it).strings in Resources */ = {isa = PBXBuildFile; fileRef = 03305EA228592A51001E52B7 /* InfoPlist (it).strings */; };
+		03305EB7285A0AD5001E52B7 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03305EB5285A0A7D001E52B7 /* Info.plist */; };
 		41176DA92834DCC3000FD885 /* FuelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41176DA82834DCC3000FD885 /* FuelViewModel.swift */; };
 		415773F8283BEBF800B20FA1 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */; };
 		415D202F28214180004AF201 /* HurricaneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D202E28214180004AF201 /* HurricaneApp.swift */; };
@@ -98,9 +98,10 @@
 		030A39932858D43E00218628 /* TermsOfService.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = TermsOfService.html; sourceTree = "<group>"; };
 		0327B675284775C50068D73A /* StatusBarAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAppearance.swift; sourceTree = "<group>"; };
 		03305E9D28592590001E52B7 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		03305EA328592A51001E52B7 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = "it.lproj/InfoPlist (it).strings"; sourceTree = "<group>"; };
 		03305EAA28593380001E52B7 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		03305EAB2859339D001E52B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		03305EB4285A0A7D001E52B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/Info.plist; sourceTree = "<group>"; };
+		03305EBA285A0C66001E52B7 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = it; path = it.lproj/Info.plist; sourceTree = "<group>"; };
 		41176DA82834DCC3000FD885 /* FuelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewModel.swift; sourceTree = "<group>"; };
 		415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
 		415D202B28214180004AF201 /* Hurricane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hurricane.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,7 +142,6 @@
 		FF534EAF283636EA0089BE94 /* AddNewVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewVehicleView.swift; sourceTree = "<group>"; };
 		FF534EB1283643330089BE94 /* AlertsOnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsOnBoarding.swift; sourceTree = "<group>"; };
 		FF5D5A2428299D0D006D5ABF /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		FF5D5A262829AE2F006D5ABF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FF7439AD28574C8E00E113CA /* ThemePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerView.swift; sourceTree = "<group>"; };
@@ -198,7 +198,6 @@
 		03305E90285922F6001E52B7 /* Localizable */ = {
 			isa = PBXGroup;
 			children = (
-				03305EA228592A51001E52B7 /* InfoPlist (it).strings */,
 				03305E9E28592590001E52B7 /* Localizable.strings */,
 			);
 			path = Localizable;
@@ -223,7 +222,7 @@
 		415D202D28214180004AF201 /* Hurricane */ = {
 			isa = PBXGroup;
 			children = (
-				FF5D5A262829AE2F006D5ABF /* Info.plist */,
+				03305EB5285A0A7D001E52B7 /* Info.plist */,
 				03305E90285922F6001E52B7 /* Localizable */,
 				FFD12249285892DB004686CA /* loadingStats.gif */,
 				FFD1224D2858BDB7004686CA /* aboutPlaceholder.gif */,
@@ -507,6 +506,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03305EB7285A0AD5001E52B7 /* Info.plist in Resources */,
 				FFD1224A285892DB004686CA /* loadingStats.gif in Resources */,
 				415D203628214182004AF201 /* Preview Assets.xcassets in Resources */,
 				415D203328214182004AF201 /* Assets.xcassets in Resources */,
@@ -514,7 +514,6 @@
 				FFD1224E2858BDB8004686CA /* aboutPlaceholder.gif in Resources */,
 				030A39942858D43E00218628 /* TermsOfService.html in Resources */,
 				03305E9C28592590001E52B7 /* Localizable.strings in Resources */,
-				03305EA428592A51001E52B7 /* InfoPlist (it).strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,12 +616,13 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		03305EA228592A51001E52B7 /* InfoPlist (it).strings */ = {
+		03305EB5285A0A7D001E52B7 /* Info.plist */ = {
 			isa = PBXVariantGroup;
 			children = (
-				03305EA328592A51001E52B7 /* it */,
+				03305EB4285A0A7D001E52B7 /* Base */,
+				03305EBA285A0C66001E52B7 /* it */,
 			);
-			name = "InfoPlist (it).strings";
+			name = Info.plist;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -751,10 +751,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = MYPTJXP3NK;
+				DEVELOPMENT_TEAM = 5DPX8M9Z36;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Hurricane/Info.plist;
+				INFOPLIST_FILE = Hurricane/Base.lproj/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Pitstop;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -786,10 +786,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
-				DEVELOPMENT_TEAM = 55H4ABU399;
+				DEVELOPMENT_TEAM = 5DPX8M9Z36;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Hurricane/Info.plist;
+				INFOPLIST_FILE = Hurricane/Base.lproj/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Pitstop;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
