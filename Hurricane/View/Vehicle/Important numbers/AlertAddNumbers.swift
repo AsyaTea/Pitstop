@@ -30,7 +30,7 @@ struct AlertAddNumbers: View {
             VStack{
                 HStack{
                     Spacer()
-                    Text("Add useful contact")
+                    Text(String(localized: "Add useful contact"))
                         .foregroundColor(Palette.black)
                         .font(Typography.headerM)
                         .padding(.leading,40)
@@ -44,7 +44,7 @@ struct AlertAddNumbers: View {
                     
                 }
                 VStack(spacing:12){
-                    TextField("Contact name", text: $homeVM.numberTitle)
+                    TextField(String(localized: "Contact name"), text: $homeVM.numberTitle)
                         .disableAutocorrection(true)
                         .focused($focusedField,equals: .numberTitle)
                         .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
@@ -61,7 +61,7 @@ struct AlertAddNumbers: View {
                             focusedField = .number
                         }
                     
-                    TextField("Number", text: $homeVM.number)
+                    TextField(String(localized: "Number"), text: $homeVM.number)
                         .disableAutocorrection(true)
                         .focused($focusedField,equals: .number)
                         .keyboardType(.phonePad)
@@ -120,7 +120,7 @@ struct AlertAddNumbers: View {
 
 struct BlackButton : View {
     
-    var text : String
+    var text : LocalizedStringKey
     var color : Color
     
     var body: some View {
@@ -158,7 +158,7 @@ struct AlertAddNumbersInside: View {
             VStack{
                 HStack{
                     Spacer()
-                    Text("Add an useful contact")
+                    Text(String(localized: "Add useful contact"))
                         .foregroundColor(Palette.black)
                         .font(Typography.headerM)
                         .padding(.leading,40)
@@ -172,7 +172,7 @@ struct AlertAddNumbersInside: View {
                     
                 }
                 VStack(spacing:12){
-                    TextField("Number title", text: $homeVM.numberTitle)
+                    TextField(String(localized: "Contact name"), text: $homeVM.numberTitle)
                         .disableAutocorrection(true)
                         .focused($focusedField,equals: .numberTitle)
                         .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
@@ -189,7 +189,7 @@ struct AlertAddNumbersInside: View {
                             focusedField = .number
                         }
                     
-                    TextField("Number", text: $homeVM.number)
+                    TextField(String(localized: "Number"), text: $homeVM.number)
                         .disableAutocorrection(true)
                         .focused($focusedField,equals: .number)
                         .keyboardType(.phonePad)

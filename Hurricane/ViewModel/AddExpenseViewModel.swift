@@ -13,11 +13,11 @@ class AddExpenseViewModel : ObservableObject {
     //List picker categories
     @Published var category : Int16 = Int16(Category.fuel.rawValue)
     @Published var fuel : Int16 = 0
-    @Published var selectedCategory : String = "Fuel"
+    @Published var selectedCategory : String = String(localized:"Fuel")
     @Published var selectedFuel : String = ""
     
     //Reminders
-    @Published var selectedCategoryReminder =  "Maintenance"
+    @Published var selectedCategoryReminder = String(localized: "Maintenance")
 //    let categoryReminder = ["Maintenance", "Insurance","Road tax","Tolls","Parking","Other"]
     @Published var selectedRepeat = "Never"
     let repeatTypes = ["Never", "Daily", "Weekdays","Weekends", "Weekly","Monthly","Every 3 Months","Every 6 Months","Yearly"]
@@ -34,7 +34,7 @@ class AddExpenseViewModel : ObservableObject {
    
     
     //Segmented picker tabs
-    @Published var currentPickerTab : String = "Expense"
+    @Published var currentPickerTab : String = String(localized: "Expense")
     @Published var odometerTab: String = ""
     @Published var priceTab : String = ""
     
@@ -63,17 +63,17 @@ class AddExpenseViewModel : ObservableObject {
     }
 
     func resetTabFields(tab : String){
-        if(tab == "Expense"){
+        if(tab == String(localized:"Expense")){
             price = ""
             priceTab = ""
-            selectedCategory = "Fuel"
+            selectedCategory = String(localized:"Fuel")
             odometer = ""
             odometerTab = ""
-            selectedRepeat = "Never"
+            selectedRepeat = String(localized: "Never")
             date = Date.now
             note = ""
         }
-        if(tab == "Odometer"){
+        if(tab == String(localized:"Odometer")){
             odometerTab = ""
             odometer = ""
             note = ""

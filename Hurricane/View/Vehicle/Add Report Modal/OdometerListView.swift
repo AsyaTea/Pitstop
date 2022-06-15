@@ -18,7 +18,7 @@ struct OdometerListView: View {
             
             //MARK: DATE
             DatePicker(selection: $addExpVM.date, displayedComponents: [.date]) {
-                ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
+                ListCategoryComponent(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
@@ -32,7 +32,7 @@ struct OdometerListView: View {
                         .resizable()
                         .frame(width: 16, height: 16)
                 }
-                TextField("Note",text: $addExpVM.note)
+                TextField(String(localized: "Note"),text: $addExpVM.note)
                     .disableAutocorrection(true)
                     .focused(focusedField, equals: .note)
                     .font(Typography.headerM)

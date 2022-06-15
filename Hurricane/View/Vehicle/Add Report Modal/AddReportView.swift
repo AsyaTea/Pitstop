@@ -19,7 +19,7 @@ struct AddReportView: View {
     @State private var showDate = false
     
     //Custom picker tabs
-    @State private var pickerTabs = ["Expense", "Odometer", "Reminder"]
+    @State private var pickerTabs = [String(localized:"Expense"),String(localized:"Odometer"),String(localized:"Reminder")]
     
     //Matching geometry namespace
     @Namespace var animation
@@ -36,11 +36,11 @@ struct AddReportView: View {
             VStack {
                 
                 //MARK: Custom TextField
-                if(addExpVM.currentPickerTab == "Expense"){
+                if(addExpVM.currentPickerTab == String(localized:"Expense")){
                     TextFieldComponent(submitField: $addExpVM.price, placeholder: "0", attribute: utilityVM.currency, keyboardType: .decimalPad,focusedField: $focusedField,defaultFocus: .priceTab)
                         .padding(.top,15)
                 }
-                else if (addExpVM.currentPickerTab == "Odometer"){
+                else if (addExpVM.currentPickerTab == String(localized:"Odometer")){
                     TextFieldComponent(submitField: $addExpVM.odometerTab, placeholder: String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), attribute: utilityVM.unit, keyboardType: .numberPad,focusedField: $focusedField,defaultFocus: .odometerTab)
                         .padding(.top,15)
                 }
@@ -56,10 +56,10 @@ struct AddReportView: View {
                     .padding(.top, -10.0)
                 
                 //MARK: List
-                if(addExpVM.currentPickerTab == "Expense"){
+                if(addExpVM.currentPickerTab == String(localized:"Expense")){
                     ExpenseListView(addExpVM: addExpVM,utilityVM: utilityVM, dataVM: dataVM, categoryVM: categoryVM, reminderVM: reminderVM, focusedField: $focusedField)
                 }
-                else if (addExpVM.currentPickerTab == "Odometer"){
+                else if (addExpVM.currentPickerTab == String(localized:"Odometer")){
                     OdometerListView(addExpVM: addExpVM,utilityVM: utilityVM, focusedField: $focusedField)
                 }
                 else{
@@ -79,13 +79,13 @@ struct AddReportView: View {
                     .accentColor(Palette.greyHard),
                 trailing:
                     Button(action: {
-                        if(addExpVM.currentPickerTab == "Expense"){
+                        if(addExpVM.currentPickerTab ==  String(localized:"Expense")){
                             addExpVM.createExpense()
                             dataVM.addExpense(expense: addExpVM.expenseS)
                             dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
                             categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                         }
-                        else if(addExpVM.currentPickerTab == "Odometer"){
+                        else if(addExpVM.currentPickerTab ==  String(localized:"Odometer")){
                             addExpVM.category = 7 //other
                             addExpVM.createExpense()
                             dataVM.addExpense(expense: addExpVM.expenseS)
@@ -103,7 +103,7 @@ struct AddReportView: View {
                         self.presentationMode.wrappedValue.dismiss()
                         
                     }, label: {
-                        Text("Save")
+                        Text(String(localized: "Save"))
                             .font(Typography.headerM)
                     })
                     .disabled(
@@ -132,7 +132,7 @@ struct AddReportView: View {
                     }
                 }
                 ToolbarItem(placement: .principal) {
-                    Text("New report")
+                    Text(String(localized: "New report"))
                         .font(Typography.headerM)
                         .foregroundColor(Palette.black)
                 }

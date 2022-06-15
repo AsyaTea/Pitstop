@@ -17,7 +17,7 @@ struct AnalyticsOverviewView: View {
     @ObservedObject var categoryVM : CategoryViewModel
     @ObservedObject var utilityVM : UtilityViewModel
 
-    @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
+    @State private var pickerTabs = [String(localized: "Overview"), String(localized: "Costs"), String(localized: "Fuel"), String(localized: "Odometer")]
     @State var pickedTab = ""
     
     @Namespace var animation
@@ -55,13 +55,13 @@ struct AnalyticsOverviewView: View {
             
       
             
-            if(categoryVM.currentPickerTab == "Overview") {
+            if(categoryVM.currentPickerTab == String(localized: "Overview")) {
                 OverviewView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM)
             }
-            else if (categoryVM.currentPickerTab == "Cost") {
+            else if (categoryVM.currentPickerTab == String(localized: "Costs")) {
                 AnalyticsCostView(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM)
             }
-            else if (categoryVM.currentPickerTab == "Fuel") {
+            else if (categoryVM.currentPickerTab == String(localized: "Fuel")) {
                 AnalyticsFuelView(categoryVM: categoryVM, utilityVM: utilityVM)
             }
             else {
@@ -95,7 +95,7 @@ struct AnalyticsOverviewView: View {
                     Text(tab)
                         .frame(maxWidth: .infinity)
                         .padding(10)
-                        .font(Typography.headerS)
+                        .font(Typography.headerXS)
                         .foregroundColor(Palette.white)
                         .background {
                             if categoryVM.currentPickerTab == tab {
@@ -117,7 +117,7 @@ struct AnalyticsOverviewView: View {
                     Text(tab)
                         .frame(maxWidth: .infinity)
                         .padding(10)
-                        .font(Typography.headerS)
+                        .font(Typography.headerXS)
                         .foregroundColor(Palette.black)
                         .background {
                             if categoryVM.currentPickerTab == tab {
@@ -268,7 +268,7 @@ struct OdometerCostsView: View {
         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
         let formattedAvgOdo = String(format: "%.0f", categoryVM.avgOdometer)
-        ListCostsAttributes(title: "Average", value: " \(formattedAvgOdo) \(utilityVM.unit)/day")
+        ListCostsAttributes(title: "Average", value: " \(formattedAvgOdo) \(utilityVM.unit)"+NSLocalizedString("/day", comment: ""))
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Month Total", value: String(categoryVM.odometerTotal))
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
@@ -302,7 +302,7 @@ struct AnalyticsHeaderView : View {
     @ObservedObject var statisticsVM : StatisticsViewModel
     @ObservedObject var categoryVM : CategoryViewModel
     @ObservedObject var dataVM : DataViewModel
-    @State private var selectedTimeFrame = "Per month"
+    @State private var selectedTimeFrame = String(localized: "Per month")
     var body: some View {
         HStack{
             HStack {

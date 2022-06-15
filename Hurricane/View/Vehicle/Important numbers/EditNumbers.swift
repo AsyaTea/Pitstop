@@ -119,7 +119,7 @@ struct EditNumbers: View {
             )
             .toolbar{
                 ToolbarItem(placement: .principal) {
-                    Text("Edit contact")
+                    Text(String(localized: "Edit contact"))
                         .font(Typography.headerM)
                         .foregroundColor(Palette.black)
                 }

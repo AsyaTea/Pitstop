@@ -28,7 +28,7 @@ struct ExpenseListView: View {
      
             //MARK: CUSTOM CATEGORY PICKER
             HStack{
-                ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
+                ListCategoryComponent(title: String(localized: "Category"), iconName: "category", color: Palette.colorYellow)
                 Spacer()
                 NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)){
                 Spacer()
@@ -41,7 +41,7 @@ struct ExpenseListView: View {
             
             //MARK: ODOMETER
             HStack{
-                ListCategoryComponent(title: "Odometer", iconName: "odometer", color: Palette.colorBlue)
+                ListCategoryComponent(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
                 TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), text: $addExpVM.odometer)
                     .font(Typography.headerM)
@@ -61,9 +61,9 @@ struct ExpenseListView: View {
             
             
             //MARK: FUEL TYPE
-            if(addExpVM.selectedCategory == "Fuel"){
+            if(addExpVM.selectedCategory == NSLocalizedString("Fuel", comment: "")){
                 HStack{
-                    ListCategoryComponent(title: "Fuel type", iconName: "fuelType", color: Palette.colorOrange)
+                    ListCategoryComponent(title: String(localized: "Fuel type"), iconName: "fuelType", color: Palette.colorOrange)
                     Spacer()
                     NavigationLink(destination: CustomFuelPicker(dataVM: dataVM,addExpVM: addExpVM, fuelVM: fuelVM, checkmark1: $checkmark1,checkmark2: $checkmark2)){
                         Spacer()
@@ -76,12 +76,12 @@ struct ExpenseListView: View {
             
             //MARK: DATE PICKER
             DatePicker(selection: $addExpVM.expenseS.date,in: ...Date(), displayedComponents: [.date]) {
-                ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
+                ListCategoryComponent(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             //MARK: LITERS & PRICE/LITER
-            if(addExpVM.selectedCategory == "Fuel"){
+            if(addExpVM.selectedCategory == NSLocalizedString("Fuel", comment: "")){
                 HStack{
                     ZStack{
                         Circle()
@@ -91,7 +91,7 @@ struct ExpenseListView: View {
                             .resizable()
                             .frame(width: 16, height: 16)
                     }
-                    Text("Liters")
+                    Text(String(localized: "Liters"))
                         .foregroundColor(Palette.black)
                         .font(Typography.headerM)
                     Spacer()
@@ -122,7 +122,7 @@ struct ExpenseListView: View {
                             .resizable()
                             .frame(width: 16, height: 16)
                     }
-                    Text("Price/Liter")
+                    Text(String(localized: "Price/Liter"))
                         .foregroundColor(Palette.black)
                         .font(Typography.headerM)
                     Spacer()
@@ -153,7 +153,7 @@ struct ExpenseListView: View {
                         .resizable()
                         .frame(width: 16, height: 16)
                 }
-                TextField("Note",text: $addExpVM.note)
+                TextField(String(localized: "Note"),text: $addExpVM.note)
                     .disableAutocorrection(true)
                     .focused(focusedField, equals: .note)
                     .font(Typography.headerM)

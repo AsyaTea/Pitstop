@@ -105,7 +105,7 @@ struct EditEventView: View {
 
 struct DeleteButton : View {
     
-    var title: String
+    var title: LocalizedStringKey
     
     var body: some View {
         ZStack{

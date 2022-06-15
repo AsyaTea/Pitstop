@@ -29,7 +29,7 @@ struct ExpiredReminder: View {
                     HStack{
                         Image("arrowLeft")
                         
-                        Text("Back")
+                        Text(String(localized: "Back"))
                             .font(Typography.headerM)
                     }
                 })
@@ -37,7 +37,7 @@ struct ExpiredReminder: View {
         )
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("View reminder")
+                Text(String(localized: "View reminder"))
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
             }

@@ -31,7 +31,7 @@ struct EditReminderView: View {
                     HStack{
                         Image("arrowLeft")
                         
-                        Text("Back")
+                        Text(String(localized: "Back"))
                             .font(Typography.headerM)
                     }
                 })
@@ -48,13 +48,13 @@ struct EditReminderView: View {
                     notificationVM.createNotification(reminderS: utilityVM.reminderToEdit)
                     self.presentationMode.wrappedValue.dismiss()
                 }, label: {
-                    Text("Save")
+                    Text(String(localized: "Save"))
                         .font(Typography.headerM)
                 })
         )
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("Edit reminder")
+                Text(String(localized: "Edit reminder"))
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
             }
@@ -65,16 +65,16 @@ struct EditReminderView: View {
                 Button(action: {
                     showingAlert.toggle()
                 }, label: {
-                    DeleteButton(title:"Delete reminder")
+                    DeleteButton(title: "Delete reminder")
                 })
                 Spacer()
             }
         )
         .alert(isPresented:$showingAlert) {
             Alert(
-                title: Text("Are you sure you want to delete this reminder?"),
-                message: Text("There is no undo"),
-                primaryButton: .destructive(Text("Delete")) {
+                title: Text(String(localized: "Are you sure you want to delete this reminder?")),
+                message: Text(String(localized: "This action cannot be undone")),
+                primaryButton: .destructive(Text(String(localized: "Delete"))) {
                     dataVM.deleteReminder(reminderS: utilityVM.reminderToEdit)
                     notificationVM.removeNotification(reminderS: utilityVM.reminderToEdit)
                     dataVM.getRemindersCoreData(filter: nil, storage: { storage in
@@ -101,7 +101,7 @@ struct ReminderList: View {
             HStack{
                 ListCategoryComponent(title: "Title", iconName: "other", color: Palette.colorViolet)
                 Spacer()
-                TextField("Title", text: $utilityVM.reminderToEdit.title)
+                TextField(String(localized: "Title"), text: $utilityVM.reminderToEdit.title)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .fixedSize(horizontal: true, vertical: true)
@@ -142,7 +142,7 @@ struct ReminderList: View {
             HStack{
                 ListCategoryComponent(title: "Note", iconName: "noteColored", color: Palette.colorViolet)
                 Spacer()
-                TextField("Note", text: $utilityVM.reminderToEdit.note)
+                TextField(String(localized: "Note"), text: $utilityVM.reminderToEdit.note)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .fixedSize(horizontal: true, vertical: true)

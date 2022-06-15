@@ -300,7 +300,7 @@ struct OdometerGraphView: View {
                         
                         let index = max(min(Int((translation / width).rounded() + 1), data.count - 1), 0)
                         
-                        currentPlot = "Km \(data[index])"
+                        currentPlot = "km \(data[index])"
                         self.translation = translation
                         
                         offset = CGSize(width: points[index].x - 40, height: points[index].y - height)

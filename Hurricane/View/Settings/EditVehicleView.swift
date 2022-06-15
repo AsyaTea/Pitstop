@@ -32,7 +32,7 @@ struct EditVehicleView : View {
             Palette.greyBackground.ignoresSafeArea()
             VStack(spacing:20){
                 
-                TextField("Vehicle name", text: $vehicleS.name)
+                TextField(String(localized: "Vehicle name"), text: $vehicleS.name)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .carName)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -50,7 +50,7 @@ struct EditVehicleView : View {
                         focusedField = .brand
                     }
                 
-                TextField("Brand", text: $vehicleS.brand)
+                TextField(String(localized: "Brand"), text: $vehicleS.brand)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .brand)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -68,7 +68,7 @@ struct EditVehicleView : View {
                         focusedField = .model
                     }
                 
-                TextField("Model", text: $vehicleS.model)
+                TextField(String(localized: "Model"), text: $vehicleS.model)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .model)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -86,7 +86,7 @@ struct EditVehicleView : View {
                         focusedField = .plate
                     }
                 
-                TextField("Plate", text: $vehicleS.plate)
+                TextField(String(localized: "Plate"), text: $vehicleS.plate)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .plate)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -156,7 +156,7 @@ struct EditVehicleView : View {
                     }
                     .accentColor(Palette.black)
                 })
-                .confirmationDialog("Select a second fuel type", isPresented: $secondaryFuelPicker, titleVisibility: .visible){
+                .confirmationDialog(String(localized: "Select a second fuel type"), isPresented: $secondaryFuelPicker, titleVisibility: .visible){
                     ForEach(FuelType.allCases, id: \.self) { fuel in
                         
                         Button(fuel.label){
@@ -193,7 +193,7 @@ struct EditVehicleView : View {
                         presentationMode.wrappedValue.dismiss()
                         fuelVM.resetSelectedFuel()
                     }, label: {
-                        Text("Save")
+                        Text(String(localized: "Save"))
                             .font(Typography.headerM)
                     }
                           )

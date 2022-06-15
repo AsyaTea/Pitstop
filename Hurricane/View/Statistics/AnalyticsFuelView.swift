@@ -23,7 +23,7 @@ struct AnalyticsFuelView: View {
                                 Text("\(formattedCost) L/100 \(utilityVM.unit)")
                                     .font(Typography.headerL)
                                     .padding(1)
-                                Text("Efficiency")
+                                Text(String(localized: "Efficiency"))
                                     .foregroundColor(Palette.greyHard)
                             }
                             Spacer()

@@ -14,7 +14,7 @@ class CategoryViewModel: ObservableObject {
     
     @Published var categories = [Category2]()
     
-    @Published var currentPickerTab : String = "Overview"
+    @Published var currentPickerTab : String = String(localized: "Overview")
     
     @Published var arrayCat : [Category] = []
     
@@ -70,8 +70,8 @@ class CategoryViewModel: ObservableObject {
     var odometerGraphData : [CGFloat] = []
     
     
-    @Published var selectedTimeFrame = "Per month"
-    let timeFrames = ["Per month", "Per 3 months", "Per year" , "All time"]
+    @Published var selectedTimeFrame = String(localized: "Per month")
+    let timeFrames = [String(localized: "Per month" ), String(localized:"Per 3 months"), String(localized:"Per year") , String(localized:"All time")]
     
     
     
@@ -117,11 +117,11 @@ class CategoryViewModel: ObservableObject {
     
     func calculateTimeFrame(timeFrame: String) -> Int {
         var monthSub : Int {
-            if timeFrame == "Per month" {
+            if timeFrame == String(localized:"Per month") {
                 return -1
-            } else if timeFrame == "Per 3 months" {
+            } else if timeFrame == String(localized:"Per 3 months") {
                 return -3
-            } else if timeFrame == "Per year" {
+            } else if timeFrame == String(localized:"Per year") {
                 return -12
             } else {
                 return 0
@@ -132,11 +132,11 @@ class CategoryViewModel: ObservableObject {
     
     func calculateDays(timeFrame: String) -> Int {
         var Days : Int {
-            if timeFrame == "Per month" {
+            if timeFrame == String(localized:"Per month") {
                 return 30
-            } else if timeFrame == "Per 3 months" {
+            } else if timeFrame == String(localized:"Per 3 months") {
                 return 90
-            } else if timeFrame == "Per year" {
+            } else if timeFrame == String(localized:"Per year") {
                 return 365
             } else {
                 return 0
@@ -163,6 +163,7 @@ class CategoryViewModel: ObservableObject {
         let literArray = expenseListTime.map { expense in
             return expense.liters
         }
+        print("lierarray \(literArray)")
         let literSum = literArray.reduce(0, +)
         self.literDiff = literSum - Float(expenseListTime.last?.liters ?? 0.0)
         print("liter sum \(literSum)")
@@ -346,14 +347,14 @@ class CategoryViewModel: ObservableObject {
         self.otherTotal = CategoryViewModel.totalCategoryCost(categoryList: self.otherList)
         
         
-        self.categories = [Category2(name: "Fuel", color: Palette.colorYellow, icon: "fuelType", totalCosts: self.fuelTotal),
-                           Category2(name: "Maintenance", color: Palette.colorGreen, icon: "maintenance", totalCosts: self.maintenanceTotal),
-                           Category2(name: "Insurance", color: Palette.colorOrange, icon: "insurance", totalCosts: self.insuranceTotal),
-                           Category2(name: "Road Tax", color: Palette.colorOrange, icon: "roadTax", totalCosts: self.roadTaxTotal),
-                           Category2(name: "Fines", color: Palette.colorOrange, icon: "fines", totalCosts: self.finesTotal),
-                           Category2(name: "Tolls", color: Palette.colorOrange, icon: "Tolls", totalCosts: self.tollsTotal),
-                           Category2(name: "Parking", color: Palette.colorViolet, icon: "parking", totalCosts: self.parkingTotal),
-                           Category2(name: "Other", color: Palette.colorViolet, icon: "other", totalCosts: self.otherTotal)
+        self.categories = [Category2(name: String(localized: "Fuel"), color: Palette.colorYellow, icon: "fuelType", totalCosts: self.fuelTotal),
+                           Category2(name: String(localized: "Maintenance"), color: Palette.colorGreen, icon: "maintenance", totalCosts: self.maintenanceTotal),
+                           Category2(name: String(localized: "Insurance"), color: Palette.colorOrange, icon: "insurance", totalCosts: self.insuranceTotal),
+                           Category2(name: String(localized: "Road tax"), color: Palette.colorOrange, icon: "roadTax", totalCosts: self.roadTaxTotal),
+                           Category2(name: String(localized: "Fines"), color: Palette.colorOrange, icon: "fines", totalCosts: self.finesTotal),
+                           Category2(name: String(localized: "Tolls"), color: Palette.colorOrange, icon: "Tolls", totalCosts: self.tollsTotal),
+                           Category2(name: String(localized: "Parking"), color: Palette.colorViolet, icon: "parking", totalCosts: self.parkingTotal),
+                           Category2(name: String(localized: "Other"), color: Palette.colorViolet, icon: "other", totalCosts: self.otherTotal)
         ]
     }
     

@@ -23,7 +23,7 @@ struct ReminderListView: View {
             
             //MARK: CATEGORY
             HStack{
-                ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
+                ListCategoryComponent(title: String(localized: "Category"), iconName: "category", color: Palette.colorYellow)
                 Spacer()
                 NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)){
                 Spacer()
@@ -41,14 +41,14 @@ struct ReminderListView: View {
                         .font(Typography.headerM)
                 }
             },label:{
-                ListCategoryComponent(title: "Based on", iconName: "basedOn", color: Palette.colorOrange)
+                ListCategoryComponent(title: String(localized: "Based on"), iconName: "basedOn", color: Palette.colorOrange)
             })
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             
             //MARK: REMIND DATE
-            if (addExpVM.selectedBased == "Date"){
+            if (addExpVM.selectedBased == NSLocalizedString("Date", comment: "")){
                 DatePicker(selection: $reminderVM.date,in:Date()...) {
-                    ListCategoryComponent(title: "Remind me on", iconName: "remindMe", color: Palette.colorGreen)
+                    ListCategoryComponent(title: String(localized: "Remind me on"), iconName: "remindMe", color: Palette.colorGreen)
                 }
                 .datePickerStyle(.compact)
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
@@ -56,7 +56,7 @@ struct ReminderListView: View {
             //MARK: REMIND DISTANCE
             else{
                 HStack{
-                    ListCategoryComponent(title: "Remind me in", iconName: "remindMe", color: Palette.colorGreen)
+                    ListCategoryComponent(title: String(localized: "Remind me in"), iconName: "remindMe", color: Palette.colorGreen)
                     Spacer()
                     TextField("1000",value: $reminderVM.distance,formatter: NumberFormatter())
                         .font(Typography.headerM)
@@ -91,7 +91,7 @@ struct ReminderListView: View {
                         .resizable()
                         .frame(width: 16, height: 16)
                 }
-                TextField("Note",text: $reminderVM.note)
+                TextField(String(localized: "Note"),text: $reminderVM.note)
                     .disableAutocorrection(true)
                     .focused(focusedField, equals: .note)
                     .font(Typography.headerM)

@@ -178,7 +178,7 @@ struct Page2 : View {
                     }
                     .accentColor(Palette.black)
                 })
-                .confirmationDialog("Select a fuel type", isPresented: $showDefaultFuel, titleVisibility: .visible){
+                .confirmationDialog(String(localized: "Select a fuel type"), isPresented: $showDefaultFuel, titleVisibility: .visible){
                     ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
                         Button(fuel.label){
                             fuelVM.defaultFuelType = fuel

@@ -49,7 +49,7 @@ struct TopNav : View {
                     .opacity(fadeOutOpacity())
                 })
                 .disabled(fadeOutOpacity() < 0.35)
-                .confirmationDialog("Select a car", isPresented: $showingAllCars, titleVisibility: .hidden) {
+                .confirmationDialog(String(localized: "Select a vehicle"), isPresented: $showingAllCars, titleVisibility: .hidden) {
                     ForEach(dataVM.vehicleList,id:\.vehicleID){ vehicle in
                         Button(vehicle.name) {
                             //DEVO SETTARE IL CURRENT VEHICLE

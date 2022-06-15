@@ -13,7 +13,7 @@ struct LastEventsListView: View {
     
     @ObservedObject var dataVM : DataViewModel
     @ObservedObject var categoryVM = CategoryViewModel()
-    @State private var pickerTabs = ["Overview", "Cost", "Fuel", "Odometer"]
+    @State private var pickerTabs = [String(localized: "Overview"), String(localized: "Costs"), String(localized: "Fuel"), String(localized: "Odometer")]
     
     @State private var showEditExpense = false
     @Environment(\.presentationMode) private var presentationMode

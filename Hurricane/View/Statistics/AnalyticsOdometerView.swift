@@ -24,7 +24,7 @@ struct AnalyticsOdometerView: View {
                                     Text("\(String(Int(dataVM.currentVehicle.first?.odometer ?? 0))) km")
                                         .font(Typography.headerL)
                                         .padding(1)
-                                    Text("Odometer")
+                                    Text(String(localized: "Odometer"))
                                         .foregroundColor(Palette.greyHard)
                                 }
                                 Spacer()
