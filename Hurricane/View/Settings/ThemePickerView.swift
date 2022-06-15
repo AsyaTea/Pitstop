@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+let pickOne = NSLocalizedString("Pick one", comment: "")
+let picked = NSLocalizedString("Picked", comment: "")
 struct ThemePickerView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -19,22 +21,22 @@ struct ThemePickerView: View {
             Spacer()
             HStack(spacing:40){
                 Spacer()
-                ColorButton(color: Palette.colorBlue, cardColor: Palette.colorMainBlue, title: "Pick one", homeVM: homeVM)
+                ColorButton(color: Palette.colorBlue, cardColor: Palette.colorMainBlue, title: pickOne, homeVM: homeVM)
                 
                 Spacer()
                 
-                ColorButton(color: Palette.colorYellow,cardColor: Palette.colorMainYellow, title: "Pick one", homeVM: homeVM)
+                ColorButton(color: Palette.colorYellow,cardColor: Palette.colorMainYellow, title: pickOne, homeVM: homeVM)
                 Spacer()
             }
             
             HStack(spacing:40){
                 Spacer()
                 
-                ColorButton(color: Palette.colorGreen,cardColor: Palette.colorMainGreen, title: "Pick one", homeVM: homeVM)
+                ColorButton(color: Palette.colorGreen,cardColor: Palette.colorMainGreen, title: pickOne, homeVM: homeVM)
                 
                 Spacer()
                 
-                ColorButton(color: Palette.colorViolet,cardColor: Palette.colorMainViolet,title: "Pick one", homeVM: homeVM)
+                ColorButton(color: Palette.colorViolet,cardColor: Palette.colorMainViolet,title: pickOne, homeVM: homeVM)
                 
                 Spacer()
             }
@@ -86,7 +88,7 @@ struct ColorButton: View {
     var body: some View {
         
         HStack{
-            Text(press ? "Picked" : title)
+            Text(press ? picked : title)
                 .font(Typography.headerM)
                 .foregroundColor(press ? Palette.black : Palette.white)
             

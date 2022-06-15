@@ -15,7 +15,7 @@ struct BottomContentView: View {
     @ObservedObject var utilityVM : UtilityViewModel
     @ObservedObject var categoryVM : CategoryViewModel
     @StateObject var pdfVM = PdfViewModel()
-    
+        
     @State private var viewAllNumbers = false
     @State private var viewAllDocuments = false
     @State private var viewAllEvents = false
@@ -38,7 +38,7 @@ struct BottomContentView: View {
             
             if(dataVM.expenseList.isEmpty){
                 HStack{
-                    Text("There are no events to show")
+                    Text(LocalizedStringKey("There are no events to show"))
                         .font(Typography.TextM)
                         .foregroundColor(Palette.greyMiddle)
                     Spacer()
@@ -138,7 +138,7 @@ struct BottomContentView: View {
                                 }
                             }
                         }, label: {
-                            addComponent(title: "Add contact")
+                            addComponent(title:"Add contact")
                         })
                         
                     }
@@ -246,7 +246,7 @@ struct BottomContentView: View {
     }
     
     @ViewBuilder
-    func addComponent(title : String) -> some View {
+    func addComponent(title : LocalizedStringKey) -> some View {
         ZStack{
             Rectangle()
                 .cornerRadius(8)
@@ -315,7 +315,7 @@ struct CategoryComponent : View {
 
 struct TitleSectionComponent : View {
     
-    var sectionTitle : String
+    var sectionTitle : LocalizedStringKey
     @Binding var binding : Bool
     
     

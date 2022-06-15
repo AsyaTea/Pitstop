@@ -32,7 +32,7 @@ struct EditVehicleView : View {
             Palette.greyBackground.ignoresSafeArea()
             VStack(spacing:20){
                 
-                TextField("Car's name", text: $vehicleS.name)
+                TextField("Vehicle name", text: $vehicleS.name)
                     .disableAutocorrection(true)
                     .focused($focusedField,equals: .carName)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))

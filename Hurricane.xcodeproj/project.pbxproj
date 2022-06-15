@@ -10,6 +10,8 @@
 		030A39922858D36500218628 /* HTML View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030A39912858D36500218628 /* HTML View.swift */; };
 		030A39942858D43E00218628 /* TermsOfService.html in Resources */ = {isa = PBXBuildFile; fileRef = 030A39932858D43E00218628 /* TermsOfService.html */; };
 		0327B676284775C50068D73A /* StatusBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0327B675284775C50068D73A /* StatusBarAppearance.swift */; };
+		03305E9C28592590001E52B7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03305E9E28592590001E52B7 /* Localizable.strings */; };
+		03305EA428592A51001E52B7 /* InfoPlist (it).strings in Resources */ = {isa = PBXBuildFile; fileRef = 03305EA228592A51001E52B7 /* InfoPlist (it).strings */; };
 		41176DA92834DCC3000FD885 /* FuelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41176DA82834DCC3000FD885 /* FuelViewModel.swift */; };
 		415773F8283BEBF800B20FA1 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */; };
 		415D202F28214180004AF201 /* HurricaneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D202E28214180004AF201 /* HurricaneApp.swift */; };
@@ -95,6 +97,10 @@
 		030A39912858D36500218628 /* HTML View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTML View.swift"; sourceTree = "<group>"; };
 		030A39932858D43E00218628 /* TermsOfService.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = TermsOfService.html; sourceTree = "<group>"; };
 		0327B675284775C50068D73A /* StatusBarAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAppearance.swift; sourceTree = "<group>"; };
+		03305E9D28592590001E52B7 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		03305EA328592A51001E52B7 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = "it.lproj/InfoPlist (it).strings"; sourceTree = "<group>"; };
+		03305EAA28593380001E52B7 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		03305EAB2859339D001E52B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		41176DA82834DCC3000FD885 /* FuelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewModel.swift; sourceTree = "<group>"; };
 		415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
 		415D202B28214180004AF201 /* Hurricane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hurricane.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,6 +195,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03305E90285922F6001E52B7 /* Localizable */ = {
+			isa = PBXGroup;
+			children = (
+				03305EA228592A51001E52B7 /* InfoPlist (it).strings */,
+				03305E9E28592590001E52B7 /* Localizable.strings */,
+			);
+			path = Localizable;
+			sourceTree = "<group>";
+		};
 		415D202228214180004AF201 = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				FF5D5A262829AE2F006D5ABF /* Info.plist */,
+				03305E90285922F6001E52B7 /* Localizable */,
 				FFD12249285892DB004686CA /* loadingStats.gif */,
 				FFD1224D2858BDB7004686CA /* aboutPlaceholder.gif */,
 				FFD1224F2858CB0D004686CA /* comingSoon.gif */,
@@ -257,8 +273,8 @@
 				41C6E207282CEE6100F756B5 /* AnalyticsCostView.swift */,
 				41C6E209282CF47D00F756B5 /* AnalyticsFuelView.swift */,
 				41C6E20B282CF49B00F756B5 /* AnalyticsOdometerView.swift */,
-				41C6E20D282D184400F756B5 /* Graph.swift */,
 				415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */,
+				41C6E20D282D184400F756B5 /* Graph.swift */,
 				FFD1224528588CB7004686CA /* GifView.swift */,
 			);
 			path = Statistics;
@@ -473,6 +489,8 @@
 			knownRegions = (
 				en,
 				Base,
+				it,
+				"en-GB",
 			);
 			mainGroup = 415D202228214180004AF201;
 			productRefGroup = 415D202C28214180004AF201 /* Products */;
@@ -495,6 +513,8 @@
 				FFD122502858CB0D004686CA /* comingSoon.gif in Resources */,
 				FFD1224E2858BDB8004686CA /* aboutPlaceholder.gif in Resources */,
 				030A39942858D43E00218628 /* TermsOfService.html in Resources */,
+				03305E9C28592590001E52B7 /* Localizable.strings in Resources */,
+				03305EA428592A51001E52B7 /* InfoPlist (it).strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -585,6 +605,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		03305E9E28592590001E52B7 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03305E9D28592590001E52B7 /* en-GB */,
+				03305EAA28593380001E52B7 /* it */,
+				03305EAB2859339D001E52B7 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		03305EA228592A51001E52B7 /* InfoPlist (it).strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03305EA328592A51001E52B7 /* it */,
+			);
+			name = "InfoPlist (it).strings";
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		415D203728214182004AF201 /* Debug */ = {
@@ -708,7 +749,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
 				DEVELOPMENT_TEAM = 55H4ABU399;
 				ENABLE_PREVIEWS = YES;
@@ -743,7 +784,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
 				DEVELOPMENT_TEAM = 55H4ABU399;
 				ENABLE_PREVIEWS = YES;
