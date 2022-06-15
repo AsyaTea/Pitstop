@@ -23,17 +23,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationView{
             VStack{
-//                HStack {
-//                    Text("Settings")
-//                        .font(Typography.headerXL)
-//                        .padding(5)
-//                    Spacer()
-//                }
-//                .padding(10)
-//                .frame(height: 30, alignment: .topLeading)
-//
-               
-                
+                Spacer()
                 PremiumBanner()
                     .padding(.top,20)
                 List{
@@ -95,13 +85,14 @@ struct SettingsView: View {
                             .font(Typography.headerM)}
                         
                         NavigationLink(destination: AboutView()){
-                            Text("About")
+                            Text("About us")
                                 .foregroundColor(Palette.black)
                             .font(Typography.headerM)}
                         
-                        Text("Term of service")
+                        NavigationLink(destination: ToSView()){
+                        Text("Terms of Service")
                             .foregroundColor(Palette.black)
-                            .font(Typography.headerM)
+                            .font(Typography.headerM)}
                     }
                 }
                 .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
@@ -144,7 +135,7 @@ struct PremiumBanner : View {
                     Text("Get more features")
                         .font(Typography.headerL)
                         .foregroundColor(Palette.white)
-                    Text("Let us remind you key dates \nabout your vehicles")
+                    Text("Add more features to better \nmanage your vehicles")
                         .font(Typography.TextM)
                         .foregroundColor(Palette.white)
                         .padding(.top,-8)
@@ -165,5 +156,23 @@ struct PremiumBanner : View {
         }
     }
 }
+struct ToSView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
+    var body: some View {
+        HTMLView(htmlFileName: "TermsOfService")
+//            .frame(width: 380.0, height: 700.0)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                leading:
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Image("arrowLeft")
+                    })
+                    .accentColor(Palette.greyHard)
+            )
+        }
+}
 

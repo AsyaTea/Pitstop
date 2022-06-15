@@ -1,0 +1,193 @@
+/* 
+  Localizable1.strings
+  Hurricane
+
+  Created by Francesco Puzone on 14/06/22.
+  
+*/
+
+/* No comment provided by engineer. */
+"100" = "100";
+
+/* No comment provided by engineer. */
+"1000" = "1000";
+
+/* No comment provided by engineer. */
+"About us" = "About us";
+
+/* No comment provided by engineer. */
+"Add contact" = "Aggiungi contatto";
+
+/* No comment provided by engineer. */
+"Add document" = "Aggiungi documento";
+
+/* No comment provided by engineer. */
+"Add more features to better \nmanage your vehicles" = "Aggiungi altre funzionalità per \ngestire al meglio i tuoi veicoli";
+
+/* No comment provided by engineer. */
+"Add more info" = "Aggiungi altre info";
+
+/* No comment provided by engineer. */
+"Add vehicle" = "Aggiungi un veicolo";
+
+/* No comment provided by engineer. */
+"All costs" = "Tutti i costi";
+
+/* No comment provided by engineer. */
+"Analytics" = "Statistiche";
+
+/* No comment provided by engineer. */
+"Brand" = "Brand";
+
+/* No comment provided by engineer. */
+"Cancel" = "Annulla";
+
+/* No comment provided by engineer. */
+"Clear expired" = "Elimina storico";
+
+/* No comment provided by engineer. */
+"Coming soon" = "In arrivo";
+
+/* No comment provided by engineer. */
+"Costs" = "Costi";
+
+/* No comment provided by engineer. */
+"Documents" = "Documenti";
+
+/* No comment provided by engineer. */
+"Don’t miss anything \nimportant" = "Non perderti nulla di importante";
+
+/* No comment provided by engineer. */
+"Expenses Name" = "Nome della spesa";
+
+/* No comment provided by engineer. */
+"Expired" = "Storico";
+
+/* No comment provided by engineer. */
+"Fuel" = "Carburante";
+
+/* No comment provided by engineer. */
+"Future" = "Prossimamente";
+
+/* No comment provided by engineer. */
+"Gear up for a simple way of managing your \nvehicle and cutting costs" = "Allaccia la cintura per un modo semplice \ndi gestire il tuo veicolo e tagliare i costi";
+
+/* No comment provided by engineer. */
+"Get more features" = "Ottieni altre funzionalità";
+
+/* No comment provided by engineer. */
+"Hello, World!" = "Hello, World!";
+
+/* No comment provided by engineer. */
+"Hop in and insert some key details" = "Salta su e inserisci delle informazioni utili";
+
+/* No comment provided by engineer. */
+"Keep all of your vehicle info at hand" = "Mantieni alla mano tutte le info del veicolo";
+
+/* No comment provided by engineer. */
+"L" = "L";
+
+/* No comment provided by engineer. */
+"Last Events" = "Ultimi eventi";
+
+/* No comment provided by engineer. */
+"Last events" = "Ultimi eventi";
+
+/* No comment provided by engineer. */
+"Let us remind you key dates about your \nvehicle’s maintenance status and deadlines" = "Lascia che l'App ti ricordi date \nchiave e scadenze sullo stato di manutenzione del veicolo";
+
+/* No comment provided by engineer. */
+"Liters" = "Litri";
+
+/* No comment provided by engineer. */
+"Model" = "Modello";
+
+/* No comment provided by engineer. */
+"Next" = "Avanti";
+
+/* No comment provided by engineer. */
+"New report" = "Nuovo report";
+
+/* No comment provided by engineer. */
+"Note" = "Note";
+
+/* No comment provided by engineer. */
+"Odometer" = "Odometro";
+
+/* No comment provided by engineer. */
+"Other" = "Altro";
+
+/* No comment provided by engineer. */
+"Pick one" = "Scegline uno";
+
+/* No comment provided by engineer. */
+"Picked" = "Scelto";
+
+/* No comment provided by engineer. */
+"Plate" = "Targa";
+
+/* No comment provided by engineer. */
+"Plate number" = "Numero di targa";
+
+/* No comment provided by engineer. */
+"Price/Liter" = "Prezzo/Litro";
+
+/* No comment provided by engineer. */
+"Reminders" = "Promemoria";
+
+/* No comment provided by engineer. */
+"Remove all expenses" = "Rimuovi tutte le spese";
+
+/* No comment provided by engineer. */
+"Remove all vehicles" = "Rimuovi tutti i veicoli";
+
+/* No comment provided by engineer. */
+"Save" = "Salva";
+
+/* No comment provided by engineer. */
+"Settings" = "Impostazioni";
+
+/* No comment provided by engineer. */
+"Terms of Service" = "Termini di servizio";
+
+/* No comment provided by engineer. */
+"The team" = "Il team";
+
+/* No comment provided by engineer. */
+"Theme" = "Tema";
+
+/* No comment provided by engineer. */
+"There are no reminders now" = "Attualmente non ci sono promemoria";
+
+/* No comment provided by engineer. */
+"Useful contacts" = "Contatti utili";
+
+/* No comment provided by engineer. */
+"Vehicle Name" = "Nome del veicolo";
+
+/* No comment provided by engineer. */
+"Vehicle name" = "Nome del veicolo";
+
+/* No comment provided by engineer. */
+"Vehicle name: %@" = "Nome del veicolo: %@";
+
+/* No comment provided by engineer. */
+"Vehicle registration" = "Registrazione veicolo";
+
+/* No comment provided by engineer. */
+"Vehicles" = "Veicoli";
+
+/* No comment provided by engineer. */
+"View all" = "Vedi tutti";
+
+/* No comment provided by engineer. */
+"Warm up your engine" = "Scalda il motore";
+
+/* No comment provided by engineer. */
+"Write the plate number" = "Scrivi il numero di targa";
+
+/* No comment provided by engineer. */
+"You are set to start your engine and optimize \n your spendings" = "Ora sei pronto a far partire il motore \ned ottimizzare le tue spese";
+
+/* No comment provided by engineer. */
+"Your vehicle is ready!" = "Il tuo veicolo è pronto!";
