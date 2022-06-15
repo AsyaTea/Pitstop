@@ -552,7 +552,7 @@ struct Page5 : View {
 
 struct OnBoardingButton : View {
     
-    var text : String
+    var text : LocalizedStringKey
     var textColor : Color
     var color : Color
     

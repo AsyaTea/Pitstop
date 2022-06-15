@@ -59,7 +59,7 @@ struct VehicleView: View {
 
 struct AddReportButton : View {
     
-    var text : String
+    var text : LocalizedStringKey
     var body: some View {
         
         ZStack{

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class AddExpenseViewModel : ObservableObject {
     
@@ -17,7 +18,7 @@ class AddExpenseViewModel : ObservableObject {
     
     //Reminders
     @Published var selectedCategoryReminder =  "Maintenance"
-    let categoryReminder = ["Maintenance", "Insurance","Road tax","Tolls","Parking","Other"]
+//    let categoryReminder = ["Maintenance", "Insurance","Road tax","Tolls","Parking","Other"]
     @Published var selectedRepeat = "Never"
     let repeatTypes = ["Never", "Daily", "Weekdays","Weekends", "Weekly","Monthly","Every 3 Months","Every 6 Months","Yearly"]
     @Published var selectedBased = "Date"

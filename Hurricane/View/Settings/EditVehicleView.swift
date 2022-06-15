@@ -124,7 +124,7 @@ struct EditVehicleView : View {
                     }
                     .accentColor(Palette.black)
                 })
-                .confirmationDialog("Select a default fuel type", isPresented: $defaultFuelPicker, titleVisibility: .visible){
+                .confirmationDialog(String(localized: "Select a default fuel type"), isPresented: $defaultFuelPicker, titleVisibility: .visible){
                     ForEach(FuelType.allCases, id: \.self) { fuel in
                         
                         Button(fuel.label){

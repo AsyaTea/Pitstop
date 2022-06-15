@@ -72,7 +72,7 @@ struct HeaderContent : View {
                             Text("\(formattedFuel) / 100")
                                 .foregroundColor(Palette.blackHeader)
                                 .font(Typography.headerLM)
-                            Text("Efficiency (L/\(utilityVM.unit))")
+                            Text(String(localized: "Efficiency")+" (L/\(utilityVM.unit))")
                                 .foregroundColor(Palette.blackHeader)
                                 .font(Typography.TextM)
                         }

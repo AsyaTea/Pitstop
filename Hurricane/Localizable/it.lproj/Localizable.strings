@@ -28,6 +28,9 @@
 "Add more info" = "Aggiungi altre info";
 
 /* No comment provided by engineer. */
+"Add report" = "Nuovo report";
+
+/* No comment provided by engineer. */
 "Add vehicle" = "Aggiungi un veicolo";
 
 /* No comment provided by engineer. */
@@ -35,6 +38,15 @@
 
 /* No comment provided by engineer. */
 "Analytics" = "Statistiche";
+
+/* No comment provided by engineer. */
+"Average" = "Media";
+
+/* No comment provided by engineer. */
+"Average days/refuel" = "Media giorni/rifornimento";
+
+/* No comment provided by engineer. */
+"Average price" = "Prezzo medio";
 
 /* No comment provided by engineer. */
 "Brand" = "Brand";
@@ -46,10 +58,25 @@
 "Clear expired" = "Elimina storico";
 
 /* No comment provided by engineer. */
+"CNG (Methane)" = "Metano";
+
+/* No comment provided by engineer. */
 "Coming soon" = "In arrivo";
 
 /* No comment provided by engineer. */
+"Cost" = "Costo";
+
+/* No comment provided by engineer. */
+"Cost structure" = "Struttura dei costi";
+
+/* No comment provided by engineer. */
 "Costs" = "Costi";
+
+/* No comment provided by engineer. */
+"Day" = "Giorno";
+
+/* No comment provided by engineer. */
+"Diesel" = "Diesel";
 
 /* No comment provided by engineer. */
 "Documents" = "Documenti";
@@ -58,16 +85,40 @@
 "Don’t miss anything \nimportant" = "Non perderti nulla di importante";
 
 /* No comment provided by engineer. */
+"Efficiency" = "Efficienza";
+
+/* No comment provided by engineer. */
+"Electric" = "Elettrica";
+
+/* No comment provided by engineer. */
+"Estimated km/year" = "Stima km/anno";
+
+/* No comment provided by engineer. */
+"Ethanol" = "Etanolo";
+
+/* No comment provided by engineer. */
+"Expense" = "Spesa";
+
+/* No comment provided by engineer. */
 "Expenses Name" = "Nome della spesa";
 
 /* No comment provided by engineer. */
 "Expired" = "Storico";
 
 /* No comment provided by engineer. */
+"Fines" = "Multe";
+
+/* No comment provided by engineer. */
 "Fuel" = "Carburante";
 
 /* No comment provided by engineer. */
+"Fuel  " = "Carburante  ";
+
+/* No comment provided by engineer. */
 "Future" = "Prossimamente";
+
+/* No comment provided by engineer. */
+"Gasoline" = "Benzina";
 
 /* No comment provided by engineer. */
 "Gear up for a simple way of managing your \nvehicle and cutting costs" = "Allaccia la cintura per un modo semplice \ndi gestire il tuo veicolo e tagliare i costi";
@@ -79,7 +130,13 @@
 "Hello, World!" = "Hello, World!";
 
 /* No comment provided by engineer. */
-"Hop in and insert some key details" = "Salta su e inserisci delle informazioni utili";
+"Hop in and insert some key details" = "Salta a bordo e inserisci delle informazioni utili";
+
+/* No comment provided by engineer. */
+"Hydrogen" = "Idrogeno";
+
+/* No comment provided by engineer. */
+"Insurance" = "Assicurazione";
 
 /* No comment provided by engineer. */
 "Keep all of your vehicle info at hand" = "Mantieni alla mano tutte le info del veicolo";
@@ -100,13 +157,25 @@
 "Liters" = "Litri";
 
 /* No comment provided by engineer. */
+"LPG (Propane)" = "GPL (Propano)";
+
+/* No comment provided by engineer. */
+"Maintenance" = "Manutenzione";
+
+/* No comment provided by engineer. */
 "Model" = "Modello";
+
+/* No comment provided by engineer. */
+"Month Total" = "Totale mensile";
 
 /* No comment provided by engineer. */
 "Next" = "Avanti";
 
 /* No comment provided by engineer. */
 "New report" = "Nuovo report";
+
+/* No comment provided by engineer. */
+"None" = "Nessuno";
 
 /* No comment provided by engineer. */
 "Note" = "Note";
@@ -116,6 +185,9 @@
 
 /* No comment provided by engineer. */
 "Other" = "Altro";
+
+/* No comment provided by engineer. */
+"Parking" = "Parcheggio";
 
 /* No comment provided by engineer. */
 "Pick one" = "Scegline uno";
@@ -133,6 +205,9 @@
 "Price/Liter" = "Prezzo/Litro";
 
 /* No comment provided by engineer. */
+"Refuels" = "Rifornimenti";
+
+/* No comment provided by engineer. */
 "Reminders" = "Promemoria";
 
 /* No comment provided by engineer. */
@@ -142,10 +217,22 @@
 "Remove all vehicles" = "Rimuovi tutti i veicoli";
 
 /* No comment provided by engineer. */
+"Road Tax" = "Tassa di circolazione";
+
+/* No comment provided by engineer. */
+"Road tax" = "Tassa di circolazione";
+
+/* No comment provided by engineer. */
 "Save" = "Salva";
 
 /* No comment provided by engineer. */
+"Select a default fuel type" = "Seleziona un tipo di carburante";
+
+/* No comment provided by engineer. */
 "Settings" = "Impostazioni";
+
+/* No comment provided by engineer. */
+"Taxes" = "Tasse";
 
 /* No comment provided by engineer. */
 "Terms of Service" = "Termini di servizio";
@@ -158,6 +245,9 @@
 
 /* No comment provided by engineer. */
 "There are no reminders now" = "Attualmente non ci sono promemoria";
+
+/* No comment provided by engineer. */
+"Tolls" = "Pedaggi";
 
 /* No comment provided by engineer. */
 "Useful contacts" = "Contatti utili";

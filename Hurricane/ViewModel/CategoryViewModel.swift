@@ -467,21 +467,21 @@ extension Category : CaseIterable{
     var label : String {
         switch self {
         case .fuel:
-            return "Fuel"
+            return NSLocalizedString("Fuel", comment: "")
         case .maintenance:
-            return "Maintenance"
+            return NSLocalizedString("Maintenance", comment: "")
         case .insurance:
-            return "Insurance"
+            return NSLocalizedString("Insurance", comment: "")
         case .roadTax:
-            return "Road tax"
+            return NSLocalizedString("Road tax", comment: "")
         case .tolls:
-            return "Tolls"
+            return NSLocalizedString("Tolls", comment: "")
         case .fines:
-            return "Fines"
+            return NSLocalizedString("Fines", comment: "")
         case .parking:
-            return "Parking"
+            return NSLocalizedString("Parking", comment: "")
         case .other:
-            return "Other"
+            return NSLocalizedString("Other", comment: "")
         }
     }
     

@@ -277,7 +277,7 @@ struct OdometerCostsView: View {
 
 //MARK: List row
 struct ListCostsAttributes: View {
-    var title : String
+    var title : LocalizedStringKey
     var value : String
     var body: some View {
         HStack{
