@@ -110,7 +110,7 @@ struct SettingsView: View {
                     Text("Settings")
                     .foregroundColor(Palette.black)
                     .font(Typography.headerXL)
-                    .padding(.top,23)
+                    .padding(.top,15)
                 
             )
         }
@@ -129,7 +129,7 @@ struct PremiumBanner : View {
             Rectangle()
                 .foregroundColor(.accentColor)
                 .cornerRadius(15)
-                .frame(width: UIScreen.main.bounds.width * 0.93, height: UIScreen.main.bounds.width * 0.4)
+                .frame(width: UIScreen.main.bounds.width * 0.915, height: UIScreen.main.bounds.width * 0.4)
             HStack{
                 VStack(alignment: .leading){
                     Text("Get more features")

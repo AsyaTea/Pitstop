@@ -19,7 +19,7 @@ class CategoryViewModel: ObservableObject {
     @Published var arrayCat : [Category] = []
     
     @Published var selectedCategory : Int16 = Int16(Category.fuel.rawValue)
-    //Computed properties, pass expenseList through view and call functions
+   
     @Published var fuelTotal: Float = 0.0
     @Published var maintenanceTotal: Float = 0.0
     @Published var insuranceTotal: Float = 0.0
@@ -51,9 +51,9 @@ class CategoryViewModel: ObservableObject {
     
     @Published var currentOdometer: Double = 0
     @Published var odometerTimeTotal: Double = 0
-    @Published var avgOdometer: Float = 0
-    @Published var odometerTotal : Float = 0
-    @Published var estimatedOdometerPerYear : Float = 0
+    var avgOdometer: Float = 0
+    var odometerTotal : Float = 0
+    var estimatedOdometerPerYear : Float = 0
     var literDiff : Float = 0
     @Published var fuelEff : Float = 0
     
@@ -261,10 +261,7 @@ class CategoryViewModel: ObservableObject {
         let days = calculateDays(timeFrame: timeFrame)
         self.avgOdometer = odometerTotal / Float(days)
         
-        // prendi l'odometer dell ultima expense
-        //prendi odometer della prima expense nel time range
-        //sub
-        //dividi il risultato x i giorni
+    
     }
     
     //Estimated km/year takes odometer data from time frame, makes an average -> multiply for 12/ 4 / 1 based on time frame
@@ -362,6 +359,9 @@ class CategoryViewModel: ObservableObject {
     
     func retrieveAndUpdate(vehicleID: NSManagedObjectID) {
         self.expenseList = []
+        self.avgOdometer = 0
+        self.odometerTotal = 0
+        self.estimatedOdometerPerYear = 0
         let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (vehicleID))
         self.getExpensesCoreData(filter: filterCurrentExpense, storage:  { storage in
             self.expenseList = storage
