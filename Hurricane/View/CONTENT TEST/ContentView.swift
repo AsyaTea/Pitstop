@@ -93,7 +93,7 @@ struct ContentView: View {
                 .textFieldStyle(.roundedBorder)
                 .padding()
             }
-            Button("Add veicolo"){
+            Button("Add vehicle"){
                 vehicleS.fuelTypeOne = fuelVM.defaultSelectedFuel
                 dataVM.addVehicle(vehicle: vehicleS)
                 print(vehicleS)

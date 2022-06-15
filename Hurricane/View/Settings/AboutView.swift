@@ -164,7 +164,7 @@ struct AboutView: View {
         )
         .toolbar{
             ToolbarItem(placement: .principal) {
-                Text("About")
+                Text("About us")
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
             }

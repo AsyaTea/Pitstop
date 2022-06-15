@@ -463,7 +463,7 @@ struct Page4 : View {
             
             Spacer()
             VStack(spacing:12){
-                Text("Don’t miss anything \n important")
+                Text("Don’t miss anything \nimportant")
                     .font(Typography.headerXL)
                     .multilineTextAlignment(.center)
                     .foregroundColor(Palette.black)

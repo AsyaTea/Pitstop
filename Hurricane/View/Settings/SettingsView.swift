@@ -23,7 +23,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationView{
             VStack{
-                
+                Spacer()
                 PremiumBanner()
                     .padding(.top,20)
                 List{
@@ -85,7 +85,7 @@ struct SettingsView: View {
                             .font(Typography.headerM)}
                         
                         NavigationLink(destination: AboutView()){
-                            Text("About")
+                            Text("About us")
                                 .foregroundColor(Palette.black)
                             .font(Typography.headerM)}
                         
@@ -161,7 +161,7 @@ struct ToSView: View {
 
     var body: some View {
         HTMLView(htmlFileName: "TermsOfService")
-            .frame(width: 380.0, height: 700.0)
+//            .frame(width: 380.0, height: 700.0)
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
