@@ -315,14 +315,12 @@ struct AnalyticsHeaderView : View {
             Spacer()
             
             HStack{
-                Button(action: {
-                    
-                }, label: {
+             
                     ZStack{
                         Rectangle()
                             .foregroundColor(Palette.white)
                             .cornerRadius(37)
-                            .frame(width: UIScreen.main.bounds.width * 0.25, height: UIScreen.main.bounds.height * 0.04)
+                            .frame(width: 125, height: UIScreen.main.bounds.height * 0.04)
                             .shadowGrey()
                         HStack{
                             Menu {
@@ -334,12 +332,12 @@ struct AnalyticsHeaderView : View {
                                         .onChange(of: selectedTimeFrame) { tag in
                                             categoryVM.setSelectedTimeFrame(timeFrame: tag)
                                             categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
-                                          
                                             print("tag is  \(tag)")
                                         }
                                 
                             } label: {
                                 HStack {
+                        
                                     Text(categoryVM.selectedTimeFrame)
                                         .foregroundColor(Palette.black)
                                         .font(Typography.ControlS)
@@ -354,7 +352,7 @@ struct AnalyticsHeaderView : View {
                         
                     
                     }
-                })
+                
                
 //                ZStack{
 //                    Button(action: {
