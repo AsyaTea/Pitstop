@@ -64,7 +64,7 @@ struct VehicleState : Hashable {
     
     var current : NSNumber?
     var brand : String = ""
-    var fuelTypeOne: Int16 = 0
+    var fuelTypeOne: Int16 = 1
     var fuelTypeTwo: Int16?
     var model : String = ""
     var name : String = ""

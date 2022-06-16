@@ -28,8 +28,8 @@ class NotificationManager : ObservableObject {
         var isIta : Bool {
             return Locale.current.languageCode == "it"
         }
-        var reminderEng = (String(localized:"You have a new ") + String(category?.label.lowercased() ?? "") + String(localized: " reminder"))
-        var reminderIta = "Hai un nuovo promemoria in \(category?.label.lowercased() ?? "")"
+        let reminderEng = (String(localized:"You have a new ") + String(category?.label.lowercased() ?? "") + String(localized: " reminder"))
+        let reminderIta = "Hai un nuovo promemoria in \(category?.label.lowercased() ?? "")"
         
         let content = UNMutableNotificationContent()
         self.id = reminderS.reminderID?.uriRepresentation().absoluteString ?? UUID().uuidString
