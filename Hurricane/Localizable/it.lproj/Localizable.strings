@@ -303,6 +303,9 @@
 "Reminder" = "Promemoria";
 
 /* No comment provided by engineer. */
+" reminder" = " promemoria";
+
+/* No comment provided by engineer. */
 "Reminders" = "Promemoria";
 
 /* No comment provided by engineer. */
@@ -394,6 +397,9 @@
 
 /* No comment provided by engineer. */
 "You are set to start your engine and optimize \n your spendings" = "Ora sei pronto a far partire il motore \ned ottimizzare le tue spese";
+
+/* No comment provided by engineer. */
+"You have a new " = "Hai un nuovo ";
 
 /* No comment provided by engineer. */
 "Your vehicle is ready!" = "Il tuo veicolo è pronto!";
