@@ -129,7 +129,7 @@ struct PremiumBanner : View {
             Rectangle()
                 .foregroundColor(.accentColor)
                 .cornerRadius(15)
-                .frame(width: UIScreen.main.bounds.width * 0.915, height: UIScreen.main.bounds.height * 0.235)
+                .frame(width: UIScreen.main.bounds.width * 0.915, height: UIScreen.main.bounds.height * 0.235 - 50)
             HStack{
                 VStack(alignment: .leading){
                     Text("Get more features")
