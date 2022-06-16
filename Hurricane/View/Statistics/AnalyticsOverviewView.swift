@@ -39,7 +39,7 @@ struct AnalyticsOverviewView: View {
                     Spacer()
                     GifView("loadingStats")
                         .frame(width: 300, height: 300)
-                    Text("No data to show")
+                    Text(String(localized: "No data to show"))
                         .foregroundColor(Palette.black)
                         .font(Typography.headerM)
                     Spacer()
