@@ -38,7 +38,7 @@ struct CostGraphView : View {
     @ObservedObject var dataVM : DataViewModel
     var value = "50%"
     var body: some View {
-        VStack {
+        VStack(alignment: .leading,spacing:0) {
             HStack {
                 VStack(alignment: .leading){
                     let formattedCost = String(format: "%.0f", dataVM.totalExpense)
@@ -57,7 +57,7 @@ struct CostGraphView : View {
             
             //LABELS
             GeometryReader{ geo in
-                VStack{
+                VStack(alignment: .leading){
                     HStack{
                         HStack{
                             RoundedRectangle(cornerRadius: 5)
@@ -124,7 +124,7 @@ struct LineGraph: View {
     @ViewBuilder
     func cell() -> some View {
         RoundedRectangle(cornerRadius: 5)
-            .frame(width: 340, height: 23, alignment: .top)
+            .frame(width: UIScreen.main.bounds.width * 0.815, height: 23, alignment: .top)
             .foregroundColor(.white)
             .overlay(content: {
                 GeometryReader { geometry in

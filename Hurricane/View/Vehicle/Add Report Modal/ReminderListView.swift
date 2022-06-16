@@ -28,6 +28,7 @@ struct ReminderListView: View {
                 NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)){
                 Spacer()
                 Text(reminderVM.selectedCategory)
+                    .fixedSize()
                     .font(Typography.headerM)
                     .foregroundColor(Palette.greyMiddle)
                 }

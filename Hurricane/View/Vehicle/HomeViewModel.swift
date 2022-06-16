@@ -23,8 +23,8 @@ class HomeViewModel : ObservableObject {
     
     @Published var numberS = NumberState()
     
-    @Published var headerBackgroundColor = Palette.colorYellow
-    @Published var headerCardColor = Palette.colorMainYellow
+    @Published var headerBackgroundColor = Palette.colorViolet
+    @Published var headerCardColor = Palette.colorMainViolet
     
     @Published var COLOR_KEY = "COLOR_KEY"
     @Published var COLOR_KEY_CARD = "COLOR_KEY_CARD"
@@ -48,9 +48,9 @@ class HomeViewModel : ObservableObject {
         guard let array = userDefaults.object(forKey: key) as? [CGFloat] else {
             
             if key == COLOR_KEY {
-                return Palette.colorYellow
+                return Palette.colorViolet
             }
-            else {return Palette.colorMainYellow}
+            else {return Palette.colorMainViolet}
         
         }
         let color = Color(.sRGB, red: array[0],green: array[1],blue: array[2],opacity: array[3])

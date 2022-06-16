@@ -33,6 +33,7 @@ struct ExpenseListView: View {
                 NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)){
                 Spacer()
                 Text(addExpVM.selectedCategory)
+                    .fixedSize()
                     .font(Typography.headerM)
                     .foregroundColor(Palette.greyMiddle)
                 }
@@ -68,6 +69,7 @@ struct ExpenseListView: View {
                     NavigationLink(destination: CustomFuelPicker(dataVM: dataVM,addExpVM: addExpVM, fuelVM: fuelVM, checkmark1: $checkmark1,checkmark2: $checkmark2)){
                         Spacer()
                         Text(addExpVM.selectedFuel)
+                            .fixedSize()
                             .font(Typography.headerM)
                             .foregroundColor(Palette.greyMiddle)
                     }

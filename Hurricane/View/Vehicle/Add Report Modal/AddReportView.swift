@@ -145,6 +145,7 @@ struct AddReportView: View {
         HStack(spacing:10){
             ForEach(pickerTabs,id:\.self){ tab in
                 Text(tab)
+                    .fixedSize()
                     .frame(maxWidth: .infinity)
                     .padding(10)
                     .font(Typography.headerS)
@@ -195,6 +196,7 @@ struct ListCategoryComponent: View {
                 
             }
             Text(title)
+//                .fixedSize()
                 .font(Typography.headerM)
         }
     }
