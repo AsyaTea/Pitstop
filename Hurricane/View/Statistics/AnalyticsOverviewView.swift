@@ -52,71 +52,72 @@ struct AnalyticsOverviewView: View {
         .overlay(content: {
             VStack {
                 Spacer()
-                CustomSegmentedPicker()
-                    .padding(.horizontal)
-                    .padding(.vertical, 12)
-                    .background(.ultraThinMaterial)
+//                CustomSegmentedPicker()
+//                    .padding(.horizontal)
+//                    .padding(.vertical, 12)
+//                    .background(.ultraThinMaterial)
             }
         })
         .background(Palette.greyLight)
     }
 
-    func CustomSegmentedPicker() -> some View {
-        ZStack {
-            HStack(alignment: .center, spacing: 10) {
-                ForEach(pickerTabs, id: \.self) { tab in
-                    if categoryVM.currentPickerTab == tab {
-                        Text(tab)
-                            .fixedSize()
-                            .frame(maxWidth: .infinity)
-                            .padding(10)
-                            .font(Typography.headerXS)
-                            .foregroundColor(Palette.white)
-                            .background {
-                                if categoryVM.currentPickerTab == tab {
-                                    Capsule()
-                                        .fill(Palette.black)
-                                        .matchedGeometryEffect(id: "pickerTab", in: animation)
-                                }
-                            }
-                            .containerShape(Capsule())
-                            .contentShape(Capsule())
-                            .onTapGesture {
-                                withAnimation(.easeInOut) {
-                                    categoryVM.currentPickerTab = tab
-                                    let haptic = UIImpactFeedbackGenerator(style: .soft)
-                                    haptic.impactOccurred()
-                                }
-                            }
-                    } else {
-                        Text(tab)
-                            .fixedSize()
-                            .frame(maxWidth: .infinity)
-                            .padding(10)
-                            .font(Typography.headerXS)
-                            .foregroundColor(Palette.black)
-                            .background {
-                                if categoryVM.currentPickerTab == tab {
-                                    Capsule()
-                                        .fill(Palette.black)
-                                        .matchedGeometryEffect(id: "pickerTab", in: animation)
-                                }
-                            }
-                            .containerShape(Capsule())
-                            .contentShape(Capsule())
-                            .onTapGesture {
-                                withAnimation(.easeInOut) {
-                                    categoryVM.currentPickerTab = tab
-                                    let haptic = UIImpactFeedbackGenerator(style: .soft)
-                                    haptic.impactOccurred()
-                                }
-                            }
-                    }
-                }
-            }
-            .padding(.horizontal, 3)
-        }
-    }
+    // TODO: TYPE CHECK EXPRESSION ERROR
+    /*    func CustomSegmentedPicker() -> some View {
+         ZStack {
+             HStack(alignment: .center, spacing: 10) {
+                 ForEach(pickerTabs, id: \.self) { tab in
+                     if categoryVM.currentPickerTab == tab {
+                         Text(tab)
+                             .fixedSize()
+                             .frame(maxWidth: .infinity)
+                             .padding(10)
+                             .font(Typography.headerXS)
+                             .foregroundColor(Palette.white)
+                             .background {
+                                 if categoryVM.currentPickerTab == tab {
+                                     Capsule()
+                                         .fill(Palette.black)
+                                         .matchedGeometryEffect(id: "pickerTab", in: animation)
+                                 }
+                             }
+                             .containerShape(Capsule())
+                             .contentShape(Capsule())
+                             .onTapGesture {
+                                 withAnimation(.easeInOut) {
+                                     categoryVM.currentPickerTab = tab
+                                     let haptic = UIImpactFeedbackGenerator(style: .soft)
+                                     haptic.impactOccurred()
+                                 }
+                             }
+                     } else {
+                         Text(tab)
+                             .fixedSize()
+                             .frame(maxWidth: .infinity)
+                             .padding(10)
+                             .font(Typography.headerXS)
+                             .foregroundColor(Palette.black)
+                             .background {
+                                 if categoryVM.currentPickerTab == tab {
+                                     Capsule()
+                                         .fill(Palette.black)
+                                         .matchedGeometryEffect(id: "pickerTab", in: animation)
+                                 }
+                             }
+                             .containerShape(Capsule())
+                             .contentShape(Capsule())
+                             .onTapGesture {
+                                 withAnimation(.easeInOut) {
+                                     categoryVM.currentPickerTab = tab
+                                     let haptic = UIImpactFeedbackGenerator(style: .soft)
+                                     haptic.impactOccurred()
+                                 }
+                             }
+                     }
+                 }
+             }
+             .padding(.horizontal, 3)
+         }
+     } */
 }
 
 // MARK: Overview page
@@ -287,11 +288,12 @@ struct AnalyticsHeaderView: View {
                     HStack {
                         Menu {
                             Picker(selection: $categoryVM.selectedTimeFrame, label: Text("Time")) {
-                                ForEach(categoryVM.timeFrames, id: \.self) { time in
-                                    Text(time).tag(time)
+                                ForEach(TimeFrame.allCases, id: \.self) { timeFrame in
+                                    Text(timeFrame.label)
+                                        .tag(timeFrame)
                                 }
                             }
-                            .onChange(of: selectedTimeFrame) { tag in
+                            .onChange(of: categoryVM.selectedTimeFrame) { tag in
                                 categoryVM.setSelectedTimeFrame(timeFrame: tag)
                                 categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                                 print("tag is  \(tag)")
@@ -299,7 +301,7 @@ struct AnalyticsHeaderView: View {
 
                         } label: {
                             HStack {
-                                Text(categoryVM.selectedTimeFrame)
+                                Text(categoryVM.selectedTimeFrame.label)
                                     .foregroundColor(Palette.black)
                                     .font(Typography.ControlS)
                                 Image("arrowDown")
@@ -312,26 +314,31 @@ struct AnalyticsHeaderView: View {
 
                 //               MARK: - DOWNLOAD DATA BUTTON
 
-                //                ZStack{
-                //                    Button(action: {
-                //
-                //
-                //                    }, label: {
-                //                        ZStack{
-                //                            Circle()
-                //                                .foregroundColor(Palette.white)
-                //                                .frame(width: UIScreen.main.bounds.width * 0.09, height: UIScreen.main.bounds.height * 0.04)
-                //                                .shadowGrey()
-                //                            Image("download")
-                //                                .frame(alignment: .center)
-                //                                .padding()
-                //                        }
-                //                    })
-                //                }
-                //                .padding()
+                ZStack {
+                    Button(action: {}, label: {
+                        ZStack {
+                            Circle()
+                                .foregroundColor(Palette.white)
+                                .frame(width: UIScreen.main.bounds.width * 0.09, height: UIScreen.main.bounds.height * 0.04)
+                                .shadowGrey()
+                            Image("download")
+                                .frame(alignment: .center)
+                                .padding()
+                        }
+                    })
+                }
+                .padding()
             }
             .padding(.top, 2)
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarItems(
+            leading:
+            Text("Analytics")
+                .foregroundColor(Palette.black)
+                .font(Typography.headerXL)
+                .padding(.top, 15)
+        )
         .padding(.top)
     }
 }

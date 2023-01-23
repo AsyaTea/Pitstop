@@ -66,8 +66,7 @@ class CategoryViewModel: ObservableObject {
     var fuelGraphData: [CGFloat] = []
     var odometerGraphData: [CGFloat] = []
 
-    @Published var selectedTimeFrame = String(localized: "Per month")
-    let timeFrames = [String(localized: "Per month"), String(localized: "Per 3 months"), String(localized: "Per year"), String(localized: "All time")]
+    @Published var selectedTimeFrame: TimeFrame = .month
 
     init() {
         print("categoryVM recreating")
@@ -79,7 +78,7 @@ class CategoryViewModel: ObservableObject {
         set { selectedCategory = Int16(newValue.rawValue) }
     }
 
-    func setSelectedTimeFrame(timeFrame: String) {
+    func setSelectedTimeFrame(timeFrame: TimeFrame) {
         selectedTimeFrame = timeFrame
         print("selected time frame \(selectedTimeFrame)")
     }
@@ -339,16 +338,16 @@ class CategoryViewModel: ObservableObject {
         getExpensesCoreData(filter: filterCurrentExpense, storage: { storage in
             self.expenseList = storage
             self.assignCategories(expenseList: storage)
-            self.getRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+            self.getRefuel(timeFrame: self.selectedTimeFrame.label, fuelList: self.fuelList)
 
             if self.fuelList.count >= 2 {
-                self.getAverageOdometer(expenseList: self.expenseList, timeFrame: self.selectedTimeFrame)
-                self.getEstimatedOdometerPerYear(timeFrame: self.selectedTimeFrame)
+                self.getAverageOdometer(expenseList: self.expenseList, timeFrame: self.selectedTimeFrame.label)
+                self.getEstimatedOdometerPerYear(timeFrame: self.selectedTimeFrame.label)
 
-                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
-                self.getAveragePrice(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+                self.getAverageDaysRefuel(timeFrame: self.selectedTimeFrame.label, fuelList: self.fuelList)
+                self.getAveragePrice(timeFrame: self.selectedTimeFrame.label, fuelList: self.fuelList)
             }
-            self.getFuelEfficiency(timeFrame: self.selectedTimeFrame, fuelList: self.fuelList)
+            self.getFuelEfficiency(timeFrame: self.selectedTimeFrame.label, fuelList: self.fuelList)
             self.getTotalExpense(expenses: self.expenseList)
             self.totalCostPercentage(totalCost: self.totalExpense, expenseList: self.expenseList)
             self.getLitersData(expenses: self.expenseList)
@@ -509,6 +508,23 @@ enum CategoryEnum {
     case maintenance
     case fuel
     case insurance
+}
+
+enum TimeFrame: CaseIterable {
+    case month
+    case threeMonth
+    case year
+
+    var label: String {
+        switch self {
+        case .month:
+            return String(localized: "Per Month")
+        case .threeMonth:
+            return String(localized: "Per 3 Months")
+        case .year:
+            return String(localized: "Per Year")
+        }
+    }
 }
 
 extension Date {

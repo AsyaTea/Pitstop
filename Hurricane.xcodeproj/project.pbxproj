@@ -28,6 +28,87 @@
 		FF10676E282C03E20077CCF7 /* Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10676D282C03E20077CCF7 /* Pages.swift */; };
 		FF106792282D36160077CCF7 /* HomeStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF106791282D36160077CCF7 /* HomeStyleView.swift */; };
 		FF106794282D38970077CCF7 /* HeaderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF106793282D38960077CCF7 /* HeaderContentView.swift */; };
+		FF130651297EBF190004C00B /* EditReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E71A28535329008B3ED9 /* EditReminderView.swift */; };
+		FF130652297EBF190004C00B /* AddReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA93161284A664800C8D73C /* AddReminderViewModel.swift */; };
+		FF130653297EBF190004C00B /* ReminderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616CE28290F21002ADA33 /* ReminderListView.swift */; };
+		FF130654297EBF190004C00B /* Vehicle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC3934282176F400F7E0A8 /* Vehicle+CoreDataClass.swift */; };
+		FF130655297EBF190004C00B /* NumberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF974B8B283F520D00C33576 /* NumberModel.swift */; };
+		FF130656297EBF190004C00B /* EditEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C4F3D2846518500926F4D /* EditEventView.swift */; };
+		FF130657297EBF190004C00B /* AlertAddNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC52899282FB4430013D8B6 /* AlertAddNumbers.swift */; };
+		FF130658297EBF190004C00B /* DocumentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAA33C283FC68400145B35 /* DocumentModel.swift */; };
+		FF130659297EBF190004C00B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D5A2428299D0D006D5ABF /* OnboardingView.swift */; };
+		FF13065A297EBF190004C00B /* VehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF85592824104A00E0F9BF /* VehicleView.swift */; };
+		FF13065B297EBF190004C00B /* Document+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E72828555014008B3ED9 /* Document+CoreDataProperties.swift */; };
+		FF13065C297EBF190004C00B /* Number+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7C8AF3283F598900D2EEA2 /* Number+CoreDataProperties.swift */; };
+		FF13065D297EBF190004C00B /* ExpiredReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E71C28553D15008B3ED9 /* ExpiredReminder.swift */; };
+		FF13065E297EBF190004C00B /* ReminderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA9315C284A5DB900C8D73C /* ReminderModel.swift */; };
+		FF13065F297EBF190004C00B /* AnalyticsOdometerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E20B282CF49B00F756B5 /* AnalyticsOdometerView.swift */; };
+		FF130660297EBF190004C00B /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E71F28554495008B3ED9 /* DocumentView.swift */; };
+		FF130661297EBF190004C00B /* ExpenseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF974B87283F4DF500C33576 /* ExpenseModel.swift */; };
+		FF130662297EBF190004C00B /* ThemePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7439AD28574C8E00E113CA /* ThemePickerView.swift */; };
+		FF130663297EBF190004C00B /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1224B2858BD6C004686CA /* AboutView.swift */; };
+		FF130664297EBF190004C00B /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAA33F283FE1A000145B35 /* TopBarView.swift */; };
+		FF130665297EBF190004C00B /* ImportantNumbersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14DC3128302CC300CA248B /* ImportantNumbersView.swift */; };
+		FF130666297EBF190004C00B /* StatusBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0327B675284775C50068D73A /* StatusBarAppearance.swift */; };
+		FF130667297EBF190004C00B /* CarModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 415D203C28214215004AF201 /* CarModel.xcdatamodeld */; };
+		FF130668297EBF190004C00B /* extensionColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A62823FC4800AB61A2 /* extensionColor.swift */; };
+		FF130669297EBF190004C00B /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA9315F284A62B400C8D73C /* ReminderView.swift */; };
+		FF13066A297EBF190004C00B /* EditVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC67B44283A2A920078B283 /* EditVehicleView.swift */; };
+		FF13066B297EBF190004C00B /* VehicleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF974B85283F4DE400C33576 /* VehicleModel.swift */; };
+		FF13066C297EBF190004C00B /* AddExpenseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616CA28290416002ADA33 /* AddExpenseViewModel.swift */; };
+		FF13066D297EBF190004C00B /* AddReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC308328252F5B00391BD5 /* AddReportView.swift */; };
+		FF13066E297EBF190004C00B /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADCE2825131C00C66A84 /* CustomTabBarView.swift */; };
+		FF13066F297EBF190004C00B /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E20F283185B200F756B5 /* CategoryViewModel.swift */; };
+		FF130670297EBF190004C00B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD62825251500C66A84 /* SettingsView.swift */; };
+		FF130671297EBF190004C00B /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */; };
+		FF130672297EBF190004C00B /* Reminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF192B0A284A5C0400F2F71C /* Reminder+CoreDataProperties.swift */; };
+		FF130673297EBF190004C00B /* TabAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD2282520A200C66A84 /* TabAppearance.swift */; };
+		FF130674297EBF190004C00B /* OdometerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616D028290F55002ADA33 /* OdometerListView.swift */; };
+		FF130675297EBF190004C00B /* Reminder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF192B09284A5C0400F2F71C /* Reminder+CoreDataClass.swift */; };
+		FF130676297EBF190004C00B /* Expense+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */; };
+		FF130677297EBF190004C00B /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A42823FC0600AB61A2 /* Palette.swift */; };
+		FF130678297EBF190004C00B /* WorkInProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF974B89283F4E6000C33576 /* WorkInProgress.swift */; };
+		FF130679297EBF190004C00B /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA93163284A829B00C8D73C /* NotificationManager.swift */; };
+		FF13067A297EBF190004C00B /* HTML View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030A39912858D36500218628 /* HTML View.swift */; };
+		FF13067B297EBF190004C00B /* AnalyticsFuelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E209282CF47D00F756B5 /* AnalyticsFuelView.swift */; };
+		FF13067C297EBF190004C00B /* GifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1224528588CB7004686CA /* GifView.swift */; };
+		FF13067D297EBF190004C00B /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E20D282D184400F756B5 /* Graph.swift */; };
+		FF13067E297EBF190004C00B /* AlertsOnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF534EB1283643330089BE94 /* AlertsOnBoarding.swift */; };
+		FF13067F297EBF190004C00B /* Document+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E72728555014008B3ED9 /* Document+CoreDataClass.swift */; };
+		FF130680297EBF190004C00B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */; };
+		FF130681297EBF190004C00B /* AddNewVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF534EAF283636EA0089BE94 /* AddNewVehicleView.swift */; };
+		FF130682297EBF190004C00B /* HeaderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF106793282D38960077CCF7 /* HeaderContentView.swift */; };
+		FF130683297EBF190004C00B /* DataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D2041282145FE004AF201 /* DataViewModel.swift */; };
+		FF130684297EBF190004C00B /* TabData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD02825201A00C66A84 /* TabData.swift */; };
+		FF130685297EBF190004C00B /* HomeStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF106791282D36160077CCF7 /* HomeStyleView.swift */; };
+		FF130686297EBF190004C00B /* AllDocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD12251285E497B004686CA /* AllDocumentsView.swift */; };
+		FF130687297EBF190004C00B /* FuelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41176DA82834DCC3000FD885 /* FuelViewModel.swift */; };
+		FF130688297EBF190004C00B /* Number+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7C8AF2283F598900D2EEA2 /* Number+CoreDataClass.swift */; };
+		FF130689297EBF190004C00B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D203F282144CE004AF201 /* CoreDataManager.swift */; };
+		FF13068A297EBF190004C00B /* Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10676D282C03E20077CCF7 /* Pages.swift */; };
+		FF13068B297EBF190004C00B /* PdfViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E721285548B1008B3ED9 /* PdfViewModel.swift */; };
+		FF13068C297EBF190004C00B /* HurricaneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D202E28214180004AF201 /* HurricaneApp.swift */; };
+		FF13068D297EBF190004C00B /* UtilityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */; };
+		FF13068E297EBF190004C00B /* AnalyticsOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD42825250A00C66A84 /* AnalyticsOverviewView.swift */; };
+		FF13068F297EBF190004C00B /* Vehicle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC3935282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift */; };
+		FF130690297EBF190004C00B /* EditNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E71828533191008B3ED9 /* EditNumbers.swift */; };
+		FF130691297EBF190004C00B /* Utility Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E714284FB684008B3ED9 /* Utility Extensions.swift */; };
+		FF130692297EBF190004C00B /* BottomContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC52897282FB2A40013D8B6 /* BottomContentView.swift */; };
+		FF130693297EBF190004C00B /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10676B282C03300077CCF7 /* OnboardingViewModel.swift */; };
+		FF130694297EBF190004C00B /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1AA1A22823F9C200AB61A2 /* Typography.swift */; };
+		FF130695297EBF190004C00B /* ExpenseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616CC28290E61002ADA33 /* ExpenseListView.swift */; };
+		FF130696297EBF190004C00B /* AnalyticsCostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6E207282CEE6100F756B5 /* AnalyticsCostView.swift */; };
+		FF130697297EBF190004C00B /* Expense+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9E2823C4CD007980F3 /* Expense+CoreDataProperties.swift */; };
+		FF130698297EBF190004C00B /* OldTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF855B282411FD00E0F9BF /* OldTabBarView.swift */; };
+		FF130699297EBF190004C00B /* PDFKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E72328554A96008B3ED9 /* PDFKitView.swift */; };
+		FF13069A297EBF190004C00B /* LastEventsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416D26C72848B1EB00E4ECD6 /* LastEventsListView.swift */; };
+		FF13069D297EBF190004C00B /* loadingStats.gif in Resources */ = {isa = PBXBuildFile; fileRef = FFD12249285892DB004686CA /* loadingStats.gif */; };
+		FF13069E297EBF190004C00B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415D203528214182004AF201 /* Preview Assets.xcassets */; };
+		FF13069F297EBF190004C00B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415D203228214182004AF201 /* Assets.xcassets */; };
+		FF1306A0297EBF190004C00B /* comingSoon.gif in Resources */ = {isa = PBXBuildFile; fileRef = FFD1224F2858CB0D004686CA /* comingSoon.gif */; };
+		FF1306A1297EBF190004C00B /* aboutPlaceholder.gif in Resources */ = {isa = PBXBuildFile; fileRef = FFD1224D2858BDB7004686CA /* aboutPlaceholder.gif */; };
+		FF1306A2297EBF190004C00B /* TermsOfService.html in Resources */ = {isa = PBXBuildFile; fileRef = 030A39932858D43E00218628 /* TermsOfService.html */; };
+		FF1306A3297EBF190004C00B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03305E9E28592590001E52B7 /* Localizable.strings */; };
 		FF14DC30282FCA1F00CA248B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC52895282E4BE60013D8B6 /* HomeViewModel.swift */; };
 		FF14DC3228302CC300CA248B /* ImportantNumbersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14DC3128302CC300CA248B /* ImportantNumbersView.swift */; };
 		FF192B0B284A5C0400F2F71C /* Reminder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF192B09284A5C0400F2F71C /* Reminder+CoreDataClass.swift */; };
@@ -80,6 +161,8 @@
 		FFC67B45283A2A920078B283 /* EditVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC67B44283A2A920078B283 /* EditVehicleView.swift */; };
 		FFCC308428252F5B00391BD5 /* AddReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC308328252F5B00391BD5 /* AddReportView.swift */; };
 		FFCC308628258B6C00391BD5 /* UtilityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */; };
+		FFCDB2A3297ED015004AD298 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDB2A2297ED015004AD298 /* AnalyticsView.swift */; };
+		FFCDB2A4297ED015004AD298 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDB2A2297ED015004AD298 /* AnalyticsView.swift */; };
 		FFD1224628588CB7004686CA /* GifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1224528588CB7004686CA /* GifView.swift */; };
 		FFD1224A285892DB004686CA /* loadingStats.gif in Resources */ = {isa = PBXBuildFile; fileRef = FFD12249285892DB004686CA /* loadingStats.gif */; };
 		FFD1224C2858BD6C004686CA /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1224B2858BD6C004686CA /* AboutView.swift */; };
@@ -104,7 +187,7 @@
 		03305EBA285A0C66001E52B7 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = it; path = it.lproj/Info.plist; sourceTree = "<group>"; };
 		41176DA82834DCC3000FD885 /* FuelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewModel.swift; sourceTree = "<group>"; };
 		415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
-		415D202B28214180004AF201 /* Hurricane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hurricane.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		415D202B28214180004AF201 /* Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Debug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		415D202E28214180004AF201 /* HurricaneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HurricaneApp.swift; sourceTree = "<group>"; };
 		415D203228214182004AF201 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		415D203528214182004AF201 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -121,6 +204,8 @@
 		FF10676D282C03E20077CCF7 /* Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pages.swift; sourceTree = "<group>"; };
 		FF106791282D36160077CCF7 /* HomeStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStyleView.swift; sourceTree = "<group>"; };
 		FF106793282D38960077CCF7 /* HeaderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderContentView.swift; sourceTree = "<group>"; };
+		FF1306A7297EBF190004C00B /* Release.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Release.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF1306A8297EBF190004C00B /* Hurricane copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Hurricane copy-Info.plist"; path = "/Users/ivanvoloshchuk/Desktop/Pitstop/Hurricane copy-Info.plist"; sourceTree = "<absolute>"; };
 		FF14DC3128302CC300CA248B /* ImportantNumbersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantNumbersView.swift; sourceTree = "<group>"; };
 		FF192B09284A5C0400F2F71C /* Reminder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF192B0A284A5C0400F2F71C /* Reminder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -173,6 +258,7 @@
 		FFC67B44283A2A920078B283 /* EditVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVehicleView.swift; sourceTree = "<group>"; };
 		FFCC308328252F5B00391BD5 /* AddReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReportView.swift; sourceTree = "<group>"; };
 		FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityViewModel.swift; sourceTree = "<group>"; };
+		FFCDB2A2297ED015004AD298 /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
 		FFD1224528588CB7004686CA /* GifView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifView.swift; sourceTree = "<group>"; };
 		FFD12249285892DB004686CA /* loadingStats.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loadingStats.gif; sourceTree = "<group>"; };
 		FFD1224B2858BD6C004686CA /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -195,6 +281,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FF13069B297EBF190004C00B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -211,13 +304,15 @@
 			children = (
 				415D202D28214180004AF201 /* Hurricane */,
 				415D202C28214180004AF201 /* Products */,
+				FF1306A8297EBF190004C00B /* Hurricane copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
 		415D202C28214180004AF201 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				415D202B28214180004AF201 /* Hurricane.app */,
+				415D202B28214180004AF201 /* Debug.app */,
+				FF1306A7297EBF190004C00B /* Release.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -276,7 +371,6 @@
 				41C6E207282CEE6100F756B5 /* AnalyticsCostView.swift */,
 				41C6E209282CF47D00F756B5 /* AnalyticsFuelView.swift */,
 				41C6E20B282CF49B00F756B5 /* AnalyticsOdometerView.swift */,
-				415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */,
 				41C6E20D282D184400F756B5 /* Graph.swift */,
 				FFD1224528588CB7004686CA /* GifView.swift */,
 			);
@@ -318,6 +412,7 @@
 				41C6E20F283185B200F756B5 /* CategoryViewModel.swift */,
 				FFA93161284A664800C8D73C /* AddReminderViewModel.swift */,
 				FFA93163284A829B00C8D73C /* NotificationManager.swift */,
+				415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -326,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				FF6773862A1740C700A6B959 /* Components */,
+				FFCDB2A1297ECFC0004AD298 /* Analytics New */,
 				FF1AA19E2823D44900AB61A2 /* Vehicle */,
 				FF1AA19F2823D45300AB61A2 /* Statistics */,
 				FF1AA1A02823D47D00AB61A2 /* Settings */,
@@ -455,6 +551,14 @@
 			path = Other;
 			sourceTree = "<group>";
 		};
+		FFCDB2A1297ECFC0004AD298 /* Analytics New */ = {
+			isa = PBXGroup;
+			children = (
+				FFCDB2A2297ED015004AD298 /* AnalyticsView.swift */,
+			);
+			path = "Analytics New";
+			sourceTree = "<group>";
+		};
 		FFDAA33E283FE12B00145B35 /* Important numbers */ = {
 			isa = PBXGroup;
 			children = (
@@ -479,9 +583,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		415D202A28214180004AF201 /* Hurricane */ = {
+		415D202A28214180004AF201 /* Debug */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 415D203928214182004AF201 /* Build configuration list for PBXNativeTarget "Hurricane" */;
+			buildConfigurationList = 415D203928214182004AF201 /* Build configuration list for PBXNativeTarget "Debug" */;
 			buildPhases = (
 				FF333146297E9C7400077A8D /* ShellScript */,
 				FF333147297E9CF700077A8D /* Run Script */,
@@ -493,11 +597,32 @@
 			);
 			dependencies = (
 			);
-			name = Hurricane;
+			name = Debug;
 			packageProductDependencies = (
 			);
 			productName = Hurricane;
-			productReference = 415D202B28214180004AF201 /* Hurricane.app */;
+			productReference = 415D202B28214180004AF201 /* Debug.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FF13064D297EBF190004C00B /* Release */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF1306A4297EBF190004C00B /* Build configuration list for PBXNativeTarget "Release" */;
+			buildPhases = (
+				FF13064E297EBF190004C00B /* ShellScript */,
+				FF13064F297EBF190004C00B /* Run Script */,
+				FF130650297EBF190004C00B /* Sources */,
+				FF13069B297EBF190004C00B /* Frameworks */,
+				FF13069C297EBF190004C00B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Release;
+			packageProductDependencies = (
+			);
+			productName = Hurricane;
+			productReference = FF1306A7297EBF190004C00B /* Release.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -532,7 +657,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				415D202A28214180004AF201 /* Hurricane */,
+				415D202A28214180004AF201 /* Debug */,
+				FF13064D297EBF190004C00B /* Release */,
 			);
 		};
 /* End PBXProject section */
@@ -552,9 +678,60 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FF13069C297EBF190004C00B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF13069D297EBF190004C00B /* loadingStats.gif in Resources */,
+				FF13069E297EBF190004C00B /* Preview Assets.xcassets in Resources */,
+				FF13069F297EBF190004C00B /* Assets.xcassets in Resources */,
+				FF1306A0297EBF190004C00B /* comingSoon.gif in Resources */,
+				FF1306A1297EBF190004C00B /* aboutPlaceholder.gif in Resources */,
+				FF1306A2297EBF190004C00B /* TermsOfService.html in Resources */,
+				FF1306A3297EBF190004C00B /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		FF13064E297EBF190004C00B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nif test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftformat >/dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+		FF13064F297EBF190004C00B /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nif test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 		FF333146297E9C7400077A8D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -664,6 +841,7 @@
 				FFCC308628258B6C00391BD5 /* UtilityViewModel.swift in Sources */,
 				FF42ADD52825250B00C66A84 /* AnalyticsOverviewView.swift in Sources */,
 				FFFC3937282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift in Sources */,
+				FFCDB2A3297ED015004AD298 /* AnalyticsView.swift in Sources */,
 				FFA0E71928533191008B3ED9 /* EditNumbers.swift in Sources */,
 				FFA0E715284FB684008B3ED9 /* SwipeBackGestureExt.swift in Sources */,
 				FFC52898282FB2A50013D8B6 /* BottomContentView.swift in Sources */,
@@ -677,6 +855,88 @@
 				FFA0E72428554A96008B3ED9 /* PDFKitView.swift in Sources */,
 				FF67738C2A1757E000A6B959 /* CustomList.swift in Sources */,
 				416D26C82848B1EB00E4ECD6 /* LastEventsListView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF130650297EBF190004C00B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF130651297EBF190004C00B /* EditReminderView.swift in Sources */,
+				FF130652297EBF190004C00B /* AddReminderViewModel.swift in Sources */,
+				FF130653297EBF190004C00B /* ReminderListView.swift in Sources */,
+				FF130654297EBF190004C00B /* Vehicle+CoreDataClass.swift in Sources */,
+				FF130655297EBF190004C00B /* NumberModel.swift in Sources */,
+				FF130656297EBF190004C00B /* EditEventView.swift in Sources */,
+				FF130657297EBF190004C00B /* AlertAddNumbers.swift in Sources */,
+				FF130658297EBF190004C00B /* DocumentModel.swift in Sources */,
+				FF130659297EBF190004C00B /* OnboardingView.swift in Sources */,
+				FF13065A297EBF190004C00B /* VehicleView.swift in Sources */,
+				FF13065B297EBF190004C00B /* Document+CoreDataProperties.swift in Sources */,
+				FF13065C297EBF190004C00B /* Number+CoreDataProperties.swift in Sources */,
+				FF13065D297EBF190004C00B /* ExpiredReminder.swift in Sources */,
+				FF13065E297EBF190004C00B /* ReminderModel.swift in Sources */,
+				FF13065F297EBF190004C00B /* AnalyticsOdometerView.swift in Sources */,
+				FF130660297EBF190004C00B /* DocumentView.swift in Sources */,
+				FF130661297EBF190004C00B /* ExpenseModel.swift in Sources */,
+				FF130662297EBF190004C00B /* ThemePickerView.swift in Sources */,
+				FF130663297EBF190004C00B /* AboutView.swift in Sources */,
+				FF130664297EBF190004C00B /* TopBarView.swift in Sources */,
+				FF130665297EBF190004C00B /* ImportantNumbersView.swift in Sources */,
+				FF130666297EBF190004C00B /* StatusBarAppearance.swift in Sources */,
+				FF130667297EBF190004C00B /* CarModel.xcdatamodeld in Sources */,
+				FF130668297EBF190004C00B /* extensionColor.swift in Sources */,
+				FF130669297EBF190004C00B /* ReminderView.swift in Sources */,
+				FF13066A297EBF190004C00B /* EditVehicleView.swift in Sources */,
+				FF13066B297EBF190004C00B /* VehicleModel.swift in Sources */,
+				FF13066C297EBF190004C00B /* AddExpenseViewModel.swift in Sources */,
+				FF13066D297EBF190004C00B /* AddReportView.swift in Sources */,
+				FF13066E297EBF190004C00B /* CustomTabBarView.swift in Sources */,
+				FF13066F297EBF190004C00B /* CategoryViewModel.swift in Sources */,
+				FF130670297EBF190004C00B /* SettingsView.swift in Sources */,
+				FF130671297EBF190004C00B /* StatisticsViewModel.swift in Sources */,
+				FF130672297EBF190004C00B /* Reminder+CoreDataProperties.swift in Sources */,
+				FF130673297EBF190004C00B /* TabAppearance.swift in Sources */,
+				FF130674297EBF190004C00B /* OdometerListView.swift in Sources */,
+				FF130675297EBF190004C00B /* Reminder+CoreDataClass.swift in Sources */,
+				FF130676297EBF190004C00B /* Expense+CoreDataClass.swift in Sources */,
+				FF130677297EBF190004C00B /* Palette.swift in Sources */,
+				FF130678297EBF190004C00B /* WorkInProgress.swift in Sources */,
+				FF130679297EBF190004C00B /* NotificationManager.swift in Sources */,
+				FF13067A297EBF190004C00B /* HTML View.swift in Sources */,
+				FF13067B297EBF190004C00B /* AnalyticsFuelView.swift in Sources */,
+				FF13067C297EBF190004C00B /* GifView.swift in Sources */,
+				FF13067D297EBF190004C00B /* Graph.swift in Sources */,
+				FF13067E297EBF190004C00B /* AlertsOnBoarding.swift in Sources */,
+				FF13067F297EBF190004C00B /* Document+CoreDataClass.swift in Sources */,
+				FF130680297EBF190004C00B /* HomeViewModel.swift in Sources */,
+				FF130681297EBF190004C00B /* AddNewVehicleView.swift in Sources */,
+				FF130682297EBF190004C00B /* HeaderContentView.swift in Sources */,
+				FF130683297EBF190004C00B /* DataViewModel.swift in Sources */,
+				FF130684297EBF190004C00B /* TabData.swift in Sources */,
+				FF130685297EBF190004C00B /* HomeStyleView.swift in Sources */,
+				FF130686297EBF190004C00B /* AllDocumentsView.swift in Sources */,
+				FF130687297EBF190004C00B /* FuelViewModel.swift in Sources */,
+				FF130688297EBF190004C00B /* Number+CoreDataClass.swift in Sources */,
+				FF130689297EBF190004C00B /* CoreDataManager.swift in Sources */,
+				FF13068A297EBF190004C00B /* Pages.swift in Sources */,
+				FF13068B297EBF190004C00B /* PdfViewModel.swift in Sources */,
+				FF13068C297EBF190004C00B /* HurricaneApp.swift in Sources */,
+				FF13068D297EBF190004C00B /* UtilityViewModel.swift in Sources */,
+				FF13068E297EBF190004C00B /* AnalyticsOverviewView.swift in Sources */,
+				FF13068F297EBF190004C00B /* Vehicle+CoreDataProperties.swift in Sources */,
+				FFCDB2A4297ED015004AD298 /* AnalyticsView.swift in Sources */,
+				FF130690297EBF190004C00B /* EditNumbers.swift in Sources */,
+				FF130691297EBF190004C00B /* Utility Extensions.swift in Sources */,
+				FF130692297EBF190004C00B /* BottomContentView.swift in Sources */,
+				FF130693297EBF190004C00B /* OnboardingViewModel.swift in Sources */,
+				FF130694297EBF190004C00B /* Typography.swift in Sources */,
+				FF130695297EBF190004C00B /* ExpenseListView.swift in Sources */,
+				FF130696297EBF190004C00B /* AnalyticsCostView.swift in Sources */,
+				FF130697297EBF190004C00B /* Expense+CoreDataProperties.swift in Sources */,
+				FF130698297EBF190004C00B /* OldTabBarView.swift in Sources */,
+				FF130699297EBF190004C00B /* PDFKitView.swift in Sources */,
+				FF13069A297EBF190004C00B /* LastEventsListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,7 +1016,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -812,7 +1072,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -843,7 +1103,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -878,7 +1138,77 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.pitstop;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		FF1306A5297EBF190004C00B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
+				DEVELOPMENT_TEAM = 55H4ABU399;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Hurricane copy-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Pitstop;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.academy.pitstop;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		FF1306A6297EBF190004C00B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_ASSET_PATHS = "\"Hurricane/Preview Content\"";
+				DEVELOPMENT_TEAM = 55H4ABU399;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Hurricane copy-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Pitstop;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -903,16 +1233,25 @@
 				415D203828214182004AF201 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
-		415D203928214182004AF201 /* Build configuration list for PBXNativeTarget "Hurricane" */ = {
+		415D203928214182004AF201 /* Build configuration list for PBXNativeTarget "Debug" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				415D203A28214182004AF201 /* Debug */,
 				415D203B28214182004AF201 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
+		};
+		FF1306A4297EBF190004C00B /* Build configuration list for PBXNativeTarget "Release" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF1306A5297EBF190004C00B /* Debug */,
+				FF1306A6297EBF190004C00B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

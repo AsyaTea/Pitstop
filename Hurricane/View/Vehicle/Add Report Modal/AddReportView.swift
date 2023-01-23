@@ -18,7 +18,9 @@ struct AddReportView: View {
     @State private var showDate = false
 
     // Custom picker tabs
-    @State private var pickerTabs = [String(localized: "Expense"), String(localized: "Odometer"), String(localized: "Reminder")]
+    @State private var pickerTabs = [String(localized: "Expense"),
+                                     String(localized: "Odometer"),
+                                     String(localized: "Reminder")]
 
     // Matching geometry namespace
     @Namespace var animation
