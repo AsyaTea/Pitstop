@@ -8,18 +8,17 @@
 import SwiftUI
 
 struct AnalyticsOdometerView: View {
-    @ObservedObject var categoryVM : CategoryViewModel
-    @ObservedObject var dataVM : DataViewModel
-    @ObservedObject var utilityVM : UtilityViewModel
+    @ObservedObject var categoryVM: CategoryViewModel
+    @ObservedObject var dataVM: DataViewModel
+    @ObservedObject var utilityVM: UtilityViewModel
     var body: some View {
         VStack {
-            
             List {
                 if categoryVM.odometerGraphData.count >= 2 {
-                Section {
-                        VStack{
+                    Section {
+                        VStack {
                             HStack {
-                                VStack(alignment: .leading){
+                                VStack(alignment: .leading) {
                                     Spacer()
                                     Text("\(String(Int(dataVM.currentVehicle.first?.odometer ?? 0))) km")
                                         .font(Typography.headerL)
@@ -33,7 +32,7 @@ struct AnalyticsOdometerView: View {
 //                                    .foregroundColor(Palette.greenHighlight)
                             }
                             .padding(-3)
-                            HStack{
+                            HStack {
                                 OdometerGraphView(data: categoryVM.odometerGraphData)
                                     .frame(height: 200)
                                     .padding(.top, 25)
@@ -49,13 +48,11 @@ struct AnalyticsOdometerView: View {
                     OdometerCostsView(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM)
                         .padding(4)
                 }
-                }
-                
             }
-        .background(Palette.greyLight)
         }
+        .background(Palette.greyLight)
     }
-
+}
 
 struct AnalyticsOdometerView_Previews: PreviewProvider {
     static var previews: some View {

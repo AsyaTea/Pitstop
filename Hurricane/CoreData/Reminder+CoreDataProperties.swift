@@ -6,26 +6,21 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-
-extension Reminder {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Reminder> {
-        return NSFetchRequest<Reminder>(entityName: "Reminder")
+public extension Reminder {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<Reminder> {
+        NSFetchRequest<Reminder>(entityName: "Reminder")
     }
 
-    @NSManaged public var title: String?
-    @NSManaged public var category: Int16
-    @NSManaged public var based: Int16
-    @NSManaged public var recurrence: Int16
-    @NSManaged public var note: String?
-    @NSManaged public var date: Date
-    @NSManaged public var distance: String?
-
+    @NSManaged var title: String?
+    @NSManaged var category: Int16
+    @NSManaged var based: Int16
+    @NSManaged var recurrence: Int16
+    @NSManaged var note: String?
+    @NSManaged var date: Date
+    @NSManaged var distance: String?
 }
 
-extension Reminder : Identifiable {
-
-}
+extension Reminder: Identifiable {}

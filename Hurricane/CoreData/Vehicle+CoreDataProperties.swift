@@ -6,46 +6,40 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-
-extension Vehicle {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Vehicle> {
-        return NSFetchRequest<Vehicle>(entityName: "Vehicle")
+public extension Vehicle {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<Vehicle> {
+        NSFetchRequest<Vehicle>(entityName: "Vehicle")
     }
 
-    @NSManaged public var current: NSNumber?
-    @NSManaged public var brand: String?
-    @NSManaged public var fuelTypeOne: Int16
-    @NSManaged public var fuelTypeTwo: Int16
-    @NSManaged public var model: String?
-    @NSManaged public var name: String?
-    @NSManaged public var odometer: Float
-    @NSManaged public var plate: String?
-    @NSManaged public var year: Int32
-    @NSManaged public var expenses: NSSet?
-
+    @NSManaged var current: NSNumber?
+    @NSManaged var brand: String?
+    @NSManaged var fuelTypeOne: Int16
+    @NSManaged var fuelTypeTwo: Int16
+    @NSManaged var model: String?
+    @NSManaged var name: String?
+    @NSManaged var odometer: Float
+    @NSManaged var plate: String?
+    @NSManaged var year: Int32
+    @NSManaged var expenses: NSSet?
 }
 
 // MARK: Generated accessors for expenses
-extension Vehicle {
 
+public extension Vehicle {
     @objc(addExpensesObject:)
-    @NSManaged public func addToExpenses(_ value: Expense)
+    @NSManaged func addToExpenses(_ value: Expense)
 
     @objc(removeExpensesObject:)
-    @NSManaged public func removeFromExpenses(_ value: Expense)
+    @NSManaged func removeFromExpenses(_ value: Expense)
 
     @objc(addExpenses:)
-    @NSManaged public func addToExpenses(_ values: NSSet)
+    @NSManaged func addToExpenses(_ values: NSSet)
 
     @objc(removeExpenses:)
-    @NSManaged public func removeFromExpenses(_ values: NSSet)
-
+    @NSManaged func removeFromExpenses(_ values: NSSet)
 }
 
-extension Vehicle : Identifiable {
-
-}
+extension Vehicle: Identifiable {}

@@ -7,19 +7,17 @@
 
 import Foundation
 
-class UtilityViewModel : ObservableObject {
+class UtilityViewModel: ObservableObject {
     @Published var currency = "€"
     @Published var unit = "km"
-    
-    @Published var totalVehicleCost : Float = 0.0
-  
+
+    @Published var totalVehicleCost: Float = 0.0
+
     @Published var expenseToEdit = ExpenseState()
     @Published var reminderToEdit = ReminderState()
-    
-    init() {
-        
-    }
-    
+
+    init() {}
+
 //    func getTotalExpense(expenses: [ExpenseViewModel]) -> Float {
 //        for expense in expenses {
 //            totalVehicleCost += expense.price
@@ -28,6 +26,4 @@ class UtilityViewModel : ObservableObject {
 //        print("sum cost : \(totalVehicleCost)")
 //        return totalVehicleCost
 //    }
-    
-
 }

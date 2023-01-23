@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct WorkInProgress: View {
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject var dataVM : DataViewModel
-    
+    @StateObject var dataVM: DataViewModel
+
     var body: some View {
-        VStack(spacing:20){
+        VStack(spacing: 20) {
             Image("bestBoy")
                 .resizable()
                 .scaledToFit()
@@ -25,14 +24,14 @@ struct WorkInProgress: View {
             }, label: {
                 Text("Go back")
                     .font(Typography.headerL)
-                
+
             })
             Button(action: {
                 dataVM.removeAllDocuments()
             }, label: {
                 Text("Delete all documents")
                     .font(Typography.headerL)
-                
+
             })
             Spacer()
         }

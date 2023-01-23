@@ -8,34 +8,30 @@
 //
 import SwiftUI
 
-
 struct LastEventsListView: View {
-    
-    @ObservedObject var dataVM : DataViewModel
+    @ObservedObject var dataVM: DataViewModel
     @ObservedObject var categoryVM = CategoryViewModel()
     @State private var pickerTabs = [String(localized: "Overview"), String(localized: "Costs"), String(localized: "Fuel"), String(localized: "Odometer")]
-    
+
     @State private var showEditExpense = false
     @Environment(\.presentationMode) private var presentationMode
-    
-    @ObservedObject var utilityVM : UtilityViewModel
-    
+
+    @ObservedObject var utilityVM: UtilityViewModel
+
     @State var isfilterSelected = 0 // If  == 0 no filters selected
-    
-    
+
     var body: some View {
-        NavigationView{
-            ZStack{
+        NavigationView {
+            ZStack {
                 Palette.greyBackground
                     .ignoresSafeArea()
                 VStack {
-                    
-                    //MARK: CATEGORIES FILTER
+                    // MARK: CATEGORIES FILTER
+
                     FiltersRow(dataVM: dataVM, isFilterSelected: $isfilterSelected)
-                    ScrollView(.vertical, showsIndicators: false){
-                        
-                        if(dataVM.expenseList.isEmpty){
-                            HStack{
+                    ScrollView(.vertical, showsIndicators: false) {
+                        if dataVM.expenseList.isEmpty {
+                            HStack {
                                 Text(String(localized: "There are no events to show"))
                                     .font(Typography.TextM)
                                     .foregroundColor(Palette.greyMiddle)
@@ -43,68 +39,69 @@ struct LastEventsListView: View {
                             }
                             .padding()
                         }
-                        
-                        ForEach(dataVM.monthsAmount.sorted(by: <),id:\.self){ month in
-                            //MARK: MONTHS
-                            ZStack{
+
+                        ForEach(dataVM.monthsAmount.sorted(by: <), id: \.self) { month in
+
+                            // MARK: MONTHS
+
+                            ZStack {
                                 Rectangle()
                                     .frame(height: UIScreen.main.bounds.height * 0.035)
                                     .foregroundColor(Palette.greyLight)
-                                HStack{
+                                HStack {
                                     Text(month.capitalized)
                                         .foregroundColor(Palette.black)
                                         .font(Typography.ControlS)
                                     Spacer()
-                                    if(isfilterSelected == 0){
-                                        Text(String(format: "%2.f",dataVM.getMonthsExpense(expenses: dataVM.expenseList, month: month)) + String(utilityVM.currency))
+                                    if isfilterSelected == 0 {
+                                        Text(String(format: "%2.f", dataVM.getMonthsExpense(expenses: dataVM.expenseList, month: month)) + String(utilityVM.currency))
                                             .foregroundColor(Palette.black)
                                             .font(Typography.ControlS)
-                                    }
-                                    else{
-                                        Text(String(format: "%2.f",dataVM.getMonthsExpense(expenses: dataVM.expenseFilteredList, month: month)) + String(utilityVM.currency))
+                                    } else {
+                                        Text(String(format: "%2.f", dataVM.getMonthsExpense(expenses: dataVM.expenseFilteredList, month: month)) + String(utilityVM.currency))
                                             .foregroundColor(Palette.black)
                                             .font(Typography.ControlS)
                                     }
                                 }
                                 .padding()
                             }
-                            
-                            //MARK: LIST
-                            if (isfilterSelected == 0){
-                                ForEach(dataVM.expenseList.filter {$0.date.toString(dateFormat: "MMMM") == month} .reversed(),id:\.self) { expense in
+
+                            // MARK: LIST
+
+                            if isfilterSelected == 0 {
+                                ForEach(dataVM.expenseList.filter { $0.date.toString(dateFormat: "MMMM") == month }.reversed(), id: \.self) { expense in
                                     Button(action: {
                                         showEditExpense.toggle()
                                         utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
                                     }, label: {
                                         CategoryComponent(
-                                            category: Category.init(rawValue: Int(expense.category )) ?? .other,
+                                            category: Category(rawValue: Int(expense.category)) ?? .other,
                                             date: expense.date, cost: String(expense.price)
                                         )
                                     })
                                 }
-                            }
-                            else{
-                                ForEach(dataVM.expenseFilteredList.filter {$0.date.toString(dateFormat: "MMMM") == month}.reversed(),id:\.self) { expense in
+                            } else {
+                                ForEach(dataVM.expenseFilteredList.filter { $0.date.toString(dateFormat: "MMMM") == month }.reversed(), id: \.self) { expense in
                                     Button(action: {
                                         showEditExpense.toggle()
                                         utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
                                     }, label: {
                                         CategoryComponent(
-                                            category: Category.init(rawValue: Int(expense.category )) ?? .other,
+                                            category: Category(rawValue: Int(expense.category)) ?? .other,
                                             date: expense.date, cost: String(expense.price)
                                         )
                                     })
                                 }
                             }
                             NavigationLink(destination:
-                                            EditEventView(
-                                                utilityVM: utilityVM,
-                                                dataVM : dataVM, categoryVM: categoryVM,
-                                                category: Category.init(rawValue: Int(utilityVM.expenseToEdit.category ?? 0 )) ?? .other
-                                            )
-                                                .navigationBarBackButtonHidden(true)
-                                                .navigationBarHidden(true),
-                                           isActive: $showEditExpense){}
+                                EditEventView(
+                                    utilityVM: utilityVM,
+                                    dataVM: dataVM, categoryVM: categoryVM,
+                                    category: Category(rawValue: Int(utilityVM.expenseToEdit.category ?? 0)) ?? .other
+                                )
+                                .navigationBarBackButtonHidden(true)
+                                .navigationBarHidden(true),
+                                isActive: $showEditExpense) {}
                         }
                         Spacer()
                     }
@@ -113,13 +110,13 @@ struct LastEventsListView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Cancel")
-                            .font(Typography.headerM)
-                    })
-                    .accentColor(Palette.greyHard)
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("Cancel")
+                        .font(Typography.headerM)
+                })
+                .accentColor(Palette.greyHard)
             )
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -128,7 +125,7 @@ struct LastEventsListView: View {
                         .foregroundColor(Palette.black)
                 }
             }
-            .onAppear{
+            .onAppear {
                 dataVM.getExpensesCoreData(filter: nil, storage: { storage in
                     dataVM.expenseFilteredList = storage
                 })
@@ -140,14 +137,13 @@ struct LastEventsListView: View {
     }
 }
 
-//struct LastEventsListView_Previews: PreviewProvider {
+// struct LastEventsListView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        LastEventsListView()
 //    }
-//}
+// }
 
 struct FiltersRow: View {
-    
     @State private var parkingIsPressed = false
     @State private var otherIsPressed = false
     @State private var finesIsPressed = false
@@ -156,175 +152,157 @@ struct FiltersRow: View {
     @State private var tollsIsPressed = false
     @State private var maintenanceIsPressed = false
     @State private var roadTaxIsPressed = false
-    
-    @ObservedObject var dataVM : DataViewModel
-    
+
+    @ObservedObject var dataVM: DataViewModel
+
     @State var curretFilter: [Int] = [] // Array to store the filters used
-    
-    @Binding var isFilterSelected : Int
+
+    @Binding var isFilterSelected: Int
     //    @Binding var month: String
-    
+
     let impactMed = UIImpactFeedbackGenerator(style: .medium)
-    
+
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false){
-            HStack{
-                
-                Button("Fuel"){
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                Button("Fuel") {
                     impactMed.impactOccurred()
                     fuelIsPressed.toggle()
-                    
-                    
-                    if(fuelIsPressed == true){
+
+                    if fuelIsPressed == true {
                         isFilterSelected += 1
                         curretFilter.append(Category.fuel.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter {curretFilter.contains(Int($0.category))}
-                    }
-                    else {
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
+                    } else {
                         isFilterSelected -= 1
-                        if let index = curretFilter.firstIndex(of: Category.fuel.rawValue){curretFilter.remove(at: index)}
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        if let index = curretFilter.firstIndex(of: Category.fuel.rawValue) { curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
                     }
-                    
                 }
                 .buttonStyle(FilterButton(isPressed: $fuelIsPressed))
-                
-                Button("Maintenance"){
+
+                Button("Maintenance") {
                     impactMed.impactOccurred()
                     maintenanceIsPressed.toggle()
-                    
-                    
-                    if(maintenanceIsPressed == true){
+
+                    if maintenanceIsPressed == true {
                         isFilterSelected += 1
                         curretFilter.append(Category.maintenance.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                    }
-                    else {
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
+                    } else {
                         isFilterSelected -= 1
-                        if let index = curretFilter.firstIndex(of: Category.maintenance.rawValue){ curretFilter.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        if let index = curretFilter.firstIndex(of: Category.maintenance.rawValue) { curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
                     }
-                    
                 }
                 .buttonStyle(FilterButton(isPressed: $maintenanceIsPressed))
-                
-                Button("Tolls"){
+
+                Button("Tolls") {
                     impactMed.impactOccurred()
                     tollsIsPressed.toggle()
-                    
-                    if(tollsIsPressed == true){
+
+                    if tollsIsPressed == true {
                         isFilterSelected += 1
                         curretFilter.append(Category.tolls.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                    }
-                    else {
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
+                    } else {
                         isFilterSelected -= 1
-                        if let index = curretFilter.firstIndex(of: Category.tolls.rawValue){ curretFilter.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        if let index = curretFilter.firstIndex(of: Category.tolls.rawValue) { curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $tollsIsPressed))
-                
-                
-                Button("Insurance"){
+
+                Button("Insurance") {
                     impactMed.impactOccurred()
                     insuranceIsPressed.toggle()
-                    if(insuranceIsPressed == true){
+                    if insuranceIsPressed == true {
                         isFilterSelected += 1
                         curretFilter.append(Category.insurance.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                    }
-                    else {
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
+                    } else {
                         isFilterSelected -= 1
-                        if let index = curretFilter.firstIndex(of: Category.insurance.rawValue){ curretFilter.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        if let index = curretFilter.firstIndex(of: Category.insurance.rawValue) { curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $insuranceIsPressed))
-                
-                Button("Road Tax"){
+
+                Button("Road Tax") {
                     impactMed.impactOccurred()
                     roadTaxIsPressed.toggle()
-                    if(roadTaxIsPressed == true){
+                    if roadTaxIsPressed == true {
                         isFilterSelected += 1
                         curretFilter.append(Category.roadTax.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                    }
-                    else {
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
+                    } else {
                         isFilterSelected -= 1
-                        if let index = curretFilter.firstIndex(of: Category.roadTax.rawValue){ curretFilter.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        if let index = curretFilter.firstIndex(of: Category.roadTax.rawValue) { curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $roadTaxIsPressed))
-                
-                Button("Fines"){
+
+                Button("Fines") {
                     impactMed.impactOccurred()
                     finesIsPressed.toggle()
-                    
-                    if(finesIsPressed == true){
+
+                    if finesIsPressed == true {
                         isFilterSelected += 1
                         curretFilter.append(Category.fines.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                    }
-                    else {
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
+                    } else {
                         isFilterSelected -= 1
-                        if let index = curretFilter.firstIndex(of: Category.fines.rawValue){ curretFilter.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        if let index = curretFilter.firstIndex(of: Category.fines.rawValue) { curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $finesIsPressed))
-                
-                Button("Parking"){
+
+                Button("Parking") {
                     impactMed.impactOccurred()
                     parkingIsPressed.toggle()
-                    if(parkingIsPressed == true){
+                    if parkingIsPressed == true {
                         isFilterSelected += 1
                         curretFilter.append(Category.parking.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                    }
-                    else {
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
+                    } else {
                         isFilterSelected -= 1
-                        if let index = curretFilter.firstIndex(of: Category.parking.rawValue){ curretFilter.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        if let index = curretFilter.firstIndex(of: Category.parking.rawValue) { curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $parkingIsPressed))
-                
-                Button("Other"){
+
+                Button("Other") {
                     impactMed.impactOccurred()
                     otherIsPressed.toggle()
-                    if(otherIsPressed == true){
+                    if otherIsPressed == true {
                         isFilterSelected += 1
                         curretFilter.append(Category.other.rawValue)
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
-                    }
-                    else {
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
+                    } else {
                         isFilterSelected -= 1
-                        if let index = curretFilter.firstIndex(of: Category.other.rawValue){ curretFilter.remove(at: index) }
-                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category))}
+                        if let index = curretFilter.firstIndex(of: Category.other.rawValue) { curretFilter.remove(at: index) }
+                        dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
                     }
                 }
                 .buttonStyle(FilterButton(isPressed: $otherIsPressed))
-                
-                
-                
             }
             .padding(.leading)
-            .padding(.top,25)
-            .padding(.bottom,5)
+            .padding(.top, 25)
+            .padding(.bottom, 5)
         }
     }
 }
 
 struct FilterButton: ButtonStyle {
-    
-    @Binding var isPressed : Bool
-    
+    @Binding var isPressed: Bool
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding(10)
-            .padding(.horizontal,7)
+            .padding(.horizontal, 7)
             .font(Typography.ControlS)
             .background(isPressed ? Palette.black : Palette.greyLight)
             .foregroundColor(isPressed ? Palette.white : Palette.black)

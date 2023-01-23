@@ -11,7 +11,6 @@
 		030A39942858D43E00218628 /* TermsOfService.html in Resources */ = {isa = PBXBuildFile; fileRef = 030A39932858D43E00218628 /* TermsOfService.html */; };
 		0327B676284775C50068D73A /* StatusBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0327B675284775C50068D73A /* StatusBarAppearance.swift */; };
 		03305E9C28592590001E52B7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03305E9E28592590001E52B7 /* Localizable.strings */; };
-		03305EB7285A0AD5001E52B7 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03305EB5285A0A7D001E52B7 /* Info.plist */; };
 		41176DA92834DCC3000FD885 /* FuelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41176DA82834DCC3000FD885 /* FuelViewModel.swift */; };
 		415773F8283BEBF800B20FA1 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */; };
 		415D202F28214180004AF201 /* HurricaneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D202E28214180004AF201 /* HurricaneApp.swift */; };
@@ -82,6 +81,7 @@
 		FFD1224C2858BD6C004686CA /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1224B2858BD6C004686CA /* AboutView.swift */; };
 		FFD1224E2858BDB8004686CA /* aboutPlaceholder.gif in Resources */ = {isa = PBXBuildFile; fileRef = FFD1224D2858BDB7004686CA /* aboutPlaceholder.gif */; };
 		FFD122502858CB0D004686CA /* comingSoon.gif in Resources */ = {isa = PBXBuildFile; fileRef = FFD1224F2858CB0D004686CA /* comingSoon.gif */; };
+		FFD12252285E497B004686CA /* AllDocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD12251285E497B004686CA /* AllDocumentsView.swift */; };
 		FFDAA33D283FC68400145B35 /* DocumentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAA33C283FC68400145B35 /* DocumentModel.swift */; };
 		FFDAA340283FE1A000145B35 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAA33F283FE1A000145B35 /* TopBarView.swift */; };
 		FFDF855A2824104A00E0F9BF /* VehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF85592824104A00E0F9BF /* VehicleView.swift */; };
@@ -170,6 +170,7 @@
 		FFD1224B2858BD6C004686CA /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		FFD1224D2858BDB7004686CA /* aboutPlaceholder.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = aboutPlaceholder.gif; sourceTree = "<group>"; };
 		FFD1224F2858CB0D004686CA /* comingSoon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = comingSoon.gif; sourceTree = "<group>"; };
+		FFD12251285E497B004686CA /* AllDocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllDocumentsView.swift; sourceTree = "<group>"; };
 		FFDAA33C283FC68400145B35 /* DocumentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentModel.swift; sourceTree = "<group>"; };
 		FFDAA33F283FE1A000145B35 /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		FFDF85592824104A00E0F9BF /* VehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleView.swift; sourceTree = "<group>"; };
@@ -394,6 +395,7 @@
 			children = (
 				FFA0E72328554A96008B3ED9 /* PDFKitView.swift */,
 				FFA0E71F28554495008B3ED9 /* DocumentView.swift */,
+				FFD12251285E497B004686CA /* AllDocumentsView.swift */,
 			);
 			path = Documents;
 			sourceTree = "<group>";
@@ -445,7 +447,7 @@
 			buildConfigurationList = 415D203928214182004AF201 /* Build configuration list for PBXNativeTarget "Hurricane" */;
 			buildPhases = (
 				FF333146297E9C7400077A8D /* ShellScript */,
-				FF333147297E9CF700077A8D /* ShellScript */,
+				FF333147297E9CF700077A8D /* Run Script */,
 				415D202728214180004AF201 /* Sources */,
 				415D202828214180004AF201 /* Frameworks */,
 				415D202928214180004AF201 /* Resources */,
@@ -455,6 +457,8 @@
 			dependencies = (
 			);
 			name = Hurricane;
+			packageProductDependencies = (
+			);
 			productName = Hurricane;
 			productReference = 415D202B28214180004AF201 /* Hurricane.app */;
 			productType = "com.apple.product-type.application";
@@ -467,7 +471,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1330;
-				LastUpgradeCheck = 1330;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					415D202A28214180004AF201 = {
 						CreatedOnToolsVersion = 13.3.1;
@@ -485,6 +489,8 @@
 				"en-GB",
 			);
 			mainGroup = 415D202228214180004AF201;
+			packageReferences = (
+			);
 			productRefGroup = 415D202C28214180004AF201 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -499,7 +505,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03305EB7285A0AD5001E52B7 /* Info.plist in Resources */,
 				FFD1224A285892DB004686CA /* loadingStats.gif in Resources */,
 				415D203628214182004AF201 /* Preview Assets.xcassets in Resources */,
 				415D203328214182004AF201 /* Assets.xcassets in Resources */,
@@ -529,9 +534,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftformat >/dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nif test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftformat >/dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
 		};
-		FF333147297E9CF700077A8D /* ShellScript */ = {
+		FF333147297E9CF700077A8D /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -541,13 +546,14 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint .\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nif test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -609,6 +615,7 @@
 				415D2042282145FE004AF201 /* DataViewModel.swift in Sources */,
 				FF42ADD12825201A00C66A84 /* TabData.swift in Sources */,
 				FF106792282D36160077CCF7 /* HomeStyleView.swift in Sources */,
+				FFD12252285E497B004686CA /* AllDocumentsView.swift in Sources */,
 				41176DA92834DCC3000FD885 /* FuelViewModel.swift in Sources */,
 				FF7C8AF4283F598900D2EEA2 /* Number+CoreDataClass.swift in Sources */,
 				415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */,
@@ -661,6 +668,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -714,6 +722,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -721,6 +730,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -767,6 +777,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

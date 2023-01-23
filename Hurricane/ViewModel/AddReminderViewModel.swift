@@ -7,21 +7,20 @@
 
 import Foundation
 
-class AddReminderViewModel : ObservableObject {
-    
+class AddReminderViewModel: ObservableObject {
     @Published var reminderS = ReminderState()
-    
-    //Vars for the input fields of reminder
+
+    // Vars for the input fields of reminder
     @Published var title = ""
     @Published var note = ""
     @Published var distance = ""
     @Published var date = Date.now
-    
-    @Published var selectedCategory = String(localized: "Maintenance")
-    @Published var category : Int16 = Int16(Category.fuel.rawValue)
 
-    //MARK: CATEGORY MISSING TO FIX
-    
+    @Published var selectedCategory = String(localized: "Maintenance")
+    @Published var category: Int16 = .init(Category.fuel.rawValue)
+
+    // MARK: CATEGORY MISSING TO FIX
+
     func createReminder() {
         reminderS.title = title
         reminderS.note = note
@@ -29,8 +28,8 @@ class AddReminderViewModel : ObservableObject {
         reminderS.date = date
         reminderS.category = category
     }
-    
-    func resetReminderFields(tab: String){
+
+    func resetReminderFields(tab _: String) {
         title = ""
         note = ""
         distance = ""
@@ -38,6 +37,4 @@ class AddReminderViewModel : ObservableObject {
         selectedCategory = String(localized: "Maintenance")
         date = Date.now
     }
-    
-    
 }

@@ -5,34 +5,34 @@
 //  Created by Asya Tealdi on 03/05/22.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 class CoreDataManager {
-    //Singleton
+    // Singleton
     static let instance = CoreDataManager()
     let container: NSPersistentContainer
     let context: NSManagedObjectContext
-    
+
     init() {
         container = NSPersistentContainer(name: "CarModel")
-        container.loadPersistentStores { description, error in
+        container.loadPersistentStores { _, error in
             if let error = error {
                 print("Error loading Core Data: \(error)")
             }
         }
         context = container.viewContext
     }
-    
+
     func save() {
         do {
             try context.save()
-        } catch let error {
+        } catch {
             print("Error saving Core Data. \(error.localizedDescription)")
         }
     }
-    
-    func removeAllItems(deleteRequest : NSBatchDeleteRequest){
+
+    func removeAllItems(deleteRequest: NSBatchDeleteRequest) {
         do {
             try context.execute(deleteRequest)
         } catch let error as NSError {
@@ -40,95 +40,82 @@ class CoreDataManager {
             print("Error when removing all Items:\(error.localizedDescription)")
         }
     }
-    
-    
-    func getVehicleById(id: NSManagedObjectID) -> Vehicle?  {
-        
-        do{
+
+    func getVehicleById(id: NSManagedObjectID) -> Vehicle? {
+        do {
             return try context.existingObject(with: id) as? Vehicle
-        }
-        catch {
+        } catch {
             print(error)
             return nil
         }
     }
-    
-    func getExpenseById(id: NSManagedObjectID) -> Expense?  {
-        
-        do{
+
+    func getExpenseById(id: NSManagedObjectID) -> Expense? {
+        do {
             return try context.existingObject(with: id) as? Expense
-        }
-        catch {
+        } catch {
             print(error)
             return nil
         }
     }
-    
-    func getNumberById(id: NSManagedObjectID) -> Number?  {
-        
-        do{
+
+    func getNumberById(id: NSManagedObjectID) -> Number? {
+        do {
             return try context.existingObject(with: id) as? Number
-        }
-        catch {
+        } catch {
             print(error)
             return nil
         }
     }
-    
-    func getReminderById(id: NSManagedObjectID) -> Reminder?  {
-        
-        do{
+
+    func getReminderById(id: NSManagedObjectID) -> Reminder? {
+        do {
             return try context.existingObject(with: id) as? Reminder
-        }
-        catch {
+        } catch {
             print(error)
             return nil
         }
     }
-    
-    func deleteVehicle(_ vehicle : Vehicle) {
+
+    func deleteVehicle(_ vehicle: Vehicle) {
         context.delete(vehicle)
-        
-        do{
+
+        do {
             try context.save()
-        }
-        catch{
+        } catch {
             context.rollback()
             print("Failed to delete vehicle \(error)")
         }
     }
-    
-    func deleteExpense(_ expense : Expense) {
+
+    func deleteExpense(_ expense: Expense) {
         context.delete(expense)
-        
-        do{
+
+        do {
             try context.save()
-        }
-        catch{
+        } catch {
             context.rollback()
             print("Failed to delete expense \(error)")
         }
     }
-    
-    func deleteNumber(_ number : Number) {
+
+    func deleteNumber(_ number: Number) {
         context.delete(number)
-        
-        do{
+
+        do {
             try context.save()
-        }
-        catch{
+        } catch {
             context.rollback()
             print("Failed to delete number \(error)")
         }
     }
-    
-    func deleteReminder(_ reminder : Reminder) {
+
+    func deleteReminder(_ reminder: Reminder) {
         context.delete(reminder)
-        
-        do{
+
+        do {
             try context.save()
-        }
-        catch{
+        } catch {
             context.rollback()
             print("Failed to delete reminder \(error)")
         }

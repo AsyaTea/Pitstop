@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(Expense)
-public class Expense: NSManagedObject {
-
-}
+public class Expense: NSManagedObject {}

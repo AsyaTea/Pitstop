@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-//Extension to swipe on custom back button
+// Extension to swipe on custom back button
 extension UINavigationController: UIGestureRecognizerDelegate {
     override open func viewDidLoad() {
         super.viewDidLoad()
         interactivePopGestureRecognizer?.delegate = self
     }
 
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return viewControllers.count > 1
+    public func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
+        viewControllers.count > 1
     }
 
     // To make it works also with ScrollView
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith _: UIGestureRecognizer) -> Bool {
         true
     }
 }

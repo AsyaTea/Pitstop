@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(Number)
-public class Number: NSManagedObject {
-
-}
+public class Number: NSManagedObject {}

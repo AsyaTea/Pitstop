@@ -5,41 +5,40 @@
 //  Created by Ivan Voloshchuk on 26/05/22.
 //
 
-import Foundation
 import CoreData
+import Foundation
 import UIKit
 
 struct DocumentState: Hashable {
 //    var image = UIImage()
     var title: String = ""
-    var url : URL?
+    var url: URL?
     var documentID: NSManagedObjectID?
     var bookmark: Data?
 }
 
-struct DocumentViewModel : Hashable {
+struct DocumentViewModel: Hashable {
     let document: Document
-    
+
     var title: String {
-        return document.title ?? ""
+        document.title ?? ""
     }
-    
+
     var url: URL {
-        return document.url ?? URL(fileURLWithPath: "")
+        document.url ?? URL(fileURLWithPath: "")
     }
-    
+
     var documentID: NSManagedObjectID {
-        return document.objectID
+        document.objectID
     }
-    
+
     var bookmark: Data {
-        return document.bookmark ?? Data()
+        document.bookmark ?? Data()
     }
 }
 
 extension DocumentState {
-    
-    static func fromDocumentViewModel(vm:DocumentViewModel ) -> DocumentState{
+    static func fromDocumentViewModel(vm: DocumentViewModel) -> DocumentState {
         var documentS = DocumentState()
         documentS.title = vm.title
         documentS.url = vm.url
@@ -48,4 +47,3 @@ extension DocumentState {
         return documentS
     }
 }
-

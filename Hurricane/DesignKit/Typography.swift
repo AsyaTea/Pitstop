@@ -5,11 +5,10 @@
 //  Created by Ivan Voloshchuk on 05/05/22.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 enum Typography {
-  
     static let headerXXL = Font.system(size: 40, weight: .bold, design: .rounded)
     static let headerXL = Font.system(size: 26, weight: .semibold, design: .rounded)
     static let headerL = Font.system(size: 20, weight: .bold, design: .rounded)
@@ -20,9 +19,4 @@ enum Typography {
 
     static let TextM = Font.system(size: 14, weight: .regular, design: .rounded)
     static let ControlS = Font.system(size: 14, weight: .semibold, design: .rounded)
-
 }
-
-
-
-

@@ -18,8 +18,8 @@ enum FuelType: Int {
     case none = 7
 }
 
-extension FuelType : CaseIterable{
-    var label : String {
+extension FuelType: CaseIterable {
+    var label: String {
         switch self {
         case .diesel:
             return NSLocalizedString("Diesel", comment: "")
@@ -41,27 +41,22 @@ extension FuelType : CaseIterable{
     }
 }
 
-
 class FuelViewModel: ObservableObject {
-    
-    @Published var defaultSelectedFuel : Int16 = 1
-    @Published var secondarySelectedFuel : Int16 = 7
-    
-    var defaultFuelType : FuelType {
-        get {return FuelType.init(rawValue: Int(defaultSelectedFuel)) ?? .gasoline}
-        set {defaultSelectedFuel = Int16(newValue.rawValue)}
+    @Published var defaultSelectedFuel: Int16 = 1
+    @Published var secondarySelectedFuel: Int16 = 7
+
+    var defaultFuelType: FuelType {
+        get { FuelType(rawValue: Int(defaultSelectedFuel)) ?? .gasoline }
+        set { defaultSelectedFuel = Int16(newValue.rawValue) }
     }
-    
-    var secondaryFuelType : FuelType {
-        get {return FuelType.init(rawValue: Int(secondarySelectedFuel)) ?? .none}
-        set {secondarySelectedFuel = Int16(newValue.rawValue)}
+
+    var secondaryFuelType: FuelType {
+        get { FuelType(rawValue: Int(secondarySelectedFuel)) ?? .none }
+        set { secondarySelectedFuel = Int16(newValue.rawValue) }
     }
-    
+
     func resetSelectedFuel() {
         defaultSelectedFuel = 1
         secondarySelectedFuel = 7
     }
-    
 }
-
-

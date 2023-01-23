@@ -8,27 +8,24 @@
 import SwiftUI
 
 struct VehicleView: View {
-    
-    //Onboarding vars
+    // Onboarding vars
 //    @AppStorage("shouldShowOnboarding") var shouldShowOnboarding : Bool = true
-    @State var shouldShowOnboarding : Bool = true //FOR TESTING
+    @State var shouldShowOnboarding: Bool = true // FOR TESTING
     @StateObject var onboardingVM = OnboardingViewModel()
-    @ObservedObject var dataVM : DataViewModel
-    @ObservedObject var homeVM : HomeViewModel
-    @ObservedObject var utilityVM : UtilityViewModel
-    @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var dataVM: DataViewModel
+    @ObservedObject var homeVM: HomeViewModel
+    @ObservedObject var utilityVM: UtilityViewModel
+    @ObservedObject var categoryVM: CategoryViewModel
     @State private var showAddReport = false
-    
-    
+
     var body: some View {
-      
-        GeometryReader{ proxy in
+        GeometryReader { proxy in
             let topEdge = proxy.safeAreaInsets.top
-            HomeStyleView(dataVM: dataVM,homeVM:homeVM, categoryVM: categoryVM, topEdge: topEdge)
-                .ignoresSafeArea(.all,edges: .top)
+            HomeStyleView(dataVM: dataVM, homeVM: homeVM, categoryVM: categoryVM, topEdge: topEdge)
+                .ignoresSafeArea(.all, edges: .top)
         }
         .overlay(
-            VStack{
+            VStack {
                 Spacer(minLength: UIScreen.main.bounds.size.height * 0.77)
                 Button(action: {
                     showAddReport.toggle()
@@ -40,37 +37,33 @@ struct VehicleView: View {
         )
         .ignoresSafeArea(.keyboard)
         .sheet(isPresented: $showAddReport) {
-            AddReportView(utilityVM: utilityVM , categoryVM: categoryVM, dataVM: dataVM)
+            AddReportView(utilityVM: utilityVM, categoryVM: categoryVM, dataVM: dataVM)
         }
-        .onAppear{
-            if(shouldShowOnboarding == false){
-            dataVM.getCurrentVehicle()
+        .onAppear {
+            if shouldShowOnboarding == false {
+                dataVM.getCurrentVehicle()
             }
         }
         .fullScreenCover(isPresented: $shouldShowOnboarding, content: {
             OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, shouldShowOnboarding: $shouldShowOnboarding)
         })
-
     }
 }
 
-//struct MainView_Previews: PreviewProvider {
+// struct MainView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        VehicleView()
 //    }
-//}
+// }
 
-
-struct AddReportButton : View {
-    
-    var text : String
+struct AddReportButton: View {
+    var text: String
     var body: some View {
-        
-        ZStack{
+        ZStack {
             Capsule(style: .continuous)
                 .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055, alignment: .center)
                 .foregroundColor(Palette.black)
-            HStack{
+            HStack {
                 Spacer()
                 Image("plus")
                     .resizable()
@@ -84,6 +77,3 @@ struct AddReportButton : View {
         }
     }
 }
-
-
-

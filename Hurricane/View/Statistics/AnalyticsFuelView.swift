@@ -8,47 +8,43 @@
 import SwiftUI
 
 struct AnalyticsFuelView: View {
-    @ObservedObject var categoryVM : CategoryViewModel
-    @ObservedObject var utilityVM : UtilityViewModel
+    @ObservedObject var categoryVM: CategoryViewModel
+    @ObservedObject var utilityVM: UtilityViewModel
     var body: some View {
         VStack {
             List {
                 if categoryVM.fuelGraphData.count >= 2 {
-                Section {
-                    VStack{
-                        HStack {
-                            VStack(alignment: .leading){
+                    Section {
+                        VStack {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Spacer()
+                                    let formattedCost = String(format: "%.2f", categoryVM.fuelEff)
+                                    Text("\(formattedCost) L/100 \(utilityVM.unit)")
+                                        .font(Typography.headerL)
+                                        .padding(1)
+                                    Text(String(localized: "Efficiency"))
+                                        .foregroundColor(Palette.greyHard)
+                                }
                                 Spacer()
-                                let formattedCost = String(format: "%.2f", categoryVM.fuelEff)
-                                Text("\(formattedCost) L/100 \(utilityVM.unit)")
-                                    .font(Typography.headerL)
-                                    .padding(1)
-                                Text(String(localized: "Efficiency"))
-                                    .foregroundColor(Palette.greyHard)
-                            }
-                            Spacer()
 //                            Text(" ▼ 12 % ")
 //                                .font(Typography.headerS)
 //                                .foregroundColor(Palette.greenHighlight)
-                        }
-                        .padding(-3)
-                        HStack{
-                           
+                            }
+                            .padding(-3)
+                            HStack {
                                 FuelGraphView(categoryVM: categoryVM, data: categoryVM.fuelGraphData)
                                     .frame(height: 200)
                                     .padding(.top, 25)
                                     .padding(1)
-                           
+                            }
+                            .padding(-15)
+
+                            Spacer()
                         }
-                        .padding(-15)
-                     
-                Spacer()
-                        
                     }
-                    
                 }
-                }
-                
+
                 Section {
                     FuelListView(categoryVM: categoryVM, utilityVM: utilityVM)
                         .padding(4)
@@ -57,7 +53,6 @@ struct AnalyticsFuelView: View {
         }
         .background(Palette.greyLight)
     }
-    
 }
 
 struct AnalyticsFuelView_Previews: PreviewProvider {

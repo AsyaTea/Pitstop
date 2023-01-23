@@ -8,28 +8,26 @@
 import SwiftUI
 
 struct VehicleView: View {
-    
-    @StateObject var onboardingVM : OnboardingViewModel
+    @StateObject var onboardingVM: OnboardingViewModel
     @StateObject var reminderVM = AddReminderViewModel()
-    @ObservedObject var dataVM : DataViewModel
-    @ObservedObject var homeVM : HomeViewModel
-    @ObservedObject var utilityVM : UtilityViewModel
-    @ObservedObject var categoryVM : CategoryViewModel
+    @ObservedObject var dataVM: DataViewModel
+    @ObservedObject var homeVM: HomeViewModel
+    @ObservedObject var utilityVM: UtilityViewModel
+    @ObservedObject var categoryVM: CategoryViewModel
     @ObservedObject var notificationVM: NotificationManager
-    
-    @AppStorage("shouldShowOnboardings") var shouldShowOnboarding : Bool = true
+
+    @AppStorage("shouldShowOnboardings") var shouldShowOnboarding: Bool = true
 //    @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @State private var showAddReport = false
-    
-    
+
     var body: some View {
-        GeometryReader{ proxy in
+        GeometryReader { proxy in
             let topEdge = proxy.safeAreaInsets.top
-            HomeStyleView(dataVM: dataVM,homeVM:homeVM, categoryVM: categoryVM, topEdge: topEdge)
-                .ignoresSafeArea(.all,edges: .top)
+            HomeStyleView(dataVM: dataVM, homeVM: homeVM, categoryVM: categoryVM, topEdge: topEdge)
+                .ignoresSafeArea(.all, edges: .top)
         }
         .overlay(
-            VStack{
+            VStack {
                 Spacer(minLength: UIScreen.main.bounds.size.height * 0.77)
                 Button(action: {
                     showAddReport.toggle()
@@ -41,32 +39,29 @@ struct VehicleView: View {
         )
         .ignoresSafeArea(.keyboard)
         .sheet(isPresented: $showAddReport) {
-            AddReportView(utilityVM: utilityVM , categoryVM: categoryVM, dataVM: dataVM, reminderVM: reminderVM)
+            AddReportView(utilityVM: utilityVM, categoryVM: categoryVM, dataVM: dataVM, reminderVM: reminderVM)
         }
-        .fullScreenCover(isPresented: $shouldShowOnboarding){
+        .fullScreenCover(isPresented: $shouldShowOnboarding) {
             OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, categoryVM: categoryVM, shouldShowOnboarding: $shouldShowOnboarding)
         }
-        .onAppear{
-            if(shouldShowOnboarding == false){
+        .onAppear {
+            if shouldShowOnboarding == false {
                 dataVM.getCurrentVehicle()
             }
             homeVM.headerBackgroundColor = homeVM.loadColor(key: homeVM.COLOR_KEY)
             homeVM.headerCardColor = homeVM.loadColor(key: homeVM.COLOR_KEY_CARD)
         }
-        
     }
 }
 
-struct AddReportButton : View {
-    
-    var text : LocalizedStringKey
+struct AddReportButton: View {
+    var text: LocalizedStringKey
     var body: some View {
-        
-        ZStack{
+        ZStack {
             Capsule(style: .continuous)
                 .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055, alignment: .center)
                 .foregroundColor(Palette.black)
-            HStack{
+            HStack {
                 Spacer()
                 Image("plus")
                     .resizable()
@@ -80,6 +75,3 @@ struct AddReportButton : View {
         }
     }
 }
-
-
-

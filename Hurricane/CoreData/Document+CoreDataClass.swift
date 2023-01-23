@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(Document)
-public class Document: NSManagedObject {
-
-}
+public class Document: NSManagedObject {}

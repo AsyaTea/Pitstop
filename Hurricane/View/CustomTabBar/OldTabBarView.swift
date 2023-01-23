@@ -9,8 +9,8 @@ import SwiftUI
 import UIKit
 
 // I will leave it here, in case we need
-//struct OldTabBarView: View {
-//    
+// struct OldTabBarView: View {
+//
 //    var body: some View {
 //        TabView{
 //            VehicleView()
@@ -18,7 +18,7 @@ import UIKit
 //                    Image("carIcon")
 //                        .renderingMode(.template)
 //                }
-//            
+//
 //            VehicleView()
 //                .tabItem {
 //                    Image("chartIcon")
@@ -32,12 +32,10 @@ import UIKit
 //        }
 //        .accentColor(Palette.black)
 //    }
-//}
+// }
 //
-//struct SwiftUIView_Previews: PreviewProvider {
+// struct SwiftUIView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        OldTabBarView()
 //    }
-//}
-
-
+// }

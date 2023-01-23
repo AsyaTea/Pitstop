@@ -6,28 +6,23 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-
-extension Expense {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Expense> {
-        return NSFetchRequest<Expense>(entityName: "Expense")
+public extension Expense {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<Expense> {
+        NSFetchRequest<Expense>(entityName: "Expense")
     }
 
-    @NSManaged public var date: Date
-    @NSManaged public var note: String?
-    @NSManaged public var odometer: Float
-    @NSManaged public var price: Float
-    @NSManaged public var category: Int16
-    @NSManaged public var fuelType: Int16
-    @NSManaged public var liters: Float
-    @NSManaged public var priceLiter: Float
-    @NSManaged public var vehicle: Vehicle?
-
+    @NSManaged var date: Date
+    @NSManaged var note: String?
+    @NSManaged var odometer: Float
+    @NSManaged var price: Float
+    @NSManaged var category: Int16
+    @NSManaged var fuelType: Int16
+    @NSManaged var liters: Float
+    @NSManaged var priceLiter: Float
+    @NSManaged var vehicle: Vehicle?
 }
 
-extension Expense : Identifiable {
-
-}
+extension Expense: Identifiable {}

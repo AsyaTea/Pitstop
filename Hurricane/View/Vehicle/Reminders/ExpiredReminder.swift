@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct ExpiredReminder: View {
-    
     @Environment(\.presentationMode) private var presentationMode
     @ObservedObject var dataVM: DataViewModel
     @StateObject var utilityVM: UtilityViewModel
     @StateObject var notificationVM = NotificationManager()
-    
+
     var body: some View {
-        VStack{
+        VStack {
             ReminderList(utilityVM: utilityVM)
                 .disabled(true)
         }
@@ -23,17 +22,17 @@ struct ExpiredReminder: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(
             leading:
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }, label: {
-                    HStack{
-                        Image("arrowLeft")
-                        
-                        Text(String(localized: "Back"))
-                            .font(Typography.headerM)
-                    }
-                })
-                .accentColor(Palette.greyHard)
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }, label: {
+                HStack {
+                    Image("arrowLeft")
+
+                    Text(String(localized: "Back"))
+                        .font(Typography.headerM)
+                }
+            })
+            .accentColor(Palette.greyHard)
         )
         .toolbar {
             ToolbarItem(placement: .principal) {
@@ -44,5 +43,3 @@ struct ExpiredReminder: View {
         }
     }
 }
-
-

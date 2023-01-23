@@ -11,7 +11,7 @@ extension Color {
     init(rgb: UInt32) {
         self.init(UIColor(rgb: rgb))
     }
-    
+
     init(lightRGB: UInt32, darkRGB: UInt32) {
         self.init(UIColor { traitCollection in
             if traitCollection.userInterfaceStyle == .dark {
@@ -25,10 +25,10 @@ extension Color {
 
 extension Color {
     static var random: Color {
-        return Color(
-            red: .random(in: 0...1),
-            green: .random(in: 0...1),
-            blue: .random(in: 0...1)
+        Color(
+            red: .random(in: 0 ... 1),
+            green: .random(in: 0 ... 1),
+            blue: .random(in: 0 ... 1)
         )
     }
 }

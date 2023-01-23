@@ -5,29 +5,27 @@
 //  Created by Ivan Voloshchuk on 11/06/22.
 //
 
-import SwiftUI
 import PDFKit
+import SwiftUI
 
 struct DocumentView: View {
-    
     @StateObject var pdfVM: PdfViewModel
     @Environment(\.presentationMode) private var presentationMode
     var body: some View {
-        
-        NavigationView{
-            VStack{
+        NavigationView {
+            VStack {
                 PDFKitRepresentedView(pdfVM.url ?? URL(fileURLWithPath: ""))
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Cancel")
-                            .font(Typography.headerM)
-                    })
-                    .accentColor(Palette.greyHard)
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("Cancel")
+                        .font(Typography.headerM)
+                })
+                .accentColor(Palette.greyHard)
             )
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -39,5 +37,3 @@ struct DocumentView: View {
         }
     }
 }
-
-

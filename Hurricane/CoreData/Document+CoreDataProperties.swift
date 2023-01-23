@@ -6,22 +6,17 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-
-extension Document {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Document> {
-        return NSFetchRequest<Document>(entityName: "Document")
+public extension Document {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<Document> {
+        NSFetchRequest<Document>(entityName: "Document")
     }
 
-    @NSManaged public var title: String?
-    @NSManaged public var url: URL?
-    @NSManaged public var bookmark: Data?
-
+    @NSManaged var title: String?
+    @NSManaged var url: URL?
+    @NSManaged var bookmark: Data?
 }
 
-extension Document : Identifiable {
-
-}
+extension Document: Identifiable {}

@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct AnalyticsCostView: View {
-    @ObservedObject var categoryVM : CategoryViewModel
-    @ObservedObject var dataVM : DataViewModel
-    @ObservedObject var utilityVM : UtilityViewModel
+    @ObservedObject var categoryVM: CategoryViewModel
+    @ObservedObject var dataVM: DataViewModel
+    @ObservedObject var utilityVM: UtilityViewModel
     var body: some View {
-        
-        VStack{
+        VStack {
             List {
                 Section {
                     CostGraphView(utilityVM: utilityVM, categoryVM: categoryVM, dataVM: dataVM)
@@ -24,7 +23,7 @@ struct AnalyticsCostView: View {
                     CostsListView(utilityVM: utilityVM, categoryVM: categoryVM, dataVM: dataVM)
                 }
                 Section {
-                    //needed for scroll
+                    // needed for scroll
                 }
             }
         }
@@ -32,15 +31,15 @@ struct AnalyticsCostView: View {
     }
 }
 
-struct CostGraphView : View {
-    @ObservedObject var utilityVM : UtilityViewModel
-    @ObservedObject var categoryVM : CategoryViewModel
-    @ObservedObject var dataVM : DataViewModel
+struct CostGraphView: View {
+    @ObservedObject var utilityVM: UtilityViewModel
+    @ObservedObject var categoryVM: CategoryViewModel
+    @ObservedObject var dataVM: DataViewModel
     var value = "50%"
     var body: some View {
-        VStack(alignment: .leading,spacing:0) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack {
-                VStack(alignment: .leading){
+                VStack(alignment: .leading) {
                     let formattedCost = String(format: "%.0f", dataVM.totalExpense)
                     Text("\(formattedCost) \(utilityVM.currency)")
                         .font(Typography.headerL)
@@ -51,15 +50,15 @@ struct CostGraphView : View {
                 Spacer()
             }
             Spacer()
-            //GRAPH LINE
+            // GRAPH LINE
             LineGraph(categoryVM: categoryVM)
             Spacer()
-            
-            //LABELS
-            GeometryReader{ geo in
-                VStack(alignment: .leading){
-                    HStack{
-                        HStack{
+
+            // LABELS
+            GeometryReader { geo in
+                VStack(alignment: .leading) {
+                    HStack {
+                        HStack {
                             RoundedRectangle(cornerRadius: 5)
                                 .frame(width: 16, height: 16, alignment: .topLeading)
                                 .foregroundColor(Palette.colorOrange)
@@ -68,9 +67,9 @@ struct CostGraphView : View {
                             Text("\(formattedTaxesPerc) %")
                                 .foregroundColor(Palette.greyHard)
                         }
-                        .frame(width: geo.size.width * 0.40,alignment: .leading)
-                        
-                        HStack{
+                        .frame(width: geo.size.width * 0.40, alignment: .leading)
+
+                        HStack {
                             RoundedRectangle(cornerRadius: 5)
                                 .frame(width: 16, height: 16, alignment: .topLeading)
                                 .foregroundColor(Palette.colorYellow)
@@ -79,33 +78,33 @@ struct CostGraphView : View {
                             Text("\(formattedPerc) %")
                                 .foregroundColor(Palette.greyHard)
                         }
-                        .frame(width: geo.size.width * 0.60,alignment: .leading)
+                        .frame(width: geo.size.width * 0.60, alignment: .leading)
                     }
-                    
+
                     HStack {
-                        HStack{
+                        HStack {
                             RoundedRectangle(cornerRadius: 5)
                                 .frame(width: 16, height: 16, alignment: .topLeading)
                                 .foregroundColor(Palette.colorViolet)
-                            Text(String(localized:"Other"))
+                            Text(String(localized: "Other"))
                             let formattedOtherPerc = String(format: "%.0f", categoryVM.otherPercentage)
                             Text("\(formattedOtherPerc) %")
                                 .foregroundColor(Palette.greyHard)
                         }
-                        .frame(width: geo.size.width * 0.40,alignment: .leading)
-                        HStack{
+                        .frame(width: geo.size.width * 0.40, alignment: .leading)
+                        HStack {
                             RoundedRectangle(cornerRadius: 5)
                                 .frame(width: 16, height: 16, alignment: .center)
                                 .foregroundColor(Palette.colorGreen)
-                                Text(String(localized: "Maintenance"))
+                            Text(String(localized: "Maintenance"))
                             let formattedMainPerc = String(format: "%.0f", categoryVM.maintainancePercentage)
                             Text("\(formattedMainPerc) %")
                                 .foregroundColor(Palette.greyHard)
                         }
-                        .frame(width: geo.size.width * 0.60,alignment: .leading)
+                        .frame(width: geo.size.width * 0.60, alignment: .leading)
                     }
                 }
-                .padding(.top,20)
+                .padding(.top, 20)
 //                Spacer()
             }
         }
@@ -113,14 +112,14 @@ struct CostGraphView : View {
 }
 
 struct LineGraph: View {
-    @ObservedObject var categoryVM : CategoryViewModel
-    
+    @ObservedObject var categoryVM: CategoryViewModel
+
     var body: some View {
         VStack(alignment: .leading) {
             cell()
         }
     }
-    
+
     @ViewBuilder
     func cell() -> some View {
         RoundedRectangle(cornerRadius: 5)
@@ -129,7 +128,7 @@ struct LineGraph: View {
             .overlay(content: {
                 GeometryReader { geometry in
                     ZStack(alignment: .leading) {
-                        HStack(spacing:0){
+                        HStack(spacing: 0) {
                             Rectangle()
                                 .foregroundColor(Palette.colorYellow)
                                 .frame(width: geometry.size.width * CGFloat(categoryVM.fuelPercentage / 100), height: geometry.size.height)
@@ -148,7 +147,6 @@ struct LineGraph: View {
             })
             .clipShape(RoundedRectangle(cornerRadius: 10))
     }
-    
 }
 
 struct AnalyticsCostView_Previews: PreviewProvider {

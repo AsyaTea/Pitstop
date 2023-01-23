@@ -5,8 +5,8 @@
 //  Created by Ivan Voloshchuk on 12/06/22.
 //
 
-import SwiftUI
 import PDFKit
+import SwiftUI
 
 struct PDFKitRepresentedView: UIViewRepresentable {
     let url: URL?
@@ -14,7 +14,7 @@ struct PDFKitRepresentedView: UIViewRepresentable {
         self.url = url
     }
 
-    func makeUIView(context: UIViewRepresentableContext<PDFKitRepresentedView>) -> PDFKitRepresentedView.UIViewType {
+    func makeUIView(context _: UIViewRepresentableContext<PDFKitRepresentedView>) -> PDFKitRepresentedView.UIViewType {
         let pdfView = PDFView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         if let url = url {
             pdfView.document = PDFDocument(url: url)
@@ -27,8 +27,7 @@ struct PDFKitRepresentedView: UIViewRepresentable {
         return pdfView
     }
 
-    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PDFKitRepresentedView>) {
+    func updateUIView(_: UIView, context _: UIViewRepresentableContext<PDFKitRepresentedView>) {
         // Update the view.
-        
     }
 }

@@ -6,22 +6,17 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-
-extension Number {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Number> {
-        return NSFetchRequest<Number>(entityName: "Number")
+public extension Number {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<Number> {
+        NSFetchRequest<Number>(entityName: "Number")
     }
 
-    @NSManaged public var telephone: String?
-    @NSManaged public var title: String?
-    @NSManaged public var vehicle: Vehicle?
-
+    @NSManaged var telephone: String?
+    @NSManaged var title: String?
+    @NSManaged var vehicle: Vehicle?
 }
 
-extension Number : Identifiable {
-
-}
+extension Number: Identifiable {}

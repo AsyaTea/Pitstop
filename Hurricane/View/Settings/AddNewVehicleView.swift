@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct AddNewVehicle: View {
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+
     var body: some View {
         Text("WORK IN PROGRESS")
     }

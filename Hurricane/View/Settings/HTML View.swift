@@ -11,14 +11,16 @@ import WebKit
 
 struct HTMLView: UIViewRepresentable {
     let htmlFileName: String
-    
-    func makeUIView(context: Context) -> WKWebView {
-        return WKWebView()
+
+    func makeUIView(context _: Context) -> WKWebView {
+        WKWebView()
     }
-    func updateUIView(_ uiView: UIViewType, context: Context) {
+
+    func updateUIView(_ uiView: UIViewType, context _: Context) {
         uiView.load(htmlFileName)
     }
 }
+
 extension WKWebView {
     func load(_ htmlFileName: String) {
         guard !htmlFileName.isEmpty else {
@@ -30,8 +32,7 @@ extension WKWebView {
         do {
             let htmlString = try String(contentsOfFile: filePath, encoding: .utf8)
             loadHTMLString(htmlString, baseURL: URL(fileURLWithPath: filePath))
-        }
-        catch {
+        } catch {
             print("HTML error")
         }
     }

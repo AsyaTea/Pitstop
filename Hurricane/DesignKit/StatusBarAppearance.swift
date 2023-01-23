@@ -5,9 +5,9 @@
 //  Created by Francesco Puzone on 01/06/22.
 //
 
-//import SwiftUI
+// import SwiftUI
 //
-//extension View {
+// extension View {
 //    /// A view modifier to set the color of the iOS Status Bar
 //    func statusBarStyle(_ style: UIStatusBarStyle, ignoreDarkMode: Bool = false) -> some View {
 //        background(HostingWindowFinder(callback: { window in
@@ -16,9 +16,9 @@
 //            window?.rootViewController = hostingController
 //        }))
 //    }
-//}
+// }
 //
-//fileprivate class HostingViewController: UIViewController {
+// fileprivate class HostingViewController: UIViewController {
 //    private var rootViewController: UIViewController?
 //    private var style: UIStatusBarStyle = .lightContent
 //    private var ignoreDarkMode: Bool = false
@@ -60,9 +60,9 @@
 //    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
 //        setNeedsStatusBarAppearanceUpdate()
 //    }
-//}
+// }
 //
-//fileprivate struct HostingWindowFinder: UIViewRepresentable {
+// fileprivate struct HostingWindowFinder: UIViewRepresentable {
 //    var callback: (UIWindow?) -> ()
 //
 //    func makeUIView(context: Context) -> UIView {
@@ -76,5 +76,5 @@
 //    func updateUIView(_ uiView: UIView, context: Context) {
 //        // NO-OP
 //    }
-//}
+// }
 //

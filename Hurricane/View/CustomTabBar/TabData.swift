@@ -7,7 +7,7 @@
 
 import Foundation
 
-//Data to pass to the tab items
+// Data to pass to the tab items
 struct TabItemData {
     let image: String
 }
@@ -16,7 +16,7 @@ enum TabType: Int, CaseIterable {
     case home = 0
     case stats
     case settings
-    
+
     var tabItem: TabItemData {
         switch self {
         case .home:

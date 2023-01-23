@@ -5,78 +5,74 @@
 //  Created by Ivan Voloshchuk on 26/05/22.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-struct VehicleViewModel : Hashable {
-    
-    let vehicle : Vehicle
-    
-    var expense : NSSet  {
-        return vehicle.expenses ?? NSSet()
+struct VehicleViewModel: Hashable {
+    let vehicle: Vehicle
+
+    var expense: NSSet {
+        vehicle.expenses ?? NSSet()
     }
-    
+
     var current: NSNumber {
-        return vehicle.current ?? 0
+        vehicle.current ?? 0
     }
-    
-    var brand : String {
-        return vehicle.brand ?? ""
+
+    var brand: String {
+        vehicle.brand ?? ""
     }
-    
+
     var fuelTypeOne: FuelType {
-        get {return FuelType.init(rawValue: Int(vehicle.fuelTypeOne)) ?? .gasoline}
-        set {vehicle.fuelTypeOne = Int16(newValue.rawValue)}
+        get { FuelType(rawValue: Int(vehicle.fuelTypeOne)) ?? .gasoline }
+        set { vehicle.fuelTypeOne = Int16(newValue.rawValue) }
     }
-    
+
     var fuelTypeTwo: FuelType {
-        get {return FuelType.init(rawValue: Int(vehicle.fuelTypeTwo)) ?? .none}
-        set {vehicle.fuelTypeTwo = Int16(newValue.rawValue)}
+        get { FuelType(rawValue: Int(vehicle.fuelTypeTwo)) ?? .none }
+        set { vehicle.fuelTypeTwo = Int16(newValue.rawValue) }
     }
-    
-    var model : String{
-        return vehicle.model ?? ""
+
+    var model: String {
+        vehicle.model ?? ""
     }
-    
-    var name : String {
-        return vehicle.name ?? ""
+
+    var name: String {
+        vehicle.name ?? ""
     }
-    
-    var odometer : Float{
-        return vehicle.odometer
+
+    var odometer: Float {
+        vehicle.odometer
     }
-    
-    var plate : String {
-        return vehicle.plate ?? ""
+
+    var plate: String {
+        vehicle.plate ?? ""
     }
-    
+
     var vehicleID: NSManagedObjectID {
-        return vehicle.objectID
+        vehicle.objectID
     }
-    
+
     var year: Int32 {
-        return vehicle.year
+        vehicle.year
     }
 }
 
-
-struct VehicleState : Hashable {
-    
-    var current : NSNumber?
-    var brand : String = ""
+struct VehicleState: Hashable {
+    var current: NSNumber?
+    var brand: String = ""
     var fuelTypeOne: Int16 = 1
     var fuelTypeTwo: Int16?
-    var model : String = ""
-    var name : String = ""
-    var odometer : Float = 0.0
-    var plate : String = ""
+    var model: String = ""
+    var name: String = ""
+    var odometer: Float = 0.0
+    var plate: String = ""
     var vehicleID: NSManagedObjectID?
     var year: Int32 = 0
 }
 
 extension VehicleState {
-    
-    static func fromVehicleViewModel(vm: VehicleViewModel) -> VehicleState{
+    static func fromVehicleViewModel(vm: VehicleViewModel) -> VehicleState {
         var vehicleS = VehicleState()
         vehicleS.current = vm.current
         vehicleS.vehicleID = vm.vehicleID
@@ -90,5 +86,4 @@ extension VehicleState {
         vehicleS.plate = vm.plate
         return vehicleS
     }
-    
 }

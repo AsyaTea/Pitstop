@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct Practice: View {
-    
-    @State var headerOffsets : (CGFloat, CGFloat) = (0,0)
+    @State var headerOffsets: (CGFloat, CGFloat) = (0, 0)
     var body: some View {
-        VStack{
+        VStack {
             TitleView()
                 .background(Palette.colorViolet)
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 0) {
                     HeaderView()
-                    
+
                     GeometryReader { mainView in
-                        
+
                         GeometryReader { item in
-                            
+
                             PinnedHeaderView()
                                 .background(Color.white)
 //                                .offset(y: headerOffsets.1 > 0 ? 0: -headerOffsets.1 / 8)
@@ -31,9 +30,6 @@ struct Practice: View {
                         }
                         .frame(height: 650)
                     }
-                    
-                    
-                    
                 }
             }
             .overlay(content: {
@@ -43,99 +39,79 @@ struct Practice: View {
                     .frame(maxHeight: .infinity, alignment: .top)
                     .opacity(headerOffsets.0 < 20 ? 1 : 0)
             })
-            
+
             .coordinateSpace(name: "Scroll")
             .ignoresSafeArea(.container, edges: .vertical)
-    }
-   
+        }
+
         .background(Palette.colorViolet)
     }
-    
-    
-    
+
     @ViewBuilder
     func HeaderView() -> some View {
         GeometryReader { proxy in
             let minY = proxy.frame(in: .named("Scroll")).minY
             let size = proxy.size
             let height = size.height + minY
-            
-                        
+
 //                Image("images")
 //                .resizable()
 //                .aspectRatio(contentMode: .fill)
 //                .frame(width: size.width, height: height, alignment: .top)
 //                .scaleEffect(10)
 //                .offset(y: -minY)
-                HStack{
-                    
-                        StatView()
-                            .padding(5)
-                    
-                    
-                   
-
-                }
-                .scaleEffect() // ???
-                .frame(width: size.width, height: height, alignment: .top)
-                .offset(y: -minY)
-                .background(Palette.colorViolet).ignoresSafeArea()
-                
-            
+            HStack {
+                StatView()
+                    .padding(5)
+            }
+            .scaleEffect() // ???
+            .frame(width: size.width, height: height, alignment: .top)
+            .offset(y: -minY)
+            .background(Palette.colorViolet).ignoresSafeArea()
         }
         .frame(height: 95)
-        
     }
-    
+
     func PinnedHeaderView() -> some View {
         ScrollView(.vertical, showsIndicators: false) {
-            VStack{
-                
-                
+            VStack {
                 MainPageScroll()
                 MainPageScroll()
                 MainPageScroll()
                     .frame(width: 380, height: 620, alignment: .center)
-                    
-                                
             }
             .zIndex(1)
             .padding()
-              
         }
     }
-    
+
     func scaleValue(mainFrame: CGFloat, minY: CGFloat) -> CGFloat {
         let scale = minY / mainFrame
-        
+
         if scale > 1 {
             print(scale)
             return 1
         } else {
             return scale
         }
-        
     }
-    
-        
-    
 }
 
-struct TitleView : View {
+struct TitleView: View {
     var body: some View {
         HStack {
             VStack {
                 HStack {
-                    //Title
+                    // Title
                     Text("Barman's Car >")
                         .font(Typography.headerXL)
                         .foregroundColor(Palette.black)
                     Spacer()
-                    //Per month Button
+                    // Per month Button
                     Button {
                         print("Button is tapped")
                     } label: {
-                        ZStack{
+                        ZStack {
                             RoundedRectangle(cornerRadius: 50)
                                 .foregroundColor(.white)
                             Text("Per month")
@@ -144,11 +120,11 @@ struct TitleView : View {
                         }
                         .frame(width: 80, height: 25, alignment: .center)
                     }
-                    //Bell ring button
+                    // Bell ring button
                     Button {
                         print("Bell is tapped")
                     } label: {
-                        ZStack{
+                        ZStack {
                             RoundedRectangle(cornerRadius: 100)
                                 .frame(width: 25, height: 25, alignment: .center)
                                 .foregroundColor(.white)
@@ -159,8 +135,8 @@ struct TitleView : View {
                     }
                 }
                 .font(.title)
-                //Model text
-                HStack{
+                // Model text
+                HStack {
                     Text("Range Rover Evoque, 2017")
                     Spacer()
                 }
@@ -168,16 +144,16 @@ struct TitleView : View {
             }
             .padding(25)
             .frame(width: 430, height: 100, alignment: .topLeading)
+        }
     }
-}
 }
 
 struct OffsetModifier: ViewModifier {
     @Binding var offset: CGFloat
-    
+
     var returnFromStart: Bool = true
     @State var startValue: CGFloat = 0
-    
+
     func body(content: Content) -> some View {
         content
             .overlay {
@@ -193,7 +169,6 @@ struct OffsetModifier: ViewModifier {
                 }
             }
     }
-    
 }
 
 struct OffsetKey: PreferenceKey {
@@ -202,9 +177,6 @@ struct OffsetKey: PreferenceKey {
         value = nextValue()
     }
 }
-    
-
-
 
 struct Practice_Previews: PreviewProvider {
     static var previews: some View {

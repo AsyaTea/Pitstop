@@ -8,22 +8,20 @@
 import SwiftUI
 
 struct EditEventView: View {
-    
     @Environment(\.presentationMode) private var presentationMode
-    
-    @StateObject var utilityVM : UtilityViewModel
-    @ObservedObject var dataVM : DataViewModel
-    @ObservedObject var categoryVM : CategoryViewModel
-    var category : Category
+
+    @StateObject var utilityVM: UtilityViewModel
+    @ObservedObject var dataVM: DataViewModel
+    @ObservedObject var categoryVM: CategoryViewModel
+    var category: Category
     @State var showingAlert = false
-    
+
     var body: some View {
-        NavigationView{
-            VStack{
-                if(category == .fuel){
+        NavigationView {
+            VStack {
+                if category == .fuel {
                     FuelEventListFields(utilityVM: utilityVM, dataVM: dataVM, category: category)
-                }
-                else{
+                } else {
                     EventListFields(utilityVM: utilityVM, dataVM: dataVM, category: category)
                 }
             }
@@ -31,31 +29,30 @@ struct EditEventView: View {
             .navigationTitle(category.label)
             .navigationBarItems(
                 leading:
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        HStack{
-                            Image("arrowLeft")
-                            
-                            Text("Back")
-                                .font(Typography.headerM)
-                        }
-                    })
-                    .accentColor(Palette.greyHard),
-                trailing:
-                    Button(action: {
-                        do {
-                            try dataVM.updateExpense(utilityVM.expenseToEdit)
-                        }
-                        catch{
-                            print(error)
-                        }
-                        dataVM.getTotalExpense(expenses: dataVM.expenseList)
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Save")
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    HStack {
+                        Image("arrowLeft")
+
+                        Text("Back")
                             .font(Typography.headerM)
-                    })
+                    }
+                })
+                .accentColor(Palette.greyHard),
+                trailing:
+                Button(action: {
+                    do {
+                        try dataVM.updateExpense(utilityVM.expenseToEdit)
+                    } catch {
+                        print(error)
+                    }
+                    dataVM.getTotalExpense(expenses: dataVM.expenseList)
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("Save")
+                        .font(Typography.headerM)
+                })
 //                    .disabled((Float(utilityVM.expenseToEdit.odometer) <= dataVM.currentVehicle.first?.odometer ?? 0 ))
 //                    .opacity((Float(utilityVM.expenseToEdit.odometer) <= dataVM.currentVehicle.first?.odometer ?? 0 ) ? 0.6 : 1)
             )
@@ -67,17 +64,17 @@ struct EditEventView: View {
                 }
             }
             .overlay(
-                VStack{
+                VStack {
                     Spacer(minLength: UIScreen.main.bounds.size.height * 0.78)
                     Button(action: {
                         showingAlert.toggle()
                     }, label: {
-                        DeleteButton(title:"Delete report")
+                        DeleteButton(title: "Delete report")
                     })
                     Spacer()
                 }
             )
-            .alert(isPresented:$showingAlert) {
+            .alert(isPresented: $showingAlert) {
                 Alert(
                     title: Text(String(localized: "Are you sure you want to delete this report?")),
                     message: Text(String(localized: "This action cannot be undone")),
@@ -88,9 +85,8 @@ struct EditEventView: View {
                             dataVM.expenseFilteredList = storage
                             categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                         })
-                       
-                        
-                        //SE METTO STA ROBA CRASHA, TO FIX PROSSIMAMENTE
+
+                        // SE METTO STA ROBA CRASHA, TO FIX PROSSIMAMENTE
                         //                            dataVM.getTotalExpense(expenses: dataVM.expenseList)
                         //                            dataVM.getMonths(expenses: dataVM.expenseList)
                         self.presentationMode.wrappedValue.dismiss()
@@ -102,17 +98,15 @@ struct EditEventView: View {
     }
 }
 
-
-struct DeleteButton : View {
-    
+struct DeleteButton: View {
     var title: LocalizedStringKey
-    
+
     var body: some View {
-        ZStack{
+        ZStack {
             Capsule(style: .continuous)
                 .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055, alignment: .center)
                 .foregroundColor(Palette.black)
-            HStack{
+            HStack {
                 Spacer()
                 Image("deleteIcon")
                     .resizable()
@@ -128,26 +122,25 @@ struct DeleteButton : View {
 }
 
 struct FuelEventListFields: View {
-    
-    @StateObject var utilityVM : UtilityViewModel
+    @StateObject var utilityVM: UtilityViewModel
     @ObservedObject var dataVM: DataViewModel
-    var category : Category
+    var category: Category
     @FocusState var focusedField: FocusField?
-    
+
     var body: some View {
-        List{
-            
-            //MARK: AMOUNT
-            HStack{
+        List {
+            // MARK: AMOUNT
+
+            HStack {
                 ListCategoryComponent(title: String(localized: "Cost"), iconName: "other", color: Palette.colorViolet)
                 Spacer()
-                TextField("100", value: $utilityVM.expenseToEdit.price,formatter: NumberFormatter())
+                TextField("100", value: $utilityVM.expenseToEdit.price, formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.decimalPad)
                     .fixedSize(horizontal: true, vertical: true)
                     .focused($focusedField, equals: .priceTab)
-                
+
                 Text(utilityVM.currency)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
@@ -157,18 +150,20 @@ struct FuelEventListFields: View {
                 focusedField = .priceTab
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
-            //MARK: DATE
+
+            // MARK: DATE
+
             DatePicker(selection: $utilityVM.expenseToEdit.date, displayedComponents: [.date]) {
                 ListCategoryComponent(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
-            //MARK: ODOMETER
-            HStack{
+
+            // MARK: ODOMETER
+
+            HStack {
                 ListCategoryComponent(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer,formatter: NumberFormatter())
+                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer, formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.numberPad)
@@ -183,40 +178,48 @@ struct FuelEventListFields: View {
                 focusedField = .odometer
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
-            //MARK: FUEL TYPE
-            HStack{
+
+            // MARK: FUEL TYPE
+
+            HStack {
                 ListCategoryComponent(title: String(localized: "Fuel type"), iconName: "fuelType", color: Palette.colorOrange)
                 Spacer()
-                Text((FuelType.init(rawValue: Int(utilityVM.expenseToEdit.fuelType ?? 0)) ?? .none).label)
+                Text((FuelType(rawValue: Int(utilityVM.expenseToEdit.fuelType ?? 0)) ?? .none).label)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
-            //MARK: PRICE LITER
-            HStack{
+
+            // MARK: PRICE LITER
+
+            HStack {
                 ListCategoryComponent(
-                    title: String(localized: "Price/Liter"),iconName: utilityVM.expenseToEdit.priceLiter == 0 ? "priceLiter" : "priceLiterColored",color:utilityVM.expenseToEdit.priceLiter == 0 ? Palette.greyLight : Palette.colorYellow)
+                    title: String(localized: "Price/Liter"),
+                    iconName: utilityVM.expenseToEdit.priceLiter == 0 ? "priceLiter" : "priceLiterColored",
+                    color: utilityVM.expenseToEdit.priceLiter == 0 ? Palette.greyLight : Palette.colorYellow
+                )
                 Spacer()
-                TextField("0", value: $utilityVM.expenseToEdit.priceLiter,formatter: NumberFormatter())
+                TextField("0", value: $utilityVM.expenseToEdit.priceLiter, formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.decimalPad)
                     .fixedSize(horizontal: true, vertical: true)
                     .focused($focusedField, equals: .priceLiter)
-                
             }
             .contentShape(Rectangle())
             .onTapGesture {
                 focusedField = .priceLiter
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
-            //MARK: LITER
-            HStack{
+
+            // MARK: LITER
+
+            HStack {
                 ListCategoryComponent(
-                    title: String(localized: "Liters"),iconName: utilityVM.expenseToEdit.liters == 0 ? "liters" : "literColored", color: utilityVM.expenseToEdit.liters == 0 ? Palette.greyLight : Palette.colorOrange)
+                    title: String(localized: "Liters"),
+                    iconName: utilityVM.expenseToEdit.liters == 0 ? "liters" : "literColored",
+                    color: utilityVM.expenseToEdit.liters == 0 ? Palette.greyLight : Palette.colorOrange
+                )
                 Spacer()
-                TextField("0", value: $utilityVM.expenseToEdit.liters,formatter: NumberFormatter())
+                TextField("0", value: $utilityVM.expenseToEdit.liters, formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.decimalPad)
@@ -228,11 +231,12 @@ struct FuelEventListFields: View {
                 focusedField = .liter
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
-            HStack{
+
+            HStack {
                 ListCategoryComponent(
                     title: String(localized: "Note"), iconName: utilityVM.expenseToEdit.note.isEmpty ? "note" : "noteColored",
-                    color: utilityVM.expenseToEdit.note.isEmpty ? Palette.greyLight : Palette.colorViolet)
+                    color: utilityVM.expenseToEdit.note.isEmpty ? Palette.greyLight : Palette.colorViolet
+                )
                 Spacer()
                 TextField(String(localized: "Note"), text: $utilityVM.expenseToEdit.note)
                     .font(Typography.headerM)
@@ -245,12 +249,11 @@ struct FuelEventListFields: View {
                 focusedField = .note
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
         }
-        .toolbar{
+        .toolbar {
             /// Keyboard focus
             ToolbarItem(placement: .keyboard) {
-                HStack{
+                HStack {
                     Button(action: {
                         focusedField = nil
                     }, label: {
@@ -265,24 +268,23 @@ struct FuelEventListFields: View {
 }
 
 struct EventListFields: View {
-    
-    @StateObject var utilityVM : UtilityViewModel
+    @StateObject var utilityVM: UtilityViewModel
     @ObservedObject var dataVM: DataViewModel
-    var category : Category
+    var category: Category
     @FocusState var focusedField: FocusField?
-    
+
     var body: some View {
-        List{
-            HStack{
+        List {
+            HStack {
                 ListCategoryComponent(title: String(localized: "Cost"), iconName: "other", color: Palette.colorViolet)
                 Spacer()
-                TextField("100", value: $utilityVM.expenseToEdit.price,formatter: NumberFormatter())
+                TextField("100", value: $utilityVM.expenseToEdit.price, formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.decimalPad)
                     .focused($focusedField, equals: .priceTab)
                     .fixedSize(horizontal: true, vertical: true)
-                
+
                 Text(utilityVM.currency)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
@@ -292,18 +294,20 @@ struct EventListFields: View {
                 focusedField = .priceTab
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
-            //MARK: DATE
+
+            // MARK: DATE
+
             DatePicker(selection: $utilityVM.expenseToEdit.date, displayedComponents: [.date]) {
                 ListCategoryComponent(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
-            //MARK: ODOMETER
-            HStack{
+
+            // MARK: ODOMETER
+
+            HStack {
                 ListCategoryComponent(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer,formatter: NumberFormatter())
+                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer, formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.numberPad)
@@ -318,11 +322,12 @@ struct EventListFields: View {
                 focusedField = .odometer
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
-            HStack{
+
+            HStack {
                 ListCategoryComponent(
-                    title: String(localized: "Note"),iconName: utilityVM.expenseToEdit.note.isEmpty ? "note" : "noteColored",
-                    color: utilityVM.expenseToEdit.note.isEmpty ? Palette.greyLight : Palette.colorViolet)
+                    title: String(localized: "Note"), iconName: utilityVM.expenseToEdit.note.isEmpty ? "note" : "noteColored",
+                    color: utilityVM.expenseToEdit.note.isEmpty ? Palette.greyLight : Palette.colorViolet
+                )
                 Spacer()
                 TextField(String(localized: "Note"), text: $utilityVM.expenseToEdit.note)
                     .font(Typography.headerM)
@@ -335,12 +340,11 @@ struct EventListFields: View {
                 focusedField = .note
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-            
         }
-        .toolbar{
+        .toolbar {
             /// Keyboard focus
             ToolbarItem(placement: .keyboard) {
-                HStack{
+                HStack {
                     Button(action: {
                         focusedField = nil
                     }, label: {
@@ -354,8 +358,8 @@ struct EventListFields: View {
     }
 }
 
-//struct EditEventView_Previews: PreviewProvider {
+// struct EditEventView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        EditEventView()
 //    }
-//}
+// }

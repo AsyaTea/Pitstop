@@ -8,6 +8,8 @@
 import SwiftUI
 import WebKit
 
+// swiftlint:disable force_try
+
 struct GifView: UIViewRepresentable {
     private let name: String
 
@@ -15,7 +17,7 @@ struct GifView: UIViewRepresentable {
         self.name = name
     }
 
-    func makeUIView(context: Context) -> WKWebView {
+    func makeUIView(context _: Context) -> WKWebView {
         let webView = WKWebView()
         let url = Bundle.main.url(forResource: name, withExtension: "gif")!
         let data = try! Data(contentsOf: url)
@@ -30,11 +32,7 @@ struct GifView: UIViewRepresentable {
         return webView
     }
 
-    func updateUIView(_ uiView: WKWebView, context: Context) {
+    func updateUIView(_ uiView: WKWebView, context _: Context) {
         uiView.reload()
     }
-
 }
-
-    
-
