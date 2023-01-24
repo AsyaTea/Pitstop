@@ -9,6 +9,23 @@ import CoreData
 import Foundation
 import SwiftUI
 
+// TODO: To move somewhere else
+struct GraphData: Identifiable {
+    var id = UUID()
+    var value: Int
+    var date: String
+
+    static func mock() -> [GraphData] {
+        [GraphData(value: 3, date: "Jan"),
+         GraphData(value: 6, date: "Feb"),
+         GraphData(value: 2, date: "Mar"),
+         GraphData(value: 9, date: "Apr"),
+         GraphData(value: 20, date: "May"),
+         GraphData(value: 15, date: "Jun"),
+         GraphData(value: 19, date: "Jul")]
+    }
+}
+
 class CategoryViewModel: ObservableObject {
     @Published var categories = [Category2]()
 
@@ -64,7 +81,8 @@ class CategoryViewModel: ObservableObject {
     var otherPercentage: Float = 0
 
     var fuelGraphData: [CGFloat] = []
-    var odometerGraphData: [CGFloat] = []
+    var odometerGraphData: [CGFloat] = [] // TODO: TO REMOVE
+    var odometerGraphData2: [GraphData] = []
 
     @Published var selectedTimeFrame: TimeFrame = .month
 
@@ -288,16 +306,15 @@ class CategoryViewModel: ObservableObject {
     }
 
     func getOdometersData(expenses: [ExpenseViewModel]) {
-        let odometerArray = expenses.map { expense in
-            expense.odometer
+        let odometerData = expenses.map { expense in
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM d" // TODO: Change format based on localization
+            let dateString = dateFormatter.string(from: expense.date)
+            return GraphData(value: Int(expense.odometer), date: dateString)
         }
-        let odometers = odometerArray.filter { odometer in
-            odometer > 0
-        }
-        print("odometer array is \(odometerArray)")
-        odometerGraphData = odometers.map { odometer in
-            CGFloat(odometer)
-        }
+
+        odometerGraphData2 = odometerData.filter { $0.value > 0 }
+        print("Debug odometer graph data: ", odometerGraphData2)
     }
 
     func assignCategories(expenseList _: [ExpenseViewModel]) {

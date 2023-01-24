@@ -163,6 +163,10 @@
 		FFCC308628258B6C00391BD5 /* UtilityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */; };
 		FFCDB2A3297ED015004AD298 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDB2A2297ED015004AD298 /* AnalyticsView.swift */; };
 		FFCDB2A4297ED015004AD298 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDB2A2297ED015004AD298 /* AnalyticsView.swift */; };
+		FFCDB2A7297F2354004AD298 /* AnalyticsOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDB2A6297F2354004AD298 /* AnalyticsOverview.swift */; };
+		FFCDB2A8297F2354004AD298 /* AnalyticsOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDB2A6297F2354004AD298 /* AnalyticsOverview.swift */; };
+		FFCDB2AA297F262B004AD298 /* AnalyticsOdometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDB2A9297F262B004AD298 /* AnalyticsOdometer.swift */; };
+		FFCDB2AB297F262B004AD298 /* AnalyticsOdometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDB2A9297F262B004AD298 /* AnalyticsOdometer.swift */; };
 		FFD1224628588CB7004686CA /* GifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1224528588CB7004686CA /* GifView.swift */; };
 		FFD1224A285892DB004686CA /* loadingStats.gif in Resources */ = {isa = PBXBuildFile; fileRef = FFD12249285892DB004686CA /* loadingStats.gif */; };
 		FFD1224C2858BD6C004686CA /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1224B2858BD6C004686CA /* AboutView.swift */; };
@@ -259,6 +263,8 @@
 		FFCC308328252F5B00391BD5 /* AddReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReportView.swift; sourceTree = "<group>"; };
 		FFCC308528258B6C00391BD5 /* UtilityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityViewModel.swift; sourceTree = "<group>"; };
 		FFCDB2A2297ED015004AD298 /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
+		FFCDB2A6297F2354004AD298 /* AnalyticsOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsOverview.swift; sourceTree = "<group>"; };
+		FFCDB2A9297F262B004AD298 /* AnalyticsOdometer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsOdometer.swift; sourceTree = "<group>"; };
 		FFD1224528588CB7004686CA /* GifView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifView.swift; sourceTree = "<group>"; };
 		FFD12249285892DB004686CA /* loadingStats.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loadingStats.gif; sourceTree = "<group>"; };
 		FFD1224B2858BD6C004686CA /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -555,6 +561,8 @@
 			isa = PBXGroup;
 			children = (
 				FFCDB2A2297ED015004AD298 /* AnalyticsView.swift */,
+				FFCDB2A6297F2354004AD298 /* AnalyticsOverview.swift */,
+				FFCDB2A9297F262B004AD298 /* AnalyticsOdometer.swift */,
 			);
 			path = "Analytics New";
 			sourceTree = "<group>";
@@ -820,6 +828,7 @@
 				FF974B8A283F4E6000C33576 /* WorkInProgressView.swift in Sources */,
 				FFA93164284A829B00C8D73C /* NotificationManager.swift in Sources */,
 				FF67738A2A174B3100A6B959 /* ListRowSeparatorModifier.swift in Sources */,
+				FFCDB2AA297F262B004AD298 /* AnalyticsOdometer.swift in Sources */,
 				030A39922858D36500218628 /* HTML View.swift in Sources */,
 				41C6E20A282CF47D00F756B5 /* AnalyticsFuelView.swift in Sources */,
 				FFD1224628588CB7004686CA /* GifView.swift in Sources */,
@@ -827,6 +836,8 @@
 				FF534EB2283643330089BE94 /* AlertsOnBoarding.swift in Sources */,
 				FFA0E72B28555014008B3ED9 /* Document+CoreDataClass.swift in Sources */,
 				FF14DC30282FCA1F00CA248B /* HomeViewModel.swift in Sources */,
+				FF534EB0283636EA0089BE94 /* AddNewVehicleView.swift in Sources */,
+				FFCDB2A7297F2354004AD298 /* AnalyticsOverview.swift in Sources */,
 				FF106794282D38970077CCF7 /* HeaderContentView.swift in Sources */,
 				415D2042282145FE004AF201 /* DataViewModel.swift in Sources */,
 				FF42ADD12825201A00C66A84 /* TabData.swift in Sources */,
@@ -903,6 +914,7 @@
 				FF130677297EBF190004C00B /* Palette.swift in Sources */,
 				FF130678297EBF190004C00B /* WorkInProgress.swift in Sources */,
 				FF130679297EBF190004C00B /* NotificationManager.swift in Sources */,
+				FFCDB2AB297F262B004AD298 /* AnalyticsOdometer.swift in Sources */,
 				FF13067A297EBF190004C00B /* HTML View.swift in Sources */,
 				FF13067B297EBF190004C00B /* AnalyticsFuelView.swift in Sources */,
 				FF13067C297EBF190004C00B /* GifView.swift in Sources */,
@@ -911,6 +923,7 @@
 				FF13067F297EBF190004C00B /* Document+CoreDataClass.swift in Sources */,
 				FF130680297EBF190004C00B /* HomeViewModel.swift in Sources */,
 				FF130681297EBF190004C00B /* AddNewVehicleView.swift in Sources */,
+				FFCDB2A8297F2354004AD298 /* AnalyticsOverview.swift in Sources */,
 				FF130682297EBF190004C00B /* HeaderContentView.swift in Sources */,
 				FF130683297EBF190004C00B /* DataViewModel.swift in Sources */,
 				FF130684297EBF190004C00B /* TabData.swift in Sources */,

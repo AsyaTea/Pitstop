@@ -144,7 +144,7 @@ struct OverviewView: View {
                     .padding(2)
             }
             Section {
-                OdometerCostsView(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM)
+                OdometerCostsView(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM, showTotalOdometer: true)
                     .padding(2)
             }
             Section {}
@@ -222,25 +222,24 @@ struct OdometerCostsView: View {
     @ObservedObject var categoryVM: CategoryViewModel
     @ObservedObject var dataVM: DataViewModel
     @ObservedObject var utilityVM: UtilityViewModel
-    var body: some View {
-        HStack {
-            Text("Odometer")
-                .font(Typography.headerL)
-            Spacer()
-            Text("\(String(Int(dataVM.currentVehicle.first?.odometer ?? 0))) km")
-                .fontWeight(.semibold)
-                .font(Typography.headerM)
-        }
-        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+    var showTotalOdometer: Bool
 
+    var body: some View {
+        if showTotalOdometer {
+            HStack {
+                Text("Odometer")
+                    .font(Typography.headerL)
+                Spacer()
+                Text("\(String(Int(dataVM.currentVehicle.first?.odometer ?? 0))) km")
+                    .fontWeight(.semibold)
+                    .font(Typography.headerM)
+            }
+        }
         let formattedAvgOdo = String(format: "%.0f", categoryVM.avgOdometer)
-        ListCostsAttributes(title: "Average", value: " \(formattedAvgOdo) \(utilityVM.unit)" + NSLocalizedString("/day", comment: ""))
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-        ListCostsAttributes(title: "Month Total", value: String(categoryVM.odometerTotal))
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         let formattedEstimatedOdo = String(format: "%.0f", categoryVM.estimatedOdometerPerYear)
+        ListCostsAttributes(title: "Average", value: " \(formattedAvgOdo) \(utilityVM.unit)" + NSLocalizedString("/day", comment: ""))
+        ListCostsAttributes(title: "Month Total", value: String(categoryVM.odometerTotal))
         ListCostsAttributes(title: "Estimated km/year", value: "\(formattedEstimatedOdo) \(utilityVM.unit)")
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
     }
 }
 

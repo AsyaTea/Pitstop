@@ -37,6 +37,7 @@ enum Palette {
     static let blueLine = Color(rgb: 0x4761FE)
 
     static let testDarkmode = Color(lightRGB: 0xFF0000, darkRGB: 0x00FF00)
+    static let separatorColor = Color(rgb: 0xE5E5E5)
 }
 
 extension View {

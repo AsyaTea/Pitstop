@@ -24,7 +24,7 @@ struct AnalyticsView: View {
                 } else if currentPickerTab == .fuel {
                     AnalyticsFuelView(categoryVM: categoryVM, utilityVM: utilityVM)
                 } else {
-                    AnalyticsOdometerView(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM)
+                    AnalyticsOdometer(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM)
                 }
             }
             .background(Palette.greyBackground)
@@ -48,6 +48,7 @@ struct AnalyticsView: View {
                 trailingTopBarItem()
             )
         }
+        .navigationViewStyle(.stack)
     }
 
     @ViewBuilder

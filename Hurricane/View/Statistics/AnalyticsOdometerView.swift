@@ -41,7 +41,10 @@ struct AnalyticsOdometerView: View {
                     }
                 }
                 Section {
-                    OdometerCostsView(categoryVM: categoryVM, dataVM: dataVM, utilityVM: utilityVM)
+                    OdometerCostsView(categoryVM: categoryVM,
+                                      dataVM: dataVM,
+                                      utilityVM: utilityVM,
+                                      showTotalOdometer: false)
                         .padding(4)
                 }
             }
