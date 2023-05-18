@@ -25,7 +25,7 @@ struct EditReminderView: View {
         .navigationBarItems(
             leading:
             Button(action: {
-                self.presentationMode.wrappedValue.dismiss()
+                presentationMode.wrappedValue.dismiss()
             }, label: {
                 HStack {
                     Image("arrowLeft")
@@ -44,7 +44,7 @@ struct EditReminderView: View {
                 }
                 notificationVM.removeNotification(reminderS: utilityVM.reminderToEdit)
                 notificationVM.createNotification(reminderS: utilityVM.reminderToEdit)
-                self.presentationMode.wrappedValue.dismiss()
+                presentationMode.wrappedValue.dismiss()
             }, label: {
                 Text(String(localized: "Save"))
                     .font(Typography.headerM)
@@ -78,7 +78,7 @@ struct EditReminderView: View {
                     dataVM.getRemindersCoreData(filter: nil, storage: { storage in
                         dataVM.reminderList = storage
                     })
-                    self.presentationMode.wrappedValue.dismiss()
+                    presentationMode.wrappedValue.dismiss()
                 },
                 secondaryButton: .cancel()
             )

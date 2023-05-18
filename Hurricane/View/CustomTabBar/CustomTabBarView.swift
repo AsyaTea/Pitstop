@@ -25,7 +25,7 @@ struct CustomTabBarView: View {
     }
 
     var body: some View {
-        CustomTabView(tabs: TabType.allCases.map { $0.tabItem }, selectedIndex: $selectedIndex) { index in
+        CustomTabView(tabs: TabType.allCases.map(\.tabItem), selectedIndex: $selectedIndex) { index in
             let type = TabType(rawValue: index) ?? .home
             getTabView(type: type)
         }

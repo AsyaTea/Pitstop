@@ -15,7 +15,7 @@ class NotificationManager: ObservableObject {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
                 print("All set!")
-            } else if let error = error {
+            } else if let error {
                 print(error.localizedDescription)
             }
         }
@@ -42,7 +42,7 @@ class NotificationManager: ObservableObject {
         let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
 
         UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
+            if let error {
                 print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
             }
         }

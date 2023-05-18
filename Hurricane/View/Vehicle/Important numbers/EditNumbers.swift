@@ -74,7 +74,7 @@ struct EditNumbers: View {
                                 dataVM.numberList = storage
                             })
 
-                            self.presentationMode.wrappedValue.dismiss()
+                            presentationMode.wrappedValue.dismiss()
                         },
                         secondaryButton: .cancel()
                     )

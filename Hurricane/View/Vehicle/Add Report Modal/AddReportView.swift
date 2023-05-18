@@ -71,7 +71,7 @@ struct AddReportView: View {
             .navigationBarItems(
                 leading:
                 Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
+                    presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text("Cancel")
                         .font(Typography.headerM)
@@ -97,7 +97,7 @@ struct AddReportView: View {
                         notificationVM.createNotification(reminderS: reminderVM.reminderS)
                     }
                     //                        categoryVM.retrieveAndUpdate()
-                    self.presentationMode.wrappedValue.dismiss()
+                    presentationMode.wrappedValue.dismiss()
 
                 }, label: {
                     Text(String(localized: "Save"))
