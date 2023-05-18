@@ -129,12 +129,6 @@ struct AboutView: View {
                         })
                         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                     }
-//                    Section(header:Text("Other")){
-//                        Text("Terms of service")
-//                            .foregroundColor(Palette.black)
-//                            .font(Typography.TextM)
-//                            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-//                    }
                 }
                 .padding(.top, 0)
 
