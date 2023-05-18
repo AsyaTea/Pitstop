@@ -5,6 +5,7 @@
 //  Created by Ivan Voloshchuk on 13/06/22.
 //
 
+// TODO: To refactor
 import SwiftUI
 
 let pickOne = NSLocalizedString("Pick one", comment: "")
