@@ -23,7 +23,7 @@ struct ExpiredReminder: View {
         .navigationBarItems(
             leading:
             Button(action: {
-                self.presentationMode.wrappedValue.dismiss()
+                presentationMode.wrappedValue.dismiss()
             }, label: {
                 HStack {
                     Image("arrowLeft")

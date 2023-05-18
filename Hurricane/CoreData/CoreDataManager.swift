@@ -17,7 +17,7 @@ class CoreDataManager {
     init() {
         container = NSPersistentContainer(name: "CarModel")
         container.loadPersistentStores { _, error in
-            if let error = error {
+            if let error {
                 print("Error loading Core Data: \(error)")
             }
         }

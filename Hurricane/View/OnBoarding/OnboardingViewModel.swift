@@ -46,7 +46,7 @@ class OnboardingViewModel: ObservableObject {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
                 print("All set!")
-            } else if let error = error {
+            } else if let error {
                 print(error.localizedDescription)
             }
         }

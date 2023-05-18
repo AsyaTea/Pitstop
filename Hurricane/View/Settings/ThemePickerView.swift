@@ -5,6 +5,7 @@
 //  Created by Ivan Voloshchuk on 13/06/22.
 //
 
+// TODO: To refactor
 import SwiftUI
 
 let pickOne = NSLocalizedString("Pick one", comment: "")
@@ -93,7 +94,7 @@ struct ColorButton: View {
             RoundedRectangle(cornerRadius: 20)
                 .frame(width: 150, height: 150)
                 .foregroundColor(color)
-                .opacity(press ? 1 : 0.5)
+                .opacity(press ? 1 : 0.7)
                 .rotationEffect(Angle(degrees: tap ? 90 : 0))
                 .animation(.easeInOut)
                 .overlay(
@@ -113,12 +114,21 @@ struct ColorButton: View {
                 impactHeavy.impactOccurred()
             }
             .onEnded { _ in
-                self.press.toggle()
+                press.toggle()
                 homeVM.saveColor(color: color, key: homeVM.COLOR_KEY)
                 homeVM.saveColor(color: cardColor, key: homeVM.COLOR_KEY_CARD)
                 homeVM.headerBackgroundColor = color
                 homeVM.headerCardColor = cardColor
             }
         )
+        .onAppear {
+            let loadedColor = homeVM.loadColor(key: homeVM.COLOR_KEY)
+            let loadedColorCard = homeVM.loadColor(key: homeVM.COLOR_KEY_CARD)
+            if loadedColor == color, loadedColorCard == cardColor {
+                press = true
+            } else {
+                press = false
+            }
+        }
     }
 }

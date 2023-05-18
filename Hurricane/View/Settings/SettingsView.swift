@@ -13,11 +13,6 @@ struct SettingsView: View {
     @StateObject var onboardingVM: OnboardingViewModel
     @ObservedObject var categoryVM: CategoryViewModel
 
-    // High priority function pepe
-    //    var arrayColorBG = [Palette.colorGreen,Palette.colorYellow,Palette.colorViolet,Palette.colorBlue]
-    //    var arrayColorCard = [Palette.colorMainGreen,Palette.colorMainYellow,Palette.colorMainViolet,Palette.colorMainBlue]
-    //    @State var random = 0
-
     var body: some View {
         NavigationView {
             VStack {
@@ -33,7 +28,7 @@ struct SettingsView: View {
                                     .foregroundColor(Palette.black)
                             }
                         }
-                        //                                                .onDelete(perform: dataVM.deleteVehicle)
+                        .onDelete(perform: dataVM.deleteVehicle)
                         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
                         // MARK: - ADD NEW VEHICLE
@@ -61,28 +56,6 @@ struct SettingsView: View {
                         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                     }
                     Section(header: Text("Other")) {
-                        //                        HStack{
-                        //                            Button(action: {
-                        //                                random = Int.random(in: 0...3)
-                        //                                homeVM.headerBackgroundColor = arrayColorBG[random]
-                        //                                homeVM.headerCardColor = arrayColorCard[random]
-                        //                            }, label: {
-                        //                                Text("Theme")
-                        //                                    .foregroundColor(Palette.black)
-                        //                                    .font(Typography.headerM)
-                        //                            })
-                        //                            Spacer()
-                        //                            Circle()
-                        //                                .frame(width: 20, height: 20)
-                        //                                .foregroundColor(homeVM.headerBackgroundColor)
-                        //                        }
-
-                        NavigationLink(destination: ThemePickerView(homeVM: homeVM)) {
-                            Text("Theme")
-                                .foregroundColor(Palette.black)
-                                .font(Typography.headerM)
-                        }
-
                         NavigationLink(destination: AboutView()) {
                             Text("About us")
                                 .foregroundColor(Palette.black)

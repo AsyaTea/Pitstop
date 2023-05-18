@@ -1,2 +1,2 @@
---swiftversion 5.1
+--swiftversion 5.7
 --disable trailingCommas,wrapMultilineStatementBraces

@@ -30,7 +30,7 @@ struct EditEventView: View {
             .navigationBarItems(
                 leading:
                 Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
+                    presentationMode.wrappedValue.dismiss()
                 }, label: {
                     HStack {
                         Image("arrowLeft")
@@ -48,7 +48,7 @@ struct EditEventView: View {
                         print(error)
                     }
                     dataVM.getTotalExpense(expenses: dataVM.expenseList)
-                    self.presentationMode.wrappedValue.dismiss()
+                    presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text("Save")
                         .font(Typography.headerM)
@@ -89,7 +89,7 @@ struct EditEventView: View {
                         // SE METTO STA ROBA CRASHA, TO FIX PROSSIMAMENTE
                         //                            dataVM.getTotalExpense(expenses: dataVM.expenseList)
                         //                            dataVM.getMonths(expenses: dataVM.expenseList)
-                        self.presentationMode.wrappedValue.dismiss()
+                        presentationMode.wrappedValue.dismiss()
                     },
                     secondaryButton: .cancel()
                 )

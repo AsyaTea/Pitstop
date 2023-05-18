@@ -601,7 +601,7 @@ struct ClearButton: ViewModifier {
 
             if !text.isEmpty {
                 Button(action: {
-                    self.text = ""
+                    text = ""
                 }) {
                     Image(systemName: "xmark")
                         .foregroundColor(Palette.black)

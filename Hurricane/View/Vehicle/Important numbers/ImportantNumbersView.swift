@@ -55,7 +55,7 @@ struct ImportantNumbersView: View {
                 leading:
                 Button(action: {
                     homeVM.resetAlertFields()
-                    self.presentationMode.wrappedValue.dismiss()
+                    presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text("Cancel")
                         .font(Typography.headerM)

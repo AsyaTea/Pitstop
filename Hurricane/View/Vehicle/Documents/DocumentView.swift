@@ -20,7 +20,7 @@ struct DocumentView: View {
             .navigationBarItems(
                 leading:
                 Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
+                    presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text("Cancel")
                         .font(Typography.headerM)

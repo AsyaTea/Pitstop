@@ -140,7 +140,7 @@ struct OffsetModifier: ViewModifier {
                     let minY = proxy.frame(in: .named("SCROLL")).minY
 
                     DispatchQueue.main.async {
-                        self.offset = minY
+                        offset = minY
                     }
 
                     return Color.clear

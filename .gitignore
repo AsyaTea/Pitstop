@@ -78,6 +78,9 @@ Dependencies/
 iOSInjectionProject/
 
 .DS_Store
+*.DS_Store
+*.moved-aside
+*.xcuserstate
 .idea
 
 Carthage

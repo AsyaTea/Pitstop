@@ -46,7 +46,6 @@
 		FF42ADD52825250B00C66A84 /* AnalyticsOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD42825250A00C66A84 /* AnalyticsOverviewView.swift */; };
 		FF42ADD72825251500C66A84 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD62825251500C66A84 /* SettingsView.swift */; };
 		FF4C4F3E2846518500926F4D /* EditEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C4F3D2846518500926F4D /* EditEventView.swift */; };
-		FF534EB0283636EA0089BE94 /* AddNewVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF534EAF283636EA0089BE94 /* AddNewVehicleView.swift */; };
 		FF534EB2283643330089BE94 /* AlertsOnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF534EB1283643330089BE94 /* AlertsOnBoarding.swift */; };
 		FF5D5A2528299D0D006D5ABF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D5A2428299D0D006D5ABF /* OnboardingView.swift */; };
 		FF5F2C9F2823C4CD007980F3 /* Expense+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */; };
@@ -134,7 +133,6 @@
 		FF42ADD42825250A00C66A84 /* AnalyticsOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsOverviewView.swift; sourceTree = "<group>"; };
 		FF42ADD62825251500C66A84 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FF4C4F3D2846518500926F4D /* EditEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventView.swift; sourceTree = "<group>"; };
-		FF534EAF283636EA0089BE94 /* AddNewVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewVehicleView.swift; sourceTree = "<group>"; };
 		FF534EB1283643330089BE94 /* AlertsOnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsOnBoarding.swift; sourceTree = "<group>"; };
 		FF5D5A2428299D0D006D5ABF /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		FF5F2C9D2823C4CD007980F3 /* Expense+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -280,7 +278,6 @@
 				FF42ADD62825251500C66A84 /* SettingsView.swift */,
 				FF7439AD28574C8E00E113CA /* ThemePickerView.swift */,
 				FFC67B44283A2A920078B283 /* EditVehicleView.swift */,
-				FF534EAF283636EA0089BE94 /* AddNewVehicleView.swift */,
 				FFD1224B2858BD6C004686CA /* AboutView.swift */,
 				030A39932858D43E00218628 /* TermsOfService.html */,
 				030A39912858D36500218628 /* HTML View.swift */,
@@ -610,7 +607,6 @@
 				FF534EB2283643330089BE94 /* AlertsOnBoarding.swift in Sources */,
 				FFA0E72B28555014008B3ED9 /* Document+CoreDataClass.swift in Sources */,
 				FF14DC30282FCA1F00CA248B /* HomeViewModel.swift in Sources */,
-				FF534EB0283636EA0089BE94 /* AddNewVehicleView.swift in Sources */,
 				FF106794282D38970077CCF7 /* HeaderContentView.swift in Sources */,
 				415D2042282145FE004AF201 /* DataViewModel.swift in Sources */,
 				FF42ADD12825201A00C66A84 /* TabData.swift in Sources */,
@@ -808,7 +804,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.academy.pitstop;
+				PRODUCT_BUNDLE_IDENTIFIER = com.academy.pitstopD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -843,7 +839,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.academy.pitstop;
+				PRODUCT_BUNDLE_IDENTIFIER = com.academy.pitstopD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

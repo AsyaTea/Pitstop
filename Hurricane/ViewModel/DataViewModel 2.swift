@@ -133,7 +133,7 @@ class DataViewModel: ObservableObject {
 
     func deleteVehicleCoreData(vehicle: VehicleViewModel) {
         let vehicle = manager.getVehicleById(id: vehicle.vehicleID)
-        if let vehicle = vehicle {
+        if let vehicle {
             manager.deleteVehicle(vehicle)
         }
         save()
@@ -280,7 +280,7 @@ class DataViewModel: ObservableObject {
 
     func deleteExpenseCoreData(expense: ExpenseViewModel) {
         let expense = manager.getExpenseById(id: expense.expenseID)
-        if let expense = expense {
+        if let expense {
             manager.deleteExpense(expense)
         }
         save()
@@ -292,7 +292,7 @@ class DataViewModel: ObservableObject {
         }
 
         let expense = manager.getExpenseById(id: expenseID)
-        if let expense = expense {
+        if let expense {
             manager.deleteExpense(expense)
         }
         save()
