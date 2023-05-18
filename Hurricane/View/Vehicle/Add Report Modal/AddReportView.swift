@@ -50,9 +50,12 @@ struct AddReportView: View {
                                        defaultFocus: .odometerTab)
                         .padding(.top, 15)
                 } else {
-                    TextFieldComponent(submitField: $reminderVM.title, placeholder: "-",
-                                       attribute: "ㅤ", keyboardType: .default,
-                                       focusedField: $focusedField, defaultFocus: .reminderTab)
+                    TextFieldComponent(submitField: $reminderVM.title,
+                                       placeholder: "-",
+                                       attribute: "ㅤ",
+                                       keyboardType: .default,
+                                       focusedField: $focusedField,
+                                       defaultFocus: .reminderTab)
                         .padding(.top, 15)
                 }
 

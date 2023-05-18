@@ -82,7 +82,7 @@ class CategoryViewModel: ObservableObject {
 
     var fuelGraphData: [CGFloat] = []
     var odometerGraphData: [CGFloat] = [] // TODO: TO REMOVE
-    var odometerGraphData2: [GraphData] = []
+    @Published var odometerGraphData2: [GraphData] = []
 
     @Published var selectedTimeFrame: TimeFrame = .month
 
@@ -313,7 +313,9 @@ class CategoryViewModel: ObservableObject {
             return GraphData(value: Int(expense.odometer), date: dateString)
         }
 
-        odometerGraphData2 = odometerData.filter { $0.value > 0 }
+        odometerGraphData2 = odometerData.filter { $0.value > 0 }.sorted(by: {
+            $0.date > $1.date
+        })
         print("Debug odometer graph data: ", odometerGraphData2)
     }
 

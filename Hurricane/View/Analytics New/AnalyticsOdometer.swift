@@ -24,7 +24,7 @@ struct AnalyticsOdometer: View {
                             .font(Typography.headerS)
                             .foregroundColor(Palette.greyMiddle)
                         Chart {
-                            ForEach(GraphData.mock()) { data in
+                            ForEach(categoryVM.odometerGraphData2) { data in
                                 LineMark(x: .value("Date", data.date),
                                          y: .value("Value", data.value))
                                     .lineStyle(StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round))

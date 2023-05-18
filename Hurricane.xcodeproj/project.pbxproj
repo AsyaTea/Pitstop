@@ -567,6 +567,13 @@
 			path = "Analytics New";
 			sourceTree = "<group>";
 		};
+		FFCDB2AC2980295C004AD298 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		FFDAA33E283FE12B00145B35 /* Important numbers */ = {
 			isa = PBXGroup;
 			children = (
