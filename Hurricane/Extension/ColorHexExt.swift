@@ -1,5 +1,5 @@
 //
-//  extensionColor.swift
+//  ColorHexExt.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 05/05/22.

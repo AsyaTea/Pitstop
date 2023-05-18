@@ -1,5 +1,5 @@
 //
-//  Utility Extensions.swift
+//  SwipeBackGestureExt.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 07/06/22.
@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// Extension to swipe on custom back button
 extension UINavigationController: UIGestureRecognizerDelegate {
     override open func viewDidLoad() {
         super.viewDidLoad()
