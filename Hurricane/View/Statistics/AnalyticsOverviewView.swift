@@ -127,17 +127,13 @@ struct OverviewView: View {
     @ObservedObject var utilityVM: UtilityViewModel
 
     init(dataVM: DataViewModel, categoryVM: CategoryViewModel, utilityVM: UtilityViewModel) {
-        //  Change list background color
-        UITableView.appearance().separatorStyle = .singleLine
-        UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
-        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
         self.dataVM = dataVM
         self.categoryVM = categoryVM
         self.utilityVM = utilityVM
     }
 
     var body: some View {
-        List {
+        CustomList {
             Section {
                 CostsListView(utilityVM: utilityVM, categoryVM: categoryVM, dataVM: dataVM)
             }
@@ -176,7 +172,7 @@ struct CostsListView: View {
 
             ForEach(categoryVM.categories, id: \.self) { category in
                 HStack {
-                    ListCategoryComponent(title: category.name, iconName: category.icon, color: category.color)
+                    CategoryRow(title: category.name, iconName: category.icon, color: category.color)
                     Spacer()
                     Text(String(category.totalCosts))
                         .font(Typography.headerM)

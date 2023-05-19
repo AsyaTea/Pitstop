@@ -22,26 +22,27 @@ struct ExpenseListView: View {
     @State private var checkmark2 = false
 
     var body: some View {
-        List {
+        CustomList {
             // MARK: CUSTOM CATEGORY PICKER
 
             HStack {
-                ListCategoryComponent(title: String(localized: "Category"), iconName: "category", color: Palette.colorYellow)
+                CategoryRow(title: String(localized: "Category"), iconName: "category", color: Palette.colorYellow)
                 Spacer()
                 NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)) {
-                    Spacer()
-                    Text(addExpVM.selectedCategory)
-                        .fixedSize()
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyMiddle)
+                    HStack {
+                        Spacer()
+                        Text(addExpVM.selectedCategory)
+                            .fixedSize()
+                            .font(Typography.headerM)
+                            .foregroundColor(Palette.greyMiddle)
+                    }
                 }
             }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: ODOMETER
 
             HStack {
-                ListCategoryComponent(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
+                CategoryRow(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
                 TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), text: $addExpVM.odometer)
                     .font(Typography.headerM)
@@ -57,30 +58,30 @@ struct ExpenseListView: View {
             .onTapGesture {
                 focusedField.wrappedValue = .odometer
             }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: FUEL TYPE
 
             if addExpVM.selectedCategory == NSLocalizedString("Fuel", comment: "") {
                 HStack {
-                    ListCategoryComponent(title: String(localized: "Fuel type"), iconName: "fuelType", color: Palette.colorOrange)
+                    CategoryRow(title: String(localized: "Fuel type"), iconName: "fuelType", color: Palette.colorOrange)
                     Spacer()
                     NavigationLink(destination: CustomFuelPicker(dataVM: dataVM, addExpVM: addExpVM, fuelVM: fuelVM, checkmark1: $checkmark1, checkmark2: $checkmark2)) {
-                        Spacer()
-                        Text(addExpVM.selectedFuel)
-                            .fixedSize()
-                            .font(Typography.headerM)
-                            .foregroundColor(Palette.greyMiddle)
+                        HStack {
+                            Spacer()
+                            Text(addExpVM.selectedFuel)
+                                .fixedSize()
+                                .font(Typography.headerM)
+                                .foregroundColor(Palette.greyMiddle)
+                        }
                     }
-                }.listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                }
             }
 
             // MARK: DATE PICKER
 
             DatePicker(selection: $addExpVM.expenseS.date, in: ...Date(), displayedComponents: [.date]) {
-                ListCategoryComponent(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
+                CategoryRow(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
             }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: LITERS & PRICE/LITER
 
@@ -113,7 +114,6 @@ struct ExpenseListView: View {
                 .onTapGesture {
                     focusedField.wrappedValue = .liter
                 }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
                 HStack {
                     ZStack {
@@ -142,7 +142,6 @@ struct ExpenseListView: View {
                 .onTapGesture {
                     focusedField.wrappedValue = .priceLiter
                 }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             }
 
             // MARK: NOTE
@@ -165,7 +164,6 @@ struct ExpenseListView: View {
             .onTapGesture {
                 focusedField.wrappedValue = .note
             }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         }
         .padding(.top, -5)
         .onAppear {
@@ -213,7 +211,7 @@ struct CustomFuelPicker: View {
 //                    addExpVM.expenseS.fuelType = fuelVM.defaultSelectedFuel
                     presentationMode.wrappedValue.dismiss()
                 }
-            }) {
+            }, label: {
                 HStack {
                     Text(dataVM.currentVehicle.first?.fuelTypeOne.label ?? "")
                         .font(Typography.headerM)
@@ -223,7 +221,7 @@ struct CustomFuelPicker: View {
                         .foregroundColor(.accentColor)
                         .opacity(checkmark1 ? 1.0 : 0.0)
                 }
-            }
+            })
             if dataVM.currentVehicle.first?.fuelTypeTwo != FuelType.none {
                 Button(action: {
                     withAnimation(.easeOut) {
@@ -234,7 +232,7 @@ struct CustomFuelPicker: View {
                         addExpVM.fuel = fuelVM.secondarySelectedFuel
                         presentationMode.wrappedValue.dismiss()
                     }
-                }) {
+                }, label: {
                     HStack {
                         Text(dataVM.currentVehicle.first?.fuelTypeTwo.label ?? "")
                             .font(Typography.headerM)
@@ -244,7 +242,7 @@ struct CustomFuelPicker: View {
                             .foregroundColor(.accentColor)
                             .opacity(checkmark2 ? 1.0 : 0.0)
                     }
-                }
+                })
             }
         }
         .listStyle(.insetGrouped)

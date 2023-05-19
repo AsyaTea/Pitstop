@@ -35,7 +35,9 @@ struct AddReportView: View {
                 // MARK: Custom TextField
 
                 if addExpVM.currentPickerTab == String(localized: "Expense") {
-                    TextFieldComponent(submitField: $addExpVM.price, placeholder: "0", attribute: utilityVM.currency, keyboardType: .decimalPad, focusedField: $focusedField, defaultFocus: .priceTab)
+                    TextFieldComponent(submitField: $addExpVM.price, placeholder: "0",
+                                       attribute: utilityVM.currency, keyboardType: .decimalPad,
+                                       focusedField: $focusedField, defaultFocus: .priceTab)
                         .padding(.top, 15)
                 } else if addExpVM.currentPickerTab == String(localized: "Odometer") {
                     TextFieldComponent(submitField: $addExpVM.odometerTab,
@@ -46,7 +48,9 @@ struct AddReportView: View {
                                        defaultFocus: .odometerTab)
                         .padding(.top, 15)
                 } else {
-                    TextFieldComponent(submitField: $reminderVM.title, placeholder: "-", attribute: "ㅤ", keyboardType: .default, focusedField: $focusedField, defaultFocus: .reminderTab)
+                    TextFieldComponent(submitField: $reminderVM.title, placeholder: "-",
+                                       attribute: "ㅤ", keyboardType: .default,
+                                       focusedField: $focusedField, defaultFocus: .reminderTab)
                         .padding(.top, 15)
                 }
 
@@ -59,11 +63,15 @@ struct AddReportView: View {
                 // MARK: List
 
                 if addExpVM.currentPickerTab == String(localized: "Expense") {
-                    ExpenseListView(addExpVM: addExpVM, utilityVM: utilityVM, dataVM: dataVM, categoryVM: categoryVM, reminderVM: reminderVM, focusedField: $focusedField)
+                    ExpenseListView(addExpVM: addExpVM, utilityVM: utilityVM,
+                                    dataVM: dataVM, categoryVM: categoryVM,
+                                    reminderVM: reminderVM, focusedField: $focusedField)
                 } else if addExpVM.currentPickerTab == String(localized: "Odometer") {
                     OdometerListView(addExpVM: addExpVM, utilityVM: utilityVM, focusedField: $focusedField)
                 } else {
-                    ReminderListView(dataVM: dataVM, addExpVM: addExpVM, utilityVM: utilityVM, reminderVM: reminderVM, categoryVM: categoryVM, focusedField: $focusedField)
+                    ReminderListView(dataVM: dataVM, addExpVM: addExpVM,
+                                     utilityVM: utilityVM, reminderVM: reminderVM,
+                                     categoryVM: categoryVM, focusedField: $focusedField)
                 }
             }
             .background(Palette.greyBackground)
@@ -174,28 +182,6 @@ struct AddReportView: View {
 //        AddReportView()
 //    }
 // }
-
-struct ListCategoryComponent: View {
-    var title: String
-    var iconName: String
-    var color: Color
-
-    var body: some View {
-        HStack {
-            ZStack {
-                Circle()
-                    .frame(width: 32, height: 32)
-                    .foregroundColor(color)
-                Image(iconName)
-                    .resizable()
-                    .frame(width: 16, height: 16)
-            }
-            Text(title)
-//                .fixedSize()
-                .font(Typography.headerM)
-        }
-    }
-}
 
 struct TextFieldComponent: View {
     @Binding var submitField: String

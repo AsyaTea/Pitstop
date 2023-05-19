@@ -16,10 +16,10 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Spacer()
-                PremiumBanner()
-                    .padding(.top, 20)
-                List {
+//                Spacer()
+//                PremiumBanner()
+//                    .padding(.top, 20)
+                CustomList {
                     Section(header: Text("Vehicles")) {
                         ForEach(dataVM.vehicleList, id: \.self) { vehicle in
                             NavigationLink(destination: EditVehicleView(dataVM: dataVM, vehicle: vehicle, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))) {
@@ -69,9 +69,7 @@ struct SettingsView: View {
                         }
                     }
                 }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                 .listStyle(.insetGrouped)
-
                 Spacer()
             }
             .fullScreenCover(isPresented: $onboardingVM.addNewVehicle) {

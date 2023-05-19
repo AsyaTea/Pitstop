@@ -23,7 +23,6 @@ struct CategoryRow: View {
                     .frame(width: 16, height: 16)
             }
             Text(title)
-                .fixedSize()
                 .font(Typography.headerM)
         }
     }

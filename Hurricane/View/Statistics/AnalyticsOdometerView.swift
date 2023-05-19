@@ -13,7 +13,7 @@ struct AnalyticsOdometerView: View {
     @ObservedObject var utilityVM: UtilityViewModel
     var body: some View {
         VStack {
-            List {
+            CustomList {
                 if categoryVM.odometerGraphData.count >= 2 {
                     Section {
                         VStack {
@@ -27,9 +27,6 @@ struct AnalyticsOdometerView: View {
                                         .foregroundColor(Palette.greyHard)
                                 }
                                 Spacer()
-//                                Text(" ▼ 12 % ")
-//                                    .font(Typography.headerS)
-//                                    .foregroundColor(Palette.greenHighlight)
                             }
                             .padding(-3)
                             HStack {
@@ -39,7 +36,6 @@ struct AnalyticsOdometerView: View {
                                     .padding(1)
                             }
                             .padding(-15)
-//
                             Spacer()
                         }
                     }
@@ -50,7 +46,7 @@ struct AnalyticsOdometerView: View {
                 }
             }
         }
-        .background(Palette.greyLight)
+        .background(Palette.greyBackground)
     }
 }
 

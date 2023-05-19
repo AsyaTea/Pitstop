@@ -12,7 +12,7 @@ struct AnalyticsFuelView: View {
     @ObservedObject var utilityVM: UtilityViewModel
     var body: some View {
         VStack {
-            List {
+            CustomList {
                 if categoryVM.fuelGraphData.count >= 2 {
                     Section {
                         VStack {
@@ -51,7 +51,7 @@ struct AnalyticsFuelView: View {
                 }
             }
         }
-        .background(Palette.greyLight)
+        .background(Palette.greyBackground)
     }
 }
 
