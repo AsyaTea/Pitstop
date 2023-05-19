@@ -16,16 +16,15 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             VStack {
-//                Spacer()
-//                PremiumBanner()
-//                    .padding(.top, 20)
-                Text("")
+                Text("") // FIX: Workaround to not overlap  list on navigation title
                 CustomList {
                     Section(header: Text("Vehicles")) {
                         ForEach(dataVM.vehicleList, id: \.self) { vehicle in
-                            NavigationLink(destination: EditVehicleView(dataVM: dataVM, vehicle: vehicle, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))) {
+                            let destination = EditVehicleView(dataVM: dataVM, vehicle: vehicle, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))
+                            NavigationLink(destination: destination ) {
                                 CategoryRow(title: vehicle.name, iconName: "car-settings", color: Palette.colorViolet)
                             }
+                            
                         }
                         .onDelete(perform: dataVM.deleteVehicle)
 
@@ -54,7 +53,10 @@ struct SettingsView: View {
                 Spacer()
             }
             .fullScreenCover(isPresented: $onboardingVM.addNewVehicle) {
-                OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, categoryVM: categoryVM, shouldShowOnboarding: $onboardingVM.addNewVehicle)
+                OnboardingView(onboardingVM: onboardingVM,
+                               dataVM: dataVM,
+                               categoryVM: categoryVM,
+                               shouldShowOnboarding: $onboardingVM.addNewVehicle)
             }
             .background(Palette.greyBackground)
             .navigationBarTitleDisplayMode(.inline)
@@ -69,11 +71,14 @@ struct SettingsView: View {
     }
 }
 
-// struct SettingsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditCarView()
-//    }
-// }
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView(dataVM: DataViewModel(),
+                     homeVM: HomeViewModel(),
+                     onboardingVM: OnboardingViewModel(),
+                     categoryVM: CategoryViewModel())
+    }
+}
 
 struct PremiumBanner: View {
     var body: some View {
@@ -115,7 +120,6 @@ struct ToSView: View {
 
     var body: some View {
         HTMLView(htmlFileName: "TermsOfService")
-//            .frame(width: 380.0, height: 700.0)
             .padding()
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
