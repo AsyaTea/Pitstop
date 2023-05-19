@@ -25,6 +25,7 @@ struct EditEventView: View {
                     EventListFields(utilityVM: utilityVM, dataVM: dataVM, category: category)
                 }
             }
+            .background(Palette.greyBackground)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(category.label)
             .navigationBarItems(
@@ -128,11 +129,11 @@ struct FuelEventListFields: View {
     @FocusState var focusedField: FocusField?
 
     var body: some View {
-        List {
+        CustomList {
             // MARK: AMOUNT
 
             HStack {
-                ListCategoryComponent(title: String(localized: "Cost"), iconName: "other", color: Palette.colorViolet)
+                CategoryRow(title: String(localized: "Cost"), iconName: "other", color: Palette.colorViolet)
                 Spacer()
                 TextField("100", value: $utilityVM.expenseToEdit.price, formatter: NumberFormatter())
                     .font(Typography.headerM)
@@ -154,14 +155,14 @@ struct FuelEventListFields: View {
             // MARK: DATE
 
             DatePicker(selection: $utilityVM.expenseToEdit.date, displayedComponents: [.date]) {
-                ListCategoryComponent(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
+                CategoryRow(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: ODOMETER
 
             HStack {
-                ListCategoryComponent(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
+                CategoryRow(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
                 TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer, formatter: NumberFormatter())
                     .font(Typography.headerM)
@@ -182,7 +183,7 @@ struct FuelEventListFields: View {
             // MARK: FUEL TYPE
 
             HStack {
-                ListCategoryComponent(title: String(localized: "Fuel type"), iconName: "fuelType", color: Palette.colorOrange)
+                CategoryRow(title: String(localized: "Fuel type"), iconName: "fuelType", color: Palette.colorOrange)
                 Spacer()
                 Text((FuelType(rawValue: Int(utilityVM.expenseToEdit.fuelType ?? 0)) ?? .none).label)
             }
@@ -191,7 +192,7 @@ struct FuelEventListFields: View {
             // MARK: PRICE LITER
 
             HStack {
-                ListCategoryComponent(
+                CategoryRow(
                     title: String(localized: "Price/Liter"),
                     iconName: utilityVM.expenseToEdit.priceLiter == 0 ? "priceLiter" : "priceLiterColored",
                     color: utilityVM.expenseToEdit.priceLiter == 0 ? Palette.greyLight : Palette.colorYellow
@@ -213,7 +214,7 @@ struct FuelEventListFields: View {
             // MARK: LITER
 
             HStack {
-                ListCategoryComponent(
+                CategoryRow(
                     title: String(localized: "Liters"),
                     iconName: utilityVM.expenseToEdit.liters == 0 ? "liters" : "literColored",
                     color: utilityVM.expenseToEdit.liters == 0 ? Palette.greyLight : Palette.colorOrange
@@ -233,7 +234,7 @@ struct FuelEventListFields: View {
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             HStack {
-                ListCategoryComponent(
+                CategoryRow(
                     title: String(localized: "Note"), iconName: utilityVM.expenseToEdit.note.isEmpty ? "note" : "noteColored",
                     color: utilityVM.expenseToEdit.note.isEmpty ? Palette.greyLight : Palette.colorViolet
                 )
@@ -274,9 +275,9 @@ struct EventListFields: View {
     @FocusState var focusedField: FocusField?
 
     var body: some View {
-        List {
+        CustomList {
             HStack {
-                ListCategoryComponent(title: String(localized: "Cost"), iconName: "other", color: Palette.colorViolet)
+                CategoryRow(title: String(localized: "Cost"), iconName: "other", color: Palette.colorViolet)
                 Spacer()
                 TextField("100", value: $utilityVM.expenseToEdit.price, formatter: NumberFormatter())
                     .font(Typography.headerM)
@@ -298,14 +299,14 @@ struct EventListFields: View {
             // MARK: DATE
 
             DatePicker(selection: $utilityVM.expenseToEdit.date, displayedComponents: [.date]) {
-                ListCategoryComponent(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
+                CategoryRow(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: ODOMETER
 
             HStack {
-                ListCategoryComponent(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
+                CategoryRow(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
                 TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer, formatter: NumberFormatter())
                     .font(Typography.headerM)
@@ -324,7 +325,7 @@ struct EventListFields: View {
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             HStack {
-                ListCategoryComponent(
+                CategoryRow(
                     title: String(localized: "Note"), iconName: utilityVM.expenseToEdit.note.isEmpty ? "note" : "noteColored",
                     color: utilityVM.expenseToEdit.note.isEmpty ? Palette.greyLight : Palette.colorViolet
                 )

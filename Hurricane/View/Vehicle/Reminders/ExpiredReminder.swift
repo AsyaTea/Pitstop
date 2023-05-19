@@ -18,6 +18,7 @@ struct ExpiredReminder: View {
             ReminderList(utilityVM: utilityVM)
                 .disabled(true)
         }
+        .background(Palette.greyBackground)
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(

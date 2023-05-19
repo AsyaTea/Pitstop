@@ -13,7 +13,7 @@ struct AnalyticsCostView: View {
     @ObservedObject var utilityVM: UtilityViewModel
     var body: some View {
         VStack {
-            List {
+            CustomList {
                 Section {
                     CostGraphView(utilityVM: utilityVM, categoryVM: categoryVM, dataVM: dataVM)
                         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
@@ -27,7 +27,7 @@ struct AnalyticsCostView: View {
                 }
             }
         }
-        .background(Palette.greyLight)
+        .background(Palette.greyBackground)
     }
 }
 

@@ -20,6 +20,7 @@ struct EditReminderView: View {
         VStack {
             ReminderList(utilityVM: utilityVM)
         }
+        .background(Palette.greyBackground)
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(
@@ -93,11 +94,11 @@ struct ReminderList: View {
     @State private var selectedItem: Category = .other
 
     var body: some View {
-        List {
+        CustomList {
             // MARK: - TITLE
 
             HStack {
-                ListCategoryComponent(title: "Title", iconName: "other", color: Palette.colorViolet)
+                CategoryRow(title: "Title", iconName: "other", color: Palette.colorViolet)
                 Spacer()
                 TextField(String(localized: "Title"), text: $utilityVM.reminderToEdit.title)
                     .font(Typography.headerM)
@@ -114,7 +115,7 @@ struct ReminderList: View {
             // MARK: - CATEGORY
 
             HStack {
-                ListCategoryComponent(title: "Category", iconName: "category", color: Palette.colorYellow)
+                CategoryRow(title: "Category", iconName: "category", color: Palette.colorYellow)
                 NavigationLink(destination:
                     EditReminderCategoryPicker(
                         utilityVM: utilityVM,
@@ -132,7 +133,7 @@ struct ReminderList: View {
             // MARK: - DATE
 
             DatePicker(selection: $utilityVM.reminderToEdit.date, in: Date()...) {
-                ListCategoryComponent(title: "Day", iconName: "day", color: Palette.colorGreen)
+                CategoryRow(title: "Day", iconName: "day", color: Palette.colorGreen)
             }
             .datePickerStyle(.compact)
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
@@ -140,7 +141,7 @@ struct ReminderList: View {
             // MARK: - NOTE
 
             HStack {
-                ListCategoryComponent(title: "Note", iconName: "noteColored", color: Palette.colorViolet)
+                CategoryRow(title: "Note", iconName: "noteColored", color: Palette.colorViolet)
                 Spacer()
                 TextField(String(localized: "Note"), text: $utilityVM.reminderToEdit.note)
                     .font(Typography.headerM)

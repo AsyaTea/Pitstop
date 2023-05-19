@@ -18,21 +18,22 @@ struct ReminderListView: View {
     @State private var selectedItem: Category = .maintenance
 
     var body: some View {
-        List {
+        CustomList {
             // MARK: CATEGORY
 
             HStack {
-                ListCategoryComponent(title: String(localized: "Category"), iconName: "category", color: Palette.colorYellow)
+                CategoryRow(title: String(localized: "Category"), iconName: "category", color: Palette.colorYellow)
                 Spacer()
                 NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)) {
-                    Spacer()
-                    Text(reminderVM.selectedCategory)
-                        .fixedSize()
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyMiddle)
+                    HStack {
+                        Spacer()
+                        Text(reminderVM.selectedCategory)
+                            .fixedSize()
+                            .font(Typography.headerM)
+                            .foregroundColor(Palette.greyMiddle)
+                    }
                 }
             }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: BASED ON PICKER
 
@@ -42,25 +43,24 @@ struct ReminderListView: View {
                         .font(Typography.headerM)
                 }
             }, label: {
-                ListCategoryComponent(title: String(localized: "Based on"), iconName: "basedOn", color: Palette.colorOrange)
+                CategoryRow(title: String(localized: "Based on"), iconName: "basedOn", color: Palette.colorOrange)
             })
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: REMIND DATE
 
             if addExpVM.selectedBased == NSLocalizedString("Date", comment: "") {
                 DatePicker(selection: $reminderVM.date, in: Date()...) {
-                    ListCategoryComponent(title: String(localized: "Remind me on"), iconName: "remindMe", color: Palette.colorGreen)
+                    CategoryRow(title: String(localized: "Remind me on"), iconName: "remindMe", color: Palette.colorGreen)
                 }
+                .frame(height: 20)
                 .datePickerStyle(.compact)
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             }
 
             // MARK: REMIND DISTANCE
 
             else {
                 HStack {
-                    ListCategoryComponent(title: String(localized: "Remind me in"), iconName: "remindMe", color: Palette.colorGreen)
+                    CategoryRow(title: String(localized: "Remind me in"), iconName: "remindMe", color: Palette.colorGreen)
                     Spacer()
                     TextField("1000", value: $reminderVM.distance, formatter: NumberFormatter())
                         .font(Typography.headerM)
@@ -72,7 +72,6 @@ struct ReminderListView: View {
                         .font(Typography.headerM)
                         .foregroundColor(Palette.black)
                 }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
             }
 
             // MARK: REPEAT
@@ -103,7 +102,6 @@ struct ReminderListView: View {
                     .focused(focusedField, equals: .note)
                     .font(Typography.headerM)
             }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         }
         .padding(.top, -10)
         .onAppear {

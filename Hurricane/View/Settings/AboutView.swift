@@ -22,7 +22,7 @@ struct AboutView: View {
                     .frame(width: 200, height: 200)
                     .clipShape(Circle())
                 Spacer()
-                List {
+                CustomList {
                     Section(header: Text("The team")) {
                         Button(action: {
                             openURL(URL(string: "https://oneanya.com")!)

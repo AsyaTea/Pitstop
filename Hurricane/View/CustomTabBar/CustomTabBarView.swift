@@ -16,14 +16,6 @@ struct CustomTabBarView: View {
     @StateObject var onboardingVM = OnboardingViewModel()
     @StateObject var notificationVM = NotificationManager()
 
-    init() {
-        //  CUSTOM PROPRETIES FOR ALL LISTS OF THE APP
-        UITableView.appearance().separatorStyle = .singleLine
-        UITableView.appearance().backgroundColor = UIColor(Palette.greyBackground)
-        UITableView.appearance().separatorColor = UIColor(Palette.greyLight)
-        UITableView.appearance().showsVerticalScrollIndicator = false
-    }
-
     var body: some View {
         CustomTabView(tabs: TabType.allCases.map(\.tabItem), selectedIndex: $selectedIndex) { index in
             let type = TabType(rawValue: index) ?? .home

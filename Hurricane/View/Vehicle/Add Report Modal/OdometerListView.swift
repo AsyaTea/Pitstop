@@ -13,13 +13,12 @@ struct OdometerListView: View {
     var focusedField: FocusState<FocusField?>.Binding
 
     var body: some View {
-        List {
+        CustomList {
             // MARK: DATE
 
             DatePicker(selection: $addExpVM.date, displayedComponents: [.date]) {
-                ListCategoryComponent(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
+                CategoryRow(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
             }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: NOTE
 
@@ -37,7 +36,6 @@ struct OdometerListView: View {
                     .focused(focusedField, equals: .note)
                     .font(Typography.headerM)
             }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         }
         .padding(.top, -10)
         .onAppear {

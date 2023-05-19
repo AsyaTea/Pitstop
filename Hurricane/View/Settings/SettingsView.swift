@@ -16,66 +16,47 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Spacer()
-                PremiumBanner()
-                    .padding(.top, 20)
-                List {
+                Text("") // FIX: Workaround to not overlap  list on navigation title
+                CustomList {
                     Section(header: Text("Vehicles")) {
                         ForEach(dataVM.vehicleList, id: \.self) { vehicle in
-                            NavigationLink(destination: EditVehicleView(dataVM: dataVM, vehicle: vehicle, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))) {
-                                Text(vehicle.name)
-                                    .font(Typography.headerM)
-                                    .foregroundColor(Palette.black)
+                            let destination = EditVehicleView(dataVM: dataVM, vehicle: vehicle, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))
+                            NavigationLink(destination: destination ) {
+                                CategoryRow(title: vehicle.name, iconName: "car-settings", color: Palette.colorViolet)
                             }
+                            
                         }
                         .onDelete(perform: dataVM.deleteVehicle)
-                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-
-                        // MARK: - ADD NEW VEHICLE
 
                         Button(action: {
                             onboardingVM.addNewVehicle = true
                             onboardingVM.destination = .page2
                         }, label: {
-                            HStack {
-                                ZStack {
-                                    Circle()
-                                        .foregroundColor(Palette.greyBackground)
-                                        .frame(width: 32, height: 32)
-                                    Image("plus")
-                                        .resizable()
-                                        .frame(width: 16, height: 16)
-                                        .foregroundColor(Palette.black)
-                                }
-                                Text("Add vehicle")
-                                    .font(Typography.headerM)
-                                    .foregroundColor(Palette.black)
-                            }
+                            CategoryRow(title: "Add vehicle ", iconName: "plus", color: Palette.greyBackground)
                         })
-
-                        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
+                        .buttonStyle(.plain)
                     }
+                    .listRowInsets(EdgeInsets(top: 5, leading: 16, bottom: 5, trailing: 16))
+
                     Section(header: Text("Other")) {
                         NavigationLink(destination: AboutView()) {
-                            Text("About us")
-                                .foregroundColor(Palette.black)
-                                .font(Typography.headerM)
+                            CategoryRow(title: "About us ", iconName: "paperclip", color: Palette.greyBackground)
                         }
 
                         NavigationLink(destination: ToSView()) {
-                            Text("Terms of Service")
-                                .foregroundColor(Palette.black)
-                                .font(Typography.headerM)
+                            CategoryRow(title: "Terms of Service", iconName: "paperclip", color: Palette.greyBackground)
                         }
                     }
+                    .listRowInsets(EdgeInsets(top: 5, leading: 16, bottom: 5, trailing: 16))
                 }
-                .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
                 .listStyle(.insetGrouped)
-
                 Spacer()
             }
             .fullScreenCover(isPresented: $onboardingVM.addNewVehicle) {
-                OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, categoryVM: categoryVM, shouldShowOnboarding: $onboardingVM.addNewVehicle)
+                OnboardingView(onboardingVM: onboardingVM,
+                               dataVM: dataVM,
+                               categoryVM: categoryVM,
+                               shouldShowOnboarding: $onboardingVM.addNewVehicle)
             }
             .background(Palette.greyBackground)
             .navigationBarTitleDisplayMode(.inline)
@@ -90,11 +71,14 @@ struct SettingsView: View {
     }
 }
 
-// struct SettingsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditCarView()
-//    }
-// }
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView(dataVM: DataViewModel(),
+                     homeVM: HomeViewModel(),
+                     onboardingVM: OnboardingViewModel(),
+                     categoryVM: CategoryViewModel())
+    }
+}
 
 struct PremiumBanner: View {
     var body: some View {
@@ -136,7 +120,7 @@ struct ToSView: View {
 
     var body: some View {
         HTMLView(htmlFileName: "TermsOfService")
-//            .frame(width: 380.0, height: 700.0)
+            .padding()
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
