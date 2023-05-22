@@ -21,10 +21,9 @@ struct SettingsView: View {
                     Section(header: Text("Vehicles")) {
                         ForEach(dataVM.vehicleList, id: \.self) { vehicle in
                             let destination = EditVehicleView(dataVM: dataVM, vehicle: vehicle, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))
-                            NavigationLink(destination: destination ) {
+                            NavigationLink(destination: destination) {
                                 CategoryRow(title: vehicle.name, iconName: "car-settings", color: Palette.colorViolet)
                             }
-                            
                         }
                         .onDelete(perform: dataVM.deleteVehicle)
 
