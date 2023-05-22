@@ -33,7 +33,9 @@ struct BottomContentView: View {
                 .padding()
                 .padding(.top, 10)
                 .padding(.bottom, -10)
-                .sheet(isPresented: $viewAllEvents) { LastEventsListView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM) }
+                .sheet(isPresented: $viewAllEvents) {
+                    LastEventsListView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM)
+                }
 
             if dataVM.expenseList.isEmpty {
                 HStack {

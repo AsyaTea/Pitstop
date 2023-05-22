@@ -105,7 +105,9 @@ struct DeleteButton: View {
     var body: some View {
         ZStack {
             Capsule(style: .continuous)
-                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055, alignment: .center)
+                .frame(width: UIScreen.main.bounds.size.width * 0.90,
+                       height: UIScreen.main.bounds.size.height * 0.055,
+                       alignment: .center)
                 .foregroundColor(Palette.black)
             HStack {
                 Spacer()
@@ -164,7 +166,9 @@ struct FuelEventListFields: View {
             HStack {
                 CategoryRow(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer, formatter: NumberFormatter())
+                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)),
+                          value: $utilityVM.expenseToEdit.odometer,
+                          formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.numberPad)
@@ -308,7 +312,9 @@ struct EventListFields: View {
             HStack {
                 CategoryRow(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer, formatter: NumberFormatter())
+                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)),
+                          value: $utilityVM.expenseToEdit.odometer,
+                          formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.numberPad)

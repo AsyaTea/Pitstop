@@ -165,7 +165,8 @@ struct Page2: View {
                         RoundedRectangle(cornerRadius: 36)
                             .stroke(isTapped ? Palette.black : Palette.greyInput, lineWidth: 1)
                             .background(isTapped ? Palette.greyLight : Palette.greyBackground)
-                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
+                            .frame(width: UIScreen.main.bounds.size.width * 0.90,
+                                   height: UIScreen.main.bounds.size.height * 0.055)
                         HStack {
                             Text(fuelVM.defaultFuelType.label)
                                 .font(Typography.TextM)
@@ -266,7 +267,9 @@ struct Page3: View {
                                 }
                                 .padding()
                             }
-                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
+                            .frame(width: UIScreen.main.bounds.size.width * 0.90,
+                                   height: UIScreen.main.bounds.size.height * 0.075,
+                                   alignment: .center)
                         }
 
                         // MARK: DOCUMENTS
@@ -299,7 +302,9 @@ struct Page3: View {
                                 }
                                 .padding()
                             }
-                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
+                            .frame(width: UIScreen.main.bounds.size.width * 0.90,
+                                   height: UIScreen.main.bounds.size.height * 0.075,
+                                   alignment: .center)
                         }
 
                         // MARK: IMPORTANT NUMBERS
@@ -355,7 +360,9 @@ struct Page3: View {
                         }, label: {
                             OnBoardingCard(text: "Second fuel type", bgColor: Palette.colorYellow, iconName: "fuel")
                         })
-                        .confirmationDialog(String(localized: "Select a fuel type"), isPresented: $onboardingVM.showAllFuels, titleVisibility: .visible) {
+                        .confirmationDialog(String(localized: "Select a fuel type"),
+                                            isPresented: $onboardingVM.showAllFuels,
+                                            titleVisibility: .visible) {
                             ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
                                 Button(fuel.label) {
                                     fuelVM.secondaryFuelType = fuel
@@ -376,7 +383,9 @@ struct Page3: View {
                                 }
                                 .padding()
                             }
-                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
+                            .frame(width: UIScreen.main.bounds.size.width * 0.90,
+                                   height: UIScreen.main.bounds.size.height * 0.075,
+                                   alignment: .center)
                         }
 
                     }.padding(.vertical, 40)
@@ -547,7 +556,9 @@ struct OnBoardingButton: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.060, alignment: .center)
+                .frame(width: UIScreen.main.bounds.size.width * 0.90,
+                       height: UIScreen.main.bounds.size.height * 0.060,
+                       alignment: .center)
                 .cornerRadius(43)
                 .foregroundColor(color)
             HStack {
@@ -569,7 +580,9 @@ struct OnBoardingCard: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
+                .frame(width: UIScreen.main.bounds.size.width * 0.90,
+                       height: UIScreen.main.bounds.size.height * 0.075,
+                       alignment: .center)
                 .cornerRadius(12)
                 .foregroundColor(Palette.white)
                 .shadowGrey()
@@ -602,10 +615,10 @@ struct ClearButton: ViewModifier {
             if !text.isEmpty {
                 Button(action: {
                     text = ""
-                }) {
+                }, label: {
                     Image(systemName: "xmark")
                         .foregroundColor(Palette.black)
-                }
+                })
                 .padding(.trailing, 20)
             }
         }

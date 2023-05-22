@@ -19,7 +19,9 @@ class AddExpenseViewModel: ObservableObject {
     @Published var selectedCategoryReminder = String(localized: "Maintenance")
 //    let categoryReminder = ["Maintenance", "Insurance","Road tax","Tolls","Parking","Other"]
     @Published var selectedRepeat = "Never"
-    let repeatTypes = ["Never", "Daily", "Weekdays", "Weekends", "Weekly", "Monthly", "Every 3 Months", "Every 6 Months", "Yearly"]
+    let repeatTypes = ["Never", "Daily", "Weekdays",
+                       "Weekends", "Weekly", "Monthly",
+                       "Every 3 Months", "Every 6 Months", "Yearly"]
     @Published var selectedBased = NSLocalizedString("Date", comment: "")
     let basedTypes = ["Date"]
 
@@ -29,7 +31,7 @@ class AddExpenseViewModel: ObservableObject {
     @Published var liters: String = ""
     @Published var pricePerLiter: String = ""
     @Published var note: String = ""
-    @Published var odometer: String = "" /// Var  to store the odometer value in expense
+    @Published var odometer: String = "" // Var  to store the odometer value in expense
 
     // Segmented picker tabs
     @Published var currentPickerTab: String = .init(localized: "Expense")

@@ -42,7 +42,10 @@ struct VehicleView: View {
             AddReportView(utilityVM: utilityVM, categoryVM: categoryVM, dataVM: dataVM, reminderVM: reminderVM)
         }
         .fullScreenCover(isPresented: $shouldShowOnboarding) {
-            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, categoryVM: categoryVM, shouldShowOnboarding: $shouldShowOnboarding)
+            OnboardingView(onboardingVM: onboardingVM,
+                           dataVM: dataVM,
+                           categoryVM: categoryVM,
+                           shouldShowOnboarding: $shouldShowOnboarding)
         }
         .onAppear {
             if shouldShowOnboarding == false {
@@ -59,7 +62,9 @@ struct AddReportButton: View {
     var body: some View {
         ZStack {
             Capsule(style: .continuous)
-                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055, alignment: .center)
+                .frame(width: UIScreen.main.bounds.size.width * 0.90,
+                       height: UIScreen.main.bounds.size.height * 0.055,
+                       alignment: .center)
                 .foregroundColor(Palette.black)
             HStack {
                 Spacer()

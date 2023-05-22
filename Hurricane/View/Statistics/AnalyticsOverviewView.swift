@@ -13,7 +13,10 @@ struct AnalyticsOverviewView: View {
     @ObservedObject var categoryVM: CategoryViewModel
     @ObservedObject var utilityVM: UtilityViewModel
 
-    @State private var pickerTabs = [String(localized: "Overview"), String(localized: "Costs"), String(localized: "Fuel"), String(localized: "Odometer")]
+    @State private var pickerTabs = [String(localized: "Overview"),
+                                     String(localized: "Costs"),
+                                     String(localized: "Fuel"),
+                                     String(localized: "Odometer")]
     @State var pickedTab = ""
 
     @Namespace var animation
@@ -310,25 +313,26 @@ struct AnalyticsHeaderView: View {
                     }
                 }
 
-                //               MARK: - DOWNLOAD DATA BUTTON
+                // MARK: - DOWNLOAD DATA BUTTON
 
-                //                ZStack{
-                //                    Button(action: {
-                //
-                //
-                //                    }, label: {
-                //                        ZStack{
-                //                            Circle()
-                //                                .foregroundColor(Palette.white)
-                //                                .frame(width: UIScreen.main.bounds.width * 0.09, height: UIScreen.main.bounds.height * 0.04)
-                //                                .shadowGrey()
-                //                            Image("download")
-                //                                .frame(alignment: .center)
-                //                                .padding()
-                //                        }
-                //                    })
-                //                }
-                //                .padding()
+//                                ZStack{
+//                                    Button(action: {
+//
+//
+//                                    }, label: {
+//                                        ZStack{
+//                                            Circle()
+//                                                .foregroundColor(Palette.white)
+//                                                .frame(width: UIScreen.main.bounds.width * 0.09,
+//            height: UIScreen.main.bounds.height * 0.04)
+//                                                .shadowGrey()
+//                                            Image("download")
+//                                                .frame(alignment: .center)
+//                                                .padding()
+//                                        }
+//                                    })
+//                                }
+//                                .padding()
             }
             .padding(.top, 2)
         }

@@ -27,7 +27,9 @@ class NotificationManager: ObservableObject {
         var isIta: Bool {
             Locale.current.languageCode == "it"
         }
-        let reminderEng = (String(localized: "You have a new ") + String(category?.label.lowercased() ?? "") + String(localized: " reminder"))
+        let reminderEng = (String(localized: "You have a new ") +
+            String(category?.label.lowercased() ?? "")
+            + String(localized: " reminder"))
         let reminderIta = "Hai un nuovo promemoria in \(category?.label.lowercased() ?? "")"
 
         let content = UNMutableNotificationContent()
@@ -37,8 +39,10 @@ class NotificationManager: ObservableObject {
         content.body = (isIta ? reminderIta : reminderEng)
 
         content.sound = UNNotificationSound.default
-
-        let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.day, .month, .year, .hour, .minute], from: reminderS.date), repeats: false)
+        let dateComponents: DateComponents = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute],
+                                                                             from: reminderS.date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents,
+                                                    repeats: false)
         let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
 
         UNUserNotificationCenter.current().add(request) { error in
@@ -51,10 +55,8 @@ class NotificationManager: ObservableObject {
     func removeNotification(reminderS _: ReminderState) {
         UNUserNotificationCenter.current().getPendingNotificationRequests { notificationRequests in
             var identifiers: [String] = []
-            for notification: UNNotificationRequest in notificationRequests {
-                if notification.identifier == self.id {
-                    identifiers.append(notification.identifier)
-                }
+            for notification in notificationRequests where notification.identifier == self.id {
+                identifiers.append(notification.identifier)
             }
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
             print("Notification Unscheduled with", identifiers)
@@ -70,7 +72,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func userNotificationCenter(_: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         print("Notification received with identifier \(notification.request.identifier)")
         completionHandler([.banner, .sound])
     }

@@ -48,7 +48,9 @@ struct TopNav: View {
                     .opacity(fadeOutOpacity())
                 })
                 .disabled(fadeOutOpacity() < 0.35)
-                .confirmationDialog(String(localized: "Select a vehicle"), isPresented: $showingAllCars, titleVisibility: .hidden) {
+                .confirmationDialog(String(localized: "Select a vehicle"),
+                                    isPresented: $showingAllCars,
+                                    titleVisibility: .hidden) {
                     ForEach(dataVM.vehicleList, id: \.vehicleID) { vehicle in
                         Button(vehicle.name) {
                             // DEVO SETTARE IL CURRENT VEHICLE
@@ -62,7 +64,8 @@ struct TopNav: View {
                                     print("updato to current")
                                     dataVM.currentVehicle.removeAll()
                                     dataVM.currentVehicle.append(vehicle)
-                                    let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (dataVM.currentVehicle.first?.vehicleID)!)
+                                    let filterCurrentExpense = NSPredicate(format: "vehicle = %@",
+                                                                           (dataVM.currentVehicle.first?.vehicleID)!)
                                     dataVM.getExpensesCoreData(filter: filterCurrentExpense) { storage in
                                         dataVM.expenseList = storage
                                         dataVM.getTotalExpense(expenses: storage)

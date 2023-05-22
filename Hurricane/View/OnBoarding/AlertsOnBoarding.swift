@@ -44,7 +44,9 @@ struct AlertOdometerOB: View {
                     })
                 }
                 VStack(spacing: 12) {
-                    TextField(String(localized: "Previously 0 km"), value: $onboardingVM.vehicle.odometer, formatter: NumberFormatter())
+                    TextField(String(localized: "Previously 0 km"),
+                              value: $onboardingVM.vehicle.odometer,
+                              formatter: NumberFormatter())
                         .disableAutocorrection(true)
                         .focused($focusedField, equals: .odometer)
                         .keyboardType(.numberPad)

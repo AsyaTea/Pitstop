@@ -26,7 +26,8 @@ struct Practice: View {
 //                                .offset(y: headerOffsets.1 > 0 ? 0: -headerOffsets.1 / 8)
                                 .modifier(OffsetModifier(offset: $headerOffsets.0, returnFromStart: false))
                                 .modifier(OffsetModifier(offset: $headerOffsets.1))
-                                .scaleEffect(scaleValue(mainFrame: mainView.frame(in: .global).minY, minY: item.frame(in: .global).minY))
+                                .scaleEffect(scaleValue(mainFrame: mainView.frame(in: .global).minY,
+                                                        minY: item.frame(in: .global).minY))
                         }
                         .frame(height: 650)
                     }

@@ -191,7 +191,9 @@ struct FiltersRow: View {
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
                     } else {
                         isFilterSelected -= 1
-                        if let index = curretFilter.firstIndex(of: Category.maintenance.rawValue) { curretFilter.remove(at: index) }
+                        if let index = curretFilter.firstIndex(of: Category.maintenance.rawValue) {
+                            curretFilter.remove(at: index)
+                        }
                         dataVM.expenseFilteredList = dataVM.expenseList.filter { curretFilter.contains(Int($0.category)) }
                     }
                 }

@@ -88,7 +88,8 @@ struct AlertAddNumbers: View {
                 }
             }
         }
-        .sheet(isPresented: $navigateToDetail, onDismiss: homeVM.resetAlertFields) { ImportantNumbersView(homeVM: homeVM, dataVM: dataVM) }
+        .sheet(isPresented: $navigateToDetail,
+               onDismiss: homeVM.resetAlertFields) { ImportantNumbersView(homeVM: homeVM, dataVM: dataVM) }
         .frame(width: UIScreen.main.bounds.width * 0.92, height: UIScreen.main.bounds.height * 0.28)
         .onAppear { focusedField = .numberTitle }
     }
@@ -129,7 +130,9 @@ struct BlackButton: View {
                 Spacer()
             }
         }
-        .frame(width: UIScreen.main.bounds.size.width * 0.84, height: UIScreen.main.bounds.size.height * 0.055, alignment: .center)
+        .frame(width: UIScreen.main.bounds.size.width * 0.84,
+               height: UIScreen.main.bounds.size.height * 0.055,
+               alignment: .center)
     }
 }
 

@@ -24,7 +24,11 @@ struct ReminderListView: View {
             HStack {
                 CategoryRow(title: String(localized: "Category"), iconName: "category", color: Palette.colorYellow)
                 Spacer()
-                NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)) {
+                NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM,
+                                                                 addExpVM: addExpVM,
+                                                                 reminderVM: reminderVM,
+                                                                 categoryVM: categoryVM,
+                                                                 selectedItem: $selectedItem)) {
                     HStack {
                         Spacer()
                         Text(reminderVM.selectedCategory)

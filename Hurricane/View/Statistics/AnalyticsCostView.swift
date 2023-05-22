@@ -131,16 +131,20 @@ struct LineGraph: View {
                         HStack(spacing: 0) {
                             Rectangle()
                                 .foregroundColor(Palette.colorYellow)
-                                .frame(width: geometry.size.width * CGFloat(categoryVM.fuelPercentage / 100), height: geometry.size.height)
+                                .frame(width: geometry.size.width * CGFloat(categoryVM.fuelPercentage / 100),
+                                       height: geometry.size.height)
                             Rectangle()
                                 .foregroundColor(Palette.colorOrange)
-                                .frame(width: geometry.size.width * CGFloat(categoryVM.taxesPercentage / 100), height: geometry.size.height)
+                                .frame(width: geometry.size.width * CGFloat(categoryVM.taxesPercentage / 100),
+                                       height: geometry.size.height)
                             Rectangle()
                                 .foregroundColor(Palette.colorViolet)
-                                .frame(width: geometry.size.width * CGFloat(categoryVM.otherPercentage / 100), height: geometry.size.height)
+                                .frame(width: geometry.size.width * CGFloat(categoryVM.otherPercentage / 100),
+                                       height: geometry.size.height)
                             Rectangle()
                                 .foregroundColor(Palette.colorGreen)
-                                .frame(width: geometry.size.width * CGFloat(categoryVM.maintainancePercentage / 100), height: geometry.size.height)
+                                .frame(width: geometry.size.width * CGFloat(categoryVM.maintainancePercentage / 100),
+                                       height: geometry.size.height)
                         }
                     }
                 }

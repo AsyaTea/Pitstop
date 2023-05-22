@@ -67,7 +67,10 @@ class CategoryViewModel: ObservableObject {
     var odometerGraphData: [CGFloat] = []
 
     @Published var selectedTimeFrame = String(localized: "Per month")
-    let timeFrames = [String(localized: "Per month"), String(localized: "Per 3 months"), String(localized: "Per year"), String(localized: "All time")]
+    let timeFrames = [String(localized: "Per month"),
+                      String(localized: "Per 3 months"),
+                      String(localized: "Per year"),
+                      String(localized: "All time")]
 
     init() {
         print("categoryVM recreating")

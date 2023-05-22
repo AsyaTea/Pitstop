@@ -1,4 +1,3 @@
-
 import CoreData
 import Foundation
 
@@ -176,11 +175,9 @@ class DataViewModel: ObservableObject {
         // etc etc
 
         // PUBLISHED LIST UPDATE
-        for (index, value) in vehicleList.enumerated() {
-            if value.vehicleID == vs.vehicleID {
-                vehicleList.remove(at: index)
-                vehicleList.insert(VehicleViewModel(vehicle: vehicle), at: index)
-            }
+        for index in vehicleList.indices where vehicleID == vs.vehicleID {
+            vehicleList.remove(at: index) // FIX: Why remove then add?
+            vehicleList.insert(VehicleViewModel(vehicle: vehicle), at: index)
         }
 
         save()
@@ -259,11 +256,9 @@ class DataViewModel: ObservableObject {
         expense.vehicle?.odometer = es.odometer
 
         // PUBLISHED LIST UPDATE
-        for (index, value) in expenseList.enumerated() {
-            if value.expenseID == es.expenseID {
-                expenseList.remove(at: index)
-                expenseList.insert(ExpenseViewModel(expense: expense), at: index)
-            }
+        for index in expenseList.indices where expenseID == es.expenseID {
+            expenseList.remove(at: index)
+            expenseList.insert(ExpenseViewModel(expense: expense), at: index)
         }
 
         save()
@@ -382,10 +377,8 @@ class DataViewModel: ObservableObject {
         reminder.title = rs.title
         reminder.category = rs.category ?? 1
 
-        for (index, value) in reminderList.enumerated() {
-            if value.reminderID == rs.reminderID {
-                reminderList.remove(at: index)
-            }
+        for index in reminderList.indices where reminderID == rs.reminderID {
+            reminderList.remove(at: index)
         }
         save()
         print("Reminder update done: ", reminder)
@@ -458,12 +451,11 @@ class DataViewModel: ObservableObject {
         number.telephone = ns.telephone
 
         // PUBLISHED LIST UPDATE
-        for (index, value) in numberList.enumerated() {
-            if value.numberID == ns.numberID {
-                numberList.remove(at: index)
-                numberList.insert(NumberViewModel(number: number), at: index)
-            }
+        for index in numberList.indices where numberID == ns.numberID {
+            numberList.remove(at: index)
+            numberList.insert(NumberViewModel(number: number), at: index)
         }
+
         save()
         print("Numbers update done")
     }
@@ -516,7 +508,9 @@ class DataViewModel: ObservableObject {
 
             defer { url.stopAccessingSecurityScopedResource() }
 
-            let bookmarkData = try url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
+            let bookmarkData = try url.bookmarkData(options: .minimalBookmark,
+                                                    includingResourceValuesForKeys: nil,
+                                                    relativeTo: nil)
 
             newDocument.bookmark = bookmarkData
         } catch {
@@ -559,10 +553,8 @@ class DataViewModel: ObservableObject {
 
     func getMonthsExpense(expenses: [ExpenseViewModel], month: String) -> Float {
         var totalExpense: Float = 0.0
-        for expense in expenses {
-            if expense.date.toString(dateFormat: "MMMM") == month {
-                totalExpense += expense.price
-            }
+        for expense in expenses where expense.date.toString(dateFormat: "MMMM") == month {
+            totalExpense += expense.price
         }
         return totalExpense
     }
@@ -580,3 +572,5 @@ extension Date {
         return dateFormatter.string(from: self)
     }
 }
+
+// swiftlint:enable type_body_length

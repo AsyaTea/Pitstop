@@ -109,8 +109,10 @@ struct ReminderView: View {
 
                         // MARK: - NAVIGATE TO EDIT
 
-                        NavigationLink(destination: EditReminderView(dataVM: dataVM, utilityVM: utilityVM), isActive: $showEditReminder) {}
-                        NavigationLink(destination: ExpiredReminder(dataVM: dataVM, utilityVM: utilityVM), isActive: $showExpiredReminder) {}
+                        NavigationLink(destination: EditReminderView(dataVM: dataVM, utilityVM: utilityVM),
+                                       isActive: $showEditReminder) {}
+                        NavigationLink(destination: ExpiredReminder(dataVM: dataVM, utilityVM: utilityVM),
+                                       isActive: $showExpiredReminder) {}
                     }
                 }
             }
