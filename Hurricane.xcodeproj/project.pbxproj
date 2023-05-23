@@ -39,6 +39,8 @@
 		FF3616CD28290E61002ADA33 /* ExpenseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616CC28290E61002ADA33 /* ExpenseListView.swift */; };
 		FF3616CF28290F21002ADA33 /* ReminderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616CE28290F21002ADA33 /* ReminderListView.swift */; };
 		FF3616D128290F55002ADA33 /* OdometerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3616D028290F55002ADA33 /* OdometerListView.swift */; };
+		FF42326D2A1C957B00C16E6C /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42326C2A1C957B00C16E6C /* ButtonStyle.swift */; };
+		FF42326F2A1CB90F00C16E6C /* DeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42326E2A1CB90F00C16E6C /* DeleteButton.swift */; };
 		FF42ADCF2825131C00C66A84 /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADCE2825131C00C66A84 /* CustomTabBarView.swift */; };
 		FF42ADD12825201A00C66A84 /* TabData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD02825201A00C66A84 /* TabData.swift */; };
 		FF42ADD3282520A300C66A84 /* TabAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF42ADD2282520A200C66A84 /* TabAppearance.swift */; };
@@ -129,6 +131,8 @@
 		FF3616CC28290E61002ADA33 /* ExpenseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseListView.swift; sourceTree = "<group>"; };
 		FF3616CE28290F21002ADA33 /* ReminderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListView.swift; sourceTree = "<group>"; };
 		FF3616D028290F55002ADA33 /* OdometerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OdometerListView.swift; sourceTree = "<group>"; };
+		FF42326C2A1C957B00C16E6C /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		FF42326E2A1CB90F00C16E6C /* DeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButton.swift; sourceTree = "<group>"; };
 		FF42ADCE2825131C00C66A84 /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		FF42ADD02825201A00C66A84 /* TabData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabData.swift; sourceTree = "<group>"; };
 		FF42ADD2282520A200C66A84 /* TabAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabAppearance.swift; sourceTree = "<group>"; };
@@ -297,6 +301,7 @@
 			children = (
 				FF1AA1A22823F9C200AB61A2 /* Typography.swift */,
 				FF1AA1A42823FC0600AB61A2 /* Palette.swift */,
+				FF42326C2A1C957B00C16E6C /* ButtonStyle.swift */,
 			);
 			path = DesignKit;
 			sourceTree = "<group>";
@@ -404,6 +409,7 @@
 			children = (
 				FF6773872A1741C200A6B959 /* CategoryRow.swift */,
 				FF67738B2A1757E000A6B959 /* CustomList.swift */,
+				FF42326E2A1CB90F00C16E6C /* DeleteButton.swift */,
 			);
 			name = Components;
 			path = ../Components;
@@ -613,6 +619,7 @@
 				FFA0E72028554495008B3ED9 /* DocumentView.swift in Sources */,
 				FF974B88283F4DF500C33576 /* ExpenseModel.swift in Sources */,
 				FF7439AE28574C8E00E113CA /* ThemePickerView.swift in Sources */,
+				FF42326D2A1C957B00C16E6C /* ButtonStyle.swift in Sources */,
 				FFD1224C2858BD6C004686CA /* AboutView.swift in Sources */,
 				FFDAA340283FE1A000145B35 /* TopBarView.swift in Sources */,
 				FF14DC3228302CC300CA248B /* ImportantNumbersView.swift in Sources */,
@@ -666,6 +673,7 @@
 				41C6E208282CEE6100F756B5 /* AnalyticsCostView.swift in Sources */,
 				FF5F2CA02823C4CD007980F3 /* Expense+CoreDataProperties.swift in Sources */,
 				FFDF855C282411FD00E0F9BF /* OldTabBarView.swift in Sources */,
+				FF42326F2A1CB90F00C16E6C /* DeleteButton.swift in Sources */,
 				FFA0E72428554A96008B3ED9 /* PDFKitView.swift in Sources */,
 				FF67738C2A1757E000A6B959 /* CustomList.swift in Sources */,
 				416D26C82848B1EB00E4ECD6 /* LastEventsListView.swift in Sources */,
