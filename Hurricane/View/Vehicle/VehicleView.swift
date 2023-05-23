@@ -32,8 +32,19 @@ struct VehicleView: View {
                 Button(action: {
                     showAddReport.toggle()
                 }, label: {
-                    AddReportButton(text: "Add report")
+                    HStack {
+                        Spacer()
+                        Image("plus")
+                            .resizable()
+                            .foregroundColor(Palette.white)
+                            .frame(width: 14, height: 14)
+                        Text("Add report")
+                            .foregroundColor(Palette.white)
+                            .font(Typography.ControlS)
+                        Spacer()
+                    }
                 })
+                .buttonStyle(Primary())
                 Spacer()
             }
         )
@@ -59,7 +70,6 @@ struct AddReportButton: View {
     var body: some View {
         ZStack {
             Capsule(style: .continuous)
-                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055, alignment: .center)
                 .foregroundColor(Palette.black)
             HStack {
                 Spacer()
@@ -73,5 +83,15 @@ struct AddReportButton: View {
                 Spacer()
             }
         }
+        .frame(height: 49)
+        .padding(.horizontal, 16)
+    }
+}
+
+struct VehicleView_Previews: PreviewProvider {
+    static var previews: some View {
+        VehicleView(onboardingVM: OnboardingViewModel(), dataVM: DataViewModel(),
+                    homeVM: HomeViewModel(), utilityVM: UtilityViewModel(),
+                    categoryVM: CategoryViewModel(), notificationVM: NotificationManager())
     }
 }
