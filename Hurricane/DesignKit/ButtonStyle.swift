@@ -46,6 +46,7 @@ struct ButtonStyle_Previews: PreviewProvider {
                 .disabled(false)
             Button("Secondary") {}
                 .buttonStyle(Secondary())
+                .disabled(false)
             Spacer()
         }
         .background(Palette.greyHard)

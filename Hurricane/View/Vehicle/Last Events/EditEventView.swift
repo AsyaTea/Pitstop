@@ -72,6 +72,7 @@ struct EditEventView: View {
                     }, label: {
                         DeleteButton(title: "Delete report")
                     })
+                    .buttonStyle(Primary())
                     Spacer()
                 }
             )
@@ -94,29 +95,6 @@ struct EditEventView: View {
                     },
                     secondaryButton: .cancel()
                 )
-            }
-        }
-    }
-}
-
-struct DeleteButton: View {
-    var title: LocalizedStringKey
-
-    var body: some View {
-        ZStack {
-            Capsule(style: .continuous)
-                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055, alignment: .center)
-                .foregroundColor(Palette.black)
-            HStack {
-                Spacer()
-                Image("deleteIcon")
-                    .resizable()
-                    .foregroundColor(Palette.white)
-                    .frame(width: 14, height: 14)
-                Text(title)
-                    .foregroundColor(Palette.white)
-                    .font(Typography.ControlS)
-                Spacer()
             }
         }
     }
@@ -359,8 +337,11 @@ struct EventListFields: View {
     }
 }
 
-// struct EditEventView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditEventView()
-//    }
-// }
+struct EditEventView_Previews: PreviewProvider {
+    static var previews: some View {
+        EditEventView(utilityVM: UtilityViewModel(),
+                      dataVM: DataViewModel(),
+                      categoryVM: CategoryViewModel(),
+                      category: Category.fuel)
+    }
+}

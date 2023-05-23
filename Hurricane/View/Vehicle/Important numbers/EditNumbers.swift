@@ -64,6 +64,7 @@ struct EditNumbers: View {
                 }, label: {
                     DeleteButton(title: "Delete contact")
                 })
+                .buttonStyle(Primary())
                 .alert(isPresented: $showAlert) {
                     Alert(
                         title: Text("Are you sure you want to delete this contact?"),

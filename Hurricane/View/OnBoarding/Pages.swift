@@ -41,16 +41,13 @@ struct Page1: View {
                         onboardingVM.destination = .page2
                     }
                 }, label: {
-                    OnBoardingButton(text: "Add a new vehicle", textColor: Palette.white, color: Palette.black)
-
+                    Text("Add a new vehicle")
                 })
-
-//                OnBoardingButton(text: "Import data", textColor: Palette.black, color: Palette.white)
-//                OnBoardingButton(text: "Restore from iCloud", textColor: Palette.black, color: Palette.white)
+                .buttonStyle(Primary())
             }
             Spacer()
-
-        }.background(Palette.greyBackground)
+        }
+        .background(Palette.greyBackground)
     }
 }
 
@@ -192,10 +189,10 @@ struct Page2: View {
                     onboardingVM.destination = .page3
                 }
             }, label: {
-                OnBoardingButton(text: "Next", textColor: Palette.white, color: Palette.black)
+                Text("Next")
             })
+            .buttonStyle(Primary())
             .disabled(onboardingVM.isDisabled)
-            .opacity(onboardingVM.isDisabled ? 0.25 : 1)
         }
         .ignoresSafeArea(.keyboard)
         .background(Palette.greyBackground)
@@ -395,8 +392,9 @@ struct Page3: View {
                         categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                         onboardingVM.addNewVehicle = false
                     }, label: {
-                        OnBoardingButton(text: "Add vehicle", textColor: Palette.white, color: Palette.black)
+                        Text("Add vehicle")
                     })
+                    .buttonStyle(Primary())
                 } else {
                     Button(action: {
                         withAnimation(.easeInOut) {
@@ -412,8 +410,9 @@ struct Page3: View {
                             fuelVM.resetSelectedFuel()
                         }
                     }, label: {
-                        OnBoardingButton(text: "Next", textColor: Palette.white, color: Palette.black)
+                        Text("Next")
                     })
+                    .buttonStyle(Primary())
                 }
             }
             .ignoresSafeArea(.keyboard)
@@ -477,16 +476,18 @@ struct Page4: View {
                         onboardingVM.removeBack = true
                     }
                 }, label: {
-                    OnBoardingButton(text: "Activate notifications", textColor: Palette.white, color: Palette.black)
+                    Text("Activate notifications")
                 })
+                .buttonStyle(Primary())
                 Button(action: {
                     withAnimation(.easeInOut) {
                         onboardingVM.destination = .page5
                         onboardingVM.removeBack = true
                     }
                 }, label: {
-                    OnBoardingButton(text: "Later", textColor: Palette.black, color: Palette.white)
+                    Text("Later")
                 })
+                .buttonStyle(Secondary())
             }
 
         }.background(Palette.greyBackground)
@@ -523,41 +524,21 @@ struct Page5: View {
                         dataVM.currentVehicle = storage
                     })
                 }, label: {
-                    OnBoardingButton(text: "Okayyyy let's go", textColor: Palette.white, color: Palette.black)
+                    Text("Okayyyy let's go")
                 })
+                .buttonStyle(Primary())
                 Button(action: {
                     withAnimation(.easeInOut) {
                         onboardingVM.destination = .page2
                         onboardingVM.resetFields()
                     }
                 }, label: {
-                    OnBoardingButton(text: "Add a new vehicle", textColor: Palette.black, color: Palette.white)
+                    Text("Add an other vehicle")
                 })
+                .buttonStyle(Secondary())
             }
 
         }.background(Palette.greyBackground)
-    }
-}
-
-struct OnBoardingButton: View {
-    var text: LocalizedStringKey
-    var textColor: Color
-    var color: Color
-
-    var body: some View {
-        ZStack {
-            Rectangle()
-                .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.060, alignment: .center)
-                .cornerRadius(43)
-                .foregroundColor(color)
-            HStack {
-                Spacer()
-                Text(text)
-                    .foregroundColor(textColor)
-                    .font(Typography.ControlS)
-                Spacer()
-            }
-        }
     }
 }
 

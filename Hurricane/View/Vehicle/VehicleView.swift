@@ -65,29 +65,6 @@ struct VehicleView: View {
     }
 }
 
-struct AddReportButton: View {
-    var text: LocalizedStringKey
-    var body: some View {
-        ZStack {
-            Capsule(style: .continuous)
-                .foregroundColor(Palette.black)
-            HStack {
-                Spacer()
-                Image("plus")
-                    .resizable()
-                    .foregroundColor(Palette.white)
-                    .frame(width: 14, height: 14)
-                Text(text)
-                    .foregroundColor(Palette.white)
-                    .font(Typography.ControlS)
-                Spacer()
-            }
-        }
-        .frame(height: 49)
-        .padding(.horizontal, 16)
-    }
-}
-
 struct VehicleView_Previews: PreviewProvider {
     static var previews: some View {
         VehicleView(onboardingVM: OnboardingViewModel(), dataVM: DataViewModel(),
