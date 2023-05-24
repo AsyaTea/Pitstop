@@ -77,47 +77,15 @@ class CoreDataManager {
         }
     }
 
-    func deleteVehicle(_ vehicle: Vehicle) {
-        context.delete(vehicle)
+    func delete(entity: NSManagedObject) {
+        context.delete(entity)
 
         do {
             try context.save()
         } catch {
             context.rollback()
-            print("Failed to delete vehicle \(error)")
+            print("Failed to delete \(entity.entity) with \(error)")
         }
     }
 
-    func deleteExpense(_ expense: Expense) {
-        context.delete(expense)
-
-        do {
-            try context.save()
-        } catch {
-            context.rollback()
-            print("Failed to delete expense \(error)")
-        }
-    }
-
-    func deleteNumber(_ number: Number) {
-        context.delete(number)
-
-        do {
-            try context.save()
-        } catch {
-            context.rollback()
-            print("Failed to delete number \(error)")
-        }
-    }
-
-    func deleteReminder(_ reminder: Reminder) {
-        context.delete(reminder)
-
-        do {
-            try context.save()
-        } catch {
-            context.rollback()
-            print("Failed to delete reminder \(error)")
-        }
-    }
 }
