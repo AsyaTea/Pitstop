@@ -8,6 +8,7 @@
 import CoreData
 import Foundation
 
+// FIX: Add error handling
 class CoreDataManager {
     // Singleton
     static let instance = CoreDataManager()
@@ -18,7 +19,7 @@ class CoreDataManager {
         container = NSPersistentContainer(name: "CarModel")
         container.loadPersistentStores { _, error in
             if let error {
-                print("Error loading Core Data: \(error)")
+                fatalError("Unable to initialize Core Data \(error)")
             }
         }
         context = container.viewContext
@@ -41,36 +42,9 @@ class CoreDataManager {
         }
     }
 
-    func getVehicleById(id: NSManagedObjectID) -> Vehicle? {
+    func getEntityBy(id: NSManagedObjectID) -> NSManagedObject? {
         do {
-            return try context.existingObject(with: id) as? Vehicle
-        } catch {
-            print(error)
-            return nil
-        }
-    }
-
-    func getExpenseById(id: NSManagedObjectID) -> Expense? {
-        do {
-            return try context.existingObject(with: id) as? Expense
-        } catch {
-            print(error)
-            return nil
-        }
-    }
-
-    func getNumberById(id: NSManagedObjectID) -> Number? {
-        do {
-            return try context.existingObject(with: id) as? Number
-        } catch {
-            print(error)
-            return nil
-        }
-    }
-
-    func getReminderById(id: NSManagedObjectID) -> Reminder? {
-        do {
-            return try context.existingObject(with: id) as? Reminder
+            return try context.existingObject(with: id)
         } catch {
             print(error)
             return nil
@@ -82,10 +56,10 @@ class CoreDataManager {
 
         do {
             try context.save()
+            print("\(entity.entity) deleted successfully")
         } catch {
             context.rollback()
             print("Failed to delete \(entity.entity) with \(error)")
         }
     }
-
 }

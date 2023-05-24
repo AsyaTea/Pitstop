@@ -417,7 +417,8 @@ class CategoryViewModel: ObservableObject {
     }
 
     func getVehicle(vehicleID: NSManagedObjectID) -> Vehicle? {
-        let vehicle = manager.getVehicleById(id: vehicleID)
+        // FIX: Need to return optional?
+        let vehicle = manager.getEntityBy(id: vehicleID) as? Vehicle
         return vehicle
     }
 }

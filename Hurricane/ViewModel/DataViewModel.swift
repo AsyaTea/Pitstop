@@ -139,11 +139,10 @@ class DataViewModel: ObservableObject {
     }
 
     func deleteVehicleCoreData(vehicle: VehicleViewModel) {
-        let vehicle = manager.getVehicleById(id: vehicle.vehicleID)
+        let vehicle = manager.getEntityBy(id: vehicle.vehicleID) as? Vehicle
         if let vehicle {
             manager.delete(entity: vehicle)
         }
-        save()
     }
 
     func deleteVehicle(at indexSet: IndexSet) {
@@ -161,7 +160,7 @@ class DataViewModel: ObservableObject {
             return print("Vehicle ID not found during update")
         }
 
-        guard let vehicle = manager.getVehicleById(id: vehicleID) else {
+        guard let vehicle = manager.getEntityBy(id: vehicleID) as? Vehicle else {
             return print("Vehicle not found during update")
         }
 
@@ -188,7 +187,7 @@ class DataViewModel: ObservableObject {
     }
 
     func getVehicleById(vehicleId: NSManagedObjectID) throws -> VehicleViewModel {
-        guard let vehicle = manager.getVehicleById(id: vehicleId) else {
+        guard let vehicle = manager.getEntityBy(id: vehicleId) as? Vehicle else {
             throw VehicleError.VehicleNotFound // DA FIXARE
         }
 
@@ -197,7 +196,7 @@ class DataViewModel: ObservableObject {
     }
 
     func getVehicle(vehicleID: NSManagedObjectID) -> Vehicle? {
-        let vehicle = manager.getVehicleById(id: vehicleID)
+        let vehicle = manager.getEntityBy(id: vehicleID) as? Vehicle
         return vehicle
     }
 
@@ -208,7 +207,7 @@ class DataViewModel: ObservableObject {
     // MARK: - EXPENSE CRUD
 
     func getExpenseByID(expenseID: NSManagedObjectID) throws -> ExpenseViewModel {
-        guard let expense = manager.getExpenseById(id: expenseID) else {
+        guard let expense = manager.getEntityBy(id: expenseID) as? Expense else {
             throw VehicleError.VehicleNotFound // DA FIXARE
         }
 
@@ -243,7 +242,7 @@ class DataViewModel: ObservableObject {
             return print("Expense ID not found during update")
         }
 
-        guard let expense = manager.getExpenseById(id: expenseID) else {
+        guard let expense = manager.getEntityBy(id: expenseID) as? Expense else {
             return print("Expense not found during update")
         }
 
@@ -298,12 +297,9 @@ class DataViewModel: ObservableObject {
         guard let expenseID = expenseS.expenseID else {
             return print("Expense ID not found during update")
         }
-
-        let expense = manager.getExpenseById(id: expenseID)
-        if let expense {
+        if let expense = manager.getEntityBy(id: expenseID) as? Expense {
             manager.delete(entity: expense)
         }
-        save()
     }
 
     func removeAllExpenses() {
@@ -373,7 +369,7 @@ class DataViewModel: ObservableObject {
             return print("Reminder ID not found during update")
         }
 
-        guard let reminder = manager.getReminderById(id: reminderID) else {
+        guard let reminder = manager.getEntityBy(id: reminderID) as? Reminder else {
             return print("Reminder not found during update")
         }
 
@@ -396,7 +392,7 @@ class DataViewModel: ObservableObject {
             return print("NumberID not found during update")
         }
 
-        let reminder = manager.getReminderById(id: reminderID)
+        let reminder = manager.getEntityBy(id: reminderID) as? Reminder
         if let reminder {
             manager.delete(entity: reminder)
         }
@@ -450,7 +446,7 @@ class DataViewModel: ObservableObject {
             return print("Expense ID not found during update")
         }
 
-        guard let number = manager.getNumberById(id: numberID) else {
+        guard let number = manager.getEntityBy(id: numberID) as? Number else {
             return print("Expense not found during update")
         }
 
@@ -473,7 +469,7 @@ class DataViewModel: ObservableObject {
             return print("NumberID not found during update")
         }
 
-        let number = manager.getNumberById(id: numberID)
+        let number = manager.getEntityBy(id: numberID) as? Number
         if let number {
             manager.delete(entity: number)
         }
