@@ -5,6 +5,7 @@
 //  Created by Ivan Voloshchuk on 31/05/22.
 //
 
+import CoreData
 import SwiftUI
 
 struct EditEventView: View {
@@ -85,7 +86,7 @@ struct EditEventView: View {
                         dataVM.getExpensesCoreData(filter: nil, storage: { storage in
                             dataVM.expenseList = storage
                             dataVM.expenseFilteredList = storage
-                            categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                            categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle?.vehicleID ?? NSManagedObjectID())
                         })
 
                         // SE METTO STA ROBA CRASHA, TO FIX PROSSIMAMENTE
@@ -142,7 +143,7 @@ struct FuelEventListFields: View {
             HStack {
                 CategoryRow(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer, formatter: NumberFormatter())
+                TextField(String(Int(dataVM.currentVehicle?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer, formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.numberPad)
@@ -286,7 +287,7 @@ struct EventListFields: View {
             HStack {
                 CategoryRow(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
                 Spacer()
-                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer, formatter: NumberFormatter())
+                TextField(String(Int(dataVM.currentVehicle?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer, formatter: NumberFormatter())
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(.numberPad)

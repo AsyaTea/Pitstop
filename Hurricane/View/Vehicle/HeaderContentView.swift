@@ -44,7 +44,7 @@ struct HeaderContent: View {
                             .foregroundColor(homeVM.headerCardColor)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center) {
-                            Text(String("\(Int64(dataVM.currentVehicle.first?.odometer ?? 0)) \(utilityVM.unit)"))
+                            Text(String("\(Int64(dataVM.currentVehicle?.odometer ?? 0)) \(utilityVM.unit)"))
                                 .foregroundColor(Palette.blackHeader)
                                 .font(Typography.headerLM)
                             Text("Odometer")

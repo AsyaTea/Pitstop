@@ -5,6 +5,7 @@
 //  Created by Ivan Voloshchuk on 26/05/22.
 //
 
+import CoreData
 import SwiftUI
 
 struct TopNav: View {
@@ -22,7 +23,7 @@ struct TopNav: View {
     let filter = NSPredicate(format: "current == %@", "1")
 
     var brandModelString: String {
-        "\(dataVM.currentVehicle.first?.brand ?? "brand") \(dataVM.currentVehicle.first?.model ?? "model")"
+        "\(dataVM.currentVehicle?.brand ?? "brand") \(dataVM.currentVehicle?.model ?? "model")"
     }
 
     var body: some View {
@@ -32,7 +33,7 @@ struct TopNav: View {
                     showingAllCars.toggle()
                 }, label: {
                     HStack {
-                        Text(dataVM.currentVehicle.first?.name ?? "Default's car ")
+                        Text(dataVM.currentVehicle?.name ?? "Default's car ")
                             .foregroundColor(Palette.blackHeader)
                             .font(Typography.headerXL)
                             .opacity(fadeOutOpacity())
@@ -51,29 +52,7 @@ struct TopNav: View {
                 .confirmationDialog(String(localized: "Select a vehicle"), isPresented: $showingAllCars, titleVisibility: .hidden) {
                     ForEach(dataVM.vehicleList, id: \.vehicleID) { vehicle in
                         Button(vehicle.name) {
-                            // DEVO SETTARE IL CURRENT VEHICLE
-                            var vehicleS = VehicleState.fromVehicleViewModel(vm: vehicle)
-                            dataVM.setAllCurrentToFalse()
-                            vehicleS.current = 1 // SETTO IL CURRENT TO TRUE
-
-                            do {
-                                if vehicleS.vehicleID != nil {
-                                    try dataVM.updateVehicle(vehicleS)
-                                    print("updato to current")
-                                    dataVM.currentVehicle.removeAll()
-                                    dataVM.currentVehicle.append(vehicle)
-                                    let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (dataVM.currentVehicle.first?.vehicleID)!)
-                                    dataVM.getExpensesCoreData(filter: filterCurrentExpense) { storage in
-                                        dataVM.expenseList = storage
-                                        dataVM.getTotalExpense(expenses: storage)
-                                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
-                                    }
-                                } else {
-                                    print("error")
-                                }
-                            } catch {
-                                print(error)
-                            }
+                            dataVM.setCurrentVehicle(vehicle)
                         }
                     }
                     Button("Cancel", role: .cancel) {}
@@ -83,27 +62,6 @@ struct TopNav: View {
 
                 Spacer()
                 HStack {
-                    // MARK: TO REMOVE
-
-//                    Button(action: {
-//
-//                    }, label: {
-//                        ZStack{
-//                            Rectangle()
-//                                .foregroundColor(Palette.white)
-//                                .cornerRadius(37)
-//                                .frame(width: UIScreen.main.bounds.width * 0.25, height: UIScreen.main.bounds.height * 0.04)
-//                                .shadowGrey()
-//                            HStack{
-//                                Text("Per month")
-//                                    .foregroundColor(Palette.black)
-//                                    .font(Typography.ControlS)
-//                                Image("arrowDown")
-//
-//                            }
-//                        }.opacity(fadeOutOpacity())
-//                    })
-
                     ZStack {
                         Button(action: {
                             showReminders.toggle()
@@ -128,13 +86,13 @@ struct TopNav: View {
         }
         .task {
             // Fetch current vehicle from DB
-            dataVM.getVehiclesCoreData(filter: filter, storage: { storage in
-                dataVM.currentVehicle = storage
-            })
+//            dataVM.getVehiclesCoreData(filter: filter, storage: { _ in
+//                dataVM.vehicleList = storage
+//            })
         }
         .overlay(
             VStack(alignment: .center, spacing: 2) {
-                Text(dataVM.currentVehicle.first?.name ?? "Default's car ")
+                Text(dataVM.currentVehicle?.name ?? "Default's car ")
                     .font(Typography.headerM)
                     .foregroundColor(Palette.blackHeader)
                 Text(brandModelString)
@@ -149,6 +107,14 @@ struct TopNav: View {
         )
         .sheet(isPresented: $showReminders) {
             ReminderView(dataVM: dataVM, utilityVM: utilityVM)
+        }
+        .onChange(of: dataVM.currentVehicle) { vehicle in
+            let filterCurrentExpense = NSPredicate(format: "vehicle = %@", vehicle?.vehicleID ?? NSManagedObjectID())
+            dataVM.getExpensesCoreData(filter: filterCurrentExpense) { storage in
+                dataVM.expenseList = storage
+                dataVM.getTotalExpense(expenses: storage)
+                categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle?.vehicleID ?? NSManagedObjectID())
+            }
         }
     }
 

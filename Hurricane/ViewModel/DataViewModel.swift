@@ -1,4 +1,3 @@
-
 import CoreData
 import Foundation
 
@@ -12,8 +11,8 @@ class DataViewModel: ObservableObject {
     let manager = CoreDataManager.instance
 
     // Vehicle
-    @Published var vehicleList: [VehicleViewModel] = [] // Var to store all the fetched vehicle entities
-    @Published var currentVehicle: [VehicleViewModel] = []
+    @Published var vehicleList: [VehicleViewModel] = []
+    @Published var currentVehicle: VehicleViewModel?
 
     // Expense
     @Published var expenseList: [ExpenseViewModel] = []
@@ -41,9 +40,10 @@ class DataViewModel: ObservableObject {
     @Published var documentsList: [DocumentViewModel] = []
 
     init() {
-        getVehiclesCoreData(filter: nil, storage: { storage in
+        getVehiclesCoreData(storage: { storage in
             self.vehicleList = storage
         })
+        getCurrentVehicle()
 
         getNumbersCoreData(filter: nil, storage: { storage in
             self.numberList = storage
@@ -53,12 +53,11 @@ class DataViewModel: ObservableObject {
         getDocumentsCoreData(filter: nil, storage: { storage in
             self.documentsList = storage
         })
-        //        getCurrentVehicle()
     }
 
     // MARK: VEHICLE CRUD
 
-    func getVehiclesCoreData(filter: NSPredicate?, storage: @escaping ([VehicleViewModel]) -> Void) {
+    func getVehiclesCoreData(filter: NSPredicate? = nil, storage: @escaping ([VehicleViewModel]) -> Void) {
         let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
         let vehicle: [Vehicle]
 
@@ -77,14 +76,23 @@ class DataViewModel: ObservableObject {
         }
     }
 
-    func setAllCurrentToFalse() {
+    func getVehicleById(_ vehicleId: NSManagedObjectID) -> Vehicle? {
+        guard let vehicle = manager.getEntityBy(id: vehicleId) as? Vehicle else {
+            return nil // FIX: Handle error
+        }
+        return vehicle
+    }
+
+    func resetAllCurrentVehicles() {
         let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
-        let vehicle: [Vehicle]
+        let vehicles: [Vehicle]
         let filter = NSPredicate(format: "current == %@", "1") // trovo tutti i veicoli che sono a true
         request.predicate = filter
         do {
-            vehicle = try manager.context.fetch(request)
-            vehicle.first?.current = 0
+            vehicles = try manager.context.fetch(request)
+            vehicles.forEach {
+                $0.current = 0
+            }
         } catch {
             print("🚓 Error fetching vehicles: \(error.localizedDescription)")
         }
@@ -92,27 +100,23 @@ class DataViewModel: ObservableObject {
     }
 
     func getCurrentVehicle() {
-        let request = NSFetchRequest<Vehicle>(entityName: "Vehicle")
-        let vehicle: [Vehicle]
-
-        let filter = NSPredicate(format: "current == %@", "1")
-        request.predicate = filter
-
-        do {
-            vehicle = try manager.context.fetch(request)
-            DispatchQueue.main.async {
-                self.currentVehicle = vehicle.map(VehicleViewModel.init)
-                let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (self.currentVehicle.first?.vehicleID)!)
-                self.getExpensesCoreData(filter: filterCurrentExpense, storage: { storage in
-                    self.expenseList = storage
-                    self.getTotalExpense(expenses: storage)
-                })
-            }
-            print("CURRENT VEHICLE LIST ", vehicleList)
-
-        } catch {
-            print("🚓 Error fetching current vehicle: \(error.localizedDescription)")
+        // There should be only 1 entity with current == 1, in case there are more choose the first one
+        // FIX: Handle the case of more entities with current == 1
+        if !vehicleList.isEmpty, let currentVehicle = vehicleList.filter({ $0.current == 1 }).first {
+            self.currentVehicle = currentVehicle
         }
+    }
+
+    func setCurrentVehicle(_ vehicle: VehicleViewModel) {
+        resetAllCurrentVehicles()
+        var vehicleState = VehicleState.fromVehicleViewModel(vm: vehicle)
+        vehicleState.current = 1
+        do {
+            try updateVehicle(vehicleState)
+        } catch {
+            print(error)
+        }
+        currentVehicle = vehicle
     }
 
     func addVehicle(vehicle: VehicleState) {
@@ -153,8 +157,6 @@ class DataViewModel: ObservableObject {
         }
     }
 
-    // MARK: VEHICLE UPDATE
-
     func updateVehicle(_ vs: VehicleState) throws {
         guard let vehicleID = vs.vehicleID else {
             return print("Vehicle ID not found during update")
@@ -186,20 +188,6 @@ class DataViewModel: ObservableObject {
         print("VEHICLE UPDATE DONE ", vehicle.odometer)
     }
 
-    func getVehicleById(vehicleId: NSManagedObjectID) throws -> VehicleViewModel {
-        guard let vehicle = manager.getEntityBy(id: vehicleId) as? Vehicle else {
-            throw VehicleError.VehicleNotFound // DA FIXARE
-        }
-
-        let vehicleVM = VehicleViewModel(vehicle: vehicle)
-        return vehicleVM
-    }
-
-    func getVehicle(vehicleID: NSManagedObjectID) -> Vehicle? {
-        let vehicle = manager.getEntityBy(id: vehicleID) as? Vehicle
-        return vehicle
-    }
-
     func save() {
         manager.save()
     }
@@ -218,7 +206,7 @@ class DataViewModel: ObservableObject {
     func addExpense(expense: ExpenseState) {
         let newExpense = Expense(context: manager.context)
         var newOdometer: Float = 0.0
-        newExpense.vehicle = getVehicle(vehicleID: currentVehicle.first!.vehicleID)
+        newExpense.vehicle = getVehicleById(currentVehicle?.vehicleID ?? NSManagedObjectID())
         newExpense.note = expense.note
         newExpense.price = expense.price
         newExpense.odometer = expense.odometer
@@ -431,7 +419,7 @@ class DataViewModel: ObservableObject {
 
     func addNumber(number: NumberState) {
         let newNumber = Number(context: manager.context)
-        newNumber.vehicle = getVehicle(vehicleID: currentVehicle.first!.vehicleID)
+        newNumber.vehicle = getVehicleById(currentVehicle?.vehicleID ?? NSManagedObjectID())
         newNumber.telephone = number.telephone
         newNumber.title = number.title
 

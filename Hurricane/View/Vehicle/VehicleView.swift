@@ -17,7 +17,7 @@ struct VehicleView: View {
     @ObservedObject var notificationVM: NotificationManager
 
     @AppStorage("shouldShowOnboardings") var shouldShowOnboarding: Bool = true
-//    @State var shouldShowOnboarding : Bool = true //FOR TESTING
+//    @State var shouldShowOnboarding: Bool = true // FOR TESTING
     @State private var showAddReport = false
 
     var body: some View {

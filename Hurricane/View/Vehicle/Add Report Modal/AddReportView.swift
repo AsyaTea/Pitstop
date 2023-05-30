@@ -5,6 +5,7 @@
 //  Created by Ivan Voloshchuk on 06/05/22.
 //
 
+import CoreData
 import SwiftUI
 
 struct AddReportView: View {
@@ -41,7 +42,7 @@ struct AddReportView: View {
                         .padding(.top, 15)
                 } else if addExpVM.currentPickerTab == String(localized: "Odometer") {
                     TextFieldComponent(submitField: $addExpVM.odometerTab,
-                                       placeholder: String(Int(dataVM.currentVehicle.first?.odometer ?? 0)),
+                                       placeholder: String(Int(dataVM.currentVehicle?.odometer ?? 0)),
                                        attribute: utilityVM.unit,
                                        keyboardType: .numberPad,
                                        focusedField: $focusedField,
@@ -91,13 +92,13 @@ struct AddReportView: View {
                         addExpVM.createExpense()
                         dataVM.addExpense(expense: addExpVM.expenseS)
                         dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
-                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle?.vehicleID ?? NSManagedObjectID())
                     } else if addExpVM.currentPickerTab == String(localized: "Odometer") {
                         addExpVM.category = 7 // other
                         addExpVM.createExpense()
                         dataVM.addExpense(expense: addExpVM.expenseS)
                         dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
-                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle?.vehicleID ?? NSManagedObjectID())
                     } else {
                         reminderVM.createReminder()
                         dataVM.addReminder(reminder: reminderVM.reminderS)
@@ -112,16 +113,16 @@ struct AddReportView: View {
                         .font(Typography.headerM)
                 })
                 .disabled(
-                    (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty) &&
-                        (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
+                    (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle?.odometer ?? 0 || addExpVM.price.isEmpty) &&
+                        (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
                         reminderVM.title.isEmpty)
                 .opacity(
-                    (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty) &&
-                        (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
+                    (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle?.odometer ?? 0 || addExpVM.price.isEmpty) &&
+                        (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
                         reminderVM.title.isEmpty ? 0.6 : 1)
             )
             .onAppear {
-                addExpVM.odometer = String(Int(dataVM.currentVehicle.first?.odometer ?? 0))
+                addExpVM.odometer = String(Int(dataVM.currentVehicle?.odometer ?? 0))
             }
             .toolbar {
                 /// Keyboard focus

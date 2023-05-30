@@ -5,6 +5,7 @@
 //  Created by Ivan Voloshchuk on 11/05/22.
 //
 
+import CoreData
 import SwiftUI
 
 enum FocusFieldBoarding: Hashable {
@@ -385,11 +386,11 @@ struct Page3: View {
                 if onboardingVM.addNewVehicle == true {
                     Button(action: {
                         onboardingVM.vehicle.fuelTypeTwo = fuelVM.secondarySelectedFuel
-                        dataVM.setAllCurrentToFalse()
+                        dataVM.resetAllCurrentVehicles()
                         onboardingVM.vehicle.current = 1
                         dataVM.addVehicle(vehicle: onboardingVM.vehicle)
                         fuelVM.resetSelectedFuel()
-                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle?.vehicleID ?? NSManagedObjectID())
                         onboardingVM.addNewVehicle = false
                     }, label: {
                         Text("Add vehicle")
@@ -399,7 +400,7 @@ struct Page3: View {
                     Button(action: {
                         withAnimation(.easeInOut) {
                             onboardingVM.vehicle.fuelTypeTwo = fuelVM.secondarySelectedFuel
-                            dataVM.setAllCurrentToFalse()
+                            dataVM.resetAllCurrentVehicles()
                             onboardingVM.vehicle.current = 1
                             dataVM.addVehicle(vehicle: onboardingVM.vehicle)
                             if onboardingVM.skipNotification == true {
@@ -521,7 +522,7 @@ struct Page5: View {
                 Button(action: {
                     shouldShowOnboarding.toggle()
                     dataVM.getVehiclesCoreData(filter: filter, storage: { storage in
-                        dataVM.currentVehicle = storage
+                        dataVM.vehicleList = storage
                     })
                 }, label: {
                     Text("Okayyyy let's go")

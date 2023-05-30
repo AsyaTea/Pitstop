@@ -5,6 +5,7 @@
 //  Created by Ivan Voloshchuk on 06/05/22.
 //
 
+import CoreData
 import SwiftUI
 
 struct AnalyticsOverviewView: View {
@@ -226,7 +227,7 @@ struct OdometerCostsView: View {
             Text("Odometer")
                 .font(Typography.headerL)
             Spacer()
-            Text("\(String(Int(dataVM.currentVehicle.first?.odometer ?? 0))) km")
+            Text("\(String(Int(dataVM.currentVehicle?.odometer ?? 0))) km")
                 .fontWeight(.semibold)
                 .font(Typography.headerM)
         }
@@ -293,7 +294,7 @@ struct AnalyticsHeaderView: View {
                             }
                             .onChange(of: selectedTimeFrame) { tag in
                                 categoryVM.setSelectedTimeFrame(timeFrame: tag)
-                                categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                                categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle?.vehicleID ?? NSManagedObjectID())
                                 print("tag is  \(tag)")
                             }
 
