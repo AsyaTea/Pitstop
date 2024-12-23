@@ -13,6 +13,11 @@ let project = Project(
             bundleId: "com.academy.pitstopD",
             deploymentTargets: .iOS("16.6"),
             sources: ["Sources/**"],
+            resources: [
+                "Sources/Resources/**",
+                "Sources/Assets.xcassets/**",
+                "Sources/Preview Content/**"
+            ],
             scripts: [
                 .pre(
                     script: "Scripts/swiftformat.sh",
@@ -30,6 +35,7 @@ let project = Project(
                 /** .external(name: "Kingfisher") **/
                 /** .target(name: "OtherProjectTarget") **/
             ],
+
             settings: .settings(configurations: [
                 .debug(name: "Debug", xcconfig: "./xcconfigs/Debug.xcconfig"),
             ])

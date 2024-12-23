@@ -18,7 +18,7 @@ struct AboutView: View {
             Palette.greyBackground
                 .ignoresSafeArea()
             VStack {
-                GifView("aboutPlaceholder")
+                GifView("aboutPlaceholder", size: .init(width: 200, height: 200))
                     .frame(width: 200, height: 200)
                     .clipShape(Circle())
                 Spacer()

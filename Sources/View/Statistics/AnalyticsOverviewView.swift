@@ -24,7 +24,7 @@ struct AnalyticsOverviewView: View {
                 Palette.white.ignoresSafeArea()
                 VStack {
                     Spacer()
-                    GifView("loadingStats")
+                    GifView("loadingStats", size: .init(width: 300, height: 300))
                         .frame(width: 300, height: 300)
                     Text(String(localized: "No data to show"))
                         .foregroundColor(Palette.black)
