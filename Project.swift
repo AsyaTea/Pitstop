@@ -1,7 +1,7 @@
 import ProjectDescription
 
 let project = Project(
-    name: "Pitstop-Tuist",
+    name: "Pitstop",
     settings: .settings(configurations: [
         .debug(name: "Debug", xcconfig: "./xcconfigs/Pitstop-Project.xcconfig"),
     ]),

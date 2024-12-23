@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EAD74B5DC3DD3F1CAA76CF4F"
+               BlueprintIdentifier = "B623475E3405182A9CEA7409"
                BuildableName = "Pitstop_APP.app"
                BlueprintName = "Pitstop-APP"
-               ReferencedContainer = "container:Pitstop-Tuist.xcodeproj">
+               ReferencedContainer = "container:Pitstop.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EAD74B5DC3DD3F1CAA76CF4F"
+            BlueprintIdentifier = "B623475E3405182A9CEA7409"
             BuildableName = "Pitstop_APP.app"
             BlueprintName = "Pitstop-APP"
-            ReferencedContainer = "container:Pitstop-Tuist.xcodeproj">
+            ReferencedContainer = "container:Pitstop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,10 +62,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EAD74B5DC3DD3F1CAA76CF4F"
+            BlueprintIdentifier = "B623475E3405182A9CEA7409"
             BuildableName = "Pitstop_APP.app"
             BlueprintName = "Pitstop-APP"
-            ReferencedContainer = "container:Pitstop-Tuist.xcodeproj">
+            ReferencedContainer = "container:Pitstop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
