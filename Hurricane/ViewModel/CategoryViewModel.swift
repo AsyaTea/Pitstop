@@ -111,13 +111,13 @@ class CategoryViewModel: ObservableObject {
     func calculateTimeFrame(timeFrame: String) -> Int {
         var monthSub: Int {
             if timeFrame == String(localized: "Per month") {
-                return -1
+                -1
             } else if timeFrame == String(localized: "Per 3 months") {
-                return -3
+                -3
             } else if timeFrame == String(localized: "Per year") {
-                return -12
+                -12
             } else {
-                return 0
+                0
             }
         }
         return monthSub
@@ -126,13 +126,13 @@ class CategoryViewModel: ObservableObject {
     func calculateDays(timeFrame: String) -> Int {
         var Days: Int {
             if timeFrame == String(localized: "Per month") {
-                return 30
+                30
             } else if timeFrame == String(localized: "Per 3 months") {
-                return 90
+                90
             } else if timeFrame == String(localized: "Per year") {
-                return 365
+                365
             } else {
-                return 0
+                0
             }
         }
         return Days
@@ -437,63 +437,63 @@ extension Category: CaseIterable {
     var label: String {
         switch self {
         case .fuel:
-            return NSLocalizedString("Fuel", comment: "")
+            NSLocalizedString("Fuel", comment: "")
         case .maintenance:
-            return NSLocalizedString("Maintenance", comment: "")
+            NSLocalizedString("Maintenance", comment: "")
         case .insurance:
-            return NSLocalizedString("Insurance", comment: "")
+            NSLocalizedString("Insurance", comment: "")
         case .roadTax:
-            return NSLocalizedString("Road tax", comment: "")
+            NSLocalizedString("Road tax", comment: "")
         case .tolls:
-            return NSLocalizedString("Tolls", comment: "")
+            NSLocalizedString("Tolls", comment: "")
         case .fines:
-            return NSLocalizedString("Fines", comment: "")
+            NSLocalizedString("Fines", comment: "")
         case .parking:
-            return NSLocalizedString("Parking", comment: "")
+            NSLocalizedString("Parking", comment: "")
         case .other:
-            return NSLocalizedString("Other", comment: "")
+            NSLocalizedString("Other", comment: "")
         }
     }
 
     var icon: ImageResource {
         switch self {
         case .fuel:
-            return .fuel
+            .fuel
         case .maintenance:
-            return .maintenance
+            .maintenance
         case .insurance:
-            return .insurance
+            .insurance
         case .roadTax:
-            return .roadTax
+            .roadTax
         case .tolls:
-            return .tolls
+            .tolls
         case .fines:
-            return .fines
+            .fines
         case .parking:
-            return .parking
+            .parking
         case .other:
-            return .other
+            .other
         }
     }
 
     var color: Color {
         switch self {
         case .fuel:
-            return Palette.colorYellow
+            Palette.colorYellow
         case .maintenance:
-            return Palette.colorGreen
+            Palette.colorGreen
         case .insurance:
-            return Palette.colorOrange
+            Palette.colorOrange
         case .roadTax:
-            return Palette.colorOrange
+            Palette.colorOrange
         case .tolls:
-            return Palette.colorOrange
+            Palette.colorOrange
         case .fines:
-            return Palette.colorOrange
+            Palette.colorOrange
         case .parking:
-            return Palette.colorViolet
+            Palette.colorViolet
         case .other:
-            return Palette.colorViolet
+            Palette.colorViolet
         }
     }
 }

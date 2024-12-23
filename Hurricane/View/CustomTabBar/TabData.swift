@@ -20,11 +20,11 @@ enum TabType: Int, CaseIterable {
     var tabItem: TabItemData {
         switch self {
         case .home:
-            return TabItemData(image: "carIcon")
+            TabItemData(image: "carIcon")
         case .stats:
-            return TabItemData(image: "chartIcon")
+            TabItemData(image: "chartIcon")
         case .settings:
-            return TabItemData(image: "settingsIcon")
+            TabItemData(image: "settingsIcon")
         }
     }
 }

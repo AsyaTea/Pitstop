@@ -95,13 +95,13 @@ class CategoryViewModel: ObservableObject {
     func calculateTimeFrame(timeFrame: String) -> Int {
         var monthSub: Int {
             if timeFrame == "Per month" {
-                return -1
+                -1
             } else if timeFrame == "Per 3 months" {
-                return -3
+                -3
             } else if timeFrame == "Per year" {
-                return -12
+                -12
             } else {
-                return 0
+                0
             }
         }
         return monthSub
@@ -307,63 +307,63 @@ extension Category: CaseIterable {
     var label: String {
         switch self {
         case .fuel:
-            return "Fuel"
+            "Fuel"
         case .maintenance:
-            return "Maintenance"
+            "Maintenance"
         case .insurance:
-            return "Insurance"
+            "Insurance"
         case .roadTax:
-            return "Road tax"
+            "Road tax"
         case .tolls:
-            return "Tolls"
+            "Tolls"
         case .fines:
-            return "Fines"
+            "Fines"
         case .parking:
-            return "Parking"
+            "Parking"
         case .other:
-            return "Other"
+            "Other"
         }
     }
 
     var icon: String {
         switch self {
         case .fuel:
-            return "fuel"
+            "fuel"
         case .maintenance:
-            return "maintenance"
+            "maintenance"
         case .insurance:
-            return "insurance"
+            "insurance"
         case .roadTax:
-            return "roadTax"
+            "roadTax"
         case .tolls:
-            return "tolls"
+            "tolls"
         case .fines:
-            return "fines"
+            "fines"
         case .parking:
-            return "parking"
+            "parking"
         case .other:
-            return "other"
+            "other"
         }
     }
 
     var color: Color {
         switch self {
         case .fuel:
-            return Palette.colorYellow
+            Palette.colorYellow
         case .maintenance:
-            return Palette.colorGreen
+            Palette.colorGreen
         case .insurance:
-            return Palette.colorOrange
+            Palette.colorOrange
         case .roadTax:
-            return Palette.colorOrange
+            Palette.colorOrange
         case .tolls:
-            return Palette.colorOrange
+            Palette.colorOrange
         case .fines:
-            return Palette.colorOrange
+            Palette.colorOrange
         case .parking:
-            return Palette.colorViolet
+            Palette.colorViolet
         case .other:
-            return Palette.colorViolet
+            Palette.colorViolet
         }
     }
 }
