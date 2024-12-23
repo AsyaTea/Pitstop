@@ -13,6 +13,18 @@ let project = Project(
             bundleId: "com.academy.pitstopD",
             deploymentTargets: .iOS("16.6"),
             sources: ["Sources/**"],
+            scripts: [
+                .pre(
+                    script: "Scripts/swiftformat.sh",
+                    name: "SwiftFormat",
+                    basedOnDependencyAnalysis: false
+                ),
+                .pre(
+                    script: "Scripts/swiftlint.sh",
+                    name: "SwiftLint",
+                    basedOnDependencyAnalysis: false
+                )
+            ],
             dependencies: [
                 /** Dependencies go here **/
                 /** .external(name: "Kingfisher") **/

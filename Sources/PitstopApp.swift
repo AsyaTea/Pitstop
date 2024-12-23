@@ -1,5 +1,5 @@
 //
-//  HurricaneApp.swift
+//  PitstopApp.swift
 //  Hurricane
 //
 //  Created by Asya Tealdi on 03/05/22.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct HurricaneApp: App {
+struct PitstopApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
