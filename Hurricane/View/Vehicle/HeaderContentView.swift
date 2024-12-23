@@ -1,5 +1,5 @@
 //
-//  HeaderView.swift
+//  HeaderContentView.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 12/05/22.

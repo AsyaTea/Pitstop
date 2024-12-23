@@ -1,5 +1,5 @@
 //
-//  GraphPractice.swift
+//  Graph.swift
 //  Hurricane
 //
 //  Created by Asya Tealdi on 12/05/22.

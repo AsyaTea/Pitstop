@@ -320,14 +320,14 @@ class CategoryViewModel: ObservableObject {
         parkingTotal = CategoryViewModel.totalCategoryCost(categoryList: parkingList)
         otherTotal = CategoryViewModel.totalCategoryCost(categoryList: otherList)
 
-        categories = [Category2(name: String(localized: "Fuel"), color: Palette.colorYellow, icon: "fuelType", totalCosts: fuelTotal),
-                      Category2(name: String(localized: "Maintenance"), color: Palette.colorGreen, icon: "maintenance", totalCosts: maintenanceTotal),
-                      Category2(name: String(localized: "Insurance"), color: Palette.colorOrange, icon: "insurance", totalCosts: insuranceTotal),
-                      Category2(name: String(localized: "Road tax"), color: Palette.colorOrange, icon: "roadTax", totalCosts: roadTaxTotal),
-                      Category2(name: String(localized: "Fines"), color: Palette.colorOrange, icon: "fines", totalCosts: finesTotal),
-                      Category2(name: String(localized: "Tolls"), color: Palette.colorOrange, icon: "Tolls", totalCosts: tollsTotal),
-                      Category2(name: String(localized: "Parking"), color: Palette.colorViolet, icon: "parking", totalCosts: parkingTotal),
-                      Category2(name: String(localized: "Other"), color: Palette.colorViolet, icon: "other", totalCosts: otherTotal)]
+        categories = [Category2(name: String(localized: "Fuel"), color: Palette.colorYellow, icon: .fuelType, totalCosts: fuelTotal),
+                      Category2(name: String(localized: "Maintenance"), color: Palette.colorGreen, icon: .maintenance, totalCosts: maintenanceTotal),
+                      Category2(name: String(localized: "Insurance"), color: Palette.colorOrange, icon: .insurance, totalCosts: insuranceTotal),
+                      Category2(name: String(localized: "Road tax"), color: Palette.colorOrange, icon: .roadTax, totalCosts: roadTaxTotal),
+                      Category2(name: String(localized: "Fines"), color: Palette.colorOrange, icon: .fines, totalCosts: finesTotal),
+                      Category2(name: String(localized: "Tolls"), color: Palette.colorOrange, icon: .tolls, totalCosts: tollsTotal),
+                      Category2(name: String(localized: "Parking"), color: Palette.colorViolet, icon: .parking, totalCosts: parkingTotal),
+                      Category2(name: String(localized: "Other"), color: Palette.colorViolet, icon: .other, totalCosts: otherTotal)]
     }
 
     func retrieveAndUpdate(vehicleID: NSManagedObjectID) {
@@ -455,24 +455,24 @@ extension Category: CaseIterable {
         }
     }
 
-    var icon: String {
+    var icon: ImageResource {
         switch self {
         case .fuel:
-            return "fuel"
+            return .fuel
         case .maintenance:
-            return "maintenance"
+            return .maintenance
         case .insurance:
-            return "insurance"
+            return .insurance
         case .roadTax:
-            return "roadTax"
+            return .roadTax
         case .tolls:
-            return "Tolls"
+            return .tolls
         case .fines:
-            return "fines"
+            return .fines
         case .parking:
-            return "parking"
+            return .parking
         case .other:
-            return "other"
+            return .other
         }
     }
 
@@ -501,7 +501,7 @@ extension Category: CaseIterable {
 struct Category2: Hashable {
     var name: String
     var color: Color
-    var icon: String
+    var icon: ImageResource
     var totalCosts: Float
 }
 

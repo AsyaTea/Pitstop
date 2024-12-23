@@ -98,7 +98,7 @@ struct ReminderList: View {
             // MARK: - TITLE
 
             HStack {
-                CategoryRow(title: "Title", iconName: "other", color: Palette.colorViolet)
+                CategoryRow(title: "Title", icon: .other, color: Palette.colorViolet)
                 Spacer()
                 TextField(String(localized: "Title"), text: $utilityVM.reminderToEdit.title)
                     .font(Typography.headerM)
@@ -115,7 +115,7 @@ struct ReminderList: View {
             // MARK: - CATEGORY
 
             HStack {
-                CategoryRow(title: "Category", iconName: "category", color: Palette.colorYellow)
+                CategoryRow(title: "Category", icon: .category, color: Palette.colorYellow)
                 NavigationLink(destination:
                     EditReminderCategoryPicker(
                         utilityVM: utilityVM,
@@ -133,7 +133,7 @@ struct ReminderList: View {
             // MARK: - DATE
 
             DatePicker(selection: $utilityVM.reminderToEdit.date, in: Date()...) {
-                CategoryRow(title: "Day", iconName: "day", color: Palette.colorGreen)
+                CategoryRow(title: "Day", icon: .day, color: Palette.colorGreen)
             }
             .datePickerStyle(.compact)
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
@@ -141,7 +141,7 @@ struct ReminderList: View {
             // MARK: - NOTE
 
             HStack {
-                CategoryRow(title: "Note", iconName: "noteColored", color: Palette.colorViolet)
+                CategoryRow(title: "Note", icon: .noteColored, color: Palette.colorViolet)
                 Spacer()
                 TextField(String(localized: "Note"), text: $utilityVM.reminderToEdit.note)
                     .font(Typography.headerM)

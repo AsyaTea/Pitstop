@@ -1,5 +1,5 @@
 //
-//  TabBarModel.swift
+//  TabData.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 06/05/22.

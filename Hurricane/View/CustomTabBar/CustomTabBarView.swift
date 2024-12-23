@@ -1,5 +1,5 @@
 //
-//  CustomTabBar.swift
+//  CustomTabBarView.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 06/05/22.

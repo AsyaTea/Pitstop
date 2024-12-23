@@ -1,5 +1,5 @@
 //
-//  RemindersList.swift
+//  ReminderView.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 03/06/22.

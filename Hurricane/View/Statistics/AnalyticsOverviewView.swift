@@ -1,5 +1,5 @@
 //
-//  StatsView.swift
+//  AnalyticsOverviewView.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 06/05/22.
@@ -172,7 +172,7 @@ struct CostsListView: View {
 
             ForEach(categoryVM.categories, id: \.self) { category in
                 HStack {
-                    CategoryRow(title: category.name, iconName: category.icon, color: category.color)
+                    CategoryRow(title: category.name, icon: category.icon, color: category.color)
                     Spacer()
                     Text(String(category.totalCosts))
                         .font(Typography.headerM)
@@ -208,7 +208,6 @@ struct FuelListView: View {
         ListCostsAttributes(title: "Average price", value: "\(String(categoryVM.avgPrice)) \(utilityVM.currency)/L")
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Refuels", value: String(categoryVM.refuelsPerTime))
-
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         ListCostsAttributes(title: "Average days/refuel", value: String(categoryVM.avgDaysRefuel))
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
