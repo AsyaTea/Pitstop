@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Document" representedClassName="Document" syncable="YES">
+        <attribute name="bookmark" optional="YES" attributeType="Binary"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="URI"/>
+    </entity>
+    <entity name="Expense" representedClassName="Expense" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="fuelType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="liters" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="odometer" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="priceLiter" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="vehicle" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicle" inverseName="expenses" inverseEntity="Vehicle"/>
+    </entity>
+    <entity name="Number" representedClassName="Number" syncable="YES">
+        <attribute name="telephone" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="vehicle" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicle" inverseName="numbers" inverseEntity="Vehicle"/>
+    </entity>
+    <entity name="Reminder" representedClassName="Reminder" syncable="YES">
+        <attribute name="based" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="category" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="distance" optional="YES" attributeType="String"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="recurrence" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Vehicle" representedClassName="Vehicle" syncable="YES">
+        <attribute name="brand" optional="YES" attributeType="String"/>
+        <attribute name="current" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO"/>
+        <attribute name="fuelTypeOne" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="fuelTypeTwo" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="model" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="odometer" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="plate" optional="YES" attributeType="String"/>
+        <attribute name="year" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="expenses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Expense" inverseName="vehicle" inverseEntity="Expense"/>
+        <relationship name="numbers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Number" inverseName="vehicle" inverseEntity="Number"/>
+    </entity>
+    <elements>
+        <element name="Document" positionX="90" positionY="99" width="128" height="74"/>
+        <element name="Expense" positionX="215.86328125" positionY="1.1640625" width="128" height="164"/>
+        <element name="Number" positionX="90" positionY="90" width="128" height="74"/>
+        <element name="Reminder" positionX="90" positionY="108" width="128" height="134"/>
+        <element name="Vehicle" positionX="-45" positionY="0" width="128" height="194"/>
+    </elements>
+</model>
