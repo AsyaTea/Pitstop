@@ -12,7 +12,7 @@
 		03305E9C28592590001E52B7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03305E9E28592590001E52B7 /* Localizable.strings */; };
 		41176DA92834DCC3000FD885 /* FuelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41176DA82834DCC3000FD885 /* FuelViewModel.swift */; };
 		415773F8283BEBF800B20FA1 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */; };
-		415D202F28214180004AF201 /* HurricaneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D202E28214180004AF201 /* HurricaneApp.swift */; };
+		415D202F28214180004AF201 /* PitstopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415D202E28214180004AF201 /* PitstopApp.swift */; };
 		415D203328214182004AF201 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415D203228214182004AF201 /* Assets.xcassets */; };
 		415D203628214182004AF201 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415D203528214182004AF201 /* Preview Assets.xcassets */; };
 		415D203E28214216004AF201 /* CarModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 415D203C28214215004AF201 /* CarModel.xcdatamodeld */; };
@@ -105,7 +105,7 @@
 		41176DA82834DCC3000FD885 /* FuelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelViewModel.swift; sourceTree = "<group>"; };
 		415773F7283BEBF800B20FA1 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
 		415D202B28214180004AF201 /* Hurricane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hurricane.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		415D202E28214180004AF201 /* HurricaneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HurricaneApp.swift; sourceTree = "<group>"; };
+		415D202E28214180004AF201 /* PitstopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitstopApp.swift; sourceTree = "<group>"; };
 		415D203228214182004AF201 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		415D203528214182004AF201 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		415D203D28214216004AF201 /* CarModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CarModel.xcdatamodel; sourceTree = "<group>"; };
@@ -230,7 +230,7 @@
 				FFD12249285892DB004686CA /* loadingStats.gif */,
 				FFD1224D2858BDB7004686CA /* aboutPlaceholder.gif */,
 				FFD1224F2858CB0D004686CA /* comingSoon.gif */,
-				415D202E28214180004AF201 /* HurricaneApp.swift */,
+				415D202E28214180004AF201 /* PitstopApp.swift */,
 				FF249C45282151A20062613A /* CoreData */,
 				FF974B84283F4DBF00C33576 /* Model */,
 				FF249C43282151690062613A /* ViewModel */,
@@ -661,7 +661,7 @@
 				415D2040282144CE004AF201 /* CoreDataManager.swift in Sources */,
 				FF10676E282C03E20077CCF7 /* Pages.swift in Sources */,
 				FFA0E722285548B1008B3ED9 /* PdfViewModel.swift in Sources */,
-				415D202F28214180004AF201 /* HurricaneApp.swift in Sources */,
+				415D202F28214180004AF201 /* PitstopApp.swift in Sources */,
 				FFCC308628258B6C00391BD5 /* UtilityViewModel.swift in Sources */,
 				FF42ADD52825250B00C66A84 /* AnalyticsOverviewView.swift in Sources */,
 				FFFC3937282176F400F7E0A8 /* Vehicle+CoreDataProperties.swift in Sources */,
