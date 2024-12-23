@@ -7,11 +7,12 @@ let project = Project(
     ]),
     targets: [
         .target(
-            name: "Debug",
+            name: "Pitstop-APP",
             destinations: .iOS,
-            product: .framework, // [!code ++] // or .staticFramework, .staticLibrary...
+            product: .app, // [!code ++] // or .staticFramework, .staticLibrary...
             bundleId: "com.academy.pitstopD",
-            sources: ["Hurricane/**"],
+            deploymentTargets: .iOS("16.6"),
+            sources: ["Sources/**"],
             dependencies: [
                 /** Dependencies go here **/
                 /** .external(name: "Kingfisher") **/
