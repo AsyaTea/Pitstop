@@ -11,7 +11,7 @@ let project = Project(
             destinations: .iOS,
             product: .app, // [!code ++] // or .staticFramework, .staticLibrary...
             bundleId: "com.academy.pitstopD",
-            deploymentTargets: .iOS("16.6"),
+            deploymentTargets: .iOS("17.0"),
             sources: ["Sources/**"],
             resources: [
                 "Sources/Resources/**",
