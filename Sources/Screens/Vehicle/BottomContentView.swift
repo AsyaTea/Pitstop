@@ -6,14 +6,15 @@
 //
 
 import PDFKit
+import SwiftData
 import SwiftUI
 
 struct BottomContentView: View {
+    @Environment(\.modelContext) private var modelContext
     @ObservedObject var homeVM: HomeViewModel
     @ObservedObject var dataVM: DataViewModel
     @ObservedObject var utilityVM: UtilityViewModel
     @ObservedObject var categoryVM: CategoryViewModel
-    @StateObject var pdfVM = PdfViewModel()
 
     @State private var viewAllNumbers = false
     @State private var viewAllDocuments = false
@@ -24,6 +25,9 @@ struct BottomContentView: View {
 
     @State private var presentImporter = false
     @State private var showPDF = false
+
+    @Query var documents: [Document2]
+    @State private var selectedDocument: Document2?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -73,13 +77,11 @@ struct BottomContentView: View {
                 VStack {
                     Spacer(minLength: 12)
                     HStack {
-                        ForEach(dataVM.documentsList, id: \.self) { document in
-                            DocumentCell(title: document.title,
-                                         onTap: {
-                                             showPDF.toggle()
-                                             pdfVM.documentState = DocumentState.fromDocumentViewModel(vm: document)
-                                             pdfVM.loadBookmark()
-                                         })
+                        ForEach(documents, id: \.uuid) { document in
+                            DocumentCell(title: document.title) {
+                                selectedDocument = document
+                                showPDF.toggle()
+                            }
                         }
                         Button(action: {
                             presentImporter.toggle()
@@ -89,17 +91,11 @@ struct BottomContentView: View {
                     }
                     Spacer(minLength: 16)
                 }
-                .fileImporter(isPresented: $presentImporter, allowedContentTypes: [.pdf]) { result in
-                    switch result {
-                    case let .success(url):
-                        if url.startAccessingSecurityScopedResource() {
-                            pdfVM.documentState.title = url.lastPathComponent.replacingOccurrences(of: ".pdf", with: "")
-                            dataVM.addDocument(documentS: pdfVM.documentState, url: url)
-                        }
-                        url.stopAccessingSecurityScopedResource()
-                    case let .failure(error):
-                        print(error)
-                    }
+                .fileImporter(
+                    isPresented: $presentImporter,
+                    allowedContentTypes: [.pdf]
+                ) { result in
+                    handleFileImport(result: result)
                 }
             }
             .safeAreaInset(edge: .trailing, spacing: 0) {
@@ -168,7 +164,9 @@ struct BottomContentView: View {
                 .interactiveDismissDisabled(homeVM.interactiveDismiss)
         }
         .fullScreenCover(isPresented: $viewAllDocuments) { WorkInProgress(dataVM: dataVM) }
-        .fullScreenCover(isPresented: $showPDF) { DocumentView(pdfVM: pdfVM) }
+        .fullScreenCover(isPresented: $showPDF) {
+            DocumentView(document: selectedDocument ?? .mock())
+        }
     }
 
     @ViewBuilder
@@ -220,6 +218,33 @@ struct BottomContentView: View {
                     .foregroundColor(Palette.greyMiddle)
                     .font(Typography.ControlS)
             }
+        }
+    }
+
+    private func handleFileImport(result: Result<URL, Error>) {
+        switch result {
+        case let .success(url):
+            processSelectedFile(url: url)
+        case let .failure(error):
+            print("File selection failed: \(error)")
+        }
+    }
+
+    private func processSelectedFile(url: URL) {
+        guard url.startAccessingSecurityScopedResource() else {
+            print("Failed to access security-scoped resource.")
+            return
+        }
+
+        defer { url.stopAccessingSecurityScopedResource() }
+
+        do {
+            let data = try Data(contentsOf: url)
+            let documentTitle = url.lastPathComponent.replacingOccurrences(of: ".pdf", with: "")
+            let newDocument = Document2(data: data, title: documentTitle, fileURL: url)
+            try newDocument.saveToModelContext(context: modelContext)
+        } catch {
+            print("Error when processing document: \(error)")
         }
     }
 }

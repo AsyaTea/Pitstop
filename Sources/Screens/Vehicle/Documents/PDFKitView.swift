@@ -8,26 +8,24 @@
 import PDFKit
 import SwiftUI
 
-struct PDFKitRepresentedView: UIViewRepresentable {
-    let url: URL?
+struct PDFRepresentedView: UIViewRepresentable {
+    let url: URL
+
     init(_ url: URL) {
         self.url = url
     }
 
-    func makeUIView(context _: UIViewRepresentableContext<PDFKitRepresentedView>) -> PDFKitRepresentedView.UIViewType {
-        let pdfView = PDFView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        if let url {
-            pdfView.document = PDFDocument(url: url)
-        }
-        pdfView.autoScales = true
-//        pdfView.displayMode = .singlePageContinuous
-//        pdfView.maxScaleFactor = 4.0
-//        pdfView.minScaleFactor = pdfView.scaleFactorForSizeToFit
+    func makeUIView(context _: Context) -> PDFView {
+        let pdfView = PDFView()
         pdfView.translatesAutoresizingMaskIntoConstraints = false
+        pdfView.autoScales = true // Automatically scales content to fit the view
+
+        pdfView.document = PDFDocument(url: url)
+
         return pdfView
     }
 
-    func updateUIView(_: UIView, context _: UIViewRepresentableContext<PDFKitRepresentedView>) {
-        // Update the view.
+    func updateUIView(_ pdfView: PDFView, context _: Context) {
+        pdfView.document = PDFDocument(url: url)
     }
 }
