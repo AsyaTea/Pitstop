@@ -64,22 +64,22 @@ struct BottomContentView: View {
                     .foregroundColor(Palette.black)
                     .font(Typography.headerL)
                 Spacer()
-            }.padding()
-                .padding(.top, 10)
-                .padding(.bottom, -10)
+            }
+            .padding()
+            .padding(.top, 10)
+            .padding(.bottom, -10)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 VStack {
                     Spacer(minLength: 12)
                     HStack {
                         ForEach(dataVM.documentsList, id: \.self) { document in
-                            Button(action: {
-                                showPDF.toggle()
-                                pdfVM.documentState = DocumentState.fromDocumentViewModel(vm: document)
-                                pdfVM.loadBookmark()
-                            }, label: {
-                                documentComponent(title: document.title)
-                            })
+                            DocumentCell(title: document.title,
+                                         onTap: {
+                                             showPDF.toggle()
+                                             pdfVM.documentState = DocumentState.fromDocumentViewModel(vm: document)
+                                             pdfVM.loadBookmark()
+                                         })
                         }
                         Button(action: {
                             presentImporter.toggle()
@@ -169,36 +169,6 @@ struct BottomContentView: View {
         }
         .fullScreenCover(isPresented: $viewAllDocuments) { WorkInProgress(dataVM: dataVM) }
         .fullScreenCover(isPresented: $showPDF) { DocumentView(pdfVM: pdfVM) }
-    }
-
-    @ViewBuilder
-    func documentComponent(title: String) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            ZStack {
-                Circle()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(Palette.greyLight)
-                Image(.documents)
-                    .resizable()
-                    .frame(width: 14, height: 14)
-                    .foregroundColor(Palette.black)
-            }
-            Spacer()
-            Text(title)
-                .frame(width: UIScreen.main.bounds.width * 0.33, height: UIScreen.main.bounds.height * 0.03, alignment: .leading)
-                .multilineTextAlignment(.leading)
-                .fixedSize(horizontal: false, vertical: false)
-                .foregroundColor(Palette.black)
-                .font(Typography.ControlS)
-        }
-        .padding()
-        .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
-        .background {
-            Rectangle()
-                .cornerRadius(8)
-                .foregroundColor(Palette.white)
-                .shadowGrey()
-        }
     }
 
     @ViewBuilder
