@@ -1,5 +1,5 @@
 //
-//  PDFKitView.swift
+//  PDFRepresentedView.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 12/06/22.

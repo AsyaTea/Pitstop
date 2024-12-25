@@ -17,7 +17,6 @@ struct BottomContentView: View {
     @ObservedObject var categoryVM: CategoryViewModel
 
     @State private var viewAllNumbers = false
-    @State private var viewAllDocuments = false
     @State private var viewAllEvents = false
     @State private var showEventEdit = false
 
@@ -26,8 +25,8 @@ struct BottomContentView: View {
     @State private var presentImporter = false
     @State private var showPDF = false
 
-    @Query var documents: [Document2]
-    @State private var selectedDocument: Document2?
+    @Query var documents: [Document]
+    @State private var selectedDocument: Document = .mock()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -163,9 +162,8 @@ struct BottomContentView: View {
             ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)
                 .interactiveDismissDisabled(homeVM.interactiveDismiss)
         }
-        .fullScreenCover(isPresented: $viewAllDocuments) { WorkInProgress(dataVM: dataVM) }
         .fullScreenCover(isPresented: $showPDF) {
-            DocumentView(document: selectedDocument ?? .mock())
+            DocumentView(document: $selectedDocument)
         }
     }
 
@@ -226,6 +224,7 @@ struct BottomContentView: View {
         case let .success(url):
             processSelectedFile(url: url)
         case let .failure(error):
+            // TODO: Implement proper error handling
             print("File selection failed: \(error)")
         }
     }
@@ -241,9 +240,10 @@ struct BottomContentView: View {
         do {
             let data = try Data(contentsOf: url)
             let documentTitle = url.lastPathComponent.replacingOccurrences(of: ".pdf", with: "")
-            let newDocument = Document2(data: data, title: documentTitle, fileURL: url)
+            let newDocument = Document(data: data, title: documentTitle, fileURL: url)
             try newDocument.saveToModelContext(context: modelContext)
         } catch {
+            // TODO: Implement proper error handling
             print("Error when processing document: \(error)")
         }
     }

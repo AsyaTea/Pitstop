@@ -1,5 +1,5 @@
 //
-//  Document2.swift
+//  Document.swift
 //  Pitstop-APP
 //
 //  Created by Ivan Voloshchuk on 24/12/24.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-@Model class Document2 {
+@Model class Document {
     @Attribute(.unique)
     var uuid: UUID
 
@@ -36,7 +36,7 @@ import SwiftData
         print("Document saved successfully!")
     }
 
-    static func mock() -> Document2 {
-        Document2(uuid: UUID(), data: Data(), title: "DocumentTitle")
+    static func mock() -> Document {
+        Document(uuid: UUID(), data: Data(), title: "DocumentTitle")
     }
 }

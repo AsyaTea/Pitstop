@@ -9,7 +9,7 @@ import PDFKit
 import SwiftUI
 
 struct DocumentView: View {
-    let document: Document2
+    @Binding var document: Document
     @Environment(\.presentationMode) private var presentationMode
     var body: some View {
         NavigationView {
