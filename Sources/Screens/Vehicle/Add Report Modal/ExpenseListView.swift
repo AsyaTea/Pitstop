@@ -28,7 +28,14 @@ struct ExpenseListView: View {
             HStack {
                 CategoryRow(title: String(localized: "Category"), icon: .category, color: Palette.colorYellow)
                 Spacer()
-                NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)) {
+                NavigationLink(
+                    destination: CustomCategoryPicker(
+                        addExpVM: addExpVM,
+                        reminderVM: reminderVM,
+                        categoryVM: categoryVM,
+                        selectedItem: $selectedItem
+                    )
+                ) {
                     HStack {
                         Spacer()
                         Text(addExpVM.selectedCategory)
@@ -251,7 +258,6 @@ struct CustomFuelPicker: View {
 
 struct CustomCategoryPicker: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @ObservedObject var dataVM: DataViewModel
     @StateObject var addExpVM: AddExpenseViewModel
     @StateObject var reminderVM: AddReminderViewModel
     @ObservedObject var categoryVM: CategoryViewModel
