@@ -1,7 +1,7 @@
 import ProjectDescription
 
 let project = Project(
-    name: "Pitstop-Tuist",
+    name: "Pitstop",
     settings: .settings(configurations: [
         .debug(name: "Debug", xcconfig: "./xcconfigs/Pitstop-Project.xcconfig"),
     ]),
@@ -11,8 +11,13 @@ let project = Project(
             destinations: .iOS,
             product: .app, // [!code ++] // or .staticFramework, .staticLibrary...
             bundleId: "com.academy.pitstopD",
-            deploymentTargets: .iOS("16.6"),
+            deploymentTargets: .iOS("17.0"),
             sources: ["Sources/**"],
+            resources: [
+                "Sources/Resources/**",
+                "Sources/Assets.xcassets/**",
+                "Sources/Preview Content/**"
+            ],
             scripts: [
                 .pre(
                     script: "Scripts/swiftformat.sh",

@@ -45,9 +45,6 @@ public enum PitstopAPPAsset: Sendable {
     public static let fines = PitstopAPPImages(name: "fines")
     public static let maintenance = PitstopAPPImages(name: "maintenance")
     public static let roadTax = PitstopAPPImages(name: "roadTax")
-    public static let loadingGif = PitstopAPPData(name: "LoadingGif")
-    public static let aboutPlaceholder = PitstopAPPData(name: "aboutPlaceholder")
-    public static let loadingStats = PitstopAPPData(name: "loadingStats")
     public static let documents = PitstopAPPImages(name: "documents")
     public static let page1 = PitstopAPPImages(name: "page1")
     public static let page4 = PitstopAPPImages(name: "page4")
@@ -63,7 +60,6 @@ public enum PitstopAPPAsset: Sendable {
     public static let bellHome = PitstopAPPImages(name: "bellHome")
     public static let bestBoy = PitstopAPPImages(name: "bestBoy")
     public static let carSettings = PitstopAPPImages(name: "car-settings")
-    public static let comingSoon = PitstopAPPData(name: "comingSoon")
     public static let deleteIcon = PitstopAPPImages(name: "deleteIcon")
     public static let download = PitstopAPPImages(name: "download")
     public static let ics = PitstopAPPImages(name: "ics")
@@ -127,34 +123,6 @@ public extension SwiftUI.Color {
   init(asset: PitstopAPPColors) {
     let bundle = Bundle.module
     self.init(asset.name, bundle: bundle)
-  }
-}
-#endif
-
-public struct PitstopAPPData: Sendable {
-  public let name: String
-
-  #if os(iOS) || os(tvOS) || os(macOS) || os(visionOS)
-  @available(iOS 9.0, macOS 10.11, visionOS 1.0, *)
-  public var data: NSDataAsset {
-    guard let data = NSDataAsset(asset: self) else {
-      fatalError("Unable to load data asset named \(name).")
-    }
-    return data
-  }
-  #endif
-}
-
-#if os(iOS) || os(tvOS) || os(macOS) || os(visionOS)
-@available(iOS 9.0, macOS 10.11, visionOS 1.0, *)
-public extension NSDataAsset {
-  convenience init?(asset: PitstopAPPData) {
-    let bundle = Bundle.module
-    #if os(iOS) || os(tvOS) || os(visionOS)
-    self.init(name: asset.name, bundle: bundle)
-    #elseif os(macOS)
-    self.init(name: NSDataAsset.Name(asset.name), bundle: bundle)
-    #endif
   }
 }
 #endif
