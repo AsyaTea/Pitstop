@@ -1,5 +1,5 @@
 //
-//  ReminderViewModel.swift
+//  AddReminderViewModel.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 03/06/22.

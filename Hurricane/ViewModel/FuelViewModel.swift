@@ -22,21 +22,21 @@ extension FuelType: CaseIterable {
     var label: String {
         switch self {
         case .diesel:
-            return NSLocalizedString("Diesel", comment: "")
+            NSLocalizedString("Diesel", comment: "")
         case .gasoline:
-            return NSLocalizedString("Gasoline", comment: "")
+            NSLocalizedString("Gasoline", comment: "")
         case .propane:
-            return NSLocalizedString("LPG (Propane)", comment: "")
+            NSLocalizedString("LPG (Propane)", comment: "")
         case .methane:
-            return NSLocalizedString("CNG (Methane)", comment: "")
+            NSLocalizedString("CNG (Methane)", comment: "")
         case .ethanol:
-            return NSLocalizedString("Ethanol", comment: "")
+            NSLocalizedString("Ethanol", comment: "")
         case .hydrogen:
-            return NSLocalizedString("Hydrogen", comment: "")
+            NSLocalizedString("Hydrogen", comment: "")
         case .electric:
-            return NSLocalizedString("Electric", comment: "")
+            NSLocalizedString("Electric", comment: "")
         case .none:
-            return NSLocalizedString("None", comment: "")
+            NSLocalizedString("None", comment: "")
         }
     }
 }

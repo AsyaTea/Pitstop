@@ -20,9 +20,13 @@ struct SettingsView: View {
                 CustomList {
                     Section(header: Text("Vehicles")) {
                         ForEach(dataVM.vehicleList, id: \.self) { vehicle in
-                            let destination = EditVehicleView(dataVM: dataVM, vehicle: vehicle, vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle))
+                            let destination = EditVehicleView(
+                                dataVM: dataVM,
+                                vehicle: vehicle,
+                                vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle)
+                            )
                             NavigationLink(destination: destination) {
-                                CategoryRow(title: vehicle.name, iconName: "car-settings", color: Palette.colorViolet)
+                                CategoryRow(title: vehicle.name, icon: .carSettings, color: Palette.colorViolet)
                             }
                         }
                         .onDelete(perform: dataVM.deleteVehicle)
@@ -31,7 +35,7 @@ struct SettingsView: View {
                             onboardingVM.addNewVehicle = true
                             onboardingVM.destination = .page2
                         }, label: {
-                            CategoryRow(title: "Add vehicle ", iconName: "plus", color: Palette.greyBackground)
+                            CategoryRow(title: "Add vehicle ", icon: .plus, color: Palette.greyBackground)
                         })
                         .buttonStyle(.plain)
                     }
@@ -39,11 +43,11 @@ struct SettingsView: View {
 
                     Section(header: Text("Other")) {
                         NavigationLink(destination: AboutView()) {
-                            CategoryRow(title: "About us ", iconName: "paperclip", color: Palette.greyBackground)
+                            CategoryRow(title: "About us ", icon: .paperclip, color: Palette.greyBackground)
                         }
 
                         NavigationLink(destination: ToSView()) {
-                            CategoryRow(title: "Terms of Service", iconName: "paperclip", color: Palette.greyBackground)
+                            CategoryRow(title: "Terms of Service", icon: .paperclip, color: Palette.greyBackground)
                         }
                     }
                     .listRowInsets(EdgeInsets(top: 5, leading: 16, bottom: 5, trailing: 16))

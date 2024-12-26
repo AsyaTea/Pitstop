@@ -1,5 +1,5 @@
 //
-//  Home.swift
+//  HomeStyleView.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 12/05/22.

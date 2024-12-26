@@ -22,7 +22,11 @@ struct ReminderListView: View {
             // MARK: CATEGORY
 
             HStack {
-                CategoryRow(title: String(localized: "Category"), iconName: "category", color: Palette.colorYellow)
+                CategoryRow(
+                    title: String(localized: "Category"),
+                    icon: .category,
+                    color: Palette.colorYellow
+                )
                 Spacer()
                 NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)) {
                     HStack {
@@ -43,14 +47,14 @@ struct ReminderListView: View {
                         .font(Typography.headerM)
                 }
             }, label: {
-                CategoryRow(title: String(localized: "Based on"), iconName: "basedOn", color: Palette.colorOrange)
+                CategoryRow(title: String(localized: "Based on"), icon: .basedOn, color: Palette.colorOrange)
             })
 
             // MARK: REMIND DATE
 
             if addExpVM.selectedBased == NSLocalizedString("Date", comment: "") {
                 DatePicker(selection: $reminderVM.date, in: Date()...) {
-                    CategoryRow(title: String(localized: "Remind me on"), iconName: "remindMe", color: Palette.colorGreen)
+                    CategoryRow(title: String(localized: "Remind me on"), icon: .remindMe, color: Palette.colorGreen)
                 }
                 .frame(height: 20)
                 .datePickerStyle(.compact)
@@ -60,7 +64,7 @@ struct ReminderListView: View {
 
             else {
                 HStack {
-                    CategoryRow(title: String(localized: "Remind me in"), iconName: "remindMe", color: Palette.colorGreen)
+                    CategoryRow(title: String(localized: "Remind me in"), icon: .remindMe, color: Palette.colorGreen)
                     Spacer()
                     TextField("1000", value: $reminderVM.distance, formatter: NumberFormatter())
                         .font(Typography.headerM)
@@ -93,7 +97,7 @@ struct ReminderListView: View {
                     Circle()
                         .frame(width: 32, height: 32)
                         .foregroundColor(reminderVM.note.isEmpty ? Palette.greyLight : Palette.colorViolet)
-                    Image(reminderVM.note.isEmpty ? "note" : "noteColored")
+                    Image(reminderVM.note.isEmpty ? "Note" : "noteColored")
                         .resizable()
                         .frame(width: 16, height: 16)
                 }

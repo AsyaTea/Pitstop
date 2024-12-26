@@ -227,9 +227,6 @@
 			children = (
 				03305EB5285A0A7D001E52B7 /* Info.plist */,
 				03305E90285922F6001E52B7 /* Localizable */,
-				FFD12249285892DB004686CA /* loadingStats.gif */,
-				FFD1224D2858BDB7004686CA /* aboutPlaceholder.gif */,
-				FFD1224F2858CB0D004686CA /* comingSoon.gif */,
 				415D202E28214180004AF201 /* HurricaneApp.swift */,
 				FF249C45282151A20062613A /* CoreData */,
 				FF974B84283F4DBF00C33576 /* Model */,
@@ -239,6 +236,9 @@
 				FF6773832A166D8E00A6B959 /* ViewModifier */,
 				FF6773822A166AAA00A6B959 /* Extension */,
 				415D203228214182004AF201 /* Assets.xcassets */,
+				FFD12249285892DB004686CA /* loadingStats.gif */,
+				FFD1224D2858BDB7004686CA /* aboutPlaceholder.gif */,
+				FFD1224F2858CB0D004686CA /* comingSoon.gif */,
 				415D203428214182004AF201 /* Preview Content */,
 			);
 			path = Hurricane;

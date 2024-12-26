@@ -17,7 +17,11 @@ struct OdometerListView: View {
             // MARK: DATE
 
             DatePicker(selection: $addExpVM.date, displayedComponents: [.date]) {
-                CategoryRow(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
+                CategoryRow(
+                    title: String(localized: "Day"),
+                    icon: .day,
+                    color: Palette.colorGreen
+                )
             }
 
             // MARK: NOTE
@@ -27,7 +31,7 @@ struct OdometerListView: View {
                     Circle()
                         .frame(width: 32, height: 32)
                         .foregroundColor(addExpVM.note.isEmpty ? Palette.greyLight : Palette.colorViolet)
-                    Image(addExpVM.note.isEmpty ? "note" : "noteColored")
+                    Image(addExpVM.note.isEmpty ? "Note" : "noteColored")
                         .resizable()
                         .frame(width: 16, height: 16)
                 }

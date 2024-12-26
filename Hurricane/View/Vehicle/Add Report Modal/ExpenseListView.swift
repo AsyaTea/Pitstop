@@ -26,7 +26,7 @@ struct ExpenseListView: View {
             // MARK: CUSTOM CATEGORY PICKER
 
             HStack {
-                CategoryRow(title: String(localized: "Category"), iconName: "category", color: Palette.colorYellow)
+                CategoryRow(title: String(localized: "Category"), icon: .category, color: Palette.colorYellow)
                 Spacer()
                 NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)) {
                     HStack {
@@ -42,7 +42,7 @@ struct ExpenseListView: View {
             // MARK: ODOMETER
 
             HStack {
-                CategoryRow(title: String(localized: "Odometer"), iconName: "odometer", color: Palette.colorBlue)
+                CategoryRow(title: String(localized: "Odometer"), icon: .odometer, color: Palette.colorBlue)
                 Spacer()
                 TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), text: $addExpVM.odometer)
                     .font(Typography.headerM)
@@ -63,7 +63,7 @@ struct ExpenseListView: View {
 
             if addExpVM.selectedCategory == NSLocalizedString("Fuel", comment: "") {
                 HStack {
-                    CategoryRow(title: String(localized: "Fuel type"), iconName: "fuelType", color: Palette.colorOrange)
+                    CategoryRow(title: String(localized: "Fuel type"), icon: .fuelType, color: Palette.colorOrange)
                     Spacer()
                     NavigationLink(destination: CustomFuelPicker(dataVM: dataVM, addExpVM: addExpVM, fuelVM: fuelVM, checkmark1: $checkmark1, checkmark2: $checkmark2)) {
                         HStack {
@@ -80,7 +80,7 @@ struct ExpenseListView: View {
             // MARK: DATE PICKER
 
             DatePicker(selection: $addExpVM.expenseS.date, in: ...Date(), displayedComponents: [.date]) {
-                CategoryRow(title: String(localized: "Day"), iconName: "day", color: Palette.colorGreen)
+                CategoryRow(title: String(localized: "Day"), icon: .day, color: Palette.colorGreen)
             }
 
             // MARK: LITERS & PRICE/LITER
@@ -91,7 +91,7 @@ struct ExpenseListView: View {
                         Circle()
                             .frame(width: 32, height: 32)
                             .foregroundColor(addExpVM.liters.isEmpty ? Palette.greyLight : Palette.colorOrange)
-                        Image(addExpVM.liters.isEmpty ? "liters" : "literColored")
+                        Image(addExpVM.liters.isEmpty ? .liters : .literColored)
                             .resizable()
                             .frame(width: 16, height: 16)
                     }
@@ -151,7 +151,7 @@ struct ExpenseListView: View {
                     Circle()
                         .frame(width: 32, height: 32)
                         .foregroundColor(addExpVM.note.isEmpty ? Palette.greyLight : Palette.colorViolet)
-                    Image(addExpVM.note.isEmpty ? "note" : "noteColored")
+                    Image(addExpVM.note.isEmpty ? "Note" : "noteColored")
                         .resizable()
                         .frame(width: 16, height: 16)
                 }

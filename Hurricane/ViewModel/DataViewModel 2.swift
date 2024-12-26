@@ -140,7 +140,7 @@ class DataViewModel: ObservableObject {
     }
 
     func deleteVehicle(at indexSet: IndexSet) {
-        indexSet.forEach { index in
+        for index in indexSet {
             let vehicle = vehicleList[index]
             vehicleList.remove(at: index)
             deleteVehicleCoreData(vehicle: vehicle)
@@ -271,7 +271,7 @@ class DataViewModel: ObservableObject {
 //    }
 
     func deleteExpense(at indexSet: IndexSet) {
-        indexSet.forEach { index in
+        for index in indexSet {
             let expense = expenseList[index]
             expenseList.remove(at: index)
             deleteExpenseCoreData(expense: expense)
