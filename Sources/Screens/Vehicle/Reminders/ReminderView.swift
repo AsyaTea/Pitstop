@@ -53,7 +53,8 @@ struct ReminderView: View {
                             title: "Expired",
                             items: expiredReminders,
                             areItemsExpired: true,
-                            onItemTap: { _ in
+                            onItemTap: { reminder in
+                                selectedReminder = reminder
                                 showExpiredReminder.toggle()
                             }
                         )
@@ -61,18 +62,11 @@ struct ReminderView: View {
                         // FIXME: - REFACTOR NAVIGATION
 
                         NavigationLink(
-                            destination: EditReminderView(
-                                //                                dataVM: dataVM,
-                                //                                utilityVM: utilityVM,
-                                reminder: $selectedReminder
-                            ),
+                            destination: EditReminderView(reminder: $selectedReminder),
                             isActive: $showEditReminder
                         ) {}
                         NavigationLink(
-                            destination: ExpiredReminder(
-                                dataVM: dataVM,
-                                utilityVM: utilityVM
-                            ),
+                            destination: ExpiredReminderView(reminder: $selectedReminder),
                             isActive: $showExpiredReminder
                         ) {}
                     }
@@ -166,9 +160,11 @@ private extension ReminderView {
                 }
                 VStack(alignment: .leading) {
                     HStack {
-                        Text(item.title ?? "")
+                        Text(item.title)
                             .foregroundColor(expired ? Palette.greyMiddle : Palette.black)
                             .font(Typography.headerS)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(2)
                         Spacer()
 
                         Text(item.date.toString(dateFormat: "MMM d, EEEE"))

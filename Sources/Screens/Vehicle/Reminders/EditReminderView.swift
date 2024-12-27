@@ -24,7 +24,7 @@ struct EditReminderView: View {
         self.reminder = reminder.wrappedValue
         _category = State(initialValue: reminder.wrappedValue.category)
         _date = State(initialValue: reminder.wrappedValue.date)
-        _title = State(initialValue: reminder.wrappedValue.title ?? "")
+        _title = State(initialValue: reminder.wrappedValue.title)
         _note = State(initialValue: reminder.wrappedValue.note)
     }
 
@@ -101,15 +101,12 @@ struct EditReminderView: View {
 private extension EditReminderView {
     func reminderInformation() -> some View {
         CustomList {
-            // MARK: - TITLE
-
             HStack {
                 CategoryRow(title: "Title", icon: .other, color: Palette.colorViolet)
                 Spacer()
                 TextField(String(localized: "Title"), text: $title)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
-                    .fixedSize(horizontal: true, vertical: true)
                     .focused($focusedField, equals: .title)
             }
             .contentShape(Rectangle())
@@ -148,7 +145,6 @@ private extension EditReminderView {
                 TextField(String(localized: "Note"), text: $note)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
-                    .fixedSize(horizontal: true, vertical: true)
                     .focused($focusedField, equals: .note)
             }
             .contentShape(Rectangle())
