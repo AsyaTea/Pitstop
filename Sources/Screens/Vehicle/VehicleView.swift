@@ -51,7 +51,7 @@ struct VehicleView: View {
             AddReportView(utilityVM: utilityVM, categoryVM: categoryVM, dataVM: dataVM)
         }
         .fullScreenCover(isPresented: $shouldShowOnboarding) {
-            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, categoryVM: categoryVM, shouldShowOnboarding: $shouldShowOnboarding)
+            OnboardingView(onboardingVM: onboardingVM, shouldShowOnboarding: $shouldShowOnboarding)
         }
         .onAppear {
             if shouldShowOnboarding == false {

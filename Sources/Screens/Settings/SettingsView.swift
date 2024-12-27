@@ -57,8 +57,6 @@ struct SettingsView: View {
             }
             .fullScreenCover(isPresented: $onboardingVM.addNewVehicle) {
                 OnboardingView(onboardingVM: onboardingVM,
-                               dataVM: dataVM,
-                               categoryVM: categoryVM,
                                shouldShowOnboarding: $onboardingVM.addNewVehicle)
             }
             .background(Palette.greyBackground)
