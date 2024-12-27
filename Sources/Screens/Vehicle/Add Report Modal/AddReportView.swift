@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct AddReportView: View {
+    @Environment(\.modelContext) private var modelContext
+
     @ObservedObject var utilityVM: UtilityViewModel
     @StateObject var addExpVM: AddExpenseViewModel = .init()
     @ObservedObject var categoryVM: CategoryViewModel
     @ObservedObject var dataVM: DataViewModel
-    @StateObject var reminderVM: AddReminderViewModel
-    @StateObject var notificationVM = NotificationManager()
 
     @State private var showDate = false
+
+    @State var reminder: Reminder = .mock()
 
     // Custom picker tabs
     @State private var pickerTabs = [String(localized: "Expense"), String(localized: "Odometer"), String(localized: "Reminder")]
@@ -48,10 +50,15 @@ struct AddReportView: View {
                                        defaultFocus: .odometerTab)
                         .padding(.top, 15)
                 } else {
-                    TextFieldComponent(submitField: $reminderVM.title, placeholder: "-",
-                                       attribute: "ㅤ", keyboardType: .default,
-                                       focusedField: $focusedField, defaultFocus: .reminderTab)
-                        .padding(.top, 15)
+                    TextFieldComponent(
+                        submitField: $reminder.title,
+                        placeholder: "-",
+                        attribute: "ㅤ",
+                        keyboardType: .default,
+                        focusedField: $focusedField,
+                        defaultFocus: .reminderTab
+                    )
+                    .padding(.top, 15)
                 }
 
                 // MARK: Custom segmented picker
@@ -65,13 +72,11 @@ struct AddReportView: View {
                 if addExpVM.currentPickerTab == String(localized: "Expense") {
                     ExpenseListView(addExpVM: addExpVM, utilityVM: utilityVM,
                                     dataVM: dataVM, categoryVM: categoryVM,
-                                    reminderVM: reminderVM, focusedField: $focusedField)
+                                    focusedField: $focusedField)
                 } else if addExpVM.currentPickerTab == String(localized: "Odometer") {
                     OdometerListView(addExpVM: addExpVM, utilityVM: utilityVM, focusedField: $focusedField)
                 } else {
-                    ReminderListView(dataVM: dataVM, addExpVM: addExpVM,
-                                     utilityVM: utilityVM, reminderVM: reminderVM,
-                                     categoryVM: categoryVM, focusedField: $focusedField)
+                    ReminderListView(reminder: $reminder, focusedField: $focusedField)
                 }
             }
             .background(Palette.greyBackground)
@@ -99,12 +104,15 @@ struct AddReportView: View {
                         dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
                         categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                     } else {
-                        reminderVM.createReminder()
-                        dataVM.addReminder(reminder: reminderVM.reminderS)
-                        notificationVM.requestAuthNotifications()
-                        notificationVM.createNotification(reminderS: reminderVM.reminderS)
+                        NotificationManager.shared.requestAuthNotifications()
+                        do {
+                            try reminder.saveToModelContext(context: modelContext)
+                        } catch {
+                            // TODO: Implement error handling
+                            print("error \(error)")
+                        }
+                        NotificationManager.shared.createNotification(for: reminder)
                     }
-                    //                        categoryVM.retrieveAndUpdate()
                     presentationMode.wrappedValue.dismiss()
 
                 }, label: {
@@ -114,11 +122,11 @@ struct AddReportView: View {
                 .disabled(
                     (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty) &&
                         (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
-                        reminderVM.title.isEmpty)
+                        reminder.title.isEmpty)
                 .opacity(
                     (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty) &&
                         (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
-                        reminderVM.title.isEmpty ? 0.6 : 1)
+                        reminder.title.isEmpty ? 0.6 : 1)
             )
             .onAppear {
                 addExpVM.odometer = String(Int(dataVM.currentVehicle.first?.odometer ?? 0))
@@ -170,7 +178,6 @@ struct AddReportView: View {
                             haptic.impactOccurred()
                         }
                         addExpVM.resetTabFields(tab: addExpVM.currentPickerTab)
-                        reminderVM.resetReminderFields(tab: addExpVM.currentPickerTab)
                     }
             }
         }

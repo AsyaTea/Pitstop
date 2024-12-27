@@ -13,7 +13,6 @@ struct ExpenseListView: View {
     @ObservedObject var dataVM: DataViewModel
     @ObservedObject var categoryVM: CategoryViewModel
     @StateObject var fuelVM = FuelViewModel()
-    @StateObject var reminderVM: AddReminderViewModel
 
     var focusedField: FocusState<FocusField?>.Binding
 
@@ -28,7 +27,13 @@ struct ExpenseListView: View {
             HStack {
                 CategoryRow(title: String(localized: "Category"), icon: .category, color: Palette.colorYellow)
                 Spacer()
-                NavigationLink(destination: CustomCategoryPicker(dataVM: dataVM, addExpVM: addExpVM, reminderVM: reminderVM, categoryVM: categoryVM, selectedItem: $selectedItem)) {
+                NavigationLink(
+                    destination: CustomCategoryPicker(
+                        addExpVM: addExpVM,
+                        categoryVM: categoryVM,
+                        selectedItem: $selectedItem
+                    )
+                ) {
                     HStack {
                         Spacer()
                         Text(addExpVM.selectedCategory)
@@ -249,11 +254,10 @@ struct CustomFuelPicker: View {
     }
 }
 
+// TODO: Remove when no longer used
 struct CustomCategoryPicker: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @ObservedObject var dataVM: DataViewModel
     @StateObject var addExpVM: AddExpenseViewModel
-    @StateObject var reminderVM: AddReminderViewModel
     @ObservedObject var categoryVM: CategoryViewModel
     @Binding var selectedItem: Category
 
@@ -267,8 +271,6 @@ struct CustomCategoryPicker: View {
                             categoryVM.defaultCategory = category
                             addExpVM.selectedCategory = category.label
                             addExpVM.category = categoryVM.selectedCategory
-                            reminderVM.selectedCategory = category.label
-                            reminderVM.category = categoryVM.selectedCategory
                         }
                     }
                     presentationMode.wrappedValue.dismiss()
@@ -284,6 +286,41 @@ struct CustomCategoryPicker: View {
                     }
                 })
             }
-        }.listStyle(.insetGrouped)
+        }
+        .listStyle(.insetGrouped)
+    }
+}
+
+struct CustomCategoryPicker2: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Binding var selectedCategory: ServiceCategory
+
+    var body: some View {
+        ZStack {
+            Palette.greyBackground
+                .ignoresSafeArea()
+            CustomList {
+                ForEach(ServiceCategory.allCases, id: \.self) { category in
+                    Button(action: {
+                        withAnimation {
+                            if selectedCategory != category {
+                                selectedCategory = category
+                            }
+                        }
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        HStack {
+                            Text(category.rawValue)
+                                .font(Typography.headerM)
+                                .foregroundColor(Palette.black)
+                            Spacer()
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.accentColor)
+                                .opacity(selectedCategory == category ? 1.0 : 0.0)
+                        }
+                    })
+                }
+            }
+        }
     }
 }

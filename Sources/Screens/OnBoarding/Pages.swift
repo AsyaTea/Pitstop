@@ -447,7 +447,6 @@ struct Page3: View {
 
 struct Page4: View {
     @ObservedObject var onboardingVM: OnboardingViewModel
-    @ObservedObject var notificationVM = NotificationManager()
 
     var body: some View {
         VStack(alignment: .center) {
@@ -470,7 +469,7 @@ struct Page4: View {
             VStack(spacing: 16) {
                 Button(action: {
                     withAnimation(.easeInOut) {
-                        notificationVM.requestAuthNotifications()
+                        NotificationManager.shared.requestAuthNotifications()
                         onboardingVM.destination = .page5
                         onboardingVM.skipNotification = true
                         onboardingVM.removeBack = true
