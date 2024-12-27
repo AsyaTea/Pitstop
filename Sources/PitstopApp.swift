@@ -5,6 +5,7 @@
 //  Created by Asya Tealdi on 03/05/22.
 //
 
+import SwiftData
 import SwiftUI
 
 @main
@@ -14,6 +15,7 @@ struct PitstopApp: App {
     var body: some Scene {
         WindowGroup {
             CustomTabBarView()
+                .modelContainer(for: Document.self)
 //            ContentView()
 //            AnalyticsOverviewView()
         }

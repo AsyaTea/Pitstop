@@ -35,7 +35,6 @@ let project = Project(
                 /** .external(name: "Kingfisher") **/
                 /** .target(name: "OtherProjectTarget") **/
             ],
-
             settings: .settings(configurations: [
                 .debug(name: "Debug", xcconfig: "./xcconfigs/Debug.xcconfig"),
             ])

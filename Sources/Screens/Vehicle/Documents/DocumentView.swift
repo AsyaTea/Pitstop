@@ -9,12 +9,14 @@ import PDFKit
 import SwiftUI
 
 struct DocumentView: View {
-    @StateObject var pdfVM: PdfViewModel
+    @Binding var document: Document
     @Environment(\.presentationMode) private var presentationMode
     var body: some View {
         NavigationView {
             VStack {
-                PDFKitRepresentedView(pdfVM.url ?? URL(fileURLWithPath: ""))
+                if let url = document.fileURL {
+                    PDFRepresentedView(url)
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
@@ -29,7 +31,7 @@ struct DocumentView: View {
             )
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text(pdfVM.documentState.title)
+                    Text(document.title)
                         .font(Typography.headerM)
                         .foregroundColor(Palette.black)
                 }

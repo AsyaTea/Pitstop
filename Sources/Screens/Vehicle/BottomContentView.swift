@@ -6,17 +6,17 @@
 //
 
 import PDFKit
+import SwiftData
 import SwiftUI
 
 struct BottomContentView: View {
+    @Environment(\.modelContext) private var modelContext
     @ObservedObject var homeVM: HomeViewModel
     @ObservedObject var dataVM: DataViewModel
     @ObservedObject var utilityVM: UtilityViewModel
     @ObservedObject var categoryVM: CategoryViewModel
-    @StateObject var pdfVM = PdfViewModel()
 
     @State private var viewAllNumbers = false
-    @State private var viewAllDocuments = false
     @State private var viewAllEvents = false
     @State private var showEventEdit = false
 
@@ -24,6 +24,9 @@ struct BottomContentView: View {
 
     @State private var presentImporter = false
     @State private var showPDF = false
+
+    @Query var documents: [Document]
+    @State private var selectedDocument: Document = .mock()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -64,22 +67,20 @@ struct BottomContentView: View {
                     .foregroundColor(Palette.black)
                     .font(Typography.headerL)
                 Spacer()
-            }.padding()
-                .padding(.top, 10)
-                .padding(.bottom, -10)
+            }
+            .padding()
+            .padding(.top, 10)
+            .padding(.bottom, -10)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 VStack {
                     Spacer(minLength: 12)
                     HStack {
-                        ForEach(dataVM.documentsList, id: \.self) { document in
-                            Button(action: {
+                        ForEach(documents, id: \.uuid) { document in
+                            DocumentCell(title: document.title) {
+                                selectedDocument = document
                                 showPDF.toggle()
-                                pdfVM.documentState = DocumentState.fromDocumentViewModel(vm: document)
-                                pdfVM.loadBookmark()
-                            }, label: {
-                                documentComponent(title: document.title)
-                            })
+                            }
                         }
                         Button(action: {
                             presentImporter.toggle()
@@ -89,17 +90,11 @@ struct BottomContentView: View {
                     }
                     Spacer(minLength: 16)
                 }
-                .fileImporter(isPresented: $presentImporter, allowedContentTypes: [.pdf]) { result in
-                    switch result {
-                    case let .success(url):
-                        if url.startAccessingSecurityScopedResource() {
-                            pdfVM.documentState.title = url.lastPathComponent.replacingOccurrences(of: ".pdf", with: "")
-                            dataVM.addDocument(documentS: pdfVM.documentState, url: url)
-                        }
-                        url.stopAccessingSecurityScopedResource()
-                    case let .failure(error):
-                        print(error)
-                    }
+                .fileImporter(
+                    isPresented: $presentImporter,
+                    allowedContentTypes: [.pdf]
+                ) { result in
+                    handleFileImport(result: result)
                 }
             }
             .safeAreaInset(edge: .trailing, spacing: 0) {
@@ -167,37 +162,8 @@ struct BottomContentView: View {
             ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)
                 .interactiveDismissDisabled(homeVM.interactiveDismiss)
         }
-        .fullScreenCover(isPresented: $viewAllDocuments) { WorkInProgress(dataVM: dataVM) }
-        .fullScreenCover(isPresented: $showPDF) { DocumentView(pdfVM: pdfVM) }
-    }
-
-    @ViewBuilder
-    func documentComponent(title: String) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            ZStack {
-                Circle()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(Palette.greyLight)
-                Image(.documents)
-                    .resizable()
-                    .frame(width: 14, height: 14)
-                    .foregroundColor(Palette.black)
-            }
-            Spacer()
-            Text(title)
-                .frame(width: UIScreen.main.bounds.width * 0.33, height: UIScreen.main.bounds.height * 0.03, alignment: .leading)
-                .multilineTextAlignment(.leading)
-                .fixedSize(horizontal: false, vertical: false)
-                .foregroundColor(Palette.black)
-                .font(Typography.ControlS)
-        }
-        .padding()
-        .frame(width: UIScreen.main.bounds.width * 0.38, height: UIScreen.main.bounds.height * 0.13)
-        .background {
-            Rectangle()
-                .cornerRadius(8)
-                .foregroundColor(Palette.white)
-                .shadowGrey()
+        .fullScreenCover(isPresented: $showPDF) {
+            DocumentView(document: $selectedDocument)
         }
     }
 
@@ -250,6 +216,35 @@ struct BottomContentView: View {
                     .foregroundColor(Palette.greyMiddle)
                     .font(Typography.ControlS)
             }
+        }
+    }
+
+    private func handleFileImport(result: Result<URL, Error>) {
+        switch result {
+        case let .success(url):
+            processSelectedFile(url: url)
+        case let .failure(error):
+            // TODO: Implement proper error handling
+            print("File selection failed: \(error)")
+        }
+    }
+
+    private func processSelectedFile(url: URL) {
+        guard url.startAccessingSecurityScopedResource() else {
+            print("Failed to access security-scoped resource.")
+            return
+        }
+
+        defer { url.stopAccessingSecurityScopedResource() }
+
+        do {
+            let data = try Data(contentsOf: url)
+            let documentTitle = url.lastPathComponent.replacingOccurrences(of: ".pdf", with: "")
+            let newDocument = Document(data: data, title: documentTitle, fileURL: url)
+            try newDocument.saveToModelContext(context: modelContext)
+        } catch {
+            // TODO: Implement proper error handling
+            print("Error when processing document: \(error)")
         }
     }
 }

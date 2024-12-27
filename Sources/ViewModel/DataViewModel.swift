@@ -38,8 +38,6 @@ class DataViewModel: ObservableObject {
 
     @Published var expenseFilteredList: [ExpenseViewModel] = []
 
-    @Published var documentsList: [DocumentViewModel] = []
-
     init() {
         getVehiclesCoreData(filter: nil, storage: { storage in
             self.vehicleList = storage
@@ -49,11 +47,6 @@ class DataViewModel: ObservableObject {
             self.numberList = storage
 
         })
-
-        getDocumentsCoreData(filter: nil, storage: { storage in
-            self.documentsList = storage
-        })
-        //        getCurrentVehicle()
     }
 
     // MARK: VEHICLE CRUD
@@ -479,62 +472,6 @@ class DataViewModel: ObservableObject {
         }
 
         save()
-    }
-
-    // MARK: - DOCUMENTS CRUD
-
-    func getDocumentsCoreData(filter: NSPredicate?, storage: @escaping ([DocumentViewModel]) -> Void) {
-        let request = NSFetchRequest<Document>(entityName: "Document")
-        let document: [Document]
-
-        let sort = NSSortDescriptor(keyPath: \Document.objectID, ascending: true)
-        request.sortDescriptors = [sort]
-        request.predicate = filter
-
-        do {
-            document = try manager.context.fetch(request)
-            DispatchQueue.main.async {
-                storage(document.map(DocumentViewModel.init))
-            }
-
-        } catch {
-            print("🔢 Error fetching documents: \(error.localizedDescription)")
-        }
-    }
-
-    func addDocument(documentS: DocumentState, url: URL) {
-        let newDocument = Document(context: manager.context)
-        newDocument.title = documentS.title
-        //        newDocument.url = documentS.url
-
-        do {
-            // Start accessing a security-scoped resource.
-            guard url.startAccessingSecurityScopedResource() else {
-                // Handle the failure here.
-                return
-            }
-
-            defer { url.stopAccessingSecurityScopedResource() }
-
-            let bookmarkData = try url.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
-
-            newDocument.bookmark = bookmarkData
-        } catch {
-            // Handle the error here.
-            print("Error creating the bookmark")
-        }
-
-        print("Document: \(newDocument)")
-        documentsList.append(DocumentViewModel(document: newDocument))
-        save()
-    }
-
-    func removeAllDocuments() {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Document")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        manager.removeAllItems(deleteRequest: deleteRequest)
-        save()
-        documentsList.removeAll()
     }
 
     // MARK: - OTHER FUNCS
