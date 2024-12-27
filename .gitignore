@@ -5,24 +5,6 @@
 ## User settings
 xcuserdata/
 
-## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
-*.xcscmblueprint
-*.xccheckout
-
-## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
-build/
-DerivedData/
-*.moved-aside
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-xcdebugger/
-
 ## Obj-C/Swift specific
 *.hmap
 
@@ -38,15 +20,10 @@ playground.xcworkspace
 # Swift Package Manager
 #
 # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
-# Packages/
-# Package.pins
-# Package.resolved
-# *.xcodeproj
-#
-# Xcode automatically generates this directory with a .xcworkspacedata file and xcuserdata
-# hence it is not needed unless you have added a package configuration file to your project
-# .swiftpm
-
+Packages/
+Package.pins
+Package.resolved
+.swiftpm/
 .build/
 
 # CocoaPods
@@ -55,16 +32,14 @@ playground.xcworkspace
 # you should judge for yourself, the pros and cons are mentioned at:
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
-# Pods/
-#
-# Add this line if you want to avoid checking in source code from the Xcode workspace
-# *.xcworkspace
+Pods/
+Podfile.lock
+*.xcworkspace
 
 # Carthage
 #
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
-# Carthage/Checkouts
-
+Carthage/Checkouts/
 Carthage/Build/
 
 # Accio dependency management
@@ -75,13 +50,34 @@ Dependencies/
 #
 # After new code Injection tools there's a generated folder /iOSInjectionProject
 # https://github.com/johnno1962/injectionforxcode
-
 iOSInjectionProject/
 
+# macOS system files
 .DS_Store
 *.DS_Store
 *.moved-aside
-*.xcuserstate
-.idea
 
-Carthage
+# Tuist
+#
+# Ignore Tuist generated files and folders
+/.xcodeproj
+/.xcworkspace
+/Tuist/Cache/
+*.xcodeproj
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# User-specific Xcode files
+*.xcuserdatad
+*.xcuserstate
+
+# IDE-specific files
+.idea/
+*.iml
+.vscode/
+
+# Miscellaneous
+xcdebugger/
+Hurricane.xcodeproj
