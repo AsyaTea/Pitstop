@@ -1,5 +1,5 @@
 //
-//  ExpiredReminder.swift
+//  ExpiredReminderView.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 11/06/22.
@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExpiredReminderView: View {
     @Environment(\.presentationMode) private var presentationMode
-    @Binding var reminder: Reminder2
+    @Binding var reminder: Reminder
 
     var body: some View {
         VStack {

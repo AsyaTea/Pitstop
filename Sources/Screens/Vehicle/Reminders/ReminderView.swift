@@ -10,8 +10,6 @@ import SwiftUI
 
 struct ReminderView: View {
     @Environment(\.modelContext) private var modelContext
-    @ObservedObject var dataVM: DataViewModel
-    @StateObject var utilityVM: UtilityViewModel
     @Environment(\.presentationMode) private var presentationMode
 
     @State private var showEditReminder = false
@@ -20,17 +18,17 @@ struct ReminderView: View {
     static var currentDate: Date { Date.now }
 
     @Query(
-        filter: #Predicate<Reminder2> { $0.date >= currentDate },
-        sort: [SortDescriptor(\Reminder2.date, order: .forward)]
+        filter: #Predicate<Reminder> { $0.date >= currentDate },
+        sort: [SortDescriptor(\Reminder.date, order: .forward)]
     )
-    var reminders: [Reminder2]
+    var reminders: [Reminder]
 
     @Query(
-        filter: #Predicate<Reminder2> { $0.date < currentDate },
-        sort: [SortDescriptor(\Reminder2.date, order: .forward)]
+        filter: #Predicate<Reminder> { $0.date < currentDate },
+        sort: [SortDescriptor(\Reminder.date, order: .forward)]
     )
-    var expiredReminders: [Reminder2]
-    @State var selectedReminder: Reminder2 = .mock()
+    var expiredReminders: [Reminder]
+    @State var selectedReminder: Reminder = .mock()
 
     var body: some View {
         NavigationView {
@@ -106,9 +104,9 @@ private extension ReminderView {
     @ViewBuilder
     func reminderSection(
         title: String,
-        items: [Reminder2],
+        items: [Reminder],
         areItemsExpired: Bool,
-        onItemTap: @escaping (Reminder2) -> Void
+        onItemTap: @escaping (Reminder) -> Void
     ) -> some View {
         VStack {
             ZStack {
@@ -143,9 +141,9 @@ private extension ReminderView {
 
     @ViewBuilder
     func reminderRow(
-        item: Reminder2,
+        item: Reminder,
         expired: Bool,
-        ontap: @escaping (Reminder2) -> Void
+        ontap: @escaping (Reminder) -> Void
     ) -> some View {
         Button(action: { ontap(item) }, label: {
             HStack {

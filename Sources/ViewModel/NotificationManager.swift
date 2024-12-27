@@ -37,7 +37,7 @@ final class NotificationManager {
         }
     }
 
-    func createNotification(for reminder: Reminder2) {
+    func createNotification(for reminder: Reminder) {
         let isItalian = Locale.current.language.languageCode?.identifier == "it"
         let category = reminder.category.rawValue.lowercased()
 
@@ -64,7 +64,7 @@ final class NotificationManager {
         }
     }
 
-    func removeNotification(for reminder: Reminder2) {
+    func removeNotification(for reminder: Reminder) {
         UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
             let identifiersToRemove = requests.filter { $0.identifier == reminder.uuid.uuidString }.map(\.identifier)
 

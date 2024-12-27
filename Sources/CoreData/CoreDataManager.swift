@@ -68,15 +68,6 @@ class CoreDataManager {
         }
     }
 
-    func getReminderById(id: NSManagedObjectID) -> Reminder? {
-        do {
-            return try context.existingObject(with: id) as? Reminder
-        } catch {
-            print(error)
-            return nil
-        }
-    }
-
     func deleteVehicle(_ vehicle: Vehicle) {
         context.delete(vehicle)
 
@@ -107,17 +98,6 @@ class CoreDataManager {
         } catch {
             context.rollback()
             print("Failed to delete number \(error)")
-        }
-    }
-
-    func deleteReminder(_ reminder: Reminder) {
-        context.delete(reminder)
-
-        do {
-            try context.save()
-        } catch {
-            context.rollback()
-            print("Failed to delete reminder \(error)")
         }
     }
 }

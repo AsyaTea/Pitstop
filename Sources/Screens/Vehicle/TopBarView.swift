@@ -148,7 +148,7 @@ struct TopNav: View {
             .padding(.bottom, 15)
         )
         .sheet(isPresented: $showReminders) {
-            ReminderView(dataVM: dataVM, utilityVM: utilityVM)
+            ReminderView()
         }
         .interactiveDismissDisabled()
     }

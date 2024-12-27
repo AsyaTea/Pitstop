@@ -14,11 +14,10 @@ struct AddReportView: View {
     @StateObject var addExpVM: AddExpenseViewModel = .init()
     @ObservedObject var categoryVM: CategoryViewModel
     @ObservedObject var dataVM: DataViewModel
-    @StateObject var reminderVM: AddReminderViewModel
 
     @State private var showDate = false
 
-    @State var reminder: Reminder2 = .mock()
+    @State var reminder: Reminder = .mock()
 
     // Custom picker tabs
     @State private var pickerTabs = [String(localized: "Expense"), String(localized: "Odometer"), String(localized: "Reminder")]
@@ -73,7 +72,7 @@ struct AddReportView: View {
                 if addExpVM.currentPickerTab == String(localized: "Expense") {
                     ExpenseListView(addExpVM: addExpVM, utilityVM: utilityVM,
                                     dataVM: dataVM, categoryVM: categoryVM,
-                                    reminderVM: reminderVM, focusedField: $focusedField)
+                                    focusedField: $focusedField)
                 } else if addExpVM.currentPickerTab == String(localized: "Odometer") {
                     OdometerListView(addExpVM: addExpVM, utilityVM: utilityVM, focusedField: $focusedField)
                 } else {
@@ -179,7 +178,6 @@ struct AddReportView: View {
                             haptic.impactOccurred()
                         }
                         addExpVM.resetTabFields(tab: addExpVM.currentPickerTab)
-                        reminderVM.resetReminderFields(tab: addExpVM.currentPickerTab)
                     }
             }
         }

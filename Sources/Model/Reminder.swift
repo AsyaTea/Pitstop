@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Reminder2: Identifiable {
+final class Reminder: Identifiable {
     @Attribute(.unique)
     var uuid: UUID
 
@@ -38,7 +38,7 @@ final class Reminder2: Identifiable {
 //        self.distance = distance
     }
 
-    static func mock() -> Reminder2 {
+    static func mock() -> Reminder {
         .init(title: "", category: .maintenance, date: Date())
     }
 

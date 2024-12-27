@@ -23,10 +23,6 @@ class DataViewModel: ObservableObject {
     // Important number
     @Published var numberList: [NumberViewModel] = []
 
-    // Reminder
-    @Published var reminderList: [ReminderViewModel] = []
-    @Published var expiredReminders: [ReminderViewModel] = []
-
     // Filter
     @Published var filter: NSPredicate?
     //    @Published var filterCurrentExpense : NSPredicate?
@@ -322,87 +318,6 @@ class DataViewModel: ObservableObject {
         } catch {
             print("💰 Error fetching expenses: \(error.localizedDescription)")
         }
-    }
-
-    // MARK: - REMINDERS CRUD
-
-    func addReminder(reminder: ReminderState) {
-        let newReminder = Reminder(context: manager.context)
-        print("reminderID", reminder.reminderID)
-        newReminder.title = reminder.title
-        newReminder.note = reminder.note
-        newReminder.distance = reminder.distance
-        newReminder.recurrence = reminder.recurrence ?? 0
-        newReminder.category = reminder.category ?? 0
-        newReminder.based = reminder.based ?? 0
-        newReminder.date = reminder.date
-
-        print(" Reminder : \(newReminder)")
-        reminderList.append(ReminderViewModel(reminder: newReminder))
-        save()
-    }
-
-    func getRemindersCoreData(filter: NSPredicate?, storage: @escaping ([ReminderViewModel]) -> Void) {
-        let request = NSFetchRequest<Reminder>(entityName: "Reminder")
-        let reminder: [Reminder]
-
-        let sort = NSSortDescriptor(keyPath: \Reminder.objectID, ascending: true)
-        request.sortDescriptors = [sort]
-        request.predicate = filter
-
-        do {
-            reminder = try manager.context.fetch(request)
-            DispatchQueue.main.async {
-                storage(reminder.map(ReminderViewModel.init))
-            }
-
-        } catch {
-            print("🛎 Error fetching reminders: \(error.localizedDescription)")
-        }
-    }
-
-    func updateReminder(_ rs: ReminderState) throws {
-        guard let reminderID = rs.reminderID else {
-            return print("Reminder ID not found during update")
-        }
-
-        guard let reminder = manager.getReminderById(id: reminderID) else {
-            return print("Reminder not found during update")
-        }
-
-        reminder.note = rs.note
-        reminder.date = rs.date
-        reminder.title = rs.title
-        reminder.category = rs.category ?? 1
-
-        for (index, value) in reminderList.enumerated() {
-            if value.reminderID == rs.reminderID {
-                reminderList.remove(at: index)
-            }
-        }
-        save()
-        print("Reminder update done: ", reminder)
-    }
-
-    func deleteReminder(reminderS: ReminderState) {
-        guard let reminderID = reminderS.reminderID else {
-            return print("NumberID not found during update")
-        }
-
-        let reminder = manager.getReminderById(id: reminderID)
-        if let reminder {
-            manager.deleteReminder(reminder)
-        }
-        save()
-    }
-
-    func removeExpiredReminders() {
-        let filterExpiredReminders = NSPredicate(format: "date <= %@", NSDate())
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Reminder")
-        fetchRequest.predicate = filterExpiredReminders
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        manager.removeAllItems(deleteRequest: deleteRequest)
-        expiredReminders.removeAll()
     }
 
     // MARK: - IMPORTANT NUMBERS CRUD

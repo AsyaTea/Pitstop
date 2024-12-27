@@ -18,9 +18,9 @@ struct EditReminderView: View {
     @State private var date: Date
     @State private var note: String
 
-    var reminder: Reminder2
+    var reminder: Reminder
 
-    init(reminder: Binding<Reminder2>) {
+    init(reminder: Binding<Reminder>) {
         self.reminder = reminder.wrappedValue
         _category = State(initialValue: reminder.wrappedValue.category)
         _date = State(initialValue: reminder.wrappedValue.date)
@@ -157,7 +157,7 @@ private extension EditReminderView {
 }
 
 private extension EditReminderView {
-    func deleteReminder(_ reminder: Reminder2) {
+    func deleteReminder(_ reminder: Reminder) {
         modelContext.delete(reminder)
         do {
             try modelContext.save()
@@ -166,7 +166,7 @@ private extension EditReminderView {
         }
     }
 
-    func updateReminder(_ reminder: Reminder2) {
+    func updateReminder(_ reminder: Reminder) {
         reminder.title = title
         reminder.category = category
         reminder.note = note

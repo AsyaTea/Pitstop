@@ -9,8 +9,8 @@ import SwiftData
 import SwiftUI
 
 struct ReminderListView: View {
-    @State private var selectedType: Reminder2.Typology = .date
-    @Binding var reminder: Reminder2
+    @State private var selectedType: Reminder.Typology = .date
+    @Binding var reminder: Reminder
 
     var focusedField: FocusState<FocusField?>.Binding
 
@@ -43,7 +43,7 @@ struct ReminderListView: View {
             Picker(
                 selection: $selectedType,
                 content: {
-                    ForEach(Reminder2.Typology.allCases, id: \.self) {
+                    ForEach(Reminder.Typology.allCases, id: \.self) {
                         Text($0.rawValue)
                             .font(Typography.headerM)
                     }

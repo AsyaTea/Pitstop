@@ -13,7 +13,6 @@ struct ExpenseListView: View {
     @ObservedObject var dataVM: DataViewModel
     @ObservedObject var categoryVM: CategoryViewModel
     @StateObject var fuelVM = FuelViewModel()
-    @StateObject var reminderVM: AddReminderViewModel
 
     var focusedField: FocusState<FocusField?>.Binding
 
@@ -31,7 +30,6 @@ struct ExpenseListView: View {
                 NavigationLink(
                     destination: CustomCategoryPicker(
                         addExpVM: addExpVM,
-                        reminderVM: reminderVM,
                         categoryVM: categoryVM,
                         selectedItem: $selectedItem
                     )
@@ -260,7 +258,6 @@ struct CustomFuelPicker: View {
 struct CustomCategoryPicker: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var addExpVM: AddExpenseViewModel
-    @StateObject var reminderVM: AddReminderViewModel
     @ObservedObject var categoryVM: CategoryViewModel
     @Binding var selectedItem: Category
 
@@ -274,8 +271,6 @@ struct CustomCategoryPicker: View {
                             categoryVM.defaultCategory = category
                             addExpVM.selectedCategory = category.label
                             addExpVM.category = categoryVM.selectedCategory
-                            reminderVM.selectedCategory = category.label
-                            reminderVM.category = categoryVM.selectedCategory
                         }
                     }
                     presentationMode.wrappedValue.dismiss()

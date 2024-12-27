@@ -16,15 +16,6 @@
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="vehicle" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vehicle" inverseName="numbers" inverseEntity="Vehicle"/>
     </entity>
-    <entity name="Reminder" representedClassName="Reminder" syncable="YES">
-        <attribute name="based" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="category" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="distance" optional="YES" attributeType="String"/>
-        <attribute name="note" optional="YES" attributeType="String"/>
-        <attribute name="recurrence" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
-    </entity>
     <entity name="Vehicle" representedClassName="Vehicle" syncable="YES">
         <attribute name="brand" optional="YES" attributeType="String"/>
         <attribute name="current" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO"/>
