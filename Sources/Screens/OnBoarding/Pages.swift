@@ -213,6 +213,7 @@ struct Page2: View {
 // MARK: PAGE 3 ADD MORE INFO
 
 struct Page3: View {
+    @EnvironmentObject var vehicleManager: VehicleManager
     @Environment(\.modelContext) private var modelContext
     @ObservedObject var onboardingVM: OnboardingViewModel
 
@@ -348,7 +349,7 @@ struct Page3: View {
                 if onboardingVM.addNewVehicle == true {
                     Button(action: {
                         onboardingVM.addNewVehicle = false
-
+                        vehicleManager.currentVehicle = vehicle
                         do {
                             try vehicle.saveToModelContext(context: modelContext)
                         } catch {

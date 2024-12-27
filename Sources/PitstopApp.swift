@@ -21,6 +21,7 @@ struct PitstopApp: App {
                                       Expense2.self,
                                       Number2.self]
                 )
+                .environmentObject(VehicleManager())
 //            ContentView()
 //            AnalyticsOverviewView()
         }

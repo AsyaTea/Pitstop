@@ -1,5 +1,5 @@
 //
-//  VehicleViewModel.swift
+//  VehicleManager.swift
 //  Pitstop-APP
 //
 //  Created by Ivan Voloshchuk on 28/12/24.

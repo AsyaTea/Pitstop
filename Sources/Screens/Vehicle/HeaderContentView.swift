@@ -11,6 +11,7 @@ struct HeaderContent: View {
     @Binding var offset: CGFloat
     var maxHeight: CGFloat
 
+    @EnvironmentObject var vehicleManager: VehicleManager
     @ObservedObject var dataVM: DataViewModel
     @ObservedObject var homeVM: HomeViewModel
     @ObservedObject var utilityVM: UtilityViewModel
@@ -44,7 +45,7 @@ struct HeaderContent: View {
                             .foregroundColor(homeVM.headerCardColor)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center) {
-                            Text(String("\(Int64(dataVM.currentVehicle.first?.odometer ?? 0)) \(utilityVM.unit)"))
+                            Text(String("\(Int64(vehicleManager.currentVehicle.odometer)) \(utilityVM.unit)"))
                                 .foregroundColor(Palette.blackHeader)
                                 .font(Typography.headerLM)
                             Text("Odometer")
