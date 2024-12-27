@@ -10,6 +10,9 @@ import SwiftData
 
 @Model
 final class Reminder2: Identifiable {
+    @Attribute(.unique)
+    var uuid: UUID
+
     var title: String?
     var category: ServiceCategory
 //    var recurrence: Int16
@@ -18,6 +21,7 @@ final class Reminder2: Identifiable {
 //    var distance: String?
 
     init(
+        uuid: UUID = UUID(),
         title: String? = nil,
         category: ServiceCategory,
 //        recurrence: Int16, // TODO: Implement recurrence of reminder
@@ -25,6 +29,7 @@ final class Reminder2: Identifiable {
         date: Date
 //        distance: String? = nil // TODO: Implement reminders on odometer amount
     ) {
+        self.uuid = uuid
         self.title = title
         self.category = category
 //        self.recurrence = recurrence
