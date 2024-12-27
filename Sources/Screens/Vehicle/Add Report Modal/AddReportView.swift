@@ -69,9 +69,7 @@ struct AddReportView: View {
                 } else if addExpVM.currentPickerTab == String(localized: "Odometer") {
                     OdometerListView(addExpVM: addExpVM, utilityVM: utilityVM, focusedField: $focusedField)
                 } else {
-                    ReminderListView(dataVM: dataVM, addExpVM: addExpVM,
-                                     utilityVM: utilityVM, reminderVM: reminderVM,
-                                     categoryVM: categoryVM, focusedField: $focusedField)
+                    ReminderListView(reminderVM: reminderVM, focusedField: $focusedField)
                 }
             }
             .background(Palette.greyBackground)

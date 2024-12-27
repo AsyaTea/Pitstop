@@ -5,17 +5,17 @@
 //  Created by Ivan Voloshchuk on 09/05/22.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ReminderListView: View {
-    @ObservedObject var dataVM: DataViewModel
-    @ObservedObject var addExpVM: AddExpenseViewModel
-    @ObservedObject var utilityVM: UtilityViewModel
+    @Environment(\.modelContext) private var modelContext
     @ObservedObject var reminderVM: AddReminderViewModel
-    @ObservedObject var categoryVM: CategoryViewModel
-    var focusedField: FocusState<FocusField?>.Binding
 
-    @State private var selectedItem: Category = .maintenance
+    @State private var selectedType: Reminder2.Typology = .date
+    @State private var reminder: Reminder2 = .mock()
+
+    var focusedField: FocusState<FocusField?>.Binding
 
     var body: some View {
         CustomList {
@@ -29,16 +29,11 @@ struct ReminderListView: View {
                 )
                 Spacer()
                 NavigationLink(
-                    destination: CustomCategoryPicker(
-                        addExpVM: addExpVM,
-                        reminderVM: reminderVM,
-                        categoryVM: categoryVM,
-                        selectedItem: $selectedItem
-                    )
+                    destination: CustomCategoryPicker2(selectedCategory: $reminder.category)
                 ) {
                     HStack {
                         Spacer()
-                        Text(reminderVM.selectedCategory)
+                        Text(reminder.category.rawValue)
                             .fixedSize()
                             .font(Typography.headerM)
                             .foregroundColor(Palette.greyMiddle)
@@ -46,46 +41,48 @@ struct ReminderListView: View {
                 }
             }
 
-            // MARK: BASED ON PICKER
+            // MARK: TYPOLOGY
 
-            Picker(selection: $addExpVM.selectedBased, content: {
-                ForEach(addExpVM.basedTypes, id: \.self) {
-                    Text($0)
+            Picker(selection: $selectedType, content: {
+                ForEach(Reminder2.Typology.allCases, id: \.self) {
+                    Text($0.rawValue)
                         .font(Typography.headerM)
                 }
             }, label: {
                 CategoryRow(title: String(localized: "Based on"), icon: .basedOn, color: Palette.colorOrange)
             })
 
-            // MARK: REMIND DATE
-
-            if addExpVM.selectedBased == NSLocalizedString("Date", comment: "") {
-                DatePicker(selection: $reminderVM.date, in: Date()...) {
-                    CategoryRow(title: String(localized: "Remind me on"), icon: .remindMe, color: Palette.colorGreen)
+            switch selectedType {
+            case .date:
+                DatePicker(
+                    selection: $reminder.date,
+                    in: Date() ... Calendar.current.date(byAdding: .year, value: 4, to: Date())!
+                ) {
+                    CategoryRow(
+                        title: String(localized: "Remind me on"),
+                        icon: .remindMe,
+                        color: Palette.colorGreen
+                    )
+                    .padding(.bottom, 10)
                 }
-                .frame(height: 20)
                 .datePickerStyle(.compact)
+//            default:
+//                HStack {
+//                    CategoryRow(title: String(localized: "Remind me in"), icon: .remindMe, color: Palette.colorGreen)
+//                    Spacer()
+//                    TextField("1000", value: $reminderVM.distance, formatter: NumberFormatter())
+//                        .font(Typography.headerM)
+//                        .foregroundColor(Palette.black)
+//                        .textFieldStyle(.plain)
+//                        .keyboardType(.decimalPad)
+//                        .fixedSize(horizontal: true, vertical: true)
+//                    Text(utilityVM.unit)
+//                        .font(Typography.headerM)
+//                        .foregroundColor(Palette.black)
+//                }
             }
 
-            // MARK: REMIND DISTANCE
-
-            else {
-                HStack {
-                    CategoryRow(title: String(localized: "Remind me in"), icon: .remindMe, color: Palette.colorGreen)
-                    Spacer()
-                    TextField("1000", value: $reminderVM.distance, formatter: NumberFormatter())
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.black)
-                        .textFieldStyle(.plain)
-                        .keyboardType(.decimalPad)
-                        .fixedSize(horizontal: true, vertical: true)
-                    Text(utilityVM.unit)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.black)
-                }
-            }
-
-            // MARK: REPEAT
+            // TODO: Implement REPEAT
 
 //            Picker(selection: $addExpVM.selectedRepeat, content: {
 //                ForEach(addExpVM.repeatTypes, id: \.self) {
@@ -103,18 +100,19 @@ struct ReminderListView: View {
                 ZStack {
                     Circle()
                         .frame(width: 32, height: 32)
-                        .foregroundColor(reminderVM.note.isEmpty ? Palette.greyLight : Palette.colorViolet)
-                    Image(reminderVM.note.isEmpty ? "Note" : "noteColored")
+                        .foregroundColor(reminder.note.isEmpty ? Palette.greyLight : Palette.colorViolet)
+                    Image(reminder.note.isEmpty ? .note : .noteColored)
                         .resizable()
                         .frame(width: 16, height: 16)
                 }
-                TextField(String(localized: "Note"), text: $reminderVM.note)
+                TextField(String(localized: "Note"), text: $reminder.note)
                     .disableAutocorrection(true)
                     .focused(focusedField, equals: .note)
                     .font(Typography.headerM)
             }
         }
         .padding(.top, -10)
+        // TODO: Check what this does
         .onAppear {
             /// Setting the keyboard focus on the price when opening the modal
             if reminderVM.title.isEmpty {
