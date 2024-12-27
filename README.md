@@ -26,6 +26,5 @@ The design pattern we adopted is **MVVM** with different view models for handlin
 
 <img src="https://user-images.githubusercontent.com/94223094/169893103-be24dbd0-4efd-4f70-8f96-eb3e595ff5ec.gif" width="280" height="570"/>   <img src="https://user-images.githubusercontent.com/94223094/169893079-7e227b06-69ef-42ff-8b46-56c2ecdda6ec.gif" width="280" height="570"/>
 
-
-## Testflight or Appstore
-Try Pitstop on [Testflight](https://testflight.apple.com/join/wOTnWIPW)!
+## Tuist
+To be able to generate the .xcodeproj , install [Tuist](https://docs.tuist.dev/en/guides/quick-start/install-tuist) and run tuist generate in the CLI
