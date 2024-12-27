@@ -43,14 +43,22 @@ struct ReminderListView: View {
 
             // MARK: TYPOLOGY
 
-            Picker(selection: $selectedType, content: {
-                ForEach(Reminder2.Typology.allCases, id: \.self) {
-                    Text($0.rawValue)
-                        .font(Typography.headerM)
+            Picker(
+                selection: $selectedType,
+                content: {
+                    ForEach(Reminder2.Typology.allCases, id: \.self) {
+                        Text($0.rawValue)
+                            .font(Typography.headerM)
+                    }
+                },
+                label: {
+                    CategoryRow(
+                        title: String(localized: "Based on"),
+                        icon: .basedOn,
+                        color: Palette.colorOrange
+                    )
                 }
-            }, label: {
-                CategoryRow(title: String(localized: "Based on"), icon: .basedOn, color: Palette.colorOrange)
-            })
+            )
 
             switch selectedType {
             case .date:
