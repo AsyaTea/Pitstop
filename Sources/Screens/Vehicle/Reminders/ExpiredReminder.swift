@@ -11,7 +11,6 @@ struct ExpiredReminder: View {
     @Environment(\.presentationMode) private var presentationMode
     @ObservedObject var dataVM: DataViewModel
     @StateObject var utilityVM: UtilityViewModel
-    @StateObject var notificationVM = NotificationManager()
 
     var body: some View {
         VStack {

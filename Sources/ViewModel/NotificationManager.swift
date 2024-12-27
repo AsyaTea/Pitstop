@@ -8,13 +8,31 @@
 import Foundation
 import NotificationCenter
 
-class NotificationManager: ObservableObject {
+final class NotificationManager {
+    static let shared = NotificationManager()
+
+    private init() {}
+
     func requestAuthNotifications() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-            if success {
-                print("Notification authorization granted.")
-            } else if let error {
-                print("Notification authorization error: \(error.localizedDescription)")
+        let center = UNUserNotificationCenter.current()
+
+        center.getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .notDetermined:
+                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    if success {
+                        print("Notification authorization granted.")
+                    } else if let error {
+                        print("Notification authorization error: \(error.localizedDescription)")
+                    }
+                }
+            case .denied:
+                // TODO: Implement alert to enable notifications
+                print("Notifications are denied.")
+            case .authorized, .provisional, .ephemeral:
+                print("Notifications are already enabled.")
+            @unknown default:
+                print("Unknown notification authorization status.")
             }
         }
     }

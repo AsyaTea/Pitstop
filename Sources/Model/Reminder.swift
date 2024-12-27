@@ -13,7 +13,7 @@ final class Reminder2: Identifiable {
     @Attribute(.unique)
     var uuid: UUID
 
-    var title: String?
+    var title: String
     var category: ServiceCategory
 //    var recurrence: Int16
     var note: String
@@ -22,7 +22,7 @@ final class Reminder2: Identifiable {
 
     init(
         uuid: UUID = UUID(),
-        title: String? = nil,
+        title: String = "",
         category: ServiceCategory,
 //        recurrence: Int16, // TODO: Implement recurrence of reminder
         note: String = "",
@@ -39,7 +39,7 @@ final class Reminder2: Identifiable {
     }
 
     static func mock() -> Reminder2 {
-        .init(title: "Test", category: .maintenance, date: Date())
+        .init(title: "", category: .maintenance, date: Date())
     }
 
     func saveToModelContext(context: ModelContext) throws {

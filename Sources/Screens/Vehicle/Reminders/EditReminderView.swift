@@ -11,17 +11,14 @@ struct EditReminderView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) private var presentationMode
 
-    @StateObject var notificationVM = NotificationManager()
-
-    @State private var showDeleteAlert = false
-
-    var reminder: Reminder2
-
     @FocusState var focusedField: FocusFieldReminder?
+    @State private var showDeleteAlert = false
     @State private var category: ServiceCategory
     @State private var title: String
     @State private var date: Date
     @State private var note: String
+
+    var reminder: Reminder2
 
     init(reminder: Binding<Reminder2>) {
         self.reminder = reminder.wrappedValue
@@ -59,8 +56,8 @@ struct EditReminderView: View {
             trailing:
             Button(action: {
                 updateReminder(reminder)
-                notificationVM.removeNotification(for: reminder)
-                notificationVM.createNotification(for: reminder)
+                NotificationManager.shared.removeNotification(for: reminder)
+                NotificationManager.shared.createNotification(for: reminder)
                 presentationMode.wrappedValue.dismiss()
             }, label: {
                 Text(String(localized: "Save"))
@@ -91,7 +88,7 @@ struct EditReminderView: View {
                 title: Text(String(localized: "Are you sure you want to delete this reminder?")),
                 message: Text(String(localized: "This action cannot be undone")),
                 primaryButton: .destructive(Text(String(localized: "Delete"))) {
-                    notificationVM.removeNotification(for: reminder)
+                    NotificationManager.shared.removeNotification(for: reminder)
                     deleteReminder(reminder)
                     presentationMode.wrappedValue.dismiss()
                 },

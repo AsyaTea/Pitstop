@@ -9,11 +9,8 @@ import SwiftData
 import SwiftUI
 
 struct ReminderListView: View {
-    @Environment(\.modelContext) private var modelContext
-    @ObservedObject var reminderVM: AddReminderViewModel
-
     @State private var selectedType: Reminder2.Typology = .date
-    @State private var reminder: Reminder2 = .mock()
+    @Binding var reminder: Reminder2
 
     var focusedField: FocusState<FocusField?>.Binding
 
@@ -123,7 +120,7 @@ struct ReminderListView: View {
         // TODO: Check what this does
         .onAppear {
             /// Setting the keyboard focus on the price when opening the modal
-            if reminderVM.title.isEmpty {
+            if reminder.title.isEmpty {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { /// Anything over 0.5 delay seems to work
                     focusedField.wrappedValue = .reminderTab
                 }

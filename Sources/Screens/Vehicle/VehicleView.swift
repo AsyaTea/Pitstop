@@ -14,7 +14,6 @@ struct VehicleView: View {
     @ObservedObject var homeVM: HomeViewModel
     @ObservedObject var utilityVM: UtilityViewModel
     @ObservedObject var categoryVM: CategoryViewModel
-    @ObservedObject var notificationVM: NotificationManager
 
     @AppStorage("shouldShowOnboardings") var shouldShowOnboarding: Bool = true
 //    @State var shouldShowOnboarding : Bool = true //FOR TESTING
@@ -69,6 +68,6 @@ struct VehicleView_Previews: PreviewProvider {
     static var previews: some View {
         VehicleView(onboardingVM: OnboardingViewModel(), dataVM: DataViewModel(),
                     homeVM: HomeViewModel(), utilityVM: UtilityViewModel(),
-                    categoryVM: CategoryViewModel(), notificationVM: NotificationManager())
+                    categoryVM: CategoryViewModel())
     }
 }

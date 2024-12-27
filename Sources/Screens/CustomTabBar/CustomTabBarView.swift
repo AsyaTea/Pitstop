@@ -14,7 +14,6 @@ struct CustomTabBarView: View {
     @StateObject var utilityVM: UtilityViewModel = .init()
     @StateObject var categoryVM = CategoryViewModel()
     @StateObject var onboardingVM = OnboardingViewModel()
-    @StateObject var notificationVM = NotificationManager()
 
     var body: some View {
         CustomTabView(tabs: TabType.allCases.map(\.tabItem), selectedIndex: $selectedIndex) { index in
@@ -27,7 +26,7 @@ struct CustomTabBarView: View {
     func getTabView(type: TabType) -> some View {
         switch type {
         case .home:
-            VehicleView(onboardingVM: onboardingVM, dataVM: dataVM, homeVM: homeVM, utilityVM: utilityVM, categoryVM: categoryVM, notificationVM: notificationVM)
+            VehicleView(onboardingVM: onboardingVM, dataVM: dataVM, homeVM: homeVM, utilityVM: utilityVM, categoryVM: categoryVM)
         case .stats:
             AnalyticsOverviewView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM)
         case .settings:
