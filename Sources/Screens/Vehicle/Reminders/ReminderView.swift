@@ -30,6 +30,7 @@ struct ReminderView: View {
         sort: [SortDescriptor(\Reminder2.date, order: .forward)]
     )
     var expiredReminders: [Reminder2]
+    @State var selectedReminder: Reminder2 = .mock()
 
     var body: some View {
         NavigationView {
@@ -42,7 +43,8 @@ struct ReminderView: View {
                             title: "Future",
                             items: reminders,
                             areItemsExpired: false,
-                            onItemTap: {
+                            onItemTap: { reminder in
+                                selectedReminder = reminder
                                 showEditReminder.toggle()
                             }
                         )
@@ -51,17 +53,18 @@ struct ReminderView: View {
                             title: "Expired",
                             items: expiredReminders,
                             areItemsExpired: true,
-                            onItemTap: {
+                            onItemTap: { _ in
                                 showExpiredReminder.toggle()
                             }
                         )
 
-                        // MARK: - NAVIGATE TO EDIT
+                        // FIXME: - REFACTOR NAVIGATION
 
                         NavigationLink(
                             destination: EditReminderView(
-                                dataVM: dataVM,
-                                utilityVM: utilityVM
+                                //                                dataVM: dataVM,
+                                //                                utilityVM: utilityVM,
+                                reminder: $selectedReminder
                             ),
                             isActive: $showEditReminder
                         ) {}
@@ -101,7 +104,6 @@ struct ReminderView: View {
                         .foregroundColor(Palette.black)
                 }
             }
-            .interactiveDismissDisabled()
         }
     }
 }
@@ -112,7 +114,7 @@ private extension ReminderView {
         title: String,
         items: [Reminder2],
         areItemsExpired: Bool,
-        onItemTap: @escaping () -> Void
+        onItemTap: @escaping (Reminder2) -> Void
     ) -> some View {
         VStack {
             ZStack {
@@ -137,8 +139,8 @@ private extension ReminderView {
                 .padding()
             } else {
                 ForEach(items, id: \.uuid) { reminder in
-                    reminderRow(item: reminder, expired: areItemsExpired) {
-                        onItemTap()
+                    reminderRow(item: reminder, expired: areItemsExpired) { currentReminder in
+                        onItemTap(currentReminder)
                     }
                 }
             }
@@ -149,9 +151,9 @@ private extension ReminderView {
     func reminderRow(
         item: Reminder2,
         expired: Bool,
-        ontap: @escaping () -> Void
+        ontap: @escaping (Reminder2) -> Void
     ) -> some View {
-        Button(action: { ontap() }, label: {
+        Button(action: { ontap(item) }, label: {
             HStack {
                 ZStack {
                     Circle()

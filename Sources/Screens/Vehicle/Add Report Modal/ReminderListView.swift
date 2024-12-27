@@ -64,7 +64,7 @@ struct ReminderListView: View {
             case .date:
                 DatePicker(
                     selection: $reminder.date,
-                    in: Date() ... Calendar.current.date(byAdding: .year, value: 4, to: Date())!
+                    in: Date() ... Date().addingYears(3)!
                 ) {
                     CategoryRow(
                         title: String(localized: "Remind me on"),

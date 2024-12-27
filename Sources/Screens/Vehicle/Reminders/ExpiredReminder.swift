@@ -15,8 +15,8 @@ struct ExpiredReminder: View {
 
     var body: some View {
         VStack {
-            ReminderList(utilityVM: utilityVM)
-                .disabled(true)
+//            ReminderList(utilityVM: utilityVM)
+//                .disabled(true)
         }
         .background(Palette.greyBackground)
         .navigationBarBackButtonHidden(true)

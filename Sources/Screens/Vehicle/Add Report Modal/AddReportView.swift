@@ -100,7 +100,7 @@ struct AddReportView: View {
                         reminderVM.createReminder()
                         dataVM.addReminder(reminder: reminderVM.reminderS)
                         notificationVM.requestAuthNotifications()
-                        notificationVM.createNotification(reminderS: reminderVM.reminderS)
+                        notificationVM.createNotification(for: .mock()) // FIXME:
                     }
                     //                        categoryVM.retrieveAndUpdate()
                     presentationMode.wrappedValue.dismiss()

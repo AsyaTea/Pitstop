@@ -8,17 +8,37 @@
 import SwiftUI
 
 struct EditReminderView: View {
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) private var presentationMode
-    @ObservedObject var dataVM: DataViewModel
-    @StateObject var utilityVM: UtilityViewModel
 
     @StateObject var notificationVM = NotificationManager()
 
-    @State private var showingAlert = false
+    @State private var showDeleteAlert = false
+
+    var reminder: Reminder2
+
+    @FocusState var focusedField: FocusFieldReminder?
+    @State private var category: ServiceCategory
+    @State private var title: String
+    @State private var date: Date
+    @State private var note: String
+
+    init(reminder: Binding<Reminder2>) {
+        self.reminder = reminder.wrappedValue
+        _category = State(initialValue: reminder.wrappedValue.category)
+        _date = State(initialValue: reminder.wrappedValue.date)
+        _title = State(initialValue: reminder.wrappedValue.title ?? "")
+        _note = State(initialValue: reminder.wrappedValue.note)
+    }
+
+    enum FocusFieldReminder: Hashable {
+        case title
+        case note
+    }
 
     var body: some View {
         VStack {
-            ReminderList(utilityVM: utilityVM)
+            reminderInformation()
         }
         .background(Palette.greyBackground)
         .navigationBarBackButtonHidden(true)
@@ -38,13 +58,9 @@ struct EditReminderView: View {
             .accentColor(Palette.greyHard),
             trailing:
             Button(action: {
-                do {
-                    try dataVM.updateReminder(utilityVM.reminderToEdit)
-                } catch {
-                    print(error)
-                }
-                notificationVM.removeNotification(reminderS: utilityVM.reminderToEdit)
-                notificationVM.createNotification(reminderS: utilityVM.reminderToEdit)
+                updateReminder(reminder)
+                notificationVM.removeNotification(for: reminder)
+                notificationVM.createNotification(for: reminder)
                 presentationMode.wrappedValue.dismiss()
             }, label: {
                 Text(String(localized: "Save"))
@@ -62,23 +78,21 @@ struct EditReminderView: View {
             VStack {
                 Spacer(minLength: UIScreen.main.bounds.size.height * 0.78)
                 Button(action: {
-                    showingAlert.toggle()
+                    showDeleteAlert.toggle()
                 }, label: {
                     DeleteButton(title: "Delete reminder")
                 })
+                .buttonStyle(Primary())
                 Spacer()
             }
         )
-        .alert(isPresented: $showingAlert) {
+        .alert(isPresented: $showDeleteAlert) {
             Alert(
                 title: Text(String(localized: "Are you sure you want to delete this reminder?")),
                 message: Text(String(localized: "This action cannot be undone")),
                 primaryButton: .destructive(Text(String(localized: "Delete"))) {
-                    dataVM.deleteReminder(reminderS: utilityVM.reminderToEdit)
-                    notificationVM.removeNotification(reminderS: utilityVM.reminderToEdit)
-                    dataVM.getRemindersCoreData(filter: nil, storage: { storage in
-                        dataVM.reminderList = storage
-                    })
+                    notificationVM.removeNotification(for: reminder)
+                    deleteReminder(reminder)
                     presentationMode.wrappedValue.dismiss()
                 },
                 secondaryButton: .cancel()
@@ -87,20 +101,15 @@ struct EditReminderView: View {
     }
 }
 
-struct ReminderList: View {
-    @StateObject var utilityVM: UtilityViewModel
-    //    @ObservedObject var reminderVM: AddReminderViewModel
-    @FocusState var focusedField: FocusFieldReminder?
-    @State private var selectedItem: Category = .other
-
-    var body: some View {
+private extension EditReminderView {
+    func reminderInformation() -> some View {
         CustomList {
             // MARK: - TITLE
 
             HStack {
                 CategoryRow(title: "Title", icon: .other, color: Palette.colorViolet)
                 Spacer()
-                TextField(String(localized: "Title"), text: $utilityVM.reminderToEdit.title)
+                TextField(String(localized: "Title"), text: $title)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .fixedSize(horizontal: true, vertical: true)
@@ -117,22 +126,18 @@ struct ReminderList: View {
             HStack {
                 CategoryRow(title: "Category", icon: .category, color: Palette.colorYellow)
                 NavigationLink(destination:
-                    EditReminderCategoryPicker(
-                        utilityVM: utilityVM,
-                        selectedItem: $selectedItem
-                    )
-                ) {
-                    Spacer()
-                    Text(Category(rawValue: Int(utilityVM.reminderToEdit.category ?? 0))?.label ?? "")
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.greyMiddle)
-                }
+                    CustomCategoryPicker2(selectedCategory: $category)) {
+                        Spacer()
+                        Text(category.rawValue)
+                            .font(Typography.headerM)
+                            .foregroundColor(Palette.greyMiddle)
+                    }
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: - DATE
 
-            DatePicker(selection: $utilityVM.reminderToEdit.date, in: Date()...) {
+            DatePicker(selection: $date, in: Date() ... Date().addingYears(3)!) {
                 CategoryRow(title: "Day", icon: .day, color: Palette.colorGreen)
             }
             .datePickerStyle(.compact)
@@ -143,7 +148,7 @@ struct ReminderList: View {
             HStack {
                 CategoryRow(title: "Note", icon: .noteColored, color: Palette.colorViolet)
                 Spacer()
-                TextField(String(localized: "Note"), text: $utilityVM.reminderToEdit.note)
+                TextField(String(localized: "Note"), text: $note)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .fixedSize(horizontal: true, vertical: true)
@@ -158,40 +163,30 @@ struct ReminderList: View {
     }
 }
 
-enum FocusFieldReminder: Hashable {
-    case title
-    case note
+private extension EditReminderView {
+    func deleteReminder(_ reminder: Reminder2) {
+        modelContext.delete(reminder)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to delete reminder: \(error)")
+        }
+    }
+
+    func updateReminder(_ reminder: Reminder2) {
+        reminder.title = title
+        reminder.category = category
+        reminder.note = note
+        reminder.date = date
+        do {
+            try modelContext.save()
+            print("Reminder saved successfully!")
+        } catch {
+            print("Failed to save reminder: \(error)")
+        }
+    }
 }
 
-struct EditReminderCategoryPicker: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
-    @StateObject var utilityVM: UtilityViewModel
-    @Binding var selectedItem: Category
-
-    var body: some View {
-        List {
-            ForEach(Category.allCases, id: \.self) { category in
-                Button(action: {
-                    withAnimation {
-                        if selectedItem != category {
-                            selectedItem = category
-                            utilityVM.reminderToEdit.category = Int16(category.rawValue)
-                        }
-                    }
-                    presentationMode.wrappedValue.dismiss()
-                }, label: {
-                    HStack {
-                        Text(category.label)
-                            .font(Typography.headerM)
-                            .foregroundColor(Palette.black)
-                        Spacer()
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.accentColor)
-                            .opacity(selectedItem == category ? 1.0 : 0.0)
-                    }
-                })
-            }
-        }.listStyle(.insetGrouped)
-    }
+#Preview {
+    EditReminderView(reminder: .constant(.mock()))
 }

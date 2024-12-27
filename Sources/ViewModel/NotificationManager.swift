@@ -9,69 +9,49 @@ import Foundation
 import NotificationCenter
 
 class NotificationManager: ObservableObject {
-    @Published var id: String = ""
-
     func requestAuthNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
-                print("All set!")
+                print("Notification authorization granted.")
             } else if let error {
-                print(error.localizedDescription)
+                print("Notification authorization error: \(error.localizedDescription)")
             }
         }
     }
 
-    func createNotification(reminderS: ReminderState) {
-        let category = Category(rawValue: Int(reminderS.category ?? 0))
+    func createNotification(for reminder: Reminder2) {
+        let isItalian = Locale.current.language.languageCode?.identifier == "it"
+        let category = reminder.category.rawValue.lowercased()
 
-        var isIta: Bool {
-            Locale.current.languageCode == "it"
-        }
-        let reminderEng = (String(localized: "You have a new ") + String(category?.label.lowercased() ?? "") + String(localized: " reminder"))
-        let reminderIta = "Hai un nuovo promemoria in \(category?.label.lowercased() ?? "")"
+        let notificationBody = isItalian
+            ? "Hai un nuovo promemoria in \(category)"
+            : "\(String(localized: "You have a new "))\(category)\(String(localized: " reminder"))"
 
         let content = UNMutableNotificationContent()
-        id = reminderS.reminderID?.uriRepresentation().absoluteString ?? UUID().uuidString
-        print(id)
-        content.title = reminderS.title
-        content.body = (isIta ? reminderIta : reminderEng)
+        content.title = reminder.title ?? ""
+        content.body = notificationBody
+        content.sound = .default
 
-        content.sound = UNNotificationSound.default
+        let triggerDateComponents = Calendar.current.dateComponents([
+            .day, .month, .year, .hour, .minute
+        ], from: reminder.date)
 
-        let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.day, .month, .year, .hour, .minute], from: reminderS.date), repeats: false)
-        let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDateComponents, repeats: false)
+        let request = UNNotificationRequest(identifier: reminder.uuid.uuidString, content: content, trigger: trigger)
 
         UNUserNotificationCenter.current().add(request) { error in
             if let error {
-                print("Unable to Add Notification Request (\(error), \(error.localizedDescription))")
+                print("Error adding notification request: \(error.localizedDescription)")
             }
         }
     }
 
-    func removeNotification(reminderS _: ReminderState) {
-        UNUserNotificationCenter.current().getPendingNotificationRequests { notificationRequests in
-            var identifiers: [String] = []
-            for notification: UNNotificationRequest in notificationRequests {
-                if notification.identifier == self.id {
-                    identifiers.append(notification.identifier)
-                }
-            }
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
-            print("Notification Unscheduled with", identifiers)
+    func removeNotification(for reminder: Reminder2) {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            let identifiersToRemove = requests.filter { $0.identifier == reminder.uuid.uuidString }.map(\.identifier)
+
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiersToRemove)
+            print("Notifications unscheduled: \(identifiersToRemove)")
         }
-    }
-}
-
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_: UIApplication, willFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        UNUserNotificationCenter.current().delegate = self
-        return true
-    }
-}
-
-extension AppDelegate: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("Notification received with identifier \(notification.request.identifier)")
-        completionHandler([.banner, .sound])
     }
 }

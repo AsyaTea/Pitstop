@@ -150,6 +150,7 @@ struct TopNav: View {
         .sheet(isPresented: $showReminders) {
             ReminderView(dataVM: dataVM, utilityVM: utilityVM)
         }
+        .interactiveDismissDisabled()
     }
 
     // Opacity to let appear items in the top bar
