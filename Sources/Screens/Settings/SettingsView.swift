@@ -5,13 +5,16 @@
 //  Created by Ivan Voloshchuk on 06/05/22.
 //
 
+import SwiftData
 import SwiftUI
 
 struct SettingsView: View {
-    @ObservedObject var dataVM: DataViewModel
+    @Environment(\.modelContext) private var modelContext
     @ObservedObject var homeVM: HomeViewModel
     @StateObject var onboardingVM: OnboardingViewModel
-    @ObservedObject var categoryVM: CategoryViewModel
+
+    @Query
+    var vehicles: [Vehicle2]
 
     var body: some View {
         NavigationView {
@@ -19,17 +22,13 @@ struct SettingsView: View {
                 Text("") // FIX: Workaround to not overlap  list on navigation title
                 CustomList {
                     Section(header: Text("Vehicles")) {
-                        ForEach(dataVM.vehicleList, id: \.self) { vehicle in
-                            let destination = EditVehicleView(
-                                dataVM: dataVM,
-                                vehicle: vehicle,
-                                vehicleS: VehicleState.fromVehicleViewModel(vm: vehicle)
-                            )
+                        ForEach(vehicles, id: \.uuid) { vehicle in
+                            let destination = EditVehicleView(vehicle2: vehicle)
                             NavigationLink(destination: destination) {
                                 CategoryRow(title: vehicle.name, icon: .carSettings, color: Palette.colorViolet)
                             }
                         }
-                        .onDelete(perform: dataVM.deleteVehicle)
+                        .onDelete(perform: deleteVehicle)
 
                         Button(action: {
                             onboardingVM.addNewVehicle = true
@@ -70,14 +69,25 @@ struct SettingsView: View {
             )
         }
     }
+
+    func deleteVehicle(at offsets: IndexSet) {
+        for index in offsets {
+            let vehicleToDelete = vehicles[index]
+            modelContext.delete(vehicleToDelete)
+        }
+
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to delete vehicle: \(error)")
+        }
+    }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(dataVM: DataViewModel(),
-                     homeVM: HomeViewModel(),
-                     onboardingVM: OnboardingViewModel(),
-                     categoryVM: CategoryViewModel())
+        SettingsView(homeVM: HomeViewModel(),
+                     onboardingVM: OnboardingViewModel())
     }
 }
 
