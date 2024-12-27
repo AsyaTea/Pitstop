@@ -51,6 +51,20 @@ final class Vehicle2: Identifiable {
         self.year = year
     }
 
+    // Custom decode method to handle relationships
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        uuid = try container.decode(UUID.self, forKey: .uuid)
+        name = try container.decode(String.self, forKey: .name)
+        brand = try container.decode(String.self, forKey: .brand)
+        model = try container.decode(String.self, forKey: .model)
+        mainFuelType = try container.decode(FuelType.self, forKey: .mainFuelType)
+        secondaryFuelType = try container.decodeIfPresent(FuelType.self, forKey: .secondaryFuelType)
+        odometer = try container.decode(Float.self, forKey: .odometer)
+        plate = try container.decodeIfPresent(String.self, forKey: .plate)
+        year = try container.decodeIfPresent(Int.self, forKey: .year)
+    }
+
     func saveToModelContext(context: ModelContext) throws {
         context.insert(self)
         try context.save()
@@ -58,7 +72,26 @@ final class Vehicle2: Identifiable {
     }
 
     static func mock() -> Vehicle2 {
-        Vehicle2(name: "", brand: "", model: "", odometer: 0)
+        Vehicle2(name: "Default car", brand: "Brand", model: "XYZ", odometer: 0)
+    }
+}
+
+extension Vehicle2: Codable {
+    enum CodingKeys: String, CodingKey {
+        case uuid, name, brand, model, mainFuelType, secondaryFuelType, odometer, plate, year, expenses, numbers
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(uuid, forKey: .uuid)
+        try container.encode(name, forKey: .name)
+        try container.encode(brand, forKey: .brand)
+        try container.encode(model, forKey: .model)
+        try container.encode(mainFuelType, forKey: .mainFuelType)
+        try container.encode(secondaryFuelType, forKey: .secondaryFuelType)
+        try container.encode(odometer, forKey: .odometer)
+        try container.encode(plate, forKey: .plate)
+        try container.encode(year, forKey: .year)
     }
 }
 
