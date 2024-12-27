@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FuelType: Int {
+enum FuelType: Int, Codable {
     case diesel = 0
     case gasoline = 1
     case propane = 2

@@ -15,7 +15,12 @@ struct PitstopApp: App {
     var body: some Scene {
         WindowGroup {
             CustomTabBarView()
-                .modelContainer(for: [Document.self, Reminder.self])
+                .modelContainer(for: [Document.self,
+                                      Reminder.self,
+                                      Vehicle2.self,
+                                      Expense2.self,
+                                      Number2.self]
+                )
 //            ContentView()
 //            AnalyticsOverviewView()
         }
