@@ -9,6 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject var vehicleManager: VehicleManager
     @Environment(\.modelContext) private var modelContext
     @ObservedObject var homeVM: HomeViewModel
     @StateObject var onboardingVM: OnboardingViewModel
@@ -81,6 +82,7 @@ struct SettingsView: View {
         } catch {
             print("Failed to delete vehicle: \(error)")
         }
+        vehicleManager.currentVehicle = vehicles.first ?? .mock()
     }
 }
 

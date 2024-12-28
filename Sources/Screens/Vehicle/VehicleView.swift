@@ -54,9 +54,6 @@ struct VehicleView: View {
             OnboardingView(onboardingVM: onboardingVM, shouldShowOnboarding: $shouldShowOnboarding)
         }
         .onAppear {
-            if shouldShowOnboarding == false {
-                dataVM.getCurrentVehicle()
-            }
             homeVM.headerBackgroundColor = homeVM.loadColor(key: homeVM.COLOR_KEY)
             homeVM.headerCardColor = homeVM.loadColor(key: homeVM.COLOR_KEY_CARD)
         }

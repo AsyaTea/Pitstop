@@ -12,15 +12,24 @@ import SwiftUI
 struct PitstopApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
+    let modelContainer: ModelContainer
+
+    init() {
+        do {
+            modelContainer = try ModelContainer(for: Document.self,
+                                                Reminder.self,
+                                                Vehicle2.self,
+                                                Expense2.self,
+                                                Number2.self)
+        } catch {
+            fatalError("Could not initialize ModelContainer")
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             CustomTabBarView()
-                .modelContainer(for: [Document.self,
-                                      Reminder.self,
-                                      Vehicle2.self,
-                                      Expense2.self,
-                                      Number2.self]
-                )
+                .modelContainer(modelContainer)
                 .environmentObject(VehicleManager())
 //            ContentView()
 //            AnalyticsOverviewView()
