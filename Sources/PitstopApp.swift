@@ -10,7 +10,7 @@ import SwiftUI
 
 @main
 struct PitstopApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     let modelContainer: ModelContainer
 
