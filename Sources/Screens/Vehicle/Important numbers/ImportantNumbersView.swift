@@ -8,12 +8,8 @@
 import SwiftUI
 
 struct ImportantNumbersView: View {
+    @EnvironmentObject var vehicleManager: VehicleManager
     @Environment(\.presentationMode) private var presentationMode
-
-    @ObservedObject var homeVM: HomeViewModel
-    @ObservedObject var dataVM: DataViewModel
-
-    @State private var showEdit = false
 
     var body: some View {
         NavigationView {
@@ -22,12 +18,9 @@ struct ImportantNumbersView: View {
                 VStack {
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(spacing: 16) {
-                            ForEach(dataVM.numberList, id: \.self) { number in
-                                NavigationLink(
-                                    destination: EditNumbers(dataVM: dataVM, numberToEdit: NumberState.fromNumberViewModel(vm: number))
-                                ) {
-                                    NumberCardView(title: number.title, number: number.telephone)
-                                }
+                            ForEach(vehicleManager.currentVehicle.numbers, id: \.self) { number in
+                                // TODO: Add edit number navigation
+                                NumberCardView(title: number.title, number: number.telephone)
                             }
                         }
                     }

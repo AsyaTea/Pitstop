@@ -278,7 +278,7 @@ private extension BottomContentView {
                 .foregroundColor(Palette.black)
                 .font(Typography.headerL)
             Spacer()
-            if showViewAll, let viewAllAction {
+            if showViewAll, let viewAllAction = viewAllAction {
                 HStack {
                     Button(action: {
                         viewAllAction()
@@ -336,37 +336,5 @@ struct CategoryComponent: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 10)
-    }
-}
-
-struct TitleSectionComponent: View {
-    let sectionTitle: LocalizedStringKey
-    let showViewAll: Bool
-    let viewAllAction: (() -> Void)?
-
-    init(sectionTitle: LocalizedStringKey, showViewAll: Bool, viewAllAction: (() -> Void)? = nil) {
-        self.sectionTitle = sectionTitle
-        self.showViewAll = showViewAll
-        self.viewAllAction = showViewAll ? viewAllAction : nil
-    }
-
-    var body: some View {
-        HStack {
-            Text(sectionTitle)
-                .foregroundColor(Palette.black)
-                .font(Typography.headerL)
-            Spacer()
-            if showViewAll, let viewAllAction {
-                HStack {
-                    Button(action: {
-                        viewAllAction()
-                    }, label: {
-                        Text("View all")
-                            .font(Typography.ControlS)
-                            .foregroundColor(Palette.greyMiddle)
-                    })
-                }
-            }
-        }
     }
 }
