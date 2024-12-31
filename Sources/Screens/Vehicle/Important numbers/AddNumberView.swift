@@ -1,5 +1,5 @@
 //
-//  AlertAddNumbers.swift
+//  AddNumberView.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 14/05/22.
@@ -12,7 +12,7 @@ enum FocusFieldNumbers: Hashable {
     case number
 }
 
-struct AlertAddNumbers: View {
+struct AddNumberView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var vehicleManager: VehicleManager
     @FocusState var focusedField: FocusFieldNumbers?
@@ -96,7 +96,7 @@ struct AlertAddNumbers: View {
     }
 }
 
-private extension AlertAddNumbers {
+private extension AddNumberView {
     func saveNumber() {
         let number = Number2(
             title: numberName,

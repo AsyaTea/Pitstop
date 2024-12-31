@@ -169,7 +169,7 @@ struct BottomContentView: View {
             DocumentView(document: $selectedDocument)
         }
         .alert(config: $newNumberAlert) {
-            AlertAddNumbers(alert: $newNumberAlert)
+            AddNumberView(alert: $newNumberAlert)
                 .environmentObject(vehicleManager)
         }
     }
