@@ -6,36 +6,44 @@
 //
 
 import Foundation
+import SwiftData
 
 class VehicleManager: ObservableObject {
-    @Published var currentVehicle: Vehicle2 = .mock() {
-        didSet {
-            saveVehicleToUserDefaults(vehicle: currentVehicle)
+    @Published private(set) var currentVehicle: Vehicle2 = .mock()
+
+    private let userDefaultsKey = "currentVehicleUUID"
+
+    func fetchVehicleByUUID(uuid: UUID, modelContext: ModelContext) -> Vehicle2? {
+        do {
+            let descriptor = FetchDescriptor<Vehicle2>(
+                predicate: #Predicate { vehicle in
+                    vehicle.uuid == uuid
+                }
+            )
+
+            // Perform the fetch using the descriptor
+            let vehicles = try modelContext.fetch(descriptor)
+            return vehicles.first // Return the first matching vehicle, if any
+        } catch {
+            print("Error fetching vehicle by UUID: \(error)")
+            return nil
         }
     }
 
-    private let userDefaultsKey = "currentVehicle"
-
-    init() {
-        if let vehicle = loadVehicleFromUserDefaults() {
+    func loadCurrentVehicle(modelContext: ModelContext) {
+        if let uuidString = UserDefaults.standard.string(forKey: userDefaultsKey),
+           let uuid = UUID(uuidString: uuidString),
+           let vehicle = fetchVehicleByUUID(uuid: uuid, modelContext: modelContext) {
             currentVehicle = vehicle
         }
     }
 
-    private func loadVehicleFromUserDefaults() -> Vehicle2? {
-        if let savedData = UserDefaults.standard.data(forKey: userDefaultsKey) {
-            let decoder = JSONDecoder()
-            if let loadedVehicle = try? decoder.decode(Vehicle2.self, from: savedData) {
-                return loadedVehicle
-            }
-        }
-        return nil
+    func setCurrentVehicle(_ vehicle: Vehicle2) {
+        currentVehicle = vehicle
+        saveUUIDToUserDefaults(vehicle: vehicle)
     }
 
-    private func saveVehicleToUserDefaults(vehicle: Vehicle2) {
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(vehicle) {
-            UserDefaults.standard.set(encoded, forKey: userDefaultsKey)
-        }
+    private func saveUUIDToUserDefaults(vehicle: Vehicle2) {
+        UserDefaults.standard.set(vehicle.uuid.uuidString, forKey: userDefaultsKey)
     }
 }

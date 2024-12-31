@@ -33,28 +33,12 @@ struct ImportantNumbersView: View {
                     }
                     .padding(.vertical, 20)
                     Spacer()
-//                        Button(action: {
-//                            homeVM.showAlertNumbersInside.toggle()
-//                            homeVM.interactiveDismiss.toggle()
-//                        }, label: {
-//                            BlackButton(text: "Add new contact", color: Palette.black)
-//                        })
-                }
-                .overlay(
-                    homeVM.showAlertNumbersInside ? Color.black.opacity(0.4) : Color.clear
-                )
-
-                if homeVM.showAlertNumbersInside {
-                    Spacer()
-                    AlertAddNumbersInside(homeVM: homeVM, dataVM: dataVM)
-                    Spacer()
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
                 Button(action: {
-                    homeVM.resetAlertFields()
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text("Cancel")

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TopNav: View {
     @EnvironmentObject var vehicleManager: VehicleManager
+    @Environment(\.modelContext) var modelContext
 
     @State private var showingAllCars = false
     @State private var showReminders = false
@@ -51,7 +52,7 @@ struct TopNav: View {
                 .confirmationDialog(String(localized: "Select a vehicle"), isPresented: $showingAllCars, titleVisibility: .hidden) {
                     ForEach(vehicles, id: \.uuid) { vehicle in
                         Button(vehicle.name) {
-                            vehicleManager.currentVehicle = vehicle
+                            vehicleManager.setCurrentVehicle(vehicle)
 //                            do {
 //                                if vehicleS.vehicleID != nil {
 //                                    try dataVM.updateVehicle(vehicleS)
@@ -120,6 +121,9 @@ struct TopNav: View {
             ReminderView()
         }
         .interactiveDismissDisabled()
+        .onAppear {
+            vehicleManager.loadCurrentVehicle(modelContext: modelContext)
+        }
     }
 
     // Opacity to let appear items in the top bar

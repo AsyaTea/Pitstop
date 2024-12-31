@@ -10,6 +10,7 @@ import SwiftData
 import SwiftUI
 
 struct BottomContentView: View {
+    @EnvironmentObject var vehicleManager: VehicleManager
     @Environment(\.modelContext) private var modelContext
     @ObservedObject var homeVM: HomeViewModel
     @ObservedObject var dataVM: DataViewModel
@@ -27,6 +28,12 @@ struct BottomContentView: View {
 
     @Query var documents: [Document]
     @State private var selectedDocument: Document = .mock()
+
+    @State private var newNumberAlert: AlertConfig = .init(
+        enableBackgroundBlur: false,
+        disableOutsideTap: false,
+        transitionType: .slide
+    )
 
     var body: some View {
         VStack(spacing: 0) {
@@ -117,7 +124,7 @@ struct BottomContentView: View {
                 VStack {
                     Spacer(minLength: 12)
                     HStack {
-                        ForEach(dataVM.numberList, id: \.self) { number in
+                        ForEach(vehicleManager.currentVehicle.numbers) { number in
                             Button(action: {
                                 UIApplication.shared.open(URL(string: "tel://" + number.telephone)!)
                             }, label: {
@@ -125,11 +132,7 @@ struct BottomContentView: View {
                             })
                         }
                         Button(action: {
-                            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                withAnimation(.easeInOut) {
-                                    homeVM.showAlertNumbers.toggle()
-                                }
-                            }
+                            newNumberAlert.present()
                         }, label: {
                             addComponent(title: "Add contact")
                         })
@@ -158,12 +161,16 @@ struct BottomContentView: View {
                 category: Category(rawValue: Int(utilityVM.expenseToEdit.category ?? 0)) ?? .other
             )
         }
-        .sheet(isPresented: $viewAllNumbers, onDismiss: homeVM.resetAlertFieldsInside) {
+        .sheet(isPresented: $viewAllNumbers) {
             ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)
                 .interactiveDismissDisabled(homeVM.interactiveDismiss)
         }
         .fullScreenCover(isPresented: $showPDF) {
             DocumentView(document: $selectedDocument)
+        }
+        .alert(config: $newNumberAlert) {
+            AlertAddNumbers(alert: $newNumberAlert)
+                .environmentObject(vehicleManager)
         }
     }
 
