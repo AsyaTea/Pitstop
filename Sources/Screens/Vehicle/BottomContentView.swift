@@ -39,11 +39,17 @@ struct BottomContentView: View {
         VStack(spacing: 0) {
             // MARK: LAST EVENTS
 
-            TitleSectionComponent(sectionTitle: "Last events", binding: $viewAllEvents)
-                .padding()
-                .padding(.top, 10)
-                .padding(.bottom, -10)
-                .sheet(isPresented: $viewAllEvents) { LastEventsListView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM) }
+            titleSection(
+                sectionTitle: "Last events",
+                showViewAll: true,
+                viewAllAction: {
+                    viewAllEvents.toggle()
+                }
+            )
+            .padding()
+            .padding(.top, 10)
+            .padding(.bottom, -10)
+            .sheet(isPresented: $viewAllEvents) { LastEventsListView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM) }
 
             if dataVM.expenseList.isEmpty {
                 HStack {
@@ -69,12 +75,10 @@ struct BottomContentView: View {
 
             // MARK: DOCUMENTS
 
-            HStack {
-                Text("Documents")
-                    .foregroundColor(Palette.black)
-                    .font(Typography.headerL)
-                Spacer()
-            }
+            titleSection(
+                sectionTitle: "Documents",
+                showViewAll: false
+            )
             .padding()
             .padding(.top, 10)
             .padding(.bottom, -10)
@@ -113,10 +117,16 @@ struct BottomContentView: View {
                     .frame(width: 16)
             }
 
-            TitleSectionComponent(sectionTitle: "Useful contacts", binding: $viewAllNumbers)
-                .padding()
-                .padding(.top, 10)
-                .padding(.bottom, -10)
+            titleSection(
+                sectionTitle: "Useful contacts",
+                showViewAll: !vehicleManager.currentVehicle.numbers.isEmpty,
+                viewAllAction: {
+                    viewAllNumbers.toggle()
+                }
+            )
+            .padding()
+            .padding(.top, 10)
+            .padding(.bottom, -10)
 
             // MARK: IMPORTANT NUMBERS
 
@@ -162,8 +172,8 @@ struct BottomContentView: View {
             )
         }
         .sheet(isPresented: $viewAllNumbers) {
-            ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)
-                .interactiveDismissDisabled(homeVM.interactiveDismiss)
+            ImportantNumbersView()
+                .interactiveDismissDisabled(true)
         }
         .fullScreenCover(isPresented: $showPDF) {
             DocumentView(document: $selectedDocument)
@@ -256,6 +266,33 @@ struct BottomContentView: View {
     }
 }
 
+private extension BottomContentView {
+    @ViewBuilder
+    func titleSection(
+        sectionTitle: LocalizedStringKey,
+        showViewAll: Bool,
+        viewAllAction: (() -> Void)? = nil
+    ) -> some View {
+        HStack {
+            Text(sectionTitle)
+                .foregroundColor(Palette.black)
+                .font(Typography.headerL)
+            Spacer()
+            if showViewAll, let viewAllAction {
+                HStack {
+                    Button(action: {
+                        viewAllAction()
+                    }, label: {
+                        Text("View all")
+                            .font(Typography.ControlS)
+                            .foregroundColor(Palette.greyMiddle)
+                    })
+                }
+            }
+        }
+    }
+}
+
 // struct BottomContentView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        BottomContentView()
@@ -303,8 +340,15 @@ struct CategoryComponent: View {
 }
 
 struct TitleSectionComponent: View {
-    var sectionTitle: LocalizedStringKey
-    @Binding var binding: Bool
+    let sectionTitle: LocalizedStringKey
+    let showViewAll: Bool
+    let viewAllAction: (() -> Void)?
+
+    init(sectionTitle: LocalizedStringKey, showViewAll: Bool, viewAllAction: (() -> Void)? = nil) {
+        self.sectionTitle = sectionTitle
+        self.showViewAll = showViewAll
+        self.viewAllAction = showViewAll ? viewAllAction : nil
+    }
 
     var body: some View {
         HStack {
@@ -312,15 +356,16 @@ struct TitleSectionComponent: View {
                 .foregroundColor(Palette.black)
                 .font(Typography.headerL)
             Spacer()
-            HStack {
-                Button(action: {
-                    binding.toggle()
-                }, label: {
-                    Text("View all")
-                        .font(Typography.ControlS)
-                        .foregroundColor(Palette.greyMiddle)
-
-                })
+            if showViewAll, let viewAllAction {
+                HStack {
+                    Button(action: {
+                        viewAllAction()
+                    }, label: {
+                        Text("View all")
+                            .font(Typography.ControlS)
+                            .foregroundColor(Palette.greyMiddle)
+                    })
+                }
             }
         }
     }
