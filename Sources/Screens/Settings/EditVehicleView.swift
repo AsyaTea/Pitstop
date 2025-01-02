@@ -18,7 +18,7 @@ struct EditVehicleView: View {
     @State private var isTapped2 = false
 
     var isDisabled: Bool {
-        vehicle2.name.isEmpty || vehicle2.brand.isEmpty || vehicle2.model.isEmpty || vehicle2.mainFuelType == .none
+        name.isEmpty || brand.isEmpty || model.isEmpty || mainFuelType == .none
     }
 
     var vehicle2: Vehicle2
@@ -212,6 +212,7 @@ struct EditVehicleView: View {
         vehicle.name = name
         vehicle.brand = brand
         vehicle.model = model
+        vehicle.plate = plate
         vehicle.mainFuelType = mainFuelType
         vehicle.secondaryFuelType = secondaryFuelType
 

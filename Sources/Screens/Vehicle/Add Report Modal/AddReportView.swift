@@ -108,7 +108,7 @@ struct AddReportView: View {
                             vehicleManager.currentVehicle.odometer = odometerValue
                             presentationMode.wrappedValue.dismiss()
                         }
-                            
+
 //                        addExpVM.category = 7 // other
 //                        addExpVM.createExpense()
 //                        dataVM.addExpense(expense: addExpVM.expenseS)
