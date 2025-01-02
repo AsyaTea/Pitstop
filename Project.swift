@@ -3,7 +3,7 @@ import ProjectDescription
 let project = Project(
     name: "Pitstop",
     settings: .settings(configurations: [
-        .debug(name: "Debug", xcconfig: "./xcconfigs/Pitstop-Project.xcconfig"),
+        .debug(name: "Debug", xcconfig: "./xcconfigs/Debug.xcconfig"),
     ]),
     targets: [
         .target(
@@ -36,7 +36,7 @@ let project = Project(
                 /** .target(name: "OtherProjectTarget") **/
             ],
             settings: .settings(configurations: [
-                .debug(name: "Debug", xcconfig: "./xcconfigs/Pitstop-Project.xcconfig"),
+                .debug(name: "Debug", xcconfig: "./xcconfigs/Debug.xcconfig"),
             ])
         ),
     ]

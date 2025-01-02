@@ -367,6 +367,7 @@ struct Page3: View {
                             } catch {
                                 print("\(error)")
                             }
+                            vehicleManager.setCurrentVehicle(vehicle)
                             if onboardingVM.skipNotification == true {
                                 onboardingVM.destination = .page5
                             } else {
@@ -481,14 +482,6 @@ struct Page5: View {
                     Text("Okayyyy let's go")
                 })
                 .buttonStyle(Primary())
-                Button(action: {
-                    withAnimation(.easeInOut) {
-                        onboardingVM.destination = .page2
-                    }
-                }, label: {
-                    Text("Add an other vehicle")
-                })
-                .buttonStyle(Secondary())
             }
         }
         .background(Palette.greyBackground)

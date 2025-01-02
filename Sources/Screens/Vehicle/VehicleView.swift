@@ -14,6 +14,9 @@ struct VehicleView: View {
     @ObservedObject var utilityVM: UtilityViewModel
     @ObservedObject var categoryVM: CategoryViewModel
 
+    @Environment(\.modelContext) var modelContext
+    @EnvironmentObject var vehicleManager: VehicleManager
+
     @AppStorage("shouldShowOnboardings") var shouldShowOnboarding: Bool = true
 //    @State var shouldShowOnboarding : Bool = true //FOR TESTING
     @State private var showAddReport = false
@@ -50,12 +53,21 @@ struct VehicleView: View {
         .sheet(isPresented: $showAddReport) {
             AddReportView(utilityVM: utilityVM, categoryVM: categoryVM, dataVM: dataVM)
         }
-        .fullScreenCover(isPresented: $shouldShowOnboarding) {
-            OnboardingView(onboardingVM: onboardingVM, shouldShowOnboarding: $shouldShowOnboarding)
-        }
+        .fullScreenCover(
+            isPresented: $shouldShowOnboarding,
+            content: {
+                OnboardingView(
+                    onboardingVM: onboardingVM,
+                    shouldShowOnboarding: $shouldShowOnboarding
+                )
+            }
+        )
         .onAppear {
             homeVM.headerBackgroundColor = homeVM.loadColor(key: homeVM.COLOR_KEY)
             homeVM.headerCardColor = homeVM.loadColor(key: homeVM.COLOR_KEY_CARD)
+            if !shouldShowOnboarding {
+                vehicleManager.loadCurrentVehicle(modelContext: modelContext)
+            }
         }
     }
 }

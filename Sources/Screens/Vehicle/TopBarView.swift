@@ -10,7 +10,6 @@ import SwiftUI
 
 struct TopNav: View {
     @EnvironmentObject var vehicleManager: VehicleManager
-    @Environment(\.modelContext) var modelContext
 
     @State private var showingAllCars = false
     @State private var showReminders = false
@@ -121,9 +120,6 @@ struct TopNav: View {
             ReminderView()
         }
         .interactiveDismissDisabled()
-        .onAppear {
-            vehicleManager.loadCurrentVehicle(modelContext: modelContext)
-        }
     }
 
     // Opacity to let appear items in the top bar
