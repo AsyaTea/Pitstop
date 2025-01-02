@@ -51,12 +51,9 @@ struct VehicleView: View {
             AddReportView(utilityVM: utilityVM, categoryVM: categoryVM, dataVM: dataVM)
         }
         .fullScreenCover(isPresented: $shouldShowOnboarding) {
-            OnboardingView(onboardingVM: onboardingVM, dataVM: dataVM, categoryVM: categoryVM, shouldShowOnboarding: $shouldShowOnboarding)
+            OnboardingView(onboardingVM: onboardingVM, shouldShowOnboarding: $shouldShowOnboarding)
         }
         .onAppear {
-            if shouldShowOnboarding == false {
-                dataVM.getCurrentVehicle()
-            }
             homeVM.headerBackgroundColor = homeVM.loadColor(key: homeVM.COLOR_KEY)
             homeVM.headerCardColor = homeVM.loadColor(key: homeVM.COLOR_KEY_CARD)
         }

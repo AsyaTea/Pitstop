@@ -54,15 +54,15 @@ struct Page1: View {
 // MARK: PAGE 2 ADD VEHICLE
 
 struct Page2: View {
+    @Environment(\.modelContext) private var modelContext
     @StateObject var onboardingVM: OnboardingViewModel
-    @StateObject var fuelVM: FuelViewModel
 
     @FocusState var focusedField: FocusFieldBoarding?
 
     @State private var isTapped = false
-    @State private var showDefaultFuel = false
+    @State private var showMainFuelSelection = false
 
-    let haptic = UIImpactFeedbackGenerator(style: .light)
+    @State var vehicle: Vehicle2 = .mock()
 
     var body: some View {
         VStack {
@@ -98,7 +98,7 @@ struct Page2: View {
                     .foregroundColor(Palette.black)
             }
             VStack(spacing: 20) {
-                TextField("Vehicle name", text: $onboardingVM.vehicle.name)
+                TextField("Vehicle name", text: $vehicle.name)
                     .disableAutocorrection(true)
                     .focused($focusedField, equals: .carName)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -111,12 +111,12 @@ struct Page2: View {
                         RoundedRectangle(cornerRadius: 36)
                             .stroke(focusedField == .carName ? Palette.black : Palette.greyInput, lineWidth: 1)
                     )
-                    .modifier(ClearButton(text: $onboardingVM.vehicle.name))
+                    .modifier(ClearButton(text: $vehicle.name))
                     .onSubmit {
                         focusedField = .brand
                     }
 
-                TextField("Brand", text: $onboardingVM.vehicle.brand)
+                TextField("Brand", text: $vehicle.brand)
                     .disableAutocorrection(true)
                     .focused($focusedField, equals: .brand)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -129,12 +129,12 @@ struct Page2: View {
                         RoundedRectangle(cornerRadius: 36)
                             .stroke(focusedField == .brand ? Palette.black : Palette.greyInput, lineWidth: 1)
                     )
-                    .modifier(ClearButton(text: $onboardingVM.vehicle.brand))
+                    .modifier(ClearButton(text: $vehicle.brand))
                     .onSubmit {
                         focusedField = .model
                     }
 
-                TextField("Model", text: $onboardingVM.vehicle.model)
+                TextField("Model", text: $vehicle.model)
                     .disableAutocorrection(true)
                     .focused($focusedField, equals: .model)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -147,7 +147,7 @@ struct Page2: View {
                         RoundedRectangle(cornerRadius: 36)
                             .stroke(focusedField == .model ? Palette.black : Palette.greyInput, lineWidth: 1)
                     )
-                    .modifier(ClearButton(text: $onboardingVM.vehicle.model))
+                    .modifier(ClearButton(text: $vehicle.model))
                     .onSubmit {
                         focusedField = nil
                     }
@@ -155,7 +155,7 @@ struct Page2: View {
                 // MARK: PRIMARY FUEL
 
                 Button(action: {
-                    showDefaultFuel.toggle()
+                    showMainFuelSelection.toggle()
                     isTapped.toggle()
                 }, label: {
                     ZStack {
@@ -164,7 +164,7 @@ struct Page2: View {
                             .background(isTapped ? Palette.greyLight : Palette.greyBackground)
                             .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
                         HStack {
-                            Text(fuelVM.defaultFuelType.label)
+                            Text(vehicle.mainFuelType.label)
                                 .font(Typography.TextM)
                             Spacer()
                         }
@@ -172,11 +172,16 @@ struct Page2: View {
                     }
                     .accentColor(Palette.black)
                 })
-                .confirmationDialog(String(localized: "Select a fuel type"), isPresented: $showDefaultFuel, titleVisibility: .visible) {
+                .confirmationDialog(
+                    String(localized: "Select a fuel type"),
+                    isPresented: $showMainFuelSelection,
+                    titleVisibility: .visible
+                ) {
                     ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
                         Button(fuel.label) {
-                            fuelVM.defaultFuelType = fuel
-                            onboardingVM.vehicle.fuelTypeOne = fuelVM.defaultSelectedFuel
+                            vehicle.mainFuelType = fuel
+                            isTapped.toggle()
+                            focusedField = nil
                         }
                     }
                 }
@@ -186,13 +191,13 @@ struct Page2: View {
             Spacer()
             Button(action: {
                 withAnimation(.easeInOut) {
-                    onboardingVM.destination = .page3
+                    onboardingVM.destination = .page3($vehicle)
                 }
             }, label: {
                 Text("Next")
             })
             .buttonStyle(Primary())
-            .disabled(onboardingVM.isDisabled)
+            .disabled(vehicle.name.isEmpty || vehicle.brand.isEmpty || vehicle.model.isEmpty || vehicle.mainFuelType == .none)
         }
         .ignoresSafeArea(.keyboard)
         .background(Palette.greyBackground)
@@ -208,11 +213,16 @@ struct Page2: View {
 // MARK: PAGE 3 ADD MORE INFO
 
 struct Page3: View {
-    @State private var isImport = false
-    var dataVM = DataViewModel()
-    @StateObject var onboardingVM: OnboardingViewModel
-    @StateObject var fuelVM: FuelViewModel
-    @ObservedObject var categoryVM: CategoryViewModel
+    @EnvironmentObject var vehicleManager: VehicleManager
+    @Environment(\.modelContext) private var modelContext
+    @ObservedObject var onboardingVM: OnboardingViewModel
+
+    @State private var showSecondaryFuelSelection: Bool = false
+    @State private var showPlateSelection: Bool = false
+    @State private var showOdometerSelection: Bool = false
+    @State private var showOverlay: Bool = false
+
+    @Binding var vehicle: Vehicle2
 
     var body: some View {
         ZStack {
@@ -243,20 +253,20 @@ struct Page3: View {
                         // MARK: PLATE NUMBER
 
                         Button(action: {
-                            onboardingVM.showAlertPlate.toggle()
-                            onboardingVM.showOverlay = true
+                            showPlateSelection.toggle()
+                            showOverlay = true
                         }, label: {
-                            OnBoardingCard(text: "Plate number", bgColor: Palette.colorOrange, iconName: "basedOn")
+                            OnBoardingCard(text: "Plate number", bgColor: Palette.colorOrange, iconName: .basedOn)
                         })
 
-                        if !onboardingVM.vehicle.plate.isEmpty {
+                        if let plate = vehicle.plate {
                             ZStack {
                                 Rectangle()
                                     .foregroundColor(Palette.greyLight)
                                     .cornerRadius(12)
 
                                 HStack {
-                                    Text(onboardingVM.vehicle.plate)
+                                    Text(plate)
                                         .font(Typography.ControlS)
                                         .foregroundColor(Palette.black)
                                     Spacer()
@@ -265,108 +275,62 @@ struct Page3: View {
                             }
                             .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
                         }
-
-                        // MARK: DOCUMENTS
-
-                        //                        Button(action: {
-                        //
-                        //                        }, label: {
-                        //                            OnBoardingCard(text: "Documents", bgColor: Palette.colorViolet, iconName:  "documents")
-                        //                        })
 
                         // MARK: ODOMETER
 
                         Button(action: {
-                            onboardingVM.showAlertOdometer.toggle()
-                            onboardingVM.showOverlay = true
+                            showOdometerSelection.toggle()
+                            showOverlay = true
                         }, label: {
-                            OnBoardingCard(text: "Odometer", bgColor: Palette.colorBlue, iconName: "odometer")
+                            OnBoardingCard(text: "Odometer", bgColor: Palette.colorBlue, iconName: .odometer)
                         })
-                        if onboardingVM.vehicle.odometer != 0 || onboardingVM.showAlertOdometer == true {
+                        if vehicle.odometer != 0 || showOdometerSelection == true {
                             ZStack {
                                 Rectangle()
                                     .foregroundColor(Palette.greyLight)
                                     .cornerRadius(12)
 
                                 HStack {
-                                    Text(String(Int(onboardingVM.vehicle.odometer)))
+                                    Text(String(Int(vehicle.odometer)))
                                         .font(Typography.ControlS)
                                         .foregroundColor(Palette.black)
                                     Spacer()
                                 }
                                 .padding()
                             }
-                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
+                            .frame(
+                                width: UIScreen.main.bounds.size.width * 0.90,
+                                height: UIScreen.main.bounds.size.height * 0.075,
+                                alignment: .center
+                            )
                         }
-
-                        // MARK: IMPORTANT NUMBERS
-
-                        //                        Button(action: {
-                        //                            onboardingVM.showAlertImportantNumbers.toggle()
-                        //                            onboardingVM.showOverlay = true
-                        //                        }, label: {
-                        //                            OnBoardingCard(text: "Important numbers", bgColor: Palette.colorGreen, iconName:  "phone")
-                        //                        })
-                        //                        ForEach(1..<3){ i in
-                        //                            ZStack{
-                        //                                Rectangle()
-                        //                                    .foregroundColor(Palette.greyLight)
-                        //                                    .cornerRadius(12)
-                        //
-                        //                                HStack{
-                        //                                    VStack{
-                        //
-                        //                                        Text("Service")
-                        //                                            .font(Typography.ControlS)
-                        //                                            .foregroundColor(Palette.black)
-                        //                                        Text("Numero")
-                        //                                            .font(Typography.TextM)
-                        //                                            .foregroundColor(Palette.greyMiddle)
-                        //                                    }
-                        //                                    Spacer()
-                        //                                }
-                        //                                .padding()
-                        //                            }
-                        //                            .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.075, alignment: .center)
-                        //                            .swipeActions(allowsFullSwipe: false) {
-                        //                                Button {
-                        //                                    print("Muting conversation")
-                        //                                } label: {
-                        //                                    Label("Mute", systemImage: "bell.slash.fill")
-                        //                                }
-                        //                                .cornerRadius(20)
-                        //                                .tint(.indigo)
-                        //
-                        //                                Button(role: .destructive) {
-                        //                                    print("Deleting conversation")
-                        //                                } label: {
-                        //                                    Label("Delete", systemImage: "trash.fill")
-                        //                                }
-                        //                            }
-                        //                        }
 
                         // MARK: SECOND FUEL TYPE
 
                         Button(action: {
-                            onboardingVM.showAllFuels.toggle()
+                            showSecondaryFuelSelection.toggle()
                         }, label: {
-                            OnBoardingCard(text: "Second fuel type", bgColor: Palette.colorYellow, iconName: "fuel")
+                            OnBoardingCard(text: "Second fuel type", bgColor: Palette.colorYellow, iconName: .fuel)
                         })
-                        .confirmationDialog(String(localized: "Select a fuel type"), isPresented: $onboardingVM.showAllFuels, titleVisibility: .visible) {
+                        .confirmationDialog(
+                            String(localized: "Select a fuel type"),
+                            isPresented: $showSecondaryFuelSelection,
+                            titleVisibility: .visible
+                        ) {
                             ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
                                 Button(fuel.label) {
-                                    fuelVM.secondaryFuelType = fuel
+                                    vehicle.secondaryFuelType = fuel
                                 }
                             }
                         }
-                        if fuelVM.secondaryFuelType != .none {
+                        if let secondaryFuel = vehicle.secondaryFuelType {
                             ZStack {
                                 Rectangle()
                                     .foregroundColor(Palette.greyLight)
                                     .cornerRadius(12)
 
                                 HStack {
-                                    Text(fuelVM.secondaryFuelType.label)
+                                    Text(secondaryFuel.label)
                                         .font(Typography.ControlS)
                                         .foregroundColor(Palette.black)
                                     Spacer()
@@ -384,13 +348,13 @@ struct Page3: View {
 
                 if onboardingVM.addNewVehicle == true {
                     Button(action: {
-                        onboardingVM.vehicle.fuelTypeTwo = fuelVM.secondarySelectedFuel
-                        dataVM.setAllCurrentToFalse()
-                        onboardingVM.vehicle.current = 1
-                        dataVM.addVehicle(vehicle: onboardingVM.vehicle)
-                        fuelVM.resetSelectedFuel()
-                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
                         onboardingVM.addNewVehicle = false
+                        vehicleManager.currentVehicle = vehicle
+                        do {
+                            try vehicle.saveToModelContext(context: modelContext)
+                        } catch {
+                            print("\(error)")
+                        }
                     }, label: {
                         Text("Add vehicle")
                     })
@@ -398,16 +362,16 @@ struct Page3: View {
                 } else {
                     Button(action: {
                         withAnimation(.easeInOut) {
-                            onboardingVM.vehicle.fuelTypeTwo = fuelVM.secondarySelectedFuel
-                            dataVM.setAllCurrentToFalse()
-                            onboardingVM.vehicle.current = 1
-                            dataVM.addVehicle(vehicle: onboardingVM.vehicle)
+                            do {
+                                try vehicle.saveToModelContext(context: modelContext)
+                            } catch {
+                                print("\(error)")
+                            }
                             if onboardingVM.skipNotification == true {
                                 onboardingVM.destination = .page5
                             } else {
                                 onboardingVM.destination = .page4
                             }
-                            fuelVM.resetSelectedFuel()
                         }
                     }, label: {
                         Text("Next")
@@ -417,27 +381,23 @@ struct Page3: View {
             }
             .ignoresSafeArea(.keyboard)
             .background(Palette.greyBackground)
-            .disabled(onboardingVM.showOverlay)
+            .disabled(showOverlay)
             .overlay(
                 ZStack {
-                    onboardingVM.showOverlay ? Color.black.opacity(0.4) : Color.clear
-
-                }.ignoresSafeArea()
+                    showOverlay ? Color.black.opacity(0.4) : Color.clear
+                }
+                .ignoresSafeArea()
             )
             .ignoresSafeArea(.keyboard)
 
             // MARK: ALL ALERTS
 
-            if onboardingVM.showAlertPlate == true {
-                AlertPlateOB(onboardingVM: onboardingVM)
+            if showPlateSelection {
+                AlertPlateOB(vehicle: $vehicle, isPresented: $showPlateSelection, showOverlay: $showOverlay)
             }
 
-            if onboardingVM.showAlertOdometer == true {
-                AlertOdometerOB(onboardingVM: onboardingVM)
-            }
-
-            if onboardingVM.showAlertImportantNumbers == true {
-                AlertImportantNumbersOB(onboardingVM: onboardingVM)
+            if showOdometerSelection {
+                AlertOdometerOB(vehicle: $vehicle, isPresented: $showOdometerSelection, showOverlay: $showOverlay)
             }
         }
     }
@@ -498,8 +458,6 @@ struct Page4: View {
 struct Page5: View {
     @Binding var shouldShowOnboarding: Bool
     @ObservedObject var onboardingVM: OnboardingViewModel
-    @ObservedObject var dataVM: DataViewModel
-    let filter = NSPredicate(format: "current == %@", "1")
 
     var body: some View {
         VStack(alignment: .center) {
@@ -519,9 +477,6 @@ struct Page5: View {
             VStack(spacing: 16) {
                 Button(action: {
                     shouldShowOnboarding.toggle()
-                    dataVM.getVehiclesCoreData(filter: filter, storage: { storage in
-                        dataVM.currentVehicle = storage
-                    })
                 }, label: {
                     Text("Okayyyy let's go")
                 })
@@ -529,22 +484,21 @@ struct Page5: View {
                 Button(action: {
                     withAnimation(.easeInOut) {
                         onboardingVM.destination = .page2
-                        onboardingVM.resetFields()
                     }
                 }, label: {
                     Text("Add an other vehicle")
                 })
                 .buttonStyle(Secondary())
             }
-
-        }.background(Palette.greyBackground)
+        }
+        .background(Palette.greyBackground)
     }
 }
 
 struct OnBoardingCard: View {
     var text: LocalizedStringKey
     var bgColor: Color
-    var iconName: String
+    var iconName: ImageResource
 
     var body: some View {
         ZStack {
@@ -582,10 +536,10 @@ struct ClearButton: ViewModifier {
             if !text.isEmpty {
                 Button(action: {
                     text = ""
-                }) {
+                }, label: {
                     Image(systemName: "xmark")
                         .foregroundColor(Palette.black)
-                }
+                })
                 .padding(.trailing, 20)
             }
         }

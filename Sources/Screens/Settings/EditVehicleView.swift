@@ -9,28 +9,42 @@ import SwiftUI
 
 struct EditVehicleView: View {
     @FocusState var focusedField: FocusFieldBoarding?
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @ObservedObject var dataVM: DataViewModel
-
-    @State var vehicle: VehicleViewModel
-    @State var vehicleS: VehicleState
 
     @State private var defaultFuelPicker = false
     @State private var secondaryFuelPicker = false
     @State private var isTapped = false
     @State private var isTapped2 = false
 
-    @StateObject var fuelVM = FuelViewModel()
-
     var isDisabled: Bool {
-        vehicleS.name.isEmpty || vehicleS.brand.isEmpty || vehicleS.model.isEmpty || vehicleS.fuelTypeOne == 7
+        vehicle2.name.isEmpty || vehicle2.brand.isEmpty || vehicle2.model.isEmpty || vehicle2.mainFuelType == .none
+    }
+
+    var vehicle2: Vehicle2
+
+    @State private var name: String
+    @State private var brand: String
+    @State private var model: String
+    @State private var plate: String
+    @State private var mainFuelType: FuelType
+    @State private var secondaryFuelType: FuelType
+
+    init(vehicle2: Vehicle2) {
+        self.vehicle2 = vehicle2
+        _name = State(initialValue: vehicle2.name)
+        _brand = State(initialValue: vehicle2.brand)
+        _model = State(initialValue: vehicle2.model)
+        _plate = State(initialValue: vehicle2.plate ?? "")
+        _mainFuelType = State(initialValue: vehicle2.mainFuelType)
+        _secondaryFuelType = State(initialValue: vehicle2.secondaryFuelType ?? .none)
     }
 
     var body: some View {
         ZStack {
             Palette.greyBackground.ignoresSafeArea()
             VStack(spacing: 20) {
-                TextField(String(localized: "Vehicle name"), text: $vehicleS.name)
+                TextField(String(localized: "Vehicle name"), text: $name)
                     .disableAutocorrection(true)
                     .focused($focusedField, equals: .carName)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -43,12 +57,12 @@ struct EditVehicleView: View {
                         RoundedRectangle(cornerRadius: 36)
                             .stroke(focusedField == .carName ? Palette.black : Palette.greyInput, lineWidth: 1)
                     )
-                    .modifier(ClearButton(text: $vehicleS.name))
+                    .modifier(ClearButton(text: $name))
                     .onSubmit {
                         focusedField = .brand
                     }
 
-                TextField(String(localized: "Brand"), text: $vehicleS.brand)
+                TextField(String(localized: "Brand"), text: $brand)
                     .disableAutocorrection(true)
                     .focused($focusedField, equals: .brand)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -61,12 +75,12 @@ struct EditVehicleView: View {
                         RoundedRectangle(cornerRadius: 36)
                             .stroke(focusedField == .brand ? Palette.black : Palette.greyInput, lineWidth: 1)
                     )
-                    .modifier(ClearButton(text: $vehicleS.brand))
+                    .modifier(ClearButton(text: $brand))
                     .onSubmit {
                         focusedField = .model
                     }
 
-                TextField(String(localized: "Model"), text: $vehicleS.model)
+                TextField(String(localized: "Model"), text: $model)
                     .disableAutocorrection(true)
                     .focused($focusedField, equals: .model)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -79,12 +93,12 @@ struct EditVehicleView: View {
                         RoundedRectangle(cornerRadius: 36)
                             .stroke(focusedField == .model ? Palette.black : Palette.greyInput, lineWidth: 1)
                     )
-                    .modifier(ClearButton(text: $vehicleS.model))
+                    .modifier(ClearButton(text: $model))
                     .onSubmit {
                         focusedField = .plate
                     }
 
-                TextField(String(localized: "Plate"), text: $vehicleS.plate)
+                TextField(String(localized: "Plate"), text: $plate)
                     .disableAutocorrection(true)
                     .focused($focusedField, equals: .plate)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -97,7 +111,7 @@ struct EditVehicleView: View {
                         RoundedRectangle(cornerRadius: 36)
                             .stroke(focusedField == .plate ? Palette.black : Palette.greyInput, lineWidth: 1)
                     )
-                    .modifier(ClearButton(text: $vehicleS.plate))
+                    .modifier(ClearButton(text: $plate))
                     .onSubmit {
                         focusedField = nil
                     }
@@ -114,7 +128,7 @@ struct EditVehicleView: View {
                             .background(isTapped ? Palette.greyLight : Palette.greyBackground)
                             .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
                         HStack {
-                            Text(vehicle.fuelTypeOne.label)
+                            Text(mainFuelType.label)
                                 .font(Typography.TextM)
                             Spacer()
                         }
@@ -124,12 +138,9 @@ struct EditVehicleView: View {
                 })
                 .confirmationDialog(String(localized: "Select a default fuel type"), isPresented: $defaultFuelPicker, titleVisibility: .visible) {
                     ForEach(FuelType.allCases, id: \.self) { fuel in
-
                         Button(fuel.label) {
                             isTapped = false
-                            fuelVM.defaultFuelType = fuel
-                            vehicle.fuelTypeOne = fuel // THIS IS NEEDED TO UPDATE THE LABEL IN THE VIEW
-                            vehicleS.fuelTypeOne = fuelVM.defaultSelectedFuel // THIS PASS THE VALUE OF THE FUEL ON VEHICLE STATE
+                            mainFuelType = fuel
                         }
                     }
                 }
@@ -146,7 +157,7 @@ struct EditVehicleView: View {
                             .background(isTapped2 ? Palette.greyLight : Palette.greyBackground)
                             .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
                         HStack {
-                            Text(vehicle.fuelTypeTwo.label)
+                            Text(secondaryFuelType.label)
                                 .font(Typography.TextM)
                             Spacer()
                         }
@@ -156,12 +167,9 @@ struct EditVehicleView: View {
                 })
                 .confirmationDialog(String(localized: "Select a second fuel type"), isPresented: $secondaryFuelPicker, titleVisibility: .visible) {
                     ForEach(FuelType.allCases, id: \.self) { fuel in
-
                         Button(fuel.label) {
                             isTapped2 = false
-                            fuelVM.secondaryFuelType = fuel
-                            vehicle.fuelTypeTwo = fuel // THIS IS NEEDED TO UPDATE THE LABEL IN THE VIEW
-                            vehicleS.fuelTypeTwo = fuelVM.secondarySelectedFuel // THIS PASS THE VALUE OF THE FUEL ON VEHICLE STATE
+                            secondaryFuelType = fuel
                         }
                     }
                 }
@@ -181,13 +189,8 @@ struct EditVehicleView: View {
                 .accentColor(Palette.greyHard),
                 trailing:
                 Button(action: {
-                    do {
-                        try dataVM.updateVehicle(vehicleS)
-                    } catch {
-                        print(error)
-                    }
+                    updateVehicle(vehicle2)
                     presentationMode.wrappedValue.dismiss()
-                    fuelVM.resetSelectedFuel()
                 }, label: {
                     Text(String(localized: "Save"))
                         .font(Typography.headerM)
@@ -197,17 +200,26 @@ struct EditVehicleView: View {
             )
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text(vehicle.name)
+                    Text(name)
                         .font(Typography.headerM)
                         .foregroundColor(Palette.black)
                 }
             }
         }
     }
-}
 
-// struct EditVehicleView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditVehicleView()
-//    }
-// }
+    private func updateVehicle(_ vehicle: Vehicle2) {
+        vehicle.name = name
+        vehicle.brand = brand
+        vehicle.model = model
+        vehicle.mainFuelType = mainFuelType
+        vehicle.secondaryFuelType = secondaryFuelType
+
+        do {
+            try modelContext.save()
+            print("Vehicle saved successfully!")
+        } catch {
+            print("Failed to save vehicle: \(error)")
+        }
+    }
+}

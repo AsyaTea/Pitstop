@@ -17,44 +17,34 @@ struct HomeStyleView: View {
     // Scroll animation vars
     @State var offset: CGFloat = 0
     @State var topEdge: CGFloat
-    let maxHeight = UIScreen.main.bounds.height / 3.6
+    let maxHeight = UIScreen.main.bounds.height / 3.8
 
     var body: some View {
         ZStack {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 15) {
                     GeometryReader { _ in
-
-                        // MARK: HEADER CONTENT
-
+                        // HEADER CONTENT
                         HeaderContent(offset: $offset, maxHeight: maxHeight, dataVM: dataVM, homeVM: homeVM, utilityVM: utilityVM, categoryVM: categoryVM)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
-                            .opacity(
-                                withAnimation(.easeOut) { fadeOutOpacity() }
-                            )
-
-                            // sticky effect
+                            .opacity(fadeOutOpacity()) // Directly apply opacity
                             .frame(height: getHeaderHeight(), alignment: .bottom)
                             .background(homeVM.headerBackgroundColor)
                             .overlay(
-                                // MARK: TOP NAV BAR
-
-                                TopNav(dataVM: dataVM, utilityVM: utilityVM, categoryVM: categoryVM, offset: offset, maxHeight: maxHeight, topEdge: topEdge)
+                                // TOP NAV BAR
+                                TopNav(offset: offset, maxHeight: maxHeight, topEdge: topEdge)
                                     .padding(.horizontal)
                                     .frame(height: 60)
                                     .padding(.top, topEdge + 10),
-
                                 alignment: .top
                             )
                     }
                     .frame(height: maxHeight)
-                    // Fixing at top
                     .offset(y: -offset)
                     .zIndex(1)
 
-                    // MARK: BOTTOM VIEW
-
+                    // BOTTOM CONTENT VIEW
                     ZStack {
                         BottomContentView(homeVM: homeVM, dataVM: dataVM, utilityVM: utilityVM, categoryVM: categoryVM)
                             .background(Palette.greyBackground, in: CustomCorner(corners: [.topLeft, .topRight], radius: getCornerRadius()))
@@ -74,7 +64,7 @@ struct HomeStyleView: View {
                 }
             )
 
-            // SHOW THE ALLERT IF TOGGLED
+            // SHOW ALERT IF TOGGLED
             if homeVM.showAlertNumbers {
                 Spacer()
                 AlertAddNumbers(homeVM: homeVM, dataVM: dataVM)
@@ -83,42 +73,28 @@ struct HomeStyleView: View {
         }
     }
 
+    // Helper Functions
     func getHeaderHeight() -> CGFloat {
         let topHeight = maxHeight + offset
-
-        // 60 is the costant top nav bar height
-        // since we included top safe area so we also need to include that too
-        return topHeight > (60 + topEdge) ? topHeight
-            : (60 + topEdge)
+        return topHeight > (60 + topEdge) ? topHeight : (60 + topEdge)
     }
 
     func getCornerRadius() -> CGFloat {
         let progress = -offset / (maxHeight - (60 + topEdge))
-
         let value = 1 - progress
         let radius = value * 35
-
         return offset < 0 ? radius : 35
     }
 
-    // Opacity to let appear items in the top bar
     func fadeInOpacity() -> CGFloat {
-        // to start after the main content vanished
-        // we nee to eliminate 70 from the offset
-        // to get starter..
         let progress = -(offset + 70) / (maxHeight - (60 + topEdge * 3.2))
-
-        return progress
+        return max(0, min(1, progress)) // Clamp between 0 and 1
     }
 
-    // Opacity to let items in top bar disappear on scroll
     func fadeOutOpacity() -> CGFloat {
-        // 70 = Some rnadom amount of time to visible on scroll
-
         let progress = -offset / 70
         let opacity = 1 - progress
-
-        return offset < 0 ? opacity : 1
+        return max(0, min(1, opacity)) // Clamp between 0 and 1
     }
 }
 

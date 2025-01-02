@@ -5,25 +5,25 @@
 //  Created by Ivan Voloshchuk on 26/05/22.
 //
 
+import SwiftData
 import SwiftUI
 
 struct TopNav: View {
-    @ObservedObject var dataVM: DataViewModel
-    @StateObject var utilityVM: UtilityViewModel
-    @ObservedObject var categoryVM: CategoryViewModel
+    @EnvironmentObject var vehicleManager: VehicleManager
+
+    @State private var showingAllCars = false
+    @State private var showReminders = false
 
     var offset: CGFloat
     let maxHeight: CGFloat
     var topEdge: CGFloat
 
-    @State private var showingAllCars = false
-    @State private var showReminders = false
-
-    let filter = NSPredicate(format: "current == %@", "1")
-
     var brandModelString: String {
-        "\(dataVM.currentVehicle.first?.brand ?? "brand") \(dataVM.currentVehicle.first?.model ?? "model")"
+        "\(vehicleManager.currentVehicle.brand) \(vehicleManager.currentVehicle.model)"
     }
+
+    @Query
+    var vehicles: [Vehicle2]
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -32,7 +32,7 @@ struct TopNav: View {
                     showingAllCars.toggle()
                 }, label: {
                     HStack {
-                        Text(dataVM.currentVehicle.first?.name ?? "Default's car ")
+                        Text(vehicleManager.currentVehicle.name)
                             .foregroundColor(Palette.blackHeader)
                             .font(Typography.headerXL)
                             .opacity(fadeOutOpacity())
@@ -49,31 +49,27 @@ struct TopNav: View {
                 })
                 .disabled(fadeOutOpacity() < 0.35)
                 .confirmationDialog(String(localized: "Select a vehicle"), isPresented: $showingAllCars, titleVisibility: .hidden) {
-                    ForEach(dataVM.vehicleList, id: \.vehicleID) { vehicle in
+                    ForEach(vehicles, id: \.uuid) { vehicle in
                         Button(vehicle.name) {
-                            // DEVO SETTARE IL CURRENT VEHICLE
-                            var vehicleS = VehicleState.fromVehicleViewModel(vm: vehicle)
-                            dataVM.setAllCurrentToFalse()
-                            vehicleS.current = 1 // SETTO IL CURRENT TO TRUE
-
-                            do {
-                                if vehicleS.vehicleID != nil {
-                                    try dataVM.updateVehicle(vehicleS)
-                                    print("updato to current")
-                                    dataVM.currentVehicle.removeAll()
-                                    dataVM.currentVehicle.append(vehicle)
-                                    let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (dataVM.currentVehicle.first?.vehicleID)!)
-                                    dataVM.getExpensesCoreData(filter: filterCurrentExpense) { storage in
-                                        dataVM.expenseList = storage
-                                        dataVM.getTotalExpense(expenses: storage)
-                                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
-                                    }
-                                } else {
-                                    print("error")
-                                }
-                            } catch {
-                                print(error)
-                            }
+                            vehicleManager.currentVehicle = vehicle
+//                            do {
+//                                if vehicleS.vehicleID != nil {
+//                                    try dataVM.updateVehicle(vehicleS)
+//                                    print("updato to current")
+//                                    dataVM.currentVehicle.removeAll()
+//                                    dataVM.currentVehicle.append(vehicle)
+//                                    let filterCurrentExpense = NSPredicate(format: "vehicle = %@", (dataVM.currentVehicle.first?.vehicleID)!)
+//                                    dataVM.getExpensesCoreData(filter: filterCurrentExpense) { storage in
+//                                        dataVM.expenseList = storage
+//                                        dataVM.getTotalExpense(expenses: storage)
+//                                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+//                                    }
+//                                } else {
+//                                    print("error")
+//                                }
+//                            } catch {
+//                                print(error)
+//                            }
                         }
                     }
                     Button("Cancel", role: .cancel) {}
@@ -83,27 +79,6 @@ struct TopNav: View {
 
                 Spacer()
                 HStack {
-                    // MARK: TO REMOVE
-
-//                    Button(action: {
-//
-//                    }, label: {
-//                        ZStack{
-//                            Rectangle()
-//                                .foregroundColor(Palette.white)
-//                                .cornerRadius(37)
-//                                .frame(width: UIScreen.main.bounds.width * 0.25, height: UIScreen.main.bounds.height * 0.04)
-//                                .shadowGrey()
-//                            HStack{
-//                                Text("Per month")
-//                                    .foregroundColor(Palette.black)
-//                                    .font(Typography.ControlS)
-//                                Image("arrowDown")
-//
-//                            }
-//                        }.opacity(fadeOutOpacity())
-//                    })
-
                     ZStack {
                         Button(action: {
                             showReminders.toggle()
@@ -113,7 +88,7 @@ struct TopNav: View {
                                     .foregroundColor(Palette.whiteHeader)
                                     .frame(width: UIScreen.main.bounds.width * 0.09, height: UIScreen.main.bounds.height * 0.04)
                                     .shadowGrey()
-                                Image("bellHome")
+                                Image(.bellHome)
                             }
                         })
                     }
@@ -126,15 +101,9 @@ struct TopNav: View {
                 .padding(.top, -12)
                 .opacity(fadeOutOpacity())
         }
-        .task {
-            // Fetch current vehicle from DB
-            dataVM.getVehiclesCoreData(filter: filter, storage: { storage in
-                dataVM.currentVehicle = storage
-            })
-        }
         .overlay(
             VStack(alignment: .center, spacing: 2) {
-                Text(dataVM.currentVehicle.first?.name ?? "Default's car ")
+                Text(vehicleManager.currentVehicle.name)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.blackHeader)
                 Text(brandModelString)
