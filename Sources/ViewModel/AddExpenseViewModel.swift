@@ -32,7 +32,6 @@ class AddExpenseViewModel: ObservableObject {
     @Published var odometer: String = "" /// Var  to store the odometer value in expense
 
     // Segmented picker tabs
-    @Published var currentPickerTab: AddReportTabs = .fuel
     @Published var odometerTab: String = ""
     @Published var priceTab: String = ""
 

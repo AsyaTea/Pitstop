@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum ServiceCategory: String, Codable, CaseIterable {
+enum ServiceCategory: String, Codable, CaseIterable, Identifiable {
     case fuel = "Fuel"
     case maintenance = "Maintenance"
     case insurance = "Insurance"
@@ -16,6 +16,8 @@ enum ServiceCategory: String, Codable, CaseIterable {
     case fines = "Fines"
     case parking = "Parking"
     case other = "Other"
+
+    var id: Self { self }
 
     var icon: ImageResource {
         switch self {

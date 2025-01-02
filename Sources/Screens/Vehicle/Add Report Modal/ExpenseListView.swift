@@ -290,37 +290,3 @@ struct CustomCategoryPicker: View {
         .listStyle(.insetGrouped)
     }
 }
-
-struct CustomCategoryPicker2: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Binding var selectedCategory: ServiceCategory
-
-    var body: some View {
-        ZStack {
-            Palette.greyBackground
-                .ignoresSafeArea()
-            CustomList {
-                ForEach(ServiceCategory.allCases, id: \.self) { category in
-                    Button(action: {
-                        withAnimation {
-                            if selectedCategory != category {
-                                selectedCategory = category
-                            }
-                        }
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        HStack {
-                            Text(category.rawValue)
-                                .font(Typography.headerM)
-                                .foregroundColor(Palette.black)
-                            Spacer()
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.accentColor)
-                                .opacity(selectedCategory == category ? 1.0 : 0.0)
-                        }
-                    })
-                }
-            }
-        }
-    }
-}

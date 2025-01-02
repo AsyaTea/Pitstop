@@ -10,30 +10,30 @@ import SwiftUI
 struct AddReportView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var vehicleManager: VehicleManager
-    
+
     @ObservedObject var utilityVM: UtilityViewModel
     @StateObject var addExpVM: AddExpenseViewModel = .init()
     @ObservedObject var categoryVM: CategoryViewModel
     @ObservedObject var dataVM: DataViewModel
-    
+
     @State private var showDate = false
     @State private var showOdometerAlert = false
-    
+
     @State var reminder: Reminder = .mock()
-    
+
     // Focus keyboard
     @FocusState var focusedField: FocusField?
-    
+
     // To dismiss the modal
     @Environment(\.presentationMode) private var presentationMode
-    
+
     @State private var currentPickerTab: AddReportTabs = .expense
-    
+
     var body: some View {
         NavigationView {
             VStack {
                 // MARK: Custom TextField
-                
+
                 switch currentPickerTab {
                 case .expense:
                     TextFieldComponent(
@@ -68,15 +68,15 @@ struct AddReportView: View {
                 case .fuel:
                     Text("Work in progress")
                 }
-                
+
                 // MARK: Custom segmented picker
-                
+
                 SegmentedPicker(currentTab: $currentPickerTab, onTap: {})
                     .padding(.horizontal, 32)
                     .padding(.top, -10.0)
-                
+
                 // MARK: List
-                
+
                 switch currentPickerTab {
                 case .expense:
                     ExpenseListView(
@@ -91,60 +91,60 @@ struct AddReportView: View {
                 case .reminder:
                     ReminderListView(reminder: $reminder, focusedField: $focusedField)
                 case .fuel:
-                    Text("Work in progress")
+                    FuelExpenseInputView()
                 }
             }
             .background(Palette.greyBackground)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Cancel")
-                            .font(Typography.headerM)
-                    })
-                    .accentColor(Palette.greyHard),
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("Cancel")
+                        .font(Typography.headerM)
+                })
+                .accentColor(Palette.greyHard),
                 trailing:
-                    Button(action: {
-                        switch currentPickerTab {
-                        case .expense:
-                            addExpVM.createExpense()
-                            dataVM.addExpense(expense: addExpVM.expenseS)
-                            dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
-                            categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                Button(action: {
+                    switch currentPickerTab {
+                    case .expense:
+                        addExpVM.createExpense()
+                        dataVM.addExpense(expense: addExpVM.expenseS)
+                        dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
+                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                        presentationMode.wrappedValue.dismiss()
+                    case .odometer:
+                        guard let odometerValue = Float(addExpVM.odometerTab) else { return }
+                        if odometerValue < vehicleManager.currentVehicle.odometer {
+                            showOdometerAlert.toggle()
+                        } else {
+                            vehicleManager.currentVehicle.odometer = odometerValue
                             presentationMode.wrappedValue.dismiss()
-                        case .odometer:
-                            guard let odometerValue = Float(addExpVM.odometerTab) else { return }
-                            if odometerValue < vehicleManager.currentVehicle.odometer {
-                                showOdometerAlert.toggle()
-                            } else {
-                                vehicleManager.currentVehicle.odometer = odometerValue
-                                presentationMode.wrappedValue.dismiss()
-                            }
-                        case .reminder:
-                            NotificationManager.shared.requestAuthNotifications()
-                            do {
-                                try reminder.saveToModelContext(context: modelContext)
-                            } catch {
-                                // TODO: Implement error handling
-                                print("error \(error)")
-                            }
-                            NotificationManager.shared.createNotification(for: reminder)
-                            presentationMode.wrappedValue.dismiss()
-                        case .fuel:
-                            break
                         }
-                    }, label: {
-                        Text(String(localized: "Save"))
-                            .font(Typography.headerM)
-                    })
-                    .disabled(
-                        (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty) &&
+                    case .reminder:
+                        NotificationManager.shared.requestAuthNotifications()
+                        do {
+                            try reminder.saveToModelContext(context: modelContext)
+                        } catch {
+                            // TODO: Implement error handling
+                            print("error \(error)")
+                        }
+                        NotificationManager.shared.createNotification(for: reminder)
+                        presentationMode.wrappedValue.dismiss()
+                    case .fuel:
+                        break
+                    }
+                }, label: {
+                    Text(String(localized: "Save"))
+                        .font(Typography.headerM)
+                })
+                .disabled(
+                    (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty) &&
                         (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
                         reminder.title.isEmpty)
-                    .opacity(
-                        (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty) &&
+                .opacity(
+                    (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty) &&
                         (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
                         reminder.title.isEmpty ? 0.6 : 1)
             )
