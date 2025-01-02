@@ -104,12 +104,7 @@ private extension AddNumberView {
             vehicle: vehicleManager.currentVehicle
         )
         vehicleManager.currentVehicle.numbers.append(number)
-
-        do {
-            try number.saveToModelContext(context: modelContext)
-        } catch {
-            print("Error saving number: \(error)")
-        }
+        number.insert(context: modelContext)
     }
 }
 

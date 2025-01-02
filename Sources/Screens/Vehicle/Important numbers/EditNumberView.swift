@@ -80,7 +80,7 @@ struct EditNumberView: View {
                         title: Text("Are you sure you want to delete this contact?"),
                         message: Text("This action cannot be undone"),
                         primaryButton: .destructive(Text(String(localized: "Delete"))) {
-                            deleteNumber()
+                            number.delete(context: modelContext)
                             presentationMode.wrappedValue.dismiss()
                         },
                         secondaryButton: .cancel()
@@ -129,20 +129,7 @@ private extension EditNumberView {
     func updateNumber() {
         number.title = title
         number.telephone = telephone
-        do {
-            try modelContext.save()
-        } catch {
-            print("Error when updating number \(error)")
-        }
-    }
-
-    func deleteNumber() {
-        modelContext.delete(number)
-        do {
-            try modelContext.save()
-        } catch {
-            print("Failed to delete number: \(error)")
-        }
+        number.save(context: modelContext)
     }
 }
 

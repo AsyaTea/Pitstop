@@ -30,9 +30,24 @@ final class Number: Identifiable {
         self.vehicle = vehicle
     }
 
-    func saveToModelContext(context: ModelContext) throws {
+    // MARK: CRUD
+
+    func insert(context: ModelContext) {
         context.insert(self)
-        try context.save()
-        print("Number \(telephone) for \(String(describing: vehicle?.name)) saved successfully!")
+        save(context: context)
+    }
+
+    func save(context: ModelContext) {
+        do {
+            try context.save()
+            print("Number \(telephone) for \(String(describing: vehicle?.name)) saved successfully!")
+        } catch {
+            print("Error saving number \(telephone) for \(String(describing: vehicle?.name)): \(error)")
+        }
+    }
+
+    func delete(context: ModelContext) {
+        context.delete(self)
+        save(context: context)
     }
 }
