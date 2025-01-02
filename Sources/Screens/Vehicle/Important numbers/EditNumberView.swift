@@ -1,5 +1,5 @@
 //
-//  EditNumbers.swift
+//  EditNumberView.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 10/06/22.
@@ -7,22 +7,32 @@
 
 import SwiftUI
 
-struct EditNumbers: View {
+struct EditNumberView: View {
+    @Environment(\.modelContext) private var modelContext
     @FocusState var focusedField: FocusFieldNumbers?
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @ObservedObject var dataVM: DataViewModel
 
-    @State var numberToEdit: NumberState
     @State private var showAlert = false
     var isDisabled: Bool {
-        numberToEdit.title.isEmpty || numberToEdit.telephone.isEmpty
+        title.isEmpty || telephone.isEmpty
+    }
+
+    @State private var title: String
+    @State private var telephone: String
+
+    var number: Number2
+
+    init(number: Number2) {
+        self.number = number
+        _title = State(initialValue: number.title)
+        _telephone = State(initialValue: number.telephone)
     }
 
     var body: some View {
         ZStack {
             Palette.greyBackground.ignoresSafeArea()
             VStack(spacing: 20) {
-                TextField(String(localized: "Contact name"), text: $numberToEdit.title)
+                TextField(String(localized: "Contact name"), text: $title)
                     .disableAutocorrection(true)
                     .focused($focusedField, equals: .numberTitle)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -35,12 +45,12 @@ struct EditNumbers: View {
                         RoundedRectangle(cornerRadius: 36)
                             .stroke(focusedField == .numberTitle ? Palette.black : Palette.greyInput, lineWidth: 1)
                     )
-                    .modifier(ClearButton(text: $numberToEdit.title))
+                    .modifier(ClearButton(text: $title))
                     .onSubmit {
                         focusedField = .number
                     }
 
-                TextField(String(localized: "Number"), text: $numberToEdit.telephone)
+                TextField(String(localized: "Number"), text: $telephone)
                     .disableAutocorrection(true)
                     .focused($focusedField, equals: .number)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -53,7 +63,7 @@ struct EditNumbers: View {
                         RoundedRectangle(cornerRadius: 36)
                             .stroke(focusedField == .number ? Palette.black : Palette.greyInput, lineWidth: 1)
                     )
-                    .modifier(ClearButton(text: $numberToEdit.telephone))
+                    .modifier(ClearButton(text: $telephone))
                     .onSubmit {
                         focusedField = nil
                     }
@@ -70,11 +80,7 @@ struct EditNumbers: View {
                         title: Text("Are you sure you want to delete this contact?"),
                         message: Text("This action cannot be undone"),
                         primaryButton: .destructive(Text(String(localized: "Delete"))) {
-                            dataVM.deleteNumber(numberS: numberToEdit)
-                            dataVM.getNumbersCoreData(filter: nil, storage: { storage in
-                                dataVM.numberList = storage
-                            })
-
+                            deleteNumber()
                             presentationMode.wrappedValue.dismiss()
                         },
                         secondaryButton: .cancel()
@@ -99,11 +105,7 @@ struct EditNumbers: View {
                 .accentColor(Palette.greyHard),
                 trailing:
                 Button(action: {
-                    do {
-                        try dataVM.updateNumber(numberToEdit)
-                    } catch {
-                        print(error)
-                    }
+                    updateNumber()
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text("Save")
@@ -119,6 +121,27 @@ struct EditNumbers: View {
                         .foregroundColor(Palette.black)
                 }
             }
+        }
+    }
+}
+
+private extension EditNumberView {
+    func updateNumber() {
+        number.title = title
+        number.telephone = telephone
+        do {
+            try modelContext.save()
+        } catch {
+            print("Error when updating number \(error)")
+        }
+    }
+
+    func deleteNumber() {
+        modelContext.delete(number)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to delete number: \(error)")
         }
     }
 }

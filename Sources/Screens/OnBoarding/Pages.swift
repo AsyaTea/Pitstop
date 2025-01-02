@@ -349,7 +349,7 @@ struct Page3: View {
                 if onboardingVM.addNewVehicle == true {
                     Button(action: {
                         onboardingVM.addNewVehicle = false
-                        vehicleManager.currentVehicle = vehicle
+                        vehicleManager.setCurrentVehicle(vehicle)
                         do {
                             try vehicle.saveToModelContext(context: modelContext)
                         } catch {

@@ -1,2 +1,4 @@
 --swiftversion 5.9
 --disable trailingCommas,wrapMultilineStatementBraces
+--acronyms
+--organizetypes

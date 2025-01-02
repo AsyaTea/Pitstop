@@ -8,12 +8,8 @@
 import SwiftUI
 
 struct ImportantNumbersView: View {
+    @EnvironmentObject var vehicleManager: VehicleManager
     @Environment(\.presentationMode) private var presentationMode
-
-    @ObservedObject var homeVM: HomeViewModel
-    @ObservedObject var dataVM: DataViewModel
-
-    @State private var showEdit = false
 
     var body: some View {
         NavigationView {
@@ -22,10 +18,8 @@ struct ImportantNumbersView: View {
                 VStack {
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(spacing: 16) {
-                            ForEach(dataVM.numberList, id: \.self) { number in
-                                NavigationLink(
-                                    destination: EditNumbers(dataVM: dataVM, numberToEdit: NumberState.fromNumberViewModel(vm: number))
-                                ) {
+                            ForEach(vehicleManager.currentVehicle.numbers, id: \.self) { number in
+                                NavigationLink(destination: EditNumberView(number: number)) {
                                     NumberCardView(title: number.title, number: number.telephone)
                                 }
                             }
@@ -33,28 +27,12 @@ struct ImportantNumbersView: View {
                     }
                     .padding(.vertical, 20)
                     Spacer()
-//                        Button(action: {
-//                            homeVM.showAlertNumbersInside.toggle()
-//                            homeVM.interactiveDismiss.toggle()
-//                        }, label: {
-//                            BlackButton(text: "Add new contact", color: Palette.black)
-//                        })
-                }
-                .overlay(
-                    homeVM.showAlertNumbersInside ? Color.black.opacity(0.4) : Color.clear
-                )
-
-                if homeVM.showAlertNumbersInside {
-                    Spacer()
-                    AlertAddNumbersInside(homeVM: homeVM, dataVM: dataVM)
-                    Spacer()
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
                 Button(action: {
-                    homeVM.resetAlertFields()
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text("Cancel")

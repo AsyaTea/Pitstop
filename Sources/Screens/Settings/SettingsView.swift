@@ -82,7 +82,7 @@ struct SettingsView: View {
         } catch {
             print("Failed to delete vehicle: \(error)")
         }
-        vehicleManager.currentVehicle = vehicles.first ?? .mock()
+        vehicleManager.setCurrentVehicle(vehicles.first ?? .mock())
     }
 }
 

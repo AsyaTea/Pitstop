@@ -10,6 +10,7 @@ import SwiftData
 import SwiftUI
 
 struct BottomContentView: View {
+    @EnvironmentObject var vehicleManager: VehicleManager
     @Environment(\.modelContext) private var modelContext
     @ObservedObject var homeVM: HomeViewModel
     @ObservedObject var dataVM: DataViewModel
@@ -28,15 +29,27 @@ struct BottomContentView: View {
     @Query var documents: [Document]
     @State private var selectedDocument: Document = .mock()
 
+    @State private var newNumberAlert: AlertConfig = .init(
+        enableBackgroundBlur: false,
+        disableOutsideTap: false,
+        transitionType: .slide
+    )
+
     var body: some View {
         VStack(spacing: 0) {
             // MARK: LAST EVENTS
 
-            TitleSectionComponent(sectionTitle: "Last events", binding: $viewAllEvents)
-                .padding()
-                .padding(.top, 10)
-                .padding(.bottom, -10)
-                .sheet(isPresented: $viewAllEvents) { LastEventsListView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM) }
+            titleSection(
+                sectionTitle: "Last events",
+                showViewAll: true,
+                viewAllAction: {
+                    viewAllEvents.toggle()
+                }
+            )
+            .padding()
+            .padding(.top, 10)
+            .padding(.bottom, -10)
+            .sheet(isPresented: $viewAllEvents) { LastEventsListView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM) }
 
             if dataVM.expenseList.isEmpty {
                 HStack {
@@ -62,12 +75,10 @@ struct BottomContentView: View {
 
             // MARK: DOCUMENTS
 
-            HStack {
-                Text("Documents")
-                    .foregroundColor(Palette.black)
-                    .font(Typography.headerL)
-                Spacer()
-            }
+            titleSection(
+                sectionTitle: "Documents",
+                showViewAll: false
+            )
             .padding()
             .padding(.top, 10)
             .padding(.bottom, -10)
@@ -106,10 +117,16 @@ struct BottomContentView: View {
                     .frame(width: 16)
             }
 
-            TitleSectionComponent(sectionTitle: "Useful contacts", binding: $viewAllNumbers)
-                .padding()
-                .padding(.top, 10)
-                .padding(.bottom, -10)
+            titleSection(
+                sectionTitle: "Useful contacts",
+                showViewAll: !vehicleManager.currentVehicle.numbers.isEmpty,
+                viewAllAction: {
+                    viewAllNumbers.toggle()
+                }
+            )
+            .padding()
+            .padding(.top, 10)
+            .padding(.bottom, -10)
 
             // MARK: IMPORTANT NUMBERS
 
@@ -117,7 +134,7 @@ struct BottomContentView: View {
                 VStack {
                     Spacer(minLength: 12)
                     HStack {
-                        ForEach(dataVM.numberList, id: \.self) { number in
+                        ForEach(vehicleManager.currentVehicle.numbers) { number in
                             Button(action: {
                                 UIApplication.shared.open(URL(string: "tel://" + number.telephone)!)
                             }, label: {
@@ -125,11 +142,7 @@ struct BottomContentView: View {
                             })
                         }
                         Button(action: {
-                            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                withAnimation(.easeInOut) {
-                                    homeVM.showAlertNumbers.toggle()
-                                }
-                            }
+                            newNumberAlert.present()
                         }, label: {
                             addComponent(title: "Add contact")
                         })
@@ -158,12 +171,16 @@ struct BottomContentView: View {
                 category: Category(rawValue: Int(utilityVM.expenseToEdit.category ?? 0)) ?? .other
             )
         }
-        .sheet(isPresented: $viewAllNumbers, onDismiss: homeVM.resetAlertFieldsInside) {
-            ImportantNumbersView(homeVM: homeVM, dataVM: dataVM)
-                .interactiveDismissDisabled(homeVM.interactiveDismiss)
+        .sheet(isPresented: $viewAllNumbers) {
+            ImportantNumbersView()
+                .interactiveDismissDisabled(true)
         }
         .fullScreenCover(isPresented: $showPDF) {
             DocumentView(document: $selectedDocument)
+        }
+        .alert(config: $newNumberAlert) {
+            AddNumberView(alert: $newNumberAlert)
+                .environmentObject(vehicleManager)
         }
     }
 
@@ -249,6 +266,33 @@ struct BottomContentView: View {
     }
 }
 
+private extension BottomContentView {
+    @ViewBuilder
+    func titleSection(
+        sectionTitle: LocalizedStringKey,
+        showViewAll: Bool,
+        viewAllAction: (() -> Void)? = nil
+    ) -> some View {
+        HStack {
+            Text(sectionTitle)
+                .foregroundColor(Palette.black)
+                .font(Typography.headerL)
+            Spacer()
+            if showViewAll, let viewAllAction {
+                HStack {
+                    Button(action: {
+                        viewAllAction()
+                    }, label: {
+                        Text("View all")
+                            .font(Typography.ControlS)
+                            .foregroundColor(Palette.greyMiddle)
+                    })
+                }
+            }
+        }
+    }
+}
+
 // struct BottomContentView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        BottomContentView()
@@ -292,29 +336,5 @@ struct CategoryComponent: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 10)
-    }
-}
-
-struct TitleSectionComponent: View {
-    var sectionTitle: LocalizedStringKey
-    @Binding var binding: Bool
-
-    var body: some View {
-        HStack {
-            Text(sectionTitle)
-                .foregroundColor(Palette.black)
-                .font(Typography.headerL)
-            Spacer()
-            HStack {
-                Button(action: {
-                    binding.toggle()
-                }, label: {
-                    Text("View all")
-                        .font(Typography.ControlS)
-                        .foregroundColor(Palette.greyMiddle)
-
-                })
-            }
-        }
     }
 }

@@ -57,19 +57,6 @@ struct HomeStyleView: View {
             }
             .background(Palette.greyBackground)
             .coordinateSpace(name: "SCROLL")
-            .disabled(homeVM.showAlertNumbers)
-            .overlay(
-                ZStack {
-                    homeVM.showAlertNumbers ? Color.black.opacity(0.4) : Color.clear
-                }
-            )
-
-            // SHOW ALERT IF TOGGLED
-            if homeVM.showAlertNumbers {
-                Spacer()
-                AlertAddNumbers(homeVM: homeVM, dataVM: dataVM)
-                Spacer()
-            }
         }
     }
 

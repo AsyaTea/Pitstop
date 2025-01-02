@@ -14,10 +14,6 @@ class HomeViewModel: ObservableObject {
     let maxHeight = UIScreen.main.bounds.height / 3.6
 
     // Alert numbers
-    @Published var showAlertNumbers = false
-    @Published var showAlertNumbersInside = false
-    @Published var numberTitle = ""
-    @Published var number = ""
     @Published var interactiveDismiss = false
 
     @Published var numberS = NumberState()
@@ -51,27 +47,6 @@ class HomeViewModel: ObservableObject {
         print(color)
         print("Color loaded")
         return color
-    }
-
-    func createNumber() {
-        numberS.telephone = number
-        numberS.title = numberTitle
-    }
-
-    var isDisabled: Bool {
-        numberTitle.isEmpty || number.isEmpty
-    }
-
-    func resetAlertFields() {
-        numberTitle = ""
-        number = ""
-        showAlertNumbers = false
-    }
-
-    func resetAlertFieldsInside() {
-        numberTitle = ""
-        number = ""
-        showAlertNumbersInside = false
     }
 
     // MARK: FRONTEND FUNCS

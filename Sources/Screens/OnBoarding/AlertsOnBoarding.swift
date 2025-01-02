@@ -59,13 +59,11 @@ struct AlertOdometerOB: View {
                                 .stroke(focusedField == .plate ? Palette.black : Palette.greyInput, lineWidth: 1)
                         )
 
-                    Button(action: {
+                    Button("Save") {
                         isPresented.toggle()
                         showOverlay = false
-
-                    }, label: {
-                        BlackButton(text: "Save", color: vehicle.odometer < 0 ? Palette.greyInput : Palette.black)
-                    })
+                    }
+                    .buttonStyle(Primary())
                     .disabled(vehicle.odometer < 0)
                 }
             }
@@ -130,13 +128,12 @@ struct AlertPlateOB: View {
                             RoundedRectangle(cornerRadius: 36)
                                 .stroke(focusedField == .plate ? Palette.black : Palette.greyInput, lineWidth: 1)
                         )
-                    Button(action: {
+                    Button("Save") {
                         isPresented.toggle()
                         showOverlay = false
                         vehicle.plate = plateNumber.isEmpty ? nil : plateNumber
-                    }, label: {
-                        BlackButton(text: "Save", color: plateNumber.isEmpty ? Palette.greyInput : Palette.black)
-                    })
+                    }
+                    .buttonStyle(Primary())
                     .disabled(plateNumber.isEmpty)
                 }
             }
