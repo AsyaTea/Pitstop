@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddReportView: View {
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject var vehicleManager: VehicleManager
 
     @ObservedObject var utilityVM: UtilityViewModel
     @StateObject var addExpVM: AddExpenseViewModel = .init()
@@ -16,6 +17,7 @@ struct AddReportView: View {
     @ObservedObject var dataVM: DataViewModel
 
     @State private var showDate = false
+    @State private var showOdometerAlert = false
 
     @State var reminder: Reminder = .mock()
 
@@ -97,12 +99,20 @@ struct AddReportView: View {
                         dataVM.addExpense(expense: addExpVM.expenseS)
                         dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
                         categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                        presentationMode.wrappedValue.dismiss()
                     } else if addExpVM.currentPickerTab == String(localized: "Odometer") {
-                        addExpVM.category = 7 // other
-                        addExpVM.createExpense()
-                        dataVM.addExpense(expense: addExpVM.expenseS)
-                        dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
-                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
+                        guard let odometerValue = Float(addExpVM.odometerTab) else { return }
+                        if odometerValue < vehicleManager.currentVehicle.odometer {
+                            showOdometerAlert.toggle()
+                        } else {
+                            vehicleManager.currentVehicle.odometer = odometerValue
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                            
+//                        addExpVM.category = 7 // other
+//                        addExpVM.createExpense()
+//                        dataVM.addExpense(expense: addExpVM.expenseS)
+//                        dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
                     } else {
                         NotificationManager.shared.requestAuthNotifications()
                         do {
@@ -112,9 +122,8 @@ struct AddReportView: View {
                             print("error \(error)")
                         }
                         NotificationManager.shared.createNotification(for: reminder)
+                        presentationMode.wrappedValue.dismiss()
                     }
-                    presentationMode.wrappedValue.dismiss()
-
                 }, label: {
                     Text(String(localized: "Save"))
                         .font(Typography.headerM)
@@ -149,6 +158,12 @@ struct AddReportView: View {
                         .font(Typography.headerM)
                         .foregroundColor(Palette.black)
                 }
+            }
+            .alert(isPresented: $showOdometerAlert) {
+                Alert(
+                    title: Text("Attention"),
+                    message: Text("Can't set lower odometer value than current value")
+                )
             }
         }
     }
