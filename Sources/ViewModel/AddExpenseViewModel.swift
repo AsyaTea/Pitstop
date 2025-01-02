@@ -32,7 +32,7 @@ class AddExpenseViewModel: ObservableObject {
     @Published var odometer: String = "" /// Var  to store the odometer value in expense
 
     // Segmented picker tabs
-    @Published var currentPickerTab: String = .init(localized: "Expense")
+    @Published var currentPickerTab: AddReportTabs = .fuel
     @Published var odometerTab: String = ""
     @Published var priceTab: String = ""
 
@@ -61,8 +61,8 @@ class AddExpenseViewModel: ObservableObject {
         expenseS.fuelType = fuel
     }
 
-    func resetTabFields(tab: String) {
-        if tab == String(localized: "Expense") {
+    func resetTabFields(tab: AddReportTabs) {
+        if tab == .expense {
             price = ""
             priceTab = ""
             selectedCategory = String(localized: "Fuel")
@@ -72,7 +72,7 @@ class AddExpenseViewModel: ObservableObject {
             date = Date.now
             note = ""
         }
-        if tab == String(localized: "Odometer") {
+        if tab == .odometer {
             odometerTab = ""
             odometer = ""
             note = ""
