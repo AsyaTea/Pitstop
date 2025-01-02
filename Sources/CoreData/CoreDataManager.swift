@@ -59,15 +59,6 @@ class CoreDataManager {
         }
     }
 
-    func getNumberById(id: NSManagedObjectID) -> Number? {
-        do {
-            return try context.existingObject(with: id) as? Number
-        } catch {
-            print(error)
-            return nil
-        }
-    }
-
     func deleteVehicle(_ vehicle: Vehicle) {
         context.delete(vehicle)
 
@@ -87,17 +78,6 @@ class CoreDataManager {
         } catch {
             context.rollback()
             print("Failed to delete expense \(error)")
-        }
-    }
-
-    func deleteNumber(_ number: Number) {
-        context.delete(number)
-
-        do {
-            try context.save()
-        } catch {
-            context.rollback()
-            print("Failed to delete number \(error)")
         }
     }
 }
