@@ -19,8 +19,7 @@ struct ImportantNumbersView: View {
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(spacing: 16) {
                             ForEach(vehicleManager.currentVehicle.numbers, id: \.self) { number in
-                                // TODO: Add edit number navigation
-                                NavigationLink(destination: EditNumbers(number: number)) {
+                                NavigationLink(destination: EditNumberView(number: number)) {
                                     NumberCardView(title: number.title, number: number.telephone)
                                 }
                             }

@@ -1,5 +1,5 @@
 //
-//  EditNumbers.swift
+//  EditNumberView.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 10/06/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditNumbers: View {
+struct EditNumberView: View {
     @Environment(\.modelContext) private var modelContext
     @FocusState var focusedField: FocusFieldNumbers?
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -80,7 +80,7 @@ struct EditNumbers: View {
                         title: Text("Are you sure you want to delete this contact?"),
                         message: Text("This action cannot be undone"),
                         primaryButton: .destructive(Text(String(localized: "Delete"))) {
-                            // TODO: Add delete function
+                            deleteNumber()
                             presentationMode.wrappedValue.dismiss()
                         },
                         secondaryButton: .cancel()
@@ -125,7 +125,7 @@ struct EditNumbers: View {
     }
 }
 
-private extension EditNumbers {
+private extension EditNumberView {
     func updateNumber() {
         number.title = title
         number.telephone = telephone
@@ -133,6 +133,15 @@ private extension EditNumbers {
             try modelContext.save()
         } catch {
             print("Error when updating number \(error)")
+        }
+    }
+
+    func deleteNumber() {
+        modelContext.delete(number)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to delete number: \(error)")
         }
     }
 }
