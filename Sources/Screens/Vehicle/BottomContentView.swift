@@ -278,7 +278,7 @@ private extension BottomContentView {
                 .foregroundColor(Palette.black)
                 .font(Typography.headerL)
             Spacer()
-            if showViewAll, let viewAllAction = viewAllAction {
+            if showViewAll, let viewAllAction {
                 HStack {
                     Button(action: {
                         viewAllAction()
