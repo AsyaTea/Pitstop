@@ -98,7 +98,7 @@ struct AddNumberView: View {
 
 private extension AddNumberView {
     func saveNumber() {
-        let number = Number2(
+        let number = Number(
             title: numberName,
             telephone: numberPhone,
             vehicle: vehicleManager.currentVehicle

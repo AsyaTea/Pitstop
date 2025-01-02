@@ -20,7 +20,7 @@ struct PitstopApp: App {
                                                 Reminder.self,
                                                 Vehicle2.self,
                                                 Expense2.self,
-                                                Number2.self)
+                                                Number.self)
         } catch {
             fatalError("Could not initialize ModelContainer")
         }

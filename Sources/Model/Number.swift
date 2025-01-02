@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Number2: Identifiable {
+final class Number: Identifiable {
     @Attribute(.unique)
     var uuid: UUID
 

@@ -22,6 +22,5 @@
         <attribute name="plate" optional="YES" attributeType="String"/>
         <attribute name="year" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="expenses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Expense" inverseName="vehicle" inverseEntity="Expense"/>
-        <relationship name="numbers" optional="YES" toMany="YES" deletionRule="Cascade"/>
     </entity>
 </model>

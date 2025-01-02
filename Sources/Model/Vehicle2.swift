@@ -26,8 +26,8 @@ final class Vehicle2: Identifiable {
     @Relationship(deleteRule: .cascade, inverse: \Expense2.vehicle)
     var expenses: [Expense2] = []
 
-    @Relationship(deleteRule: .cascade, inverse: \Number2.vehicle)
-    var numbers: [Number2] = []
+    @Relationship(deleteRule: .cascade, inverse: \Number.vehicle)
+    var numbers: [Number] = []
 
     init(
         uuid: UUID = UUID(),

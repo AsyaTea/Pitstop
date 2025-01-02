@@ -20,9 +20,9 @@ struct EditNumberView: View {
     @State private var title: String
     @State private var telephone: String
 
-    var number: Number2
+    var number: Number
 
-    init(number: Number2) {
+    init(number: Number) {
         self.number = number
         _title = State(initialValue: number.title)
         _telephone = State(initialValue: number.telephone)
