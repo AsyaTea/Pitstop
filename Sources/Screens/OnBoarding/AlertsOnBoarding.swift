@@ -8,8 +8,6 @@
 import SwiftUI
 
 enum FocusFieldAlertOB: Hashable {
-    case numberTitle
-    case number
     case odometer
     case plate
 }

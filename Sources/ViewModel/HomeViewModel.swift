@@ -13,10 +13,7 @@ class HomeViewModel: ObservableObject {
     @Published var topEdge: CGFloat = 0
     let maxHeight = UIScreen.main.bounds.height / 3.6
 
-    // Alert numbers
     @Published var interactiveDismiss = false
-
-    @Published var numberS = NumberState()
 
     @Published var headerBackgroundColor = Palette.colorViolet
     @Published var headerCardColor = Palette.colorMainViolet

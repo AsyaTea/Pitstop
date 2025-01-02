@@ -20,9 +20,6 @@ class DataViewModel: ObservableObject {
     @Published var expenses: [Expense] = []
     @Published var expenseModel = ExpenseState()
 
-    // Important number
-    @Published var numberList: [NumberViewModel] = []
-
     // Filter
     @Published var filter: NSPredicate?
     //    @Published var filterCurrentExpense : NSPredicate?
@@ -37,11 +34,6 @@ class DataViewModel: ObservableObject {
     init() {
         getVehiclesCoreData(filter: nil, storage: { storage in
             self.vehicleList = storage
-        })
-
-        getNumbersCoreData(filter: nil, storage: { storage in
-            self.numberList = storage
-
         })
     }
 
@@ -318,75 +310,6 @@ class DataViewModel: ObservableObject {
         } catch {
             print("💰 Error fetching expenses: \(error.localizedDescription)")
         }
-    }
-
-    // MARK: - IMPORTANT NUMBERS CRUD
-
-    func getNumbersCoreData(filter: NSPredicate?, storage: @escaping ([NumberViewModel]) -> Void) {
-        let request = NSFetchRequest<Number>(entityName: "Number")
-        let number: [Number]
-
-        let sort = NSSortDescriptor(keyPath: \Number.objectID, ascending: true)
-        request.sortDescriptors = [sort]
-        request.predicate = filter
-
-        do {
-            number = try manager.context.fetch(request)
-            DispatchQueue.main.async {
-                storage(number.map(NumberViewModel.init))
-            }
-
-        } catch {
-            print("🔢 Error fetching numbers: \(error.localizedDescription)")
-        }
-    }
-
-    func addNumber(number: NumberState) {
-        let newNumber = Number(context: manager.context)
-        newNumber.vehicle = getVehicle(vehicleID: currentVehicle.first!.vehicleID)
-        newNumber.telephone = number.telephone
-        newNumber.title = number.title
-
-        print(" Number : \(newNumber)")
-        print(" Current Vehicle \(currentVehicle)")
-        numberList.append(NumberViewModel(number: newNumber))
-        save()
-    }
-
-    func updateNumber(_ ns: NumberState) throws {
-        guard let numberID = ns.numberID else {
-            return print("Expense ID not found during update")
-        }
-
-        guard let number = manager.getNumberById(id: numberID) else {
-            return print("Expense not found during update")
-        }
-
-        number.title = ns.title
-        number.telephone = ns.telephone
-
-        // PUBLISHED LIST UPDATE
-        for (index, value) in numberList.enumerated() {
-            if value.numberID == ns.numberID {
-                numberList.remove(at: index)
-                numberList.insert(NumberViewModel(number: number), at: index)
-            }
-        }
-        save()
-        print("Numbers update done")
-    }
-
-    func deleteNumber(numberS: NumberState) {
-        guard let numberID = numberS.numberID else {
-            return print("NumberID not found during update")
-        }
-
-        let number = manager.getNumberById(id: numberID)
-        if let number {
-            manager.deleteNumber(number)
-        }
-
-        save()
     }
 
     // MARK: - OTHER FUNCS
