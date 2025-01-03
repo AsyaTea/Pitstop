@@ -59,13 +59,4 @@ class AddExpenseViewModel: ObservableObject {
         expenseS.category = category
         expenseS.fuelType = fuel
     }
-
-    func resetTabFields(tab: AddReportTabs) {
-        if tab == .odometer {
-            odometerTab = ""
-            odometer = ""
-            note = ""
-            date = Date.now
-        }
-    }
 }

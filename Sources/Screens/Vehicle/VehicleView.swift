@@ -51,7 +51,7 @@ struct VehicleView: View {
         )
         .ignoresSafeArea(.keyboard)
         .sheet(isPresented: $showAddReport) {
-            AddReportView(utilityVM: utilityVM, categoryVM: categoryVM, dataVM: dataVM)
+            AddReportView(utilityVM: utilityVM)
         }
         .fullScreenCover(
             isPresented: $shouldShowOnboarding,

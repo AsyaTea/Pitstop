@@ -9,43 +9,28 @@ import SwiftUI
 
 struct AddReportView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.presentationMode) private var presentationMode
     @EnvironmentObject var vehicleManager: VehicleManager
 
     @ObservedObject var utilityVM: UtilityViewModel
-    @StateObject var addExpVM: AddExpenseViewModel = .init()
-    @ObservedObject var dataVM: DataViewModel
 
     @State private var showOdometerAlert = false
 
     @State private var reminder: Reminder = .mock()
-
     @State var fuelExpense: FuelExpense = .mock()
     @State var fuelCategories: [FuelType] = []
 
     // FIXME: Focus keyboard
     @FocusState var focusedField: FocusField?
 
-    // To dismiss the modal
-    @Environment(\.presentationMode) private var presentationMode
-
     @State private var currentPickerTab: AddReportTabs = .fuel
 
     var body: some View {
         NavigationView {
             VStack {
-                // MARK: Custom TextField
+                // MARK: Text field
 
                 switch currentPickerTab {
-                case .odometer:
-                    TextFieldComponent(
-                        submitField: $addExpVM.odometerTab,
-                        placeholder: String(Int(dataVM.currentVehicle.first?.odometer ?? 0)),
-                        attribute: utilityVM.unit,
-                        keyboardType: .numberPad,
-                        focusedField: $focusedField,
-                        defaultFocus: .odometerTab
-                    )
-                    .padding(.top, 15)
                 case .reminder:
                     TextFieldComponent(
                         submitField: $reminder.title,
@@ -72,8 +57,6 @@ struct AddReportView: View {
                     .padding(.top, 15)
                 }
 
-                // MARK: Custom segmented picker
-
                 SegmentedPicker(currentTab: $currentPickerTab, onTap: {})
                     .padding(.horizontal, 32)
                     .padding(.top, -10.0)
@@ -81,8 +64,6 @@ struct AddReportView: View {
                 // MARK: List
 
                 switch currentPickerTab {
-                case .odometer:
-                    OdometerListView(addExpVM: addExpVM, utilityVM: utilityVM, focusedField: $focusedField)
                 case .reminder:
                     ReminderListView(reminder: $reminder, focusedField: $focusedField)
                 case .fuel:
@@ -103,14 +84,6 @@ struct AddReportView: View {
                 trailing:
                 Button(action: {
                     switch currentPickerTab {
-                    case .odometer:
-                        guard let odometerValue = Float(addExpVM.odometerTab) else { return }
-                        if odometerValue < vehicleManager.currentVehicle.odometer {
-                            showOdometerAlert.toggle()
-                        } else {
-                            vehicleManager.currentVehicle.odometer = odometerValue
-                            presentationMode.wrappedValue.dismiss()
-                        }
                     case .reminder:
                         NotificationManager.shared.requestAuthNotifications()
                         do {
@@ -122,31 +95,26 @@ struct AddReportView: View {
                         NotificationManager.shared.createNotification(for: reminder)
                         presentationMode.wrappedValue.dismiss()
                     case .fuel:
-                        vehicleManager.currentVehicle.odometer = fuelExpense.odometer
-                        do {
-                            try vehicleManager.currentVehicle.saveToModelContext(context: modelContext)
-                        } catch {
-                            print("error saving current vehicle odometer \(error)")
+                        if fuelExpense.odometer < vehicleManager.currentVehicle.odometer {
+                            showOdometerAlert.toggle()
+                        } else {
+                            vehicleManager.currentVehicle.odometer = fuelExpense.odometer
+                            do {
+                                try vehicleManager.currentVehicle.saveToModelContext(context: modelContext)
+                            } catch {
+                                print("error saving current vehicle odometer \(error)")
+                            }
+                            fuelExpense.insert(context: modelContext)
+                            presentationMode.wrappedValue.dismiss()
                         }
-                        fuelExpense.insert(context: modelContext)
-                        presentationMode.wrappedValue.dismiss()
                     }
                 }, label: {
                     Text(String(localized: "Save"))
                         .font(Typography.headerM)
                 })
-                .disabled(
-                    (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty) &&
-                        (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
-                        reminder.title.isEmpty && fuelExpense.totalPrice.isZero)
-                .opacity(
-                    (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty) &&
-                        (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
-                        reminder.title.isEmpty && fuelExpense.totalPrice.isZero ? 0.6 : 1)
+                .disabled(reminder.title.isEmpty && fuelExpense.totalPrice.isZero)
+                .opacity(reminder.title.isEmpty && fuelExpense.totalPrice.isZero ? 0.6 : 1)
             )
-            .onAppear {
-                addExpVM.odometer = String(Int(dataVM.currentVehicle.first?.odometer ?? 0))
-            }
             .toolbar {
                 /// Keyboard focus
                 ToolbarItem(placement: .keyboard) {
@@ -236,7 +204,6 @@ enum FocusField: Hashable {
 enum AddReportTabs: String, CaseIterable, Identifiable {
     case fuel
     case reminder
-    case odometer
 
     var id: Self { self }
 }

@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+// Deprecated: - OdometerListView
+// The abiltiy to update the odometer at any point in time interferes with the logic of the statistics
+// and could lead to potential errors. The odometer should be updated only when adding a new fuel entry.
 struct OdometerListView: View {
     @StateObject var addExpVM: AddExpenseViewModel
     @ObservedObject var utilityVM: UtilityViewModel

@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// DEPRECATED: - ExpenseListView
+// Since it was not working most of the time. I prefer to focus only on fuel for now
 struct ExpenseListView: View {
     @StateObject var addExpVM: AddExpenseViewModel
     @ObservedObject var utilityVM: UtilityViewModel
