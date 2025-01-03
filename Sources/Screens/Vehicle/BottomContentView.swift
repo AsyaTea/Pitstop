@@ -41,7 +41,7 @@ struct BottomContentView: View {
 
             titleSection(
                 sectionTitle: "Last events",
-                showViewAll: true,
+                showViewAll: vehicleManager.currentVehicle.fuelExpenses.isEmpty,
                 viewAllAction: {
                     viewAllEvents.toggle()
                 }
@@ -51,7 +51,7 @@ struct BottomContentView: View {
             .padding(.bottom, -10)
             .sheet(isPresented: $viewAllEvents) { LastEventsListView(dataVM: dataVM, categoryVM: categoryVM, utilityVM: utilityVM) }
 
-            if dataVM.expenseList.isEmpty {
+            if vehicleManager.currentVehicle.fuelExpenses.isEmpty {
                 HStack {
                     Text(LocalizedStringKey("There are no events to show"))
                         .font(Typography.TextM)
@@ -60,14 +60,16 @@ struct BottomContentView: View {
                 }
                 .padding()
             } else {
-                ForEach(dataVM.expenseList.reversed().prefix(3), id: \.self) { expense in
+                ForEach(vehicleManager.currentVehicle.fuelExpenses.reversed().prefix(3), id: \.id) { fuelExpense in
                     Button(action: {
-                        utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
+//                        utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
+                        // TODO: Fix edit event
                         showEventEdit.toggle()
                     }, label: {
                         CategoryComponent(
-                            category: Category(rawValue: Int(expense.category)) ?? .other,
-                            date: expense.date, cost: String(expense.price)
+                            category: .fuel,
+                            date: fuelExpense.date,
+                            cost: String(fuelExpense.totalPrice)
                         )
                     })
                 }

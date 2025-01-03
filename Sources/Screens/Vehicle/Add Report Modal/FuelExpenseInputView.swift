@@ -9,23 +9,8 @@ import SwiftData
 import SwiftUI
 
 struct FuelExpenseInputView: View {
-    @Environment(\.modelContext) private var modelContext
-
-    @State private var odometer: Float = 0.0
-    @State private var date = Date()
-    @State private var quantity: Float = 0.0
-    @State private var pricePerUnit: Float = 0.0
-    @State private var selectedFuel: FuelType
-
-    private var vehicleFuels: [FuelType] = []
-
-    init(vehicleManager: VehicleManager) {
-        _odometer = State(initialValue: vehicleManager.currentVehicle.odometer)
-        _selectedFuel = State(initialValue: vehicleManager.currentVehicle.mainFuelType)
-        vehicleFuels.append(vehicleManager.currentVehicle.mainFuelType)
-        guard let secondaryFuelType = vehicleManager.currentVehicle.secondaryFuelType else { return }
-        vehicleFuels.append(secondaryFuelType)
-    }
+    let vehicleFuels: [FuelType]
+    @Binding var fuelExpense: FuelExpense
 
     var body: some View {
         CustomList {
@@ -36,7 +21,7 @@ struct FuelExpenseInputView: View {
                     color: Palette.colorBlue
                 ),
                 type: .field(
-                    value: $odometer,
+                    value: $fuelExpense.odometer,
                     unit: "km",
                     placeholder: "0",
                     keyboardType: .numberPad
@@ -44,14 +29,14 @@ struct FuelExpenseInputView: View {
             )
             NavigationLink(
                 destination: CategoryPicker(
-                    selectedCategory: $selectedFuel,
+                    selectedCategory: $fuelExpense.fuelType,
                     categories: vehicleFuels
                 )
             ) {
                 HStack {
                     CategoryRow(input: .init(title: "Fuel type", icon: .fuelType, color: Palette.colorOrange))
                     Spacer()
-                    Text(selectedFuel.rawValue)
+                    Text(fuelExpense.fuelType.rawValue)
                         .fixedSize()
                         .font(Typography.headerM)
                         .foregroundColor(Palette.greyMiddle)
@@ -63,16 +48,16 @@ struct FuelExpenseInputView: View {
                     icon: .day,
                     color: Palette.colorGreen
                 ),
-                type: .date(value: $date)
+                type: .date(value: $fuelExpense.date)
             )
             CategoryInputView(
                 categoryInfo: .init(
                     title: "Liters",
-                    icon: quantity.isZero ? .liters : .literColored,
-                    color: quantity.isZero ? Palette.greyLight : Palette.colorOrange
+                    icon: fuelExpense.quantity.isZero ? .liters : .literColored,
+                    color: fuelExpense.quantity.isZero ? Palette.greyLight : Palette.colorOrange
                 ),
                 type: .field(
-                    value: $quantity,
+                    value: $fuelExpense.quantity,
                     unit: "L",
                     placeholder: "0",
                     keyboardType: .decimalPad
@@ -81,11 +66,11 @@ struct FuelExpenseInputView: View {
             CategoryInputView(
                 categoryInfo: .init(
                     title: "Price/Liter",
-                    icon: pricePerUnit.isZero ? .priceLiter : .priceLiterColored,
-                    color: pricePerUnit.isZero ? Palette.greyLight : Palette.colorOrange
+                    icon: fuelExpense.pricePerUnit.isZero ? .priceLiter : .priceLiterColored,
+                    color: fuelExpense.pricePerUnit.isZero ? Palette.greyLight : Palette.colorOrange
                 ),
                 type: .field(
-                    value: $pricePerUnit,
+                    value: $fuelExpense.pricePerUnit,
                     unit: "€",
                     placeholder: "0",
                     keyboardType: .decimalPad

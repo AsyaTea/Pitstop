@@ -45,4 +45,25 @@ class FuelExpense: Identifiable {
     static func mock() -> FuelExpense {
         .init(totalPrice: 0, quantity: 0, pricePerUnit: 0, odometer: 0, fuelType: .diesel, date: .now, vehicle: .mock())
     }
+
+    // MARK: CRUD
+
+    func insert(context: ModelContext) {
+        context.insert(self)
+        save(context: context)
+    }
+
+    func save(context: ModelContext) {
+        do {
+            try context.save()
+            print("Fuel Expense \(totalPrice) for \(String(describing: vehicle.name)) saved successfully!")
+        } catch {
+            print("Error saving fuel \(totalPrice) for \(String(describing: vehicle.name)): \(error)")
+        }
+    }
+
+    func delete(context: ModelContext) {
+        context.delete(self)
+        save(context: context)
+    }
 }

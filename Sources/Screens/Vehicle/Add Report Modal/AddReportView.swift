@@ -19,7 +19,10 @@ struct AddReportView: View {
     @State private var showDate = false
     @State private var showOdometerAlert = false
 
-    @State var reminder: Reminder = .mock()
+    @State private var reminder: Reminder = .mock()
+
+    @State var fuelExpense: FuelExpense = .mock()
+    @State var fuelCategories: [FuelType] = []
 
     // Focus keyboard
     @FocusState var focusedField: FocusField?
@@ -66,7 +69,19 @@ struct AddReportView: View {
                     )
                     .padding(.top, 15)
                 case .fuel:
-                    Text("Work in progress")
+                    HStack {
+                        Spacer()
+                        TextField("0.0", value: $fuelExpense.totalPrice, format: .number)
+                            .keyboardType(.decimalPad)
+                            .font(Typography.headerXXL)
+                            .foregroundColor(Palette.black)
+                            .fixedSize(horizontal: true, vertical: true)
+                        Text(utilityVM.currency)
+                            .font(Typography.headerXXL)
+                            .foregroundColor(Palette.black)
+                        Spacer()
+                    }
+                    .padding(.top, 15)
                 }
 
                 // MARK: Custom segmented picker
@@ -91,7 +106,7 @@ struct AddReportView: View {
                 case .reminder:
                     ReminderListView(reminder: $reminder, focusedField: $focusedField)
                 case .fuel:
-                    FuelExpenseInputView(vehicleManager: vehicleManager)
+                    FuelExpenseInputView(vehicleFuels: fuelCategories, fuelExpense: $fuelExpense)
                 }
             }
             .background(Palette.greyBackground)
@@ -133,7 +148,14 @@ struct AddReportView: View {
                         NotificationManager.shared.createNotification(for: reminder)
                         presentationMode.wrappedValue.dismiss()
                     case .fuel:
-                        break
+                        vehicleManager.currentVehicle.odometer = fuelExpense.odometer
+                        do {
+                            try vehicleManager.currentVehicle.saveToModelContext(context: modelContext)
+                        } catch {
+                            print("error updating fuel  \(error)")
+                        }
+                        fuelExpense.insert(context: modelContext)
+                        presentationMode.wrappedValue.dismiss()
                     }
                 }, label: {
                     Text(String(localized: "Save"))
@@ -142,11 +164,11 @@ struct AddReportView: View {
                 .disabled(
                     (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty) &&
                         (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
-                        reminder.title.isEmpty)
+                        reminder.title.isEmpty && fuelExpense.totalPrice.isZero)
                 .opacity(
                     (Float(addExpVM.odometer) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.price.isEmpty) &&
                         (Float(addExpVM.odometerTab) ?? 0.0 < dataVM.currentVehicle.first?.odometer ?? 0 || addExpVM.odometerTab.isEmpty) &&
-                        reminder.title.isEmpty ? 0.6 : 1)
+                        reminder.title.isEmpty && fuelExpense.totalPrice.isZero ? 0.6 : 1)
             )
             .onAppear {
                 addExpVM.odometer = String(Int(dataVM.currentVehicle.first?.odometer ?? 0))
@@ -177,6 +199,26 @@ struct AddReportView: View {
                 )
             }
         }
+        .onAppear {
+            initializeFuelExpense()
+        }
+    }
+
+    private func initializeFuelExpense() {
+        let currentVehicle = vehicleManager.currentVehicle
+        fuelExpense = FuelExpense(
+            totalPrice: 0.0,
+            quantity: 0,
+            pricePerUnit: 0.0,
+            odometer: currentVehicle.odometer,
+            fuelType: currentVehicle.mainFuelType,
+            date: Date(),
+            vehicle: currentVehicle
+        )
+
+        fuelCategories.append(currentVehicle.mainFuelType)
+        guard let secondaryFuelType = currentVehicle.secondaryFuelType else { return }
+        fuelCategories.append(secondaryFuelType)
     }
 }
 
@@ -217,6 +259,7 @@ enum FocusField: Hashable {
     case priceTab
     case odometerTab
     case reminderTab
+    case fuelTab
     case odometer
     case liter
     case priceLiter
