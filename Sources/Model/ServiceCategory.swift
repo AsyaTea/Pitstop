@@ -8,7 +8,6 @@
 import SwiftUI
 
 enum ServiceCategory: String, Codable, CaseIterable, Identifiable {
-    case fuel = "Fuel"
     case maintenance = "Maintenance"
     case insurance = "Insurance"
     case roadTax = "Road Tax"
@@ -21,8 +20,6 @@ enum ServiceCategory: String, Codable, CaseIterable, Identifiable {
 
     var icon: ImageResource {
         switch self {
-        case .fuel:
-            .fuel
         case .maintenance:
             .maintenance
         case .insurance:
@@ -42,8 +39,6 @@ enum ServiceCategory: String, Codable, CaseIterable, Identifiable {
 
     var color: Color {
         switch self {
-        case .fuel:
-            Palette.colorYellow
         case .maintenance:
             Palette.colorGreen
         case .insurance:

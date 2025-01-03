@@ -54,23 +54,25 @@ struct HeaderContent: View {
                     }
                 }).disabled(true)
 
-                Button(action: {}, label: {
-                    ZStack {
-                        Rectangle()
-                            .cornerRadius(16)
-                            .foregroundColor(homeVM.headerCardColor)
-                            .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
-                        VStack(alignment: .center) {
-                            let formattedFuel = String(format: "%.1f", categoryVM.fuelEff)
-                            Text("\(formattedFuel) / 100")
-                                .foregroundColor(Palette.blackHeader)
-                                .font(Typography.headerLM)
-                            Text(String(localized: "Efficiency") + " (L/\(utilityVM.unit))")
-                                .foregroundColor(Palette.blackHeader)
-                                .font(Typography.TextM)
+                if let efficiency = vehicleManager.currentVehicle.calculateFuelEfficiency() {
+                    Button(action: {}, label: {
+                        ZStack {
+                            Rectangle()
+                                .cornerRadius(16)
+                                .foregroundColor(homeVM.headerCardColor)
+                                .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
+                            VStack(alignment: .center) {
+                                let formattedEfficiency = String(format: "%.1f", efficiency)
+                                Text("\(formattedEfficiency) / 100")
+                                    .foregroundColor(Palette.blackHeader)
+                                    .font(Typography.headerLM)
+                                Text(String(localized: "Efficiency") + " (L/\(utilityVM.unit))")
+                                    .foregroundColor(Palette.blackHeader)
+                                    .font(Typography.TextM)
+                            }
                         }
-                    }
-                }).disabled(true)
+                    }).disabled(true)
+                }
             }
         }
         .padding()

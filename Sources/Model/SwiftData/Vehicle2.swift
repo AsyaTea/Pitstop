@@ -77,10 +77,42 @@ final class Vehicle2: Identifiable {
     static func mock() -> Vehicle2 {
         Vehicle2(name: "Default car", brand: "Brand", model: "XYZ", odometer: 0.0)
     }
+}
 
+extension Vehicle2 {
     func calculateTotalFuelExpenses() -> String {
         let total = fuelExpenses.reduce(0.0) { $0 + $1.totalPrice }
         return String(format: "%.2f", total)
+    }
+
+    func calculateFuelEfficiency() -> Float? {
+        guard fuelExpenses.count > 1 else {
+            return nil // Not enough data to calculate efficiency
+        }
+
+        // Sort fuel expenses by odometer reading
+        let sortedExpenses = fuelExpenses.sorted { $0.odometer < $1.odometer }
+
+        var totalFuelConsumed: Float = 0
+        var totalDistanceTraveled: Float = 0
+
+        for i in 1 ..< sortedExpenses.count {
+            let previousExpense = sortedExpenses[i - 1]
+            let currentExpense = sortedExpenses[i]
+
+            // Calculate the distance traveled
+            let distance = currentExpense.odometer - previousExpense.odometer
+            if distance > 0 {
+                totalDistanceTraveled += distance
+                totalFuelConsumed += currentExpense.quantity
+            }
+        }
+
+        guard totalDistanceTraveled > 0 else { return nil }
+
+        // Calculate efficiency
+        // Total Fuel Consumed (Liters) / Total Distance Traveled (Kilometers) * 100
+        return (totalFuelConsumed / totalDistanceTraveled) * 100
     }
 }
 
