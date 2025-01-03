@@ -94,13 +94,10 @@ struct LastEventsListView: View {
                                 }
                             }
                             NavigationLink(destination:
-                                EditEventView(
-                                    utilityVM: utilityVM,
-                                    dataVM: dataVM, categoryVM: categoryVM,
-                                    category: Category(rawValue: Int(utilityVM.expenseToEdit.category ?? 0)) ?? .other
-                                )
-                                .navigationBarBackButtonHidden(true)
-                                .navigationBarHidden(true),
+                                EditEventView(utilityVM: utilityVM,
+                                              fuelExpense: .constant(.mock()))
+                                    .navigationBarBackButtonHidden(true)
+                                    .navigationBarHidden(true),
                                 isActive: $showEditExpense) {}
                         }
                         Spacer()

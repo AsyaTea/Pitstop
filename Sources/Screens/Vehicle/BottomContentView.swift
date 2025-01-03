@@ -29,6 +29,8 @@ struct BottomContentView: View {
     @Query var documents: [Document]
     @State private var selectedDocument: Document = .mock()
 
+    @State private var selectedFuelExpense: FuelExpense = .mock()
+
     @State private var newNumberAlert: AlertConfig = .init(
         enableBackgroundBlur: false,
         disableOutsideTap: false,
@@ -64,6 +66,7 @@ struct BottomContentView: View {
                     Button(action: {
 //                        utilityVM.expenseToEdit = ExpenseState.fromExpenseViewModel(vm: expense)
                         // TODO: Fix edit event
+                        selectedFuelExpense = fuelExpense
                         showEventEdit.toggle()
                     }, label: {
                         CategoryComponent(
@@ -167,11 +170,7 @@ struct BottomContentView: View {
             Spacer()
         }
         .sheet(isPresented: $showEventEdit) {
-            EditEventView(
-                utilityVM: utilityVM,
-                dataVM: dataVM, categoryVM: categoryVM,
-                category: Category(rawValue: Int(utilityVM.expenseToEdit.category ?? 0)) ?? .other
-            )
+            EditEventView(utilityVM: utilityVM, fuelExpense: $selectedFuelExpense)
         }
         .sheet(isPresented: $viewAllNumbers) {
             ImportantNumbersView()

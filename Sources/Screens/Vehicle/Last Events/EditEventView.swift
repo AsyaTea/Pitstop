@@ -5,66 +5,38 @@
 //  Created by Ivan Voloshchuk on 31/05/22.
 //
 
+import SwiftData
 import SwiftUI
 
 struct EditEventView: View {
     @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.modelContext) private var modelContext
+    @ObservedObject var utilityVM: UtilityViewModel
+    @State var showDeleteAlert = false
 
-    @StateObject var utilityVM: UtilityViewModel
-    @ObservedObject var dataVM: DataViewModel
-    @ObservedObject var categoryVM: CategoryViewModel
-    var category: Category
-    @State var showingAlert = false
+    @Binding var fuelExpense: FuelExpense
 
     var body: some View {
         NavigationView {
             VStack {
-                FuelEventListFields(utilityVM: utilityVM, dataVM: dataVM, category: category)
+                fuelEventListFields()
             }
             .background(Palette.greyBackground)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(category.label)
-            .navigationBarItems(
-                leading:
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }, label: {
-                    HStack {
-                        Image("arrowLeft")
-
-                        Text("Back")
-                            .font(Typography.headerM)
-                    }
-                })
-                .accentColor(Palette.greyHard),
-                trailing:
-                Button(action: {
-                    do {
-                        try dataVM.updateExpense(utilityVM.expenseToEdit)
-                    } catch {
-                        print(error)
-                    }
-                    dataVM.getTotalExpense(expenses: dataVM.expenseList)
-                    presentationMode.wrappedValue.dismiss()
-                }, label: {
-                    Text("Save")
-                        .font(Typography.headerM)
-                })
-//                    .disabled((Float(utilityVM.expenseToEdit.odometer) <= dataVM.currentVehicle.first?.odometer ?? 0 ))
-//                    .opacity((Float(utilityVM.expenseToEdit.odometer) <= dataVM.currentVehicle.first?.odometer ?? 0 ) ? 0.6 : 1)
-            )
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    backButton
+                }
+
                 ToolbarItem(placement: .principal) {
-                    Text(category.label)
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.black)
+                    categoryLabel
                 }
             }
             .overlay(
                 VStack {
                     Spacer(minLength: UIScreen.main.bounds.size.height * 0.78)
                     Button(action: {
-                        showingAlert.toggle()
+                        showDeleteAlert.toggle()
                     }, label: {
                         DeleteButton(title: "Delete report")
                     })
@@ -72,21 +44,12 @@ struct EditEventView: View {
                     Spacer()
                 }
             )
-            .alert(isPresented: $showingAlert) {
+            .alert(isPresented: $showDeleteAlert) {
                 Alert(
                     title: Text(String(localized: "Are you sure you want to delete this report?")),
                     message: Text(String(localized: "This action cannot be undone")),
                     primaryButton: .destructive(Text(String(localized: "Delete"))) {
-                        dataVM.deleteExpense(expenseS: utilityVM.expenseToEdit)
-                        dataVM.getExpensesCoreData(filter: nil, storage: { storage in
-                            dataVM.expenseList = storage
-                            dataVM.expenseFilteredList = storage
-                            categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
-                        })
-
-                        // SE METTO STA ROBA CRASHA, TO FIX PROSSIMAMENTE
-                        //                            dataVM.getTotalExpense(expenses: dataVM.expenseList)
-                        //                            dataVM.getMonths(expenses: dataVM.expenseList)
+                        fuelExpense.delete(context: modelContext)
                         presentationMode.wrappedValue.dismiss()
                     },
                     secondaryButton: .cancel()
@@ -94,160 +57,136 @@ struct EditEventView: View {
             }
         }
     }
-}
 
-struct FuelEventListFields: View {
-    @StateObject var utilityVM: UtilityViewModel
-    @ObservedObject var dataVM: DataViewModel
-    var category: Category
-    @FocusState var focusedField: FocusField?
+    private var backButton: some View {
+        Button(action: {
+            presentationMode.wrappedValue.dismiss()
+        }, label: {
+            HStack {
+                Image("arrowLeft")
+                Text("Back")
+                    .font(Typography.headerM)
+            }
+            .accentColor(Palette.greyHard)
+        })
+    }
 
-    var body: some View {
+    private var categoryLabel: some View {
+        Text("Fuel")
+            .font(Typography.headerM)
+            .foregroundColor(Palette.black)
+    }
+
+    @ViewBuilder
+    private func fuelEventListFields() -> some View {
         CustomList {
             // MARK: AMOUNT
 
             HStack {
-//                CategoryRow(title: String(localized: "Cost"), icon: .other, color: Palette.colorViolet)
+                CategoryRow(
+                    input:
+                    .init(
+                        title: String(localized: "Cost"),
+                        icon: .other,
+                        color: Palette.colorViolet
+                    )
+                )
                 Spacer()
-                TextField("100", value: $utilityVM.expenseToEdit.price, formatter: NumberFormatter())
-                    .font(Typography.headerM)
-                    .foregroundColor(Palette.black)
-                    .keyboardType(.decimalPad)
-                    .fixedSize(horizontal: true, vertical: true)
-                    .focused($focusedField, equals: .priceTab)
-
-                Text(utilityVM.currency)
+                Text("\(fuelExpense.totalPrice) " + utilityVM.currency)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
             }
             .contentShape(Rectangle())
-            .onTapGesture {
-                focusedField = .priceTab
-            }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: DATE
 
-            DatePicker(selection: $utilityVM.expenseToEdit.date, displayedComponents: [.date]) {
-//                CategoryRow(title: String(localized: "Day"), icon: .day, color: Palette.colorGreen)
+            HStack {
+                CategoryRow(
+                    input: .init(
+                        title: String(localized: "Day"),
+                        icon: .day,
+                        color: Palette.colorGreen
+                    )
+                )
+                Spacer()
+                Text(fuelExpense.date.formatDate())
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.black)
             }
+            .contentShape(Rectangle())
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: ODOMETER
 
             HStack {
-//                CategoryRow(title: String(localized: "Odometer"), icon: .odometer, color: Palette.colorBlue)
+                CategoryRow(
+                    input: .init(
+                        title: String(localized: "Odometer"),
+                        icon: .odometer,
+                        color: Palette.colorBlue
+                    )
+                )
                 Spacer()
-                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer, formatter: NumberFormatter())
-                    .font(Typography.headerM)
-                    .foregroundColor(Palette.black)
-                    .keyboardType(.numberPad)
-                    .fixedSize(horizontal: true, vertical: true)
-                    .focused($focusedField, equals: .odometer)
-                Text(utilityVM.unit)
+                Text("\(fuelExpense.odometer) " + utilityVM.unit)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
             }
             .contentShape(Rectangle())
-            .onTapGesture {
-                focusedField = .odometer
-            }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: FUEL TYPE
 
             HStack {
-//                CategoryRow(title: String(localized: "Fuel type"), icon: .fuelType, color: Palette.colorOrange)
+                CategoryRow(
+                    input: .init(
+                        title: String(localized: "Fuel type"),
+                        icon: .fuelType,
+                        color: Palette.colorOrange
+                    )
+                )
                 Spacer()
-//                Text((FuelType(rawValue: Int(utilityVM.expenseToEdit.fuelType ?? 0)) ?? .none).label)
+                Text(fuelExpense.fuelType.rawValue)
+                    .font(Typography.headerM)
+                    .foregroundColor(Palette.black)
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: PRICE LITER
 
             HStack {
-//                CategoryRow(
-//                    title: String(localized: "Price/Liter"),
-//                    icon: utilityVM.expenseToEdit.priceLiter == 0 ? .priceLiter : .priceLiterColored,
-//                    color: utilityVM.expenseToEdit.priceLiter == 0 ? Palette.greyLight : Palette.colorYellow
-//                )
+                CategoryRow(
+                    input: .init(
+                        title: String(localized: "Price/Liter"),
+                        icon: fuelExpense.pricePerUnit.isZero ? .priceLiter : .priceLiterColored,
+                        color: fuelExpense.pricePerUnit.isZero ? Palette.greyLight : Palette.colorYellow
+                    )
+                )
                 Spacer()
-                TextField("0", value: $utilityVM.expenseToEdit.priceLiter, formatter: NumberFormatter())
+                Text("\(fuelExpense.pricePerUnit) " + utilityVM.currency)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
-                    .keyboardType(.decimalPad)
-                    .fixedSize(horizontal: true, vertical: true)
-                    .focused($focusedField, equals: .priceLiter)
             }
             .contentShape(Rectangle())
-            .onTapGesture {
-                focusedField = .priceLiter
-            }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
             // MARK: LITER
 
             HStack {
-//                CategoryRow(
-//                    title: String(localized: "Liters"),
-//                    icon: utilityVM.expenseToEdit.liters == 0 ? .liters : .literColored,
-//                    color: utilityVM.expenseToEdit.liters == 0 ? Palette.greyLight : Palette.colorOrange
-//                )
+                CategoryRow(
+                    input: .init(
+                        title: String(localized: "Liters"),
+                        icon: fuelExpense.quantity.isZero ? .liters : .literColored,
+                        color: fuelExpense.quantity.isZero ? Palette.greyLight : Palette.colorOrange
+                    )
+                )
                 Spacer()
-                TextField("0", value: $utilityVM.expenseToEdit.liters, formatter: NumberFormatter())
+                Text("\(fuelExpense.quantity) " + utilityVM.unit)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
-                    .keyboardType(.decimalPad)
-                    .fixedSize(horizontal: true, vertical: true)
-                    .focused($focusedField, equals: .liter)
             }
             .contentShape(Rectangle())
-            .onTapGesture {
-                focusedField = .liter
-            }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-
-            HStack {
-//                CategoryRow(
-//                    title: String(localized: "Note"),
-//                    icon: utilityVM.expenseToEdit.note.isEmpty ? .note : .noteColored,
-//                    color: utilityVM.expenseToEdit.note.isEmpty ? Palette.greyLight : Palette.colorViolet
-//                )
-                Spacer()
-                TextField(String(localized: "Note"), text: $utilityVM.expenseToEdit.note)
-                    .font(Typography.headerM)
-                    .foregroundColor(Palette.black)
-                    .fixedSize(horizontal: true, vertical: true)
-                    .focused($focusedField, equals: .note)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                focusedField = .note
-            }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
         }
-        .toolbar {
-            /// Keyboard focus
-            ToolbarItem(placement: .keyboard) {
-                HStack {
-                    Button(action: {
-                        focusedField = nil
-                    }, label: {
-                        Image(systemName: "keyboard.chevron.compact.down")
-                            .resizable()
-                            .foregroundColor(Palette.black)
-                    })
-                }
-            }
-        }
-    }
-}
-
-struct EditEventView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditEventView(utilityVM: UtilityViewModel(),
-                      dataVM: DataViewModel(),
-                      categoryVM: CategoryViewModel(),
-                      category: Category.fuel)
     }
 }

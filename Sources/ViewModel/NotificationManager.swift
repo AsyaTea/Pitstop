@@ -46,7 +46,7 @@ final class NotificationManager {
             : "\(String(localized: "You have a new "))\(category)\(String(localized: " reminder"))"
 
         let content = UNMutableNotificationContent()
-        content.title = reminder.title ?? ""
+        content.title = reminder.title
         content.body = notificationBody
         content.sound = .default
 
