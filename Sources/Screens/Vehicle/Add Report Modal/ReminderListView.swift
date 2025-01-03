@@ -19,14 +19,15 @@ struct ReminderListView: View {
             // MARK: CATEGORY
 
             HStack {
-                CategoryRow(
+                CategoryRow(input: .init(
                     title: String(localized: "Category"),
                     icon: .category,
                     color: Palette.colorYellow
                 )
+                )
                 Spacer()
                 NavigationLink(
-                    destination: CustomCategoryPicker2(selectedCategory: $reminder.category)
+                    destination: CategoryPicker(selectedCategory: $reminder.category)
                 ) {
                     HStack {
                         Spacer()
@@ -49,11 +50,11 @@ struct ReminderListView: View {
                     }
                 },
                 label: {
-                    CategoryRow(
+                    CategoryRow(input: .init(
                         title: String(localized: "Based on"),
                         icon: .basedOn,
                         color: Palette.colorOrange
-                    )
+                    ))
                 }
             )
 
@@ -63,11 +64,12 @@ struct ReminderListView: View {
                     selection: $reminder.date,
                     in: Date() ... Date().addingYears(3)!
                 ) {
-                    CategoryRow(
+                    CategoryRow(input: .init(
                         title: String(localized: "Remind me on"),
                         icon: .remindMe,
                         color: Palette.colorGreen
-                    )
+                    ))
+
                     .padding(.bottom, 10)
                 }
                 .datePickerStyle(.compact)

@@ -26,7 +26,11 @@ struct SettingsView: View {
                         ForEach(vehicles, id: \.uuid) { vehicle in
                             let destination = EditVehicleView(vehicle2: vehicle)
                             NavigationLink(destination: destination) {
-                                CategoryRow(title: vehicle.name, icon: .carSettings, color: Palette.colorViolet)
+                                CategoryRow(input: .init(
+                                    title: vehicle.name,
+                                    icon: .carSettings,
+                                    color: Palette.colorViolet
+                                ))
                             }
                         }
                         .onDelete(perform: deleteVehicle)
@@ -35,7 +39,11 @@ struct SettingsView: View {
                             onboardingVM.addNewVehicle = true
                             onboardingVM.destination = .page2
                         }, label: {
-                            CategoryRow(title: "Add vehicle ", icon: .plus, color: Palette.greyBackground)
+                            CategoryRow(input: .init(
+                                title: "Add vehicle",
+                                icon: .plus,
+                                color: Palette.greyBackground
+                            ))
                         })
                         .buttonStyle(.plain)
                     }
@@ -43,11 +51,19 @@ struct SettingsView: View {
 
                     Section(header: Text("Other")) {
                         NavigationLink(destination: AboutView()) {
-                            CategoryRow(title: "About us ", icon: .paperclip, color: Palette.greyBackground)
+                            CategoryRow(input: .init(
+                                title: "About us",
+                                icon: .paperclip,
+                                color: Palette.greyBackground
+                            ))
                         }
 
                         NavigationLink(destination: ToSView()) {
-                            CategoryRow(title: "Terms of Service", icon: .paperclip, color: Palette.greyBackground)
+                            CategoryRow(input: .init(
+                                title: "Terms of service",
+                                icon: .paperclip,
+                                color: Palette.greyBackground
+                            ))
                         }
                     }
                     .listRowInsets(EdgeInsets(top: 5, leading: 16, bottom: 5, trailing: 16))

@@ -8,22 +8,26 @@
 import SwiftUI
 
 struct CategoryRow: View {
-    var title: String
-    var icon: ImageResource
-    var color: Color
+    var input: CategoryRow.Input
 
     var body: some View {
         HStack {
             ZStack {
                 Circle()
                     .frame(width: 32, height: 32)
-                    .foregroundColor(color)
-                Image(icon)
+                    .foregroundColor(input.color)
+                Image(input.icon)
                     .resizable()
                     .frame(width: 16, height: 16)
             }
-            Text(title)
+            Text(input.title)
                 .font(Typography.headerM)
         }
+    }
+
+    struct Input {
+        var title: String
+        var icon: ImageResource
+        var color: Color
     }
 }

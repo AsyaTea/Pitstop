@@ -102,7 +102,11 @@ private extension EditReminderView {
     func reminderInformation() -> some View {
         CustomList {
             HStack {
-                CategoryRow(title: "Title", icon: .other, color: Palette.colorViolet)
+                CategoryRow(input: .init(
+                    title: String(localized: "Title"),
+                    icon: .other,
+                    color: Palette.colorViolet
+                ))
                 Spacer()
                 TextField(String(localized: "Title"), text: $title)
                     .font(Typography.headerM)
@@ -118,7 +122,11 @@ private extension EditReminderView {
             // MARK: - CATEGORY
 
             HStack {
-                CategoryRow(title: "Category", icon: .category, color: Palette.colorYellow)
+                CategoryRow(input: .init(
+                    title: String(localized: "Category"),
+                    icon: .category,
+                    color: Palette.colorYellow
+                ))
                 NavigationLink(destination:
                     CategoryPicker(selectedCategory: $category)) {
                         Spacer()
@@ -132,7 +140,11 @@ private extension EditReminderView {
             // MARK: - DATE
 
             DatePicker(selection: $date, in: Date() ... Date().addingYears(3)!) {
-                CategoryRow(title: "Day", icon: .day, color: Palette.colorGreen)
+                CategoryRow(input: .init(
+                    title: String(localized: "Day"),
+                    icon: .day,
+                    color: Palette.colorGreen
+                ))
             }
             .datePickerStyle(.compact)
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
@@ -140,7 +152,11 @@ private extension EditReminderView {
             // MARK: - NOTE
 
             HStack {
-                CategoryRow(title: "Note", icon: .noteColored, color: Palette.colorViolet)
+                CategoryRow(input: .init(
+                    title: String(localized: "Note"),
+                    icon: .noteColored,
+                    color: Palette.colorViolet
+                ))
                 Spacer()
                 TextField(String(localized: "Note"), text: $note)
                     .font(Typography.headerM)

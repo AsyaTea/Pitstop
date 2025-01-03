@@ -46,7 +46,12 @@ struct ExpiredReminderView: View {
     private func reminderInformation() -> some View {
         CustomList {
             HStack {
-                CategoryRow(title: "Title", icon: .other, color: Palette.colorViolet)
+                CategoryRow(input: .init(
+                    title: String(localized: "Title"),
+                    icon: .other,
+                    color: Palette.colorViolet
+                ))
+
                 Spacer()
                 Text(reminder.title)
                     .font(Typography.headerM)
@@ -59,7 +64,12 @@ struct ExpiredReminderView: View {
             // MARK: - CATEGORY
 
             HStack {
-                CategoryRow(title: "Category", icon: .category, color: Palette.colorYellow)
+                CategoryRow(input: .init(
+                    title: String(localized: "Category"),
+                    icon: .category,
+                    color: Palette.colorYellow
+                ))
+
                 Spacer()
                 Text(reminder.category.rawValue)
                     .font(Typography.headerM)
@@ -71,7 +81,12 @@ struct ExpiredReminderView: View {
             // MARK: - DATE
 
             HStack {
-                CategoryRow(title: "Day", icon: .day, color: Palette.colorGreen)
+                CategoryRow(input: .init(
+                    title: String(localized: "Day"),
+                    icon: .day,
+                    color: Palette.colorGreen
+                ))
+
                 Spacer()
                 Text(reminder.date.formatDate(with: "MMM d HH:mm"))
                     .font(Typography.headerM)
@@ -83,7 +98,11 @@ struct ExpiredReminderView: View {
             // MARK: - NOTE
 
             HStack {
-                CategoryRow(title: "Note", icon: .noteColored, color: Palette.colorViolet)
+                CategoryRow(input: .init(
+                    title: String(localized: "Note"),
+                    icon: .note,
+                    color: Palette.colorViolet
+                ))
                 Spacer()
                 Text(reminder.note)
                     .font(Typography.headerM)

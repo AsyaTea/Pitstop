@@ -24,7 +24,12 @@ struct ExpenseListView: View {
             // MARK: CUSTOM CATEGORY PICKER
 
             HStack {
-                CategoryRow(title: String(localized: "Category"), icon: .category, color: Palette.colorYellow)
+                CategoryRow(input: .init(
+                    title: String(localized: "Category"),
+                    icon: .category,
+                    color: Palette.colorYellow
+                )
+                )
                 Spacer()
                 NavigationLink(
                     destination: CustomCategoryPicker(
@@ -46,7 +51,12 @@ struct ExpenseListView: View {
             // MARK: ODOMETER
 
             HStack {
-                CategoryRow(title: String(localized: "Odometer"), icon: .odometer, color: Palette.colorBlue)
+                CategoryRow(input: .init(
+                    title: String(localized: "Odometer"),
+                    icon: .odometer,
+                    color: Palette.colorBlue
+                )
+                )
                 Spacer()
                 TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), text: $addExpVM.odometer)
                     .font(Typography.headerM)

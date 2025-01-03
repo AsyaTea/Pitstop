@@ -172,7 +172,7 @@ struct CostsListView: View {
 
             ForEach(categoryVM.categories, id: \.self) { category in
                 HStack {
-                    CategoryRow(title: category.name, icon: category.icon, color: category.color)
+//                    CategoryRow(title: category.name, icon: category.icon, color: category.color)
                     Spacer()
                     Text(String(category.totalCosts))
                         .font(Typography.headerM)

@@ -91,7 +91,7 @@ struct AddReportView: View {
                 case .reminder:
                     ReminderListView(reminder: $reminder, focusedField: $focusedField)
                 case .fuel:
-                    FuelExpenseInputView()
+                    FuelExpenseInputView(vehicleManager: vehicleManager)
                 }
             }
             .background(Palette.greyBackground)

@@ -16,13 +16,10 @@ struct OdometerListView: View {
         CustomList {
             // MARK: DATE
 
-            DatePicker(selection: $addExpVM.date, displayedComponents: [.date]) {
-                CategoryRow(
-                    title: String(localized: "Day"),
-                    icon: .day,
-                    color: Palette.colorGreen
-                )
-            }
+            CategoryInputView(
+                categoryInfo: .init(title: "Day", icon: .day, color: Palette.colorGreen),
+                type: .date(value: $addExpVM.date)
+            )
 
             // MARK: NOTE
 
