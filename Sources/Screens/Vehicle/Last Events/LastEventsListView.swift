@@ -1,5 +1,3 @@
-
-
 //
 //  LastEventsListView.swift
 //  Hurricane
@@ -8,6 +6,7 @@
 //
 import SwiftUI
 
+// TODO: Need huge refactoring
 struct LastEventsListView: View {
     @ObservedObject var dataVM: DataViewModel
     @ObservedObject var categoryVM = CategoryViewModel()

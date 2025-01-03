@@ -49,6 +49,6 @@ struct SegmentedPicker<T>: View where
 }
 
 #Preview {
-    @Previewable @State var tabs: AddReportTabs = .expense
+    @Previewable @State var tabs: AddReportTabs = .fuel
     SegmentedPicker(currentTab: $tabs, onTap: {})
 }

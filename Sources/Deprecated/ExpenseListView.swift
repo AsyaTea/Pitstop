@@ -101,14 +101,6 @@ struct ExpenseListView: View {
             }
         }
         .padding(.top, -5)
-        .onAppear {
-            /// Setting the keyboard focus on the price when opening the modal
-            if addExpVM.priceTab.isEmpty {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { /// Anything over 0.5 delay seems to work
-                    focusedField.wrappedValue = .priceTab
-                }
-            }
-        }
     }
 }
 

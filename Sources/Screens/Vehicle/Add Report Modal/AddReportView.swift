@@ -13,10 +13,8 @@ struct AddReportView: View {
 
     @ObservedObject var utilityVM: UtilityViewModel
     @StateObject var addExpVM: AddExpenseViewModel = .init()
-    @ObservedObject var categoryVM: CategoryViewModel
     @ObservedObject var dataVM: DataViewModel
 
-    @State private var showDate = false
     @State private var showOdometerAlert = false
 
     @State private var reminder: Reminder = .mock()
@@ -24,7 +22,7 @@ struct AddReportView: View {
     @State var fuelExpense: FuelExpense = .mock()
     @State var fuelCategories: [FuelType] = []
 
-    // Focus keyboard
+    // FIXME: Focus keyboard
     @FocusState var focusedField: FocusField?
 
     // To dismiss the modal
@@ -38,16 +36,6 @@ struct AddReportView: View {
                 // MARK: Custom TextField
 
                 switch currentPickerTab {
-                case .expense:
-                    TextFieldComponent(
-                        submitField: $addExpVM.price,
-                        placeholder: "0",
-                        attribute: utilityVM.currency,
-                        keyboardType: .decimalPad,
-                        focusedField: $focusedField,
-                        defaultFocus: .priceTab
-                    )
-                    .padding(.top, 15)
                 case .odometer:
                     TextFieldComponent(
                         submitField: $addExpVM.odometerTab,
@@ -93,14 +81,6 @@ struct AddReportView: View {
                 // MARK: List
 
                 switch currentPickerTab {
-                case .expense:
-                    ExpenseListView(
-                        addExpVM: addExpVM,
-                        utilityVM: utilityVM,
-                        dataVM: dataVM,
-                        categoryVM: categoryVM,
-                        focusedField: $focusedField
-                    )
                 case .odometer:
                     OdometerListView(addExpVM: addExpVM, utilityVM: utilityVM, focusedField: $focusedField)
                 case .reminder:
@@ -123,12 +103,6 @@ struct AddReportView: View {
                 trailing:
                 Button(action: {
                     switch currentPickerTab {
-                    case .expense:
-                        addExpVM.createExpense()
-                        dataVM.addExpense(expense: addExpVM.expenseS)
-                        dataVM.addNewExpensePriceToTotal(expense: addExpVM.expenseS)
-                        categoryVM.retrieveAndUpdate(vehicleID: dataVM.currentVehicle.first!.vehicleID)
-                        presentationMode.wrappedValue.dismiss()
                     case .odometer:
                         guard let odometerValue = Float(addExpVM.odometerTab) else { return }
                         if odometerValue < vehicleManager.currentVehicle.odometer {
@@ -152,7 +126,7 @@ struct AddReportView: View {
                         do {
                             try vehicleManager.currentVehicle.saveToModelContext(context: modelContext)
                         } catch {
-                            print("error updating fuel  \(error)")
+                            print("error saving current vehicle odometer \(error)")
                         }
                         fuelExpense.insert(context: modelContext)
                         presentationMode.wrappedValue.dismiss()
@@ -222,12 +196,6 @@ struct AddReportView: View {
     }
 }
 
-// struct AddReportView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddReportView()
-//    }
-// }
-
 struct TextFieldComponent: View {
     @Binding var submitField: String
     var placeholder: String
@@ -256,7 +224,6 @@ struct TextFieldComponent: View {
 }
 
 enum FocusField: Hashable {
-    case priceTab
     case odometerTab
     case reminderTab
     case fuelTab
@@ -268,7 +235,6 @@ enum FocusField: Hashable {
 
 enum AddReportTabs: String, CaseIterable, Identifiable {
     case fuel
-    case expense
     case reminder
     case odometer
 

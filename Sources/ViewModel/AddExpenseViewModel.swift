@@ -61,16 +61,6 @@ class AddExpenseViewModel: ObservableObject {
     }
 
     func resetTabFields(tab: AddReportTabs) {
-        if tab == .expense {
-            price = ""
-            priceTab = ""
-            selectedCategory = String(localized: "Fuel")
-            odometer = ""
-            odometerTab = ""
-            selectedRepeat = String(localized: "Never")
-            date = Date.now
-            note = ""
-        }
         if tab == .odometer {
             odometerTab = ""
             odometer = ""
@@ -78,13 +68,4 @@ class AddExpenseViewModel: ObservableObject {
             date = Date.now
         }
     }
-
-//
-//    func getLiters(cost: Float, priceLiter: Float){
-//        self.liters = cost/priceLiter
-//    }
-//
-//    func getPrice(cost: Float, liters: Float) {
-//        self.pricePerLiter = cost/liters
-//    }
 }
