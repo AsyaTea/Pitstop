@@ -128,7 +128,7 @@ struct EditVehicleView: View {
                             .background(isTapped ? Palette.greyLight : Palette.greyBackground)
                             .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
                         HStack {
-                            Text(mainFuelType.label)
+                            Text(mainFuelType.rawValue)
                                 .font(Typography.TextM)
                             Spacer()
                         }
@@ -137,8 +137,8 @@ struct EditVehicleView: View {
                     .accentColor(Palette.black)
                 })
                 .confirmationDialog(String(localized: "Select a default fuel type"), isPresented: $defaultFuelPicker, titleVisibility: .visible) {
-                    ForEach(FuelType.allCases, id: \.self) { fuel in
-                        Button(fuel.label) {
+                    ForEach(FuelType.allCases) { fuel in
+                        Button(fuel.rawValue) {
                             isTapped = false
                             mainFuelType = fuel
                         }
@@ -157,7 +157,7 @@ struct EditVehicleView: View {
                             .background(isTapped2 ? Palette.greyLight : Palette.greyBackground)
                             .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
                         HStack {
-                            Text(secondaryFuelType.label)
+                            Text(secondaryFuelType.rawValue)
                                 .font(Typography.TextM)
                             Spacer()
                         }
@@ -166,8 +166,8 @@ struct EditVehicleView: View {
                     .accentColor(Palette.black)
                 })
                 .confirmationDialog(String(localized: "Select a second fuel type"), isPresented: $secondaryFuelPicker, titleVisibility: .visible) {
-                    ForEach(FuelType.allCases, id: \.self) { fuel in
-                        Button(fuel.label) {
+                    ForEach(FuelType.allCases) { fuel in
+                        Button(fuel.rawValue) {
                             isTapped2 = false
                             secondaryFuelType = fuel
                         }

@@ -164,7 +164,7 @@ struct Page2: View {
                             .background(isTapped ? Palette.greyLight : Palette.greyBackground)
                             .frame(width: UIScreen.main.bounds.size.width * 0.90, height: UIScreen.main.bounds.size.height * 0.055)
                         HStack {
-                            Text(vehicle.mainFuelType.label)
+                            Text(vehicle.mainFuelType.rawValue)
                                 .font(Typography.TextM)
                             Spacer()
                         }
@@ -177,8 +177,8 @@ struct Page2: View {
                     isPresented: $showMainFuelSelection,
                     titleVisibility: .visible
                 ) {
-                    ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
-                        Button(fuel.label) {
+                    ForEach(FuelType.allCases, id: \.id) { fuel in
+                        Button(fuel.rawValue) {
                             vehicle.mainFuelType = fuel
                             isTapped.toggle()
                             focusedField = nil
@@ -317,8 +317,8 @@ struct Page3: View {
                             isPresented: $showSecondaryFuelSelection,
                             titleVisibility: .visible
                         ) {
-                            ForEach(FuelType.allCases.reversed(), id: \.self) { fuel in
-                                Button(fuel.label) {
+                            ForEach(FuelType.allCases, id: \.id) { fuel in
+                                Button(fuel.rawValue) {
                                     vehicle.secondaryFuelType = fuel
                                 }
                             }
@@ -330,7 +330,7 @@ struct Page3: View {
                                     .cornerRadius(12)
 
                                 HStack {
-                                    Text(secondaryFuel.label)
+                                    Text(secondaryFuel.rawValue)
                                         .font(Typography.ControlS)
                                         .foregroundColor(Palette.black)
                                     Spacer()
