@@ -317,7 +317,7 @@ struct Page3: View {
                             isPresented: $showSecondaryFuelSelection,
                             titleVisibility: .visible
                         ) {
-                            ForEach(FuelType.allCases, id: \.id) { fuel in
+                            ForEach(FuelType.allCases.filter { $0 != vehicle.mainFuelType }, id: \.id) { fuel in
                                 Button(fuel.rawValue) {
                                     vehicle.secondaryFuelType = fuel
                                 }
