@@ -75,7 +75,7 @@ final class Vehicle2: Identifiable {
     }
 
     static func mock() -> Vehicle2 {
-        Vehicle2(name: "Default car", brand: "Brand", model: "XYZ", odometer: 0.1)
+        Vehicle2(name: "Default car", brand: "Brand", model: "XYZ", odometer: 0.0)
     }
 }
 

@@ -23,16 +23,6 @@ struct VehicleViewModel: Hashable {
         vehicle.brand ?? ""
     }
 
-    var fuelTypeOne: FuelType {
-        get { FuelType(rawValue: Int(vehicle.fuelTypeOne)) ?? .gasoline }
-        set { vehicle.fuelTypeOne = Int16(newValue.rawValue) }
-    }
-
-    var fuelTypeTwo: FuelType {
-        get { FuelType(rawValue: Int(vehicle.fuelTypeTwo)) ?? .none }
-        set { vehicle.fuelTypeTwo = Int16(newValue.rawValue) }
-    }
-
     var model: String {
         vehicle.model ?? ""
     }
@@ -78,8 +68,6 @@ extension VehicleState {
         vehicleS.vehicleID = vm.vehicleID
         vehicleS.odometer = vm.odometer
         vehicleS.brand = vm.brand
-        vehicleS.fuelTypeOne = Int16(vm.fuelTypeOne.rawValue)
-        vehicleS.fuelTypeTwo = Int16(vm.fuelTypeTwo.rawValue)
         vehicleS.name = vm.name
         vehicleS.year = vm.year
         vehicleS.model = vm.model

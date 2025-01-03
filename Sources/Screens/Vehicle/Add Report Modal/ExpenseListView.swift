@@ -12,7 +12,6 @@ struct ExpenseListView: View {
     @ObservedObject var utilityVM: UtilityViewModel
     @ObservedObject var dataVM: DataViewModel
     @ObservedObject var categoryVM: CategoryViewModel
-    @StateObject var fuelVM = FuelViewModel()
 
     var focusedField: FocusState<FocusField?>.Binding
 
@@ -64,28 +63,10 @@ struct ExpenseListView: View {
                 focusedField.wrappedValue = .odometer
             }
 
-            // MARK: FUEL TYPE
-
-            if addExpVM.selectedCategory == NSLocalizedString("Fuel", comment: "") {
-                HStack {
-                    CategoryRow(title: String(localized: "Fuel type"), icon: .fuelType, color: Palette.colorOrange)
-                    Spacer()
-                    NavigationLink(destination: CustomFuelPicker(dataVM: dataVM, addExpVM: addExpVM, fuelVM: fuelVM, checkmark1: $checkmark1, checkmark2: $checkmark2)) {
-                        HStack {
-                            Spacer()
-                            Text(addExpVM.selectedFuel)
-                                .fixedSize()
-                                .font(Typography.headerM)
-                                .foregroundColor(Palette.greyMiddle)
-                        }
-                    }
-                }
-            }
-
             // MARK: DATE PICKER
 
             DatePicker(selection: $addExpVM.expenseS.date, in: ...Date(), displayedComponents: [.date]) {
-                CategoryRow(title: String(localized: "Day"), icon: .day, color: Palette.colorGreen)
+//                CategoryRow(title: String(localized: "Day"), icon: .day, color: Palette.colorGreen)
             }
 
             // MARK: LITERS & PRICE/LITER
@@ -178,12 +159,6 @@ struct ExpenseListView: View {
                     focusedField.wrappedValue = .priceTab
                 }
             }
-
-            if addExpVM.selectedFuel == "" {
-                addExpVM.selectedFuel = dataVM.currentVehicle.first?.fuelTypeOne.label ?? ""
-                fuelVM.defaultFuelType = dataVM.currentVehicle.first?.fuelTypeOne ?? FuelType.none
-                addExpVM.fuel = fuelVM.defaultSelectedFuel
-            }
         }
     }
 }
@@ -193,66 +168,6 @@ struct ExpenseListView: View {
 //        ExpenseListView()
 //    }
 // }
-
-struct CustomFuelPicker: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
-    @ObservedObject var dataVM: DataViewModel
-    @StateObject var addExpVM: AddExpenseViewModel
-    @StateObject var fuelVM: FuelViewModel
-    @Binding var checkmark1: Bool
-    @Binding var checkmark2: Bool
-
-    var body: some View {
-        List {
-            Button(action: {
-                withAnimation(.easeOut) {
-                    checkmark1 = true
-                    checkmark2 = false
-                    addExpVM.selectedFuel = dataVM.currentVehicle.first?.fuelTypeOne.label ?? ""
-                    fuelVM.defaultFuelType = dataVM.currentVehicle.first?.fuelTypeOne ?? FuelType.none
-                    addExpVM.fuel = fuelVM.defaultSelectedFuel
-
-//                    addExpVM.expenseS.fuelType = fuelVM.defaultSelectedFuel
-                    presentationMode.wrappedValue.dismiss()
-                }
-            }, label: {
-                HStack {
-                    Text(dataVM.currentVehicle.first?.fuelTypeOne.label ?? "")
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.black)
-                    Spacer()
-                    Image(systemName: "checkmark")
-                        .foregroundColor(.accentColor)
-                        .opacity(checkmark1 ? 1.0 : 0.0)
-                }
-            })
-            if dataVM.currentVehicle.first?.fuelTypeTwo != FuelType.none {
-                Button(action: {
-                    withAnimation(.easeOut) {
-                        checkmark1 = false
-                        checkmark2 = true
-                        addExpVM.selectedFuel = dataVM.currentVehicle.first?.fuelTypeTwo.label ?? ""
-                        fuelVM.secondaryFuelType = dataVM.currentVehicle.first?.fuelTypeTwo ?? FuelType.none
-                        addExpVM.fuel = fuelVM.secondarySelectedFuel
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }, label: {
-                    HStack {
-                        Text(dataVM.currentVehicle.first?.fuelTypeTwo.label ?? "")
-                            .font(Typography.headerM)
-                            .foregroundColor(Palette.black)
-                        Spacer()
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.accentColor)
-                            .opacity(checkmark2 ? 1.0 : 0.0)
-                    }
-                })
-            }
-        }
-        .listStyle(.insetGrouped)
-    }
-}
 
 // TODO: Remove when no longer used
 struct CustomCategoryPicker: View {

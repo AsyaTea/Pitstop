@@ -120,7 +120,7 @@ private extension EditReminderView {
             HStack {
                 CategoryRow(title: "Category", icon: .category, color: Palette.colorYellow)
                 NavigationLink(destination:
-                    CustomCategoryPicker2(selectedCategory: $category)) {
+                    CategoryPicker(selectedCategory: $category)) {
                         Spacer()
                         Text(category.rawValue)
                             .font(Typography.headerM)

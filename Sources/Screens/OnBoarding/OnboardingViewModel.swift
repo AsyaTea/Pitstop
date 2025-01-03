@@ -17,11 +17,6 @@ class OnboardingViewModel: ObservableObject {
 
     @Published var destination: Pages = .page1
 
-    var isDisabled: Bool {
-        vehicle.name.isEmpty || vehicle.brand.isEmpty || vehicle.model.isEmpty || vehicle.fuelTypeOne == FuelType.none.rawValue
-//        return false // debugging
-    }
-
     @Published var skipNotification = false /// Skip notiification page when adding another car
     @Published var removeBack = false /// Remove back button when adding another car
 
