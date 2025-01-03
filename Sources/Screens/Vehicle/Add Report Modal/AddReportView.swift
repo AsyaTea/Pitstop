@@ -44,7 +44,7 @@ struct AddReportView: View {
                 case .fuel:
                     HStack {
                         Spacer()
-                        TextField("0.0", value: $fuelExpense.totalPrice, format: .number)
+                        TextField("0.0", value: $fuelExpense.totalPrice, formatter: NumberFormatter.twoDecimalPlaces)
                             .keyboardType(.decimalPad)
                             .font(Typography.headerXXL)
                             .foregroundColor(Palette.black)
@@ -161,6 +161,17 @@ struct AddReportView: View {
         fuelCategories.append(currentVehicle.mainFuelType)
         guard let secondaryFuelType = currentVehicle.secondaryFuelType else { return }
         fuelCategories.append(secondaryFuelType)
+    }
+
+    // FIXME: The logic is broken
+    private func updateFuelExpense() {
+        if fuelExpense.pricePerUnit > 0, fuelExpense.quantity > 0 {
+            fuelExpense.totalPrice = (fuelExpense.pricePerUnit * fuelExpense.quantity).rounded(toPlaces: 2)
+        } else if fuelExpense.pricePerUnit > 0, fuelExpense.totalPrice > 0 {
+            fuelExpense.quantity = (fuelExpense.totalPrice / fuelExpense.pricePerUnit).rounded(toPlaces: 2)
+        } else if fuelExpense.quantity > 0, fuelExpense.totalPrice > 0 {
+            fuelExpense.pricePerUnit = (fuelExpense.totalPrice / fuelExpense.quantity).rounded(toPlaces: 2)
+        }
     }
 }
 

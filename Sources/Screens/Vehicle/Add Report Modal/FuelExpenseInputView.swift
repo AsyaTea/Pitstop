@@ -90,7 +90,7 @@ struct CategoryInputView: View {
             case let .field(value, unit, placeholder, keyboardType):
                 CategoryRow(input: categoryInfo)
                 Spacer()
-                TextField(placeholder, value: value, format: .number)
+                TextField(placeholder, value: value, formatter: NumberFormatter.twoDecimalPlaces)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
                     .keyboardType(keyboardType)
