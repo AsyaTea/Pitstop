@@ -65,9 +65,13 @@ struct AddReportView: View {
 
                 switch currentPickerTab {
                 case .reminder:
-                    ReminderListView(reminder: $reminder, focusedField: $focusedField)
+                    ReminderInputView(reminder: $reminder, focusedField: $focusedField)
                 case .fuel:
                     FuelExpenseInputView(vehicleFuels: fuelCategories, fuelExpense: $fuelExpense)
+                        .onAppear {
+                            // Reset the reminder when switching tabs
+                            reminder = .mock()
+                        }
                 }
             }
             .background(Palette.greyBackground)
@@ -112,8 +116,8 @@ struct AddReportView: View {
                     Text(String(localized: "Save"))
                         .font(Typography.headerM)
                 })
-                .disabled(reminder.title.isEmpty && fuelExpense.totalPrice.isZero)
-                .opacity(reminder.title.isEmpty && fuelExpense.totalPrice.isZero ? 0.6 : 1)
+                .disabled(reminder.title.isEmpty && (fuelExpense.totalPrice.isZero || fuelExpense.quantity.isZero))
+                .opacity(reminder.title.isEmpty && (fuelExpense.totalPrice.isZero || fuelExpense.quantity.isZero) ? 0.6 : 1)
             )
             .toolbar {
                 /// Keyboard focus

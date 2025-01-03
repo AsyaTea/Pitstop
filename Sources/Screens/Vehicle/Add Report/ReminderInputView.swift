@@ -1,5 +1,5 @@
 //
-//  ReminderListView.swift
+//  ReminderInputView.swift
 //  Hurricane
 //
 //  Created by Ivan Voloshchuk on 09/05/22.
@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct ReminderListView: View {
+struct ReminderInputView: View {
     @State private var selectedType: Reminder.Typology = .date
     @Binding var reminder: Reminder
 

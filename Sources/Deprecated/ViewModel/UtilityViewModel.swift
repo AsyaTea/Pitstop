@@ -17,12 +17,4 @@ class UtilityViewModel: ObservableObject {
 
     init() {}
 
-//    func getTotalExpense(expenses: [ExpenseViewModel]) -> Float {
-//        for expense in expenses {
-//            totalVehicleCost += expense.price
-//        }
-//        totalExpense = totalVehicleCost
-//        print("sum cost : \(totalVehicleCost)")
-//        return totalVehicleCost
-//    }
 }
