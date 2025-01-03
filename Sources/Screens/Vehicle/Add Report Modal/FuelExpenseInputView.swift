@@ -16,32 +16,33 @@ struct FuelExpenseInputView: View {
 }
 
 struct CategoryInputView: View {
+    let categoryInfo: CategoryRow.Input
     let type: InputType
 
     var body: some View {
         HStack {
             switch type {
-            case let .field(value, unit):
-                CategoryRow(title: "Odometer", icon: .odometer, color: Palette.colorBlue)
+            case let .field(value, unit, placeholder, keyboardType):
+                CategoryRow(input: categoryInfo)
                 Spacer()
-                TextField("value", text: value)
+                TextField(placeholder, value: value, format: .number)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
-                    .keyboardType(.decimalPad)
+                    .keyboardType(keyboardType)
                     .fixedSize(horizontal: true, vertical: true)
                 Text(unit)
                     .font(Typography.headerM)
                     .foregroundColor(Palette.black)
             case let .date(value):
                 DatePicker(selection: value, in: ...Date(), displayedComponents: [.date]) {
-                    CategoryRow(title: String(localized: "Day"), icon: .day, color: Palette.colorGreen)
+                    CategoryRow(input: categoryInfo)
                 }
             }
         }
     }
 
     enum InputType {
-        case field(value: Binding<String>, unit: String)
+        case field(value: Binding<Float>, unit: String, placeholder: String, keyboardType: UIKeyboardType)
         case date(value: Binding<Date>)
     }
 }
