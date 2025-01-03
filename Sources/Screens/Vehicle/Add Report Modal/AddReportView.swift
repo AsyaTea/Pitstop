@@ -27,7 +27,7 @@ struct AddReportView: View {
     // To dismiss the modal
     @Environment(\.presentationMode) private var presentationMode
 
-    @State private var currentPickerTab: AddReportTabs = .expense
+    @State private var currentPickerTab: AddReportTabs = .fuel
 
     var body: some View {
         NavigationView {

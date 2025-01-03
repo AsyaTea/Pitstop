@@ -18,7 +18,7 @@ struct EditVehicleView: View {
     @State private var isTapped2 = false
 
     var isDisabled: Bool {
-        name.isEmpty || brand.isEmpty || model.isEmpty || mainFuelType == .none
+        name.isEmpty || brand.isEmpty || model.isEmpty || mainFuelType == .none || mainFuelType == secondaryFuelType
     }
 
     var vehicle2: Vehicle2
@@ -166,7 +166,7 @@ struct EditVehicleView: View {
                     .accentColor(Palette.black)
                 })
                 .confirmationDialog(String(localized: "Select a second fuel type"), isPresented: $secondaryFuelPicker, titleVisibility: .visible) {
-                    ForEach(FuelType.allCases) { fuel in
+                    ForEach(FuelType.allCases.filter { $0 != mainFuelType }) { fuel in
                         Button(fuel.rawValue) {
                             isTapped2 = false
                             secondaryFuelType = fuel

@@ -76,68 +76,7 @@ struct ExpenseListView: View {
             // MARK: DATE PICKER
 
             DatePicker(selection: $addExpVM.expenseS.date, in: ...Date(), displayedComponents: [.date]) {
-//                CategoryRow(title: String(localized: "Day"), icon: .day, color: Palette.colorGreen)
-            }
-
-            // MARK: LITERS & PRICE/LITER
-
-            if addExpVM.selectedCategory == NSLocalizedString("Fuel", comment: "") {
-                HStack {
-                    ZStack {
-                        Circle()
-                            .frame(width: 32, height: 32)
-                            .foregroundColor(addExpVM.liters.isEmpty ? Palette.greyLight : Palette.colorOrange)
-                        Image(addExpVM.liters.isEmpty ? .liters : .literColored)
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                    }
-                    Text(String(localized: "Liters"))
-                        .foregroundColor(Palette.black)
-                        .font(Typography.headerM)
-                    Spacer()
-                    TextField("0", text: $addExpVM.liters)
-                        .disableAutocorrection(true)
-                        .keyboardType(.decimalPad)
-                        .focused(focusedField, equals: .liter)
-                        .fixedSize(horizontal: true, vertical: true)
-                        .font(Typography.headerM)
-
-                    Text("L")
-                        .font(Typography.headerM)
-                        .foregroundColor(Palette.black)
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    focusedField.wrappedValue = .liter
-                }
-
-                HStack {
-                    ZStack {
-                        Circle()
-                            .frame(width: 32, height: 32)
-                            .foregroundColor(addExpVM.pricePerLiter.isEmpty ? Palette.greyLight : Palette.colorYellow)
-                        Image(addExpVM.pricePerLiter.isEmpty ? "priceLiter" : "priceLiterColored")
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                    }
-                    Text(String(localized: "Price/Liter"))
-                        .foregroundColor(Palette.black)
-                        .font(Typography.headerM)
-                    Spacer()
-                    TextField("0", text: $addExpVM.pricePerLiter)
-                        .disableAutocorrection(true)
-                        .focused(focusedField, equals: .priceLiter)
-                        .fixedSize(horizontal: true, vertical: true)
-                        .keyboardType(.decimalPad)
-                        .font(Typography.headerM)
-
-                    Text(utilityVM.currency)
-                        .foregroundColor(Palette.black)
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    focusedField.wrappedValue = .priceLiter
-                }
+                CategoryRow(input: .init(title: String(localized: "Day"), icon: .day, color: Palette.colorGreen))
             }
 
             // MARK: NOTE
