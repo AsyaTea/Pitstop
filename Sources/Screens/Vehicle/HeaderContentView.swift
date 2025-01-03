@@ -27,8 +27,7 @@ struct HeaderContent: View {
                             .foregroundColor(homeVM.headerCardColor)
                             .frame(width: UIScreen.main.bounds.width * 0.29, height: UIScreen.main.bounds.height * 0.09)
                         VStack(alignment: .center) {
-                            let formattedCost = String(format: "%.0f", dataVM.totalExpense)
-                            Text("\(formattedCost) \(utilityVM.currency)")
+                            Text("\(vehicleManager.currentVehicle.calculateTotalFuelExpenses()) \(utilityVM.currency)")
                                 .foregroundColor(Palette.blackHeader)
                                 .font(Typography.headerLM)
                             Text("All costs")

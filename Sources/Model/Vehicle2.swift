@@ -77,6 +77,11 @@ final class Vehicle2: Identifiable {
     static func mock() -> Vehicle2 {
         Vehicle2(name: "Default car", brand: "Brand", model: "XYZ", odometer: 0.0)
     }
+
+    func calculateTotalFuelExpenses() -> String {
+        let total = fuelExpenses.reduce(0.0) { $0 + $1.totalPrice }
+        return String(format: "%.2f", total)
+    }
 }
 
 extension Vehicle2: Codable {

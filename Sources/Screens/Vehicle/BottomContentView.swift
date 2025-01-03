@@ -41,7 +41,7 @@ struct BottomContentView: View {
 
             titleSection(
                 sectionTitle: "Last events",
-                showViewAll: vehicleManager.currentVehicle.fuelExpenses.isEmpty,
+                showViewAll: !vehicleManager.currentVehicle.fuelExpenses.isEmpty,
                 viewAllAction: {
                     viewAllEvents.toggle()
                 }

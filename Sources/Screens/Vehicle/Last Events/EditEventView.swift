@@ -19,11 +19,7 @@ struct EditEventView: View {
     var body: some View {
         NavigationView {
             VStack {
-                if category == .fuel {
-                    FuelEventListFields(utilityVM: utilityVM, dataVM: dataVM, category: category)
-                } else {
-                    EventListFields(utilityVM: utilityVM, dataVM: dataVM, category: category)
-                }
+                FuelEventListFields(utilityVM: utilityVM, dataVM: dataVM, category: category)
             }
             .background(Palette.greyBackground)
             .navigationBarTitleDisplayMode(.inline)
@@ -208,106 +204,6 @@ struct FuelEventListFields: View {
             .contentShape(Rectangle())
             .onTapGesture {
                 focusedField = .liter
-            }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-
-            HStack {
-//                CategoryRow(
-//                    title: String(localized: "Note"),
-//                    icon: utilityVM.expenseToEdit.note.isEmpty ? .note : .noteColored,
-//                    color: utilityVM.expenseToEdit.note.isEmpty ? Palette.greyLight : Palette.colorViolet
-//                )
-                Spacer()
-                TextField(String(localized: "Note"), text: $utilityVM.expenseToEdit.note)
-                    .font(Typography.headerM)
-                    .foregroundColor(Palette.black)
-                    .fixedSize(horizontal: true, vertical: true)
-                    .focused($focusedField, equals: .note)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                focusedField = .note
-            }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-        }
-        .toolbar {
-            /// Keyboard focus
-            ToolbarItem(placement: .keyboard) {
-                HStack {
-                    Button(action: {
-                        focusedField = nil
-                    }, label: {
-                        Image(systemName: "keyboard.chevron.compact.down")
-                            .resizable()
-                            .foregroundColor(Palette.black)
-                    })
-                }
-            }
-        }
-    }
-}
-
-struct EventListFields: View {
-    @StateObject var utilityVM: UtilityViewModel
-    @ObservedObject var dataVM: DataViewModel
-    var category: Category
-    @FocusState var focusedField: FocusField?
-
-    var body: some View {
-        CustomList {
-            HStack {
-//                CategoryRow(title: String(localized: "Cost"), icon: .other, color: Palette.colorViolet)
-                Spacer()
-                TextField("100", value: $utilityVM.expenseToEdit.price, formatter: NumberFormatter())
-                    .font(Typography.headerM)
-                    .foregroundColor(Palette.black)
-                    .keyboardType(.decimalPad)
-                    .focused($focusedField, equals: .priceTab)
-                    .fixedSize(horizontal: true, vertical: true)
-
-                Text(utilityVM.currency)
-                    .font(Typography.headerM)
-                    .foregroundColor(Palette.black)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                focusedField = .priceTab
-            }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-
-            // MARK: DATE
-
-            DatePicker(selection: $utilityVM.expenseToEdit.date, displayedComponents: [.date]) {
-//                CategoryRow(
-//                    title: String(localized: "Day"),
-//                    icon: .day,
-//                    color: Palette.colorGreen
-//                )
-            }
-            .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
-
-            // MARK: ODOMETER
-
-            HStack {
-//                CategoryRow(
-//                    title: String(localized: "Odometer"),
-//                    icon: .odometer,
-//                    color: Palette.colorBlue
-//                )
-                Spacer()
-                TextField(String(Int(dataVM.currentVehicle.first?.odometer ?? 0)), value: $utilityVM.expenseToEdit.odometer, formatter: NumberFormatter())
-                    .font(Typography.headerM)
-                    .foregroundColor(Palette.black)
-                    .keyboardType(.numberPad)
-                    .focused($focusedField, equals: .odometer)
-                    .fixedSize(horizontal: true, vertical: true)
-                Text(utilityVM.unit)
-                    .font(Typography.headerM)
-                    .foregroundColor(Palette.black)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                focusedField = .odometer
             }
             .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
 
